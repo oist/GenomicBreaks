@@ -4,7 +4,9 @@
 \name{gr_O_Oki}
 \alias{gr_O_Oki}
 \title{Genome Pairwise Alignment}
-\format{GRanges object containing reference genome alignment, with corresponding query alignment information in metadata.}
+\format{
+GRanges object containing reference genome alignment, with corresponding query alignment information in metadata.
+}
 \usage{
 gr_O_Oki
 }

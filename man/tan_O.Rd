@@ -4,7 +4,9 @@
 \name{tan_O}
 \alias{tan_O}
 \title{Tandem Repeat coverage of the Osaka2016 Genome}
-\format{GRanges object}
+\format{
+GRanges object
+}
 \usage{
 tan_O
 }

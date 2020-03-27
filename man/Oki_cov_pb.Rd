@@ -4,7 +4,9 @@
 \name{Oki_cov_pb}
 \alias{Oki_cov_pb}
 \title{Genome Coverage of Okinawa Genome}
-\format{GRanges object}
+\format{
+GRanges object
+}
 \usage{
 Oki_cov_pb
 }
