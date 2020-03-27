@@ -4,7 +4,9 @@
 \name{tan_Oki}
 \alias{tan_Oki}
 \title{Tandem Repeat coverage of the Okinawa (v3) Genome}
-\format{GRanges object}
+\format{
+GRanges object
+}
 \usage{
 tan_Oki
 }
