@@ -108,7 +108,7 @@ The resulting GRanges object has far fewer alignments and therefore far fewer al
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced lsit, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented. 
 
-```{r tan class}
+```{r echo=T, message=F, warning=F}
 
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
@@ -116,11 +116,31 @@ tan_gr_O
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
 
-
-# tandem_coverage function. Although check its method compared to bp_heatmap, since it might plot shorter ones?? 
 ```
 
+We can use another script to plot the density of tandem repeats around alignment stops (and breakpoints). In the following plots, breakpoints are aligned at the centre of the plots. Intuitively, this function can be generalised to see the density of any binary coverage characteristic around breakpoints, given a GRanges object with per-base coverage of a given characteristic. Here we stick with tandem repeat info:
+
+```{r echo=T, message=F, warning=F}
+hm_tan_O <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 1000, lab = "Osaka ~ Okinawa")
+
+#hm_tan_Oki <- tandem_coverage(gr_ob = q_Oki, tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa")
+
+par(mfrow = c(2,1))
+plotHeatmapList(hm_tan_O)
+plotHeatmapMeta(hm_tan_O)
+
+# come back to this
+```
 ## Coverage
+
+Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for reference or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function `bp_coverage` returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns. 
+
+```{r echo=T, message=F, warning=F}
+
+cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
+cov_gr_O_Oki
+
+```
 
 
 ## Breakpoint classification - master script

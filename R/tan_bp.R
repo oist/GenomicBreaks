@@ -12,7 +12,7 @@
 #' @import IRanges
 #' @import GenomeInfoDb
 
-tan_bp <- function(gr_ob, tan, tol, query_tf){
+tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
 
   # extract query as GRanges object
   if(query_tf == TRUE){
