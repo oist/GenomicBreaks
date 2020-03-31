@@ -1,30 +1,134 @@
 ---
 title: "GenomicBreaks Vignette"
-author: "Charlotte"
+author: "Charlotte West"
 date: "3/27/2020"
-output: html_document
+output: rmarkdown::html_vignette
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r loadlib, echo=T, results='hide', message=F, warning=F}
 
-```{r cars}
-summary(cars)
+library(GenomicRanges)
+library(IRanges)
+library(GenomeInfoDb)
+library(BSgenome)
+library(Biostrings)
+library(graphics)
+library(heatmaps)
+library(stats)
+library(schoolmath)
+
+library(GenomicBreaks)
+
 ```
 
-## Including Plots
+and look at the primary data structure that this package deals with. 
 
-You can also embed plots, for example:
+```{r GRanges object}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+gr_O_Oki
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
+
+The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions can cause failure to align analagous regions, or misalignments. 
+
+Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909373 and 909853 in scaffold_1 of the query genome as alignment stops. 
+
+The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
+
+```{r get bps}
+
+gr_O_Oki_stops <- get_bps(gr_ob = gr_O_Oki)
+gr_O_Oki_stops
+
+```
+
+Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
+
+This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
+
+Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be transformed as follows:
+
+```{r query GRanges}
+
+q_Oki <- GRanges(gr_O_Oki$name)
+q_Oki
+
+```
+
+## Visualising alignments
+
+We can use the function `scaf_align_plot` to see the alignment of query scaffolds/chromosomes onto a specific reference scaffold/chromosome of interest.
+
+```{r echo=T, message=F, warning=F}
+
+scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2", ref_name = "Osaka", query_name = "Okinawa")
+
+```
+
+Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top. 
+
+We can plot alignments for two of the reference scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
+
+```{r echo=T, message=F, warning=F}
+
+align_scaf_plot_2(gr_ob = gr_O_Oki, scaf = c("S7","S5"))
+
+```
+
+As you can see, scaffold 2 of the query genome aligns to the majority of both reference scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
+
+## Coalescing alignments
+
+Large alignments can often appear cluttered with alignment breaks, spanning just a few basepairs. When the alignments skips this short distance, it is likely an artefact of the aligner and not a true breakpoint. Furthermore, we do not consider SNPs here to be breakpoints. Therefore, the algorithm in `coalesce_contigs` is used to produce a new GRanges object with fewer alignment breaks by coalescing alignments separated by short (user specified) distances. This distance need be agreeable in both the reference and query genome in order for the coalscion to happen. 
+
+For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignment:
+
+```{r coalescing algorithm}
+
+reduced_gr_O_Oki <- coalesce_contigs(gr_ob = gr_O_Oki, tol = 500)
+reduced_gr_O_Oki
+length(gr_O_Oki)
+length(reduced_gr_O_Oki)
+
+```
+
+The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
+
+## Tandem repeats
+
+Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced lsit, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented. 
+
+```{r tan class}
+
+tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
+tan_gr_O
+
+tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
+tan_gr_Oki
+
+
+# tandem_coverage function. Although check its method compared to bp_heatmap, since it might plot shorter ones?? 
+```
+
+## Coverage
+
+
+## Breakpoint classification - master script
+
+
+## Plots
+
+
+
+
+
