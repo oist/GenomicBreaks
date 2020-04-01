@@ -25,6 +25,10 @@ library(heatmaps)
 library(stats)
 library(schoolmath)
 
+# These will need to be installed by the user
+library("BSgenome.Odioica.local.OSKA2016")
+library("BSgenome.Odioica.local.Odioica.reference.v3.0")
+
 library(GenomicBreaks)
 
 ```
@@ -145,8 +149,111 @@ cov_gr_O_Oki
 
 ## Breakpoint classification - master script
 
+The function `master_bp_analysis` brings together the information about tandem repeats and coverage, as well as coalescing the alignment. It can perform the analyses for both the reference and the query genome, depending on the available input data. The output is split into two GRanges objects; one for the reference genome and one for the query, with associated information in the metadata columns. 
 
-## Plots
+```{r echo=T, message=F, warning=F}
+
+fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
+                                   q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
+fin_gr_O_Oki
+
+```
+
+
+# Examples
+
+## Nucleaic acid content heatmaps
+
+We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleaic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
+
+```{r echo=T, message=F, warning=F}
+
+hm_GC1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
+hm_GC1 <- smoothHeatmap(hm_GC1, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_GC1)
+
+hm_GC2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
+hm_GC2 <- smoothHeatmap(hm_GC2, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_GC2)
+
+```
+
+The alignment stops are ordered in such a way that start (or left breaks) are centred on the top half of the plot, and end alignment stops are centred on the bottom. This is why we see different directionality in the plots. At the alignment stops, the GC content seems to be lower, but higher once within the aligned region. 
+
+Now looking at TATA content:
+
+```{r echo=T, message=F, warning=F}
+
+hm_tata1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
+hm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_tata1)
+
+hm_tata2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
+hm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_tata2)
+
+```
+
+The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100
+
+## Evidence for breakpoint hotspots
+
+The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produced two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
+
+```{r echo=T, message=F, warning=F}
+
+hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
+plotHeatmapMeta(hm1)
+
+hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
+plotHeatmapMeta(hm2)
+
+```
+
+The accumulation of alignment breaks of one pairwise alignment onto another suggests the existence of breakpoint hotspots; regions where breaks are far more likely to occur. Intuitively, this would lead to the presumption of synteny blocks, also. The pattern is consistent after coalescing, too;
+
+```{r echo=T, message=F, warning=F}
+
+reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
+
+hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
+plotHeatmapMeta(hm3)
+
+```
+
+## Tandem repeat coverage around alignment stops (breakpoints)
+
+The function `tandem_coverage` will plot the coverage of tandem repeats around centred alignment stops. 
+
+```{r echo=T, message=F, warning=F}
+
+hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
+plotHeatmapMeta(hm_tan1)
+
+hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
+plotHeatmapMeta(hm_tan2)
+
+# should I also add comparison of proportions of tandem proximities before and after coalescion?
+
+```
+
+There appears to be less tandem repeats around alignment stops after coalescion, inferring that perhaps that some are artefacts of difficult alignment near to tandem repeats. 
+
+
+## Okinawa genome coverage
+
+As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this assembly is very good, with the lowest points of coverage still having:
+
+
+```{r echo=T, message=F, warning=F}
+
+Oki_O_ab <- get_bps(gr_ob = q_Oki) #get alignment stops (in terms of query)
+
+
+min(width(ranges(Oki_cov_pb)))
+
+
+```
 
 
 
