@@ -2,11 +2,12 @@
 title: "GenomicBreaks Vignette"
 author: "Charlotte West"
 date: "3/27/2020"
-output: rmarkdown::html_vignette
+output: pdf_document
+#output: rmarkdown::html_vignette
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
 ```
 
 ## Introduction
@@ -25,6 +26,10 @@ library(heatmaps)
 library(stats)
 library(schoolmath)
 
+# These will need to be installed by the user
+library("BSgenome.Odioica.local.OSKA2016")
+library("BSgenome.Odioica.local.Odioica.reference.v3.0")
+
 library(GenomicBreaks)
 
 ```
@@ -39,7 +44,7 @@ gr_O_Oki
 
 This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
 
-The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions can cause failure to align analagous regions, or misalignments. 
+The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
 
 Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909373 and 909853 in scaffold_1 of the query genome as alignment stops. 
 
@@ -108,7 +113,7 @@ The resulting GRanges object has far fewer alignments and therefore far fewer al
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced lsit, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented. 
 
-```{r tan class}
+```{r echo=T, message=F, warning=F}
 
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
@@ -116,19 +121,140 @@ tan_gr_O
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
 
-
-# tandem_coverage function. Although check its method compared to bp_heatmap, since it might plot shorter ones?? 
 ```
 
+We can use another script to plot the density of tandem repeats around alignment stops (and breakpoints). In the following plots, breakpoints are aligned at the centre of the plots. Intuitively, this function can be generalised to see the density of any binary coverage characteristic around breakpoints, given a GRanges object with per-base coverage of a given characteristic. Here we stick with tandem repeat info:
+
+```{r echo=T, message=F, warning=F}
+hm_tan_O <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 1000, lab = "Osaka ~ Okinawa")
+
+#hm_tan_Oki <- tandem_coverage(gr_ob = q_Oki, tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa")
+
+par(mfrow = c(2,1))
+plotHeatmapList(hm_tan_O)
+plotHeatmapMeta(hm_tan_O)
+
+# come back to this
+```
 ## Coverage
+
+Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for reference or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function `bp_coverage` returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns. 
+
+```{r echo=T, message=F, warning=F}
+
+cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
+cov_gr_O_Oki
+
+```
 
 
 ## Breakpoint classification - master script
 
+The function `master_bp_analysis` brings together the information about tandem repeats and coverage, as well as coalescing the alignment. It can perform the analyses for both the reference and the query genome, depending on the available input data. The output is split into two GRanges objects; one for the reference genome and one for the query, with associated information in the metadata columns. 
 
-## Plots
+```{r echo=T, message=F, warning=F}
+
+fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
+                                   q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
+fin_gr_O_Oki
+
+```
 
 
+# Examples
+
+## Nucleaic acid content heatmaps
+
+We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleaic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
+
+```{r echo=T, message=F, warning=F}
+
+hm_GC1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
+hm_GC1 <- smoothHeatmap(hm_GC1, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_GC1)
+
+hm_GC2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
+hm_GC2 <- smoothHeatmap(hm_GC2, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_GC2)
+
+```
+
+The alignment stops are ordered in such a way that start (or left breaks) are centred on the top half of the plot, and end alignment stops are centred on the bottom. This is why we see different directionality in the plots. At the alignment stops, the GC content seems to be lower, but higher once within the aligned region. 
+
+Now looking at TATA content:
+
+```{r echo=T, message=F, warning=F}
+
+hm_tata1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
+hm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_tata1)
+
+hm_tata2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
+hm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
+plotHeatmapList(hm_tata2)
+
+```
+
+The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occuring directly after promotor regions. 
+
+## Evidence for breakpoint hotspots
+
+The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
+
+```{r echo=T, message=F, warning=F}
+
+hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
+plotHeatmapMeta(hm1)
+
+hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
+plotHeatmapMeta(hm2)
+
+```
+
+The accumulation of alignment breaks of one pairwise alignment onto another suggests the existence of breakpoint hotspots; regions where breaks are far more likely to occur. Intuitively, this would lead to the presumption of synteny blocks, also. The pattern is consistent after coalescing, too;
+
+```{r echo=T, message=F, warning=F}
+
+reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
+
+hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
+plotHeatmapMeta(hm3)
+
+```
+
+## Tandem repeat coverage around alignment stops (breakpoints)
+
+The function `tandem_coverage` will plot the coverage of tandem repeats around centred alignment stops. 
+
+```{r echo=T, message=F, warning=F}
+
+hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
+plotHeatmapMeta(hm_tan1)
+
+hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
+plotHeatmapMeta(hm_tan2)
+
+# should I also add comparison of proportions of tandem proximities before and after coalescion?
+
+```
+
+There appears to be less tandem repeats around alignment stops after coalescion, inferring that perhaps that some are artefacts of difficult alignment near to tandem repeats. 
+
+
+## Okinawa genome coverage
+
+As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this particular assembly is quite good. In fact, we can investigate the coverge over alignment stops from the information obtained using `master_bp_analysis`. 
+
+```{r echo=T, message=F, warning=F}
+fin_Oki <- fin_gr_O_Oki[[2]]
+min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
+min_cov
+length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
+length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
+
+```
+
+We may choose to kick out the one alignment stop for which there is no coverage. However, only 15 out of 34572 alignment stops have a coverage of less than or equal to 50, meaning that it would be hard to exclude more than just a few alignment stops using coverage information for breakpoint analysis. 
 
 
 

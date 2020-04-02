@@ -4,7 +4,7 @@
 \alias{tan_bp}
 \title{Breakpoint proximity to Tandem Repeats}
 \usage{
-tan_bp(gr_ob, tan, tol, query_tf)
+tan_bp(gr_ob, tan, tol, query_tf = FALSE)
 }
 \arguments{
 \item{gr_ob}{GRanges object containing pairwise alignment}
