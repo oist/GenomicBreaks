@@ -2,11 +2,12 @@
 title: "GenomicBreaks Vignette"
 author: "Charlotte West"
 date: "3/27/2020"
-output: rmarkdown::html_vignette
+output: pdf_document
+#output: rmarkdown::html_vignette
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
 ```
 
 ## Introduction
@@ -43,7 +44,7 @@ gr_O_Oki
 
 This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
 
-The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions can cause failure to align analagous regions, or misalignments. 
+The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
 
 Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909373 and 909853 in scaffold_1 of the query genome as alignment stops. 
 
@@ -194,11 +195,11 @@ plotHeatmapList(hm_tata2)
 
 ```
 
-The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100
+The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occuring directly after promotor regions. 
 
 ## Evidence for breakpoint hotspots
 
-The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produced two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
+The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
 
 ```{r echo=T, message=F, warning=F}
 
@@ -242,20 +243,18 @@ There appears to be less tandem repeats around alignment stops after coalescion,
 
 ## Okinawa genome coverage
 
-As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this assembly is very good, with the lowest points of coverage still having:
-
+As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this particular assembly is quite good. In fact, we can investigate the coverge over alignment stops from the information obtained using `master_bp_analysis`. 
 
 ```{r echo=T, message=F, warning=F}
-
-Oki_O_ab <- get_bps(gr_ob = q_Oki) #get alignment stops (in terms of query)
-
-
-min(width(ranges(Oki_cov_pb)))
-
+fin_Oki <- fin_gr_O_Oki[[2]]
+min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
+min_cov
+length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
+length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
 
 ```
 
-
+We may choose to kick out the one alignment stop for which there is no coverage. However, only 15 out of 34572 alignment stops have a coverage of less than or equal to 50, meaning that it would be hard to exclude more than just a few alignment stops using coverage information for breakpoint analysis. 
 
 
 
