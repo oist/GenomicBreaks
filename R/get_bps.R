@@ -11,11 +11,11 @@
 
 get_bps <- function(gr_ob){
 
-  gr_starts <- start(ranges(gr_ob)) # start bps
-  gr_ends <- end(ranges(gr_ob)) # end bps
+  gr_starts <- start(gr_ob) # start bps
+  gr_ends <- end(gr_ob) # end bps
   bps_s_e <- c(gr_starts, gr_ends) # concatenate start and end bps
   bps_ir <- IRanges(start = bps_s_e, end = bps_s_e) # IRanges object needed for constructing GRanges object
-  bps_vec_seq <- as.vector(seqnames(gr_ob))
+  bps_vec_seq <- seqnames(gr_ob)
   bps_seqs <- c(bps_vec_seq, bps_vec_seq)
   bps <- GRanges(seqnames = bps_seqs, ranges = bps_ir, seqinfo = seqinfo(gr_ob))
 }
