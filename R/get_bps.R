@@ -8,6 +8,9 @@
 #' @import GenomicRanges
 #' @import IRanges
 #' @import GenomeInfoDb
+#' @examples
+#' gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges(1:4, width=4:1))
+#' get_bps(gr)
 
 get_bps <- function(gr_ob){
 
