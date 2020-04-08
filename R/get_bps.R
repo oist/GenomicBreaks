@@ -17,5 +17,5 @@ get_bps <- function(gr_ob){
   bps_ir <- IRanges(start = bps_s_e, end = bps_s_e) # IRanges object needed for constructing GRanges object
   bps_vec_seq <- as.vector(seqnames(gr_ob))
   bps_seqs <- c(bps_vec_seq, bps_vec_seq)
-  bps <- GRanges(seqnames = bps_seqs, ranges = bps_ir, seqinfo = seqinfo(gr_ob))
+  GRanges(seqnames = bps_seqs, ranges = bps_ir, seqinfo = seqinfo(gr_ob))
 }
