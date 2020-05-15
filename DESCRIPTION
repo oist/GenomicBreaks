@@ -21,5 +21,6 @@ Imports:
   Biostrings,
   BSgenome
 RoxygenNote: 7.1.0
+Roxygen: list(markdown = TRUE)
 Suggests: knitr
 VignetteBuilder: knitr
