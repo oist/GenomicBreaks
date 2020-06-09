@@ -7,11 +7,8 @@ export(bp_pair_analysis)
 export(coalesce_contigs)
 export(getRefGenome)
 export(get_bps)
-<<<<<<< HEAD
 export(int_frag)
-=======
 export(load_genomic_breaks)
->>>>>>> e108b628a1ed1d9f658b7fd422b6cd7ed3335bda
 export(master_bp_analysis)
 export(scaf_align_plot)
 export(tan_bp)
