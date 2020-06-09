@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_genomic_breaks.R
 \name{load_genomic_breaks}
 \alias{load_genomic_breaks}
-\title{Load pairwise genome alignments in R}
+\title{Load pairwise genome alignments}
 \usage{
 load_genomic_breaks(file, bsgenome_ref, bsgenome_query)
 }
@@ -14,9 +14,9 @@ load_genomic_breaks(file, bsgenome_ref, bsgenome_query)
 \item{bsgenome_query}{A \code{BSgenome} object representing the query genome.}
 }
 \value{
-a \verb{GRanges object} where each element represents a pairwise alignment
-block.  The \code{granges} part of the object contains the coordinates on the
-\emph{reference} genome, and the \code{query} metadata column contains the query
+Returns a \verb{GRanges object} where each element represents a pairwise
+alignment block.  The \code{granges} part of the object contains the coordinates
+on the \emph{reference} genome, and the \code{query} metadata column contains the query
 coordinates in \code{GRanges} format.  The \code{seqinfo} of each \code{BSgenome} object
 passed as parameters are copied to the \code{GRanges} objects accordingly.
 }
