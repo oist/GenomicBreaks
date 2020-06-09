@@ -22,7 +22,13 @@ scaf_align_plot <- function(gr_ob, scaf, ref_name, query_name){
 
   q_scafs <- as.numeric(gsub("\\D+", "", as.vector(seqnames(q_now))))
 
-  ref_len <- seqlengths(gr_ob)[scaf]
+  if(all(is.na(as.vector(seqlengths(gr_ob))))){
+    ref_len <- max(end(gr_ob))
+  }
+  else{
+    ref_len <- as.numeric(seqlengths(gr_ob)[which(seqlevels(gr_ob) == scaf)])
+  }
+
   s_len <- length(end(ranges(ref_now)))
 
   # Plotting

@@ -2,8 +2,7 @@
 title: "GenomicBreaks Vignette"
 author: "Charlotte West"
 date: "3/27/2020"
-output: pdf_document
-#output: rmarkdown::html_vignette
+output: rmarkdown::html_vignette
 ---
 
 ```{r setup, include=FALSE}
