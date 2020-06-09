@@ -5,9 +5,9 @@
 #' @param gr_ob GRanges object containing pairwise alignment
 #' @return GRanges object of the breakpoints
 #' @export
-#' @import GenomicRanges
-#' @import IRanges
-#' @import GenomeInfoDb
+#' @importFrom GenomicRanges start end GRanges
+#' @importFrom IRanges IRanges
+#' @importFrom GenomeInfoDb seqnames
 
 get_bps <- function(gr_ob){
 
