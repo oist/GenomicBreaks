@@ -13,8 +13,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
 
 The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages
 
-```{r loadlib, echo=T, results='hide', message=F, warning=F}
-
+```{r loadlib, echo=T, results='hide'}
+suppressPackageStartupMessages({
 library(GenomicRanges)
 library(IRanges)
 library(GenomeInfoDb)
@@ -24,6 +24,7 @@ library(graphics)
 library(heatmaps)
 library(stats)
 library(schoolmath)
+})
 
 # These will need to be installed by the user
 library("BSgenome.Odioica.local.OSKA2016")
