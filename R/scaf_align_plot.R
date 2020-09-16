@@ -4,8 +4,6 @@
 #'
 #' @param gr_ob GRanges object containing pairwise alignment
 #' @param scaf Character string of the name of the scaffold you wish to plot
-#' @param ref_name Reference genome name
-#' @param query_name Query genome name
 #' @return A plot of the query scaffold alignments to the chosen reference scaffold
 #' @export
 #' @import GenomicRanges
@@ -14,7 +12,7 @@
 #' @importFrom graphics plot.new plot.window rect
 
 
-scaf_align_plot <- function(gr_ob, scaf, ref_name, query_name){
+scaf_align_plot <- function(gr_ob, scaf){
 
   # Prep
   ref_now <- gr_ob[seqnames(gr_ob) == scaf]
