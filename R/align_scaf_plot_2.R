@@ -16,35 +16,35 @@ align_scaf_plot_2<- function(gr_ob, scaf){
 
 
   ### reference scaffold 1 ###
-  scaf1 <- scaf[[1]]
+  scaf1 <- scaf[1]
   ref_1 <- gr_ob[seqnames(gr_ob) == scaf1]
-  q_1 <- GRanges(ref_1$name)
+  q_1 <- ref_1$query
 
-  q_scafs1 <- as.numeric(gsub("\\D+", "", as.vector(seqnames(q_1)))) #numeric value of query1 scaffolds
+  q_scafs1 <- as.numeric(seqnames(q_1)) #numeric value of query1 scaffolds
 
   ref1_len <- seqlengths(gr_ob)[scaf1]
-  s_len1 <- length(end(ranges(ref_1)))
+  s_len1 <- length(ref_1)
 
   ### reference scaffold 2 ###
-  scaf2 <- scaf[[2]]
+  scaf2 <- scaf[2]
   ref_2 <- gr_ob[seqnames(gr_ob) == scaf2]
-  q_2 <- GRanges(ref_2$name)
+  q_2 <- ref_2$query
 
-  q_scafs2 <- as.numeric(gsub("\\D+", "", as.vector(seqnames(q_2)))) #numeric value of query2 scaffolds
+  q_scafs2 <- as.numeric(seqnames(q_2)) #numeric value of query2 scaffolds
 
   ref2_len <- seqlengths(gr_ob)[scaf2]
-  s_len2 <- length(end(ranges(ref_2)))
+  s_len2 <- length(ref_2)
 
   ### combined info ###
-  scaf_min <- min(min(q_scafs1), min(q_scafs2))
-  scaf_max <- max(max(q_scafs1), max(q_scafs2))
+  scaf_min <- min(q_scafs1, q_scafs2)
+  scaf_max <- max(q_scafs1, q_scafs2)
   x_ax_max <- ref1_len + ref2_len
 
   ### Plotting ###
   plot.new()
   plot.window(xlim = c(0, x_ax_max), ylim = c(scaf_min, scaf_max*1.1 +0.05))
-  title(xlab = paste("Ref Gen Scaffolds", gsub("\\D+", "", scaf[1]), "(left) and",
-                     gsub("\\D+", "", scaf[2]), "(right)"), ylab = "Scaffolds of query Genome", main = "")
+  title(xlab = paste("Ref Gen Scafs", scaf[1], "(left) and", scaf[2], "(right)"),
+        ylab = "Scaffolds of query Genome", main = "")
   axis(1)
   axis(2)
 
