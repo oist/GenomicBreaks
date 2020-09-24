@@ -2,11 +2,24 @@
 #'
 #' This algorithm take in pairwise alignment, and reduces the number of alignments by coalescing fragments that are within close proximity (user determined). Fragmented alignments can cause artificial breakpoints arising from incorrect basecalls, misassembly and misalignments.
 #'
-#' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "name".
+#' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "query".
 #' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
 #' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.
+#' @examples
+#' gb1       <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' gb1$query <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' coalesce_contigs(gb1, 500)
+#' gb2       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb2$query <- GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
+#' coalesce_contigs(gb2, 500)
+#' gb3       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb3$query <- GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
+#' coalesce_contigs(gb3, 500)
+#' gb4       <- GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
+#' gb4$query <- GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
+#' coalesce_contigs(gb4, 500)
 #' @export
-#' @import GenomicRanges
+#' @importFrom GenomicRanges GRanges
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @importFrom stats na.omit
@@ -16,7 +29,7 @@
 coalesce_contigs <- function(gr_ob, tol){
 
   # extract query as GRanges object
-  gr_q <- GRanges(gr_ob$name)
+  gr_q <- gr_ob$query
 
   # define new GRanges object for output
   gr_ext <- gr_ob
@@ -24,7 +37,7 @@ coalesce_contigs <- function(gr_ob, tol){
 
   # Do this in a loop, one ref scaffold at a time
   #######################################################
-  ref_scafs <- unique(as.vector(seqnames(gr_ob)))
+  ref_scafs <- seqlevelsInUse(gr_ob)
   ref_gap_sizes_total <- vector(length = length(gr_ob))
   q_gap_sizes_total <- vector(length = length(gr_ob))
   ref_con_met_total <- vector(length = length(gr_ob))
@@ -32,8 +45,8 @@ coalesce_contigs <- function(gr_ob, tol){
   qscaf_con_met_total <- vector(length = length(gr_ob))
 
   # end point considerations in query (when same scaffold is not continuous)
-  c1 <- end(ranges(gr_q))[1:(length(gr_q)-1)]
-  c2 <- start(ranges(gr_q))[2:length(gr_q)]
+  c1 <- end(gr_q)[1:(length(gr_q)-1)]
+  c2 <- start(gr_q)[2:length(gr_q)]
   qorder_con_met_total <- c(c1<c2, FALSE)
 
   k = 1 #counter
@@ -45,15 +58,15 @@ coalesce_contigs <- function(gr_ob, tol){
       next()}
 
     # extract query block (blocks of the same scaffolds in query)
-    q_now <- GRanges(gr_now$name)
+    q_now <- gr_now$query
     q_seq <- as.vector(seqnames(q_now))
     compare1 <- q_seq[2:length(q_seq)]
     compare2 <- q_seq[1:(length(q_seq) - 1)]
     compare_q <- c(compare1 == compare2, FALSE)
 
     # find where conditions of <tol are met in ref
-    ref_starts <- start(ranges(gr_now))[2:length(gr_now)] # define starts
-    ref_ends <- end(ranges(gr_now))[1:length(gr_now) - 1] # define ends
+    ref_starts <- start(gr_now)[2:length(gr_now)] # define starts
+    ref_ends   <-   end(gr_now)[1:length(gr_now) - 1] # define ends
     ref_gap_sizes <- c(ref_starts - ref_ends, tol + 1)
 
     if(any(ref_gap_sizes < 0)){stop("gap sizes should not be negative")}
@@ -61,9 +74,8 @@ coalesce_contigs <- function(gr_ob, tol){
     ref_con_met <- ref_gap_sizes <= tol
 
     # find where conditions of <tol are met in query
-    q_now <- GRanges(gr_now$name) # define GRanges object of query
-    q_starts <- start(ranges(q_now))[2:length(q_now)]
-    q_ends <- end(ranges(q_now))[1:length(q_now) - 1]
+    q_starts <- start(q_now)[2:length(q_now)]
+    q_ends <- end(q_now)[1:length(q_now) - 1]
     q_gap_sizes <- c(q_starts - q_ends, tol + 1)
 
 
