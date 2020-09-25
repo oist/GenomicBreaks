@@ -46,7 +46,5 @@ tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
   near_in_bps <- c(bps_in_tan, bps_near_tan)
   bps_out_tan <- subsetByOverlaps(gr_bps, near_in_bps, invert = TRUE)
 
-  output <- list(bps_in_tan, bps_near_tan, bps_out_tan)
-  return(output)
-
+  list(bps_in_tan, bps_near_tan, bps_out_tan)
 }
