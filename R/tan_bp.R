@@ -19,15 +19,7 @@ tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
     gr_q <- gr_ob$query}
   else{gr_q <- gr_ob}
 
-  # construct GRanges object of query bps
-  q_starts <- start(gr_q)
-  q_ends <- end(gr_q)
-  q_bps <- c(q_starts, q_ends)
-  q_ir_ob <- IRanges(start = q_bps, end = q_bps)
-  q_seqs1 <- as.vector(seqnames(gr_q))
-  q_seqs2 <- c(q_seqs1, q_seqs1)
-
-  gr_bps <- GRanges(seqnames = q_seqs2, ranges = q_ir_ob)
+  gr_bps <- get_bps(gr_q)
 
   # bps in tandem repeat
   bp_tan_overlap <- overlapsAny(gr_bps, tan)
