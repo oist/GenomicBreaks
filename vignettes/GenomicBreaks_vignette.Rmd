@@ -27,6 +27,7 @@ library(schoolmath)
 })
 
 # These will need to be installed by the user
+library("BSgenome.Odioica.local.Okinawa.I69")
 library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 
