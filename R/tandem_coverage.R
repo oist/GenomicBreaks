@@ -37,9 +37,6 @@ tandem_coverage <- function(gr_ob, tan_ref, win, lab){
   seqlengths(ref_bps_trim) = end(combined)
   seqlengths(tan_ref) = end(combined)
 
-
   # heatmap
-  heat_map <- CoverageHeatmap(windows = ref_bps_trim, track = tan_ref, coords = c(-win*0.5, win*0.5), label = lab)
-  return(heat_map)
-
+  CoverageHeatmap(windows = ref_bps_trim, track = tan_ref, coords = c(-win*0.5, win*0.5), label = lab)
 }
