@@ -32,17 +32,7 @@ bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
 
   # Construct new GRanges object from red_gr
 
-  gr_starts1 <- start(red_gr) - (basep_range*0.5)
-  gr_starts2 <- end(red_gr) - (basep_range*0.5)
-  gr_starts <- c(gr_starts1, gr_starts2)
-  gr_ends1 <- start(red_gr) + (basep_range*0.5 -1)
-  gr_ends2 <- end(red_gr) + (basep_range*0.5 -1)
-  gr_ends <- c(gr_ends1, gr_ends2)
-  gr_ir_ob <- IRanges(start = gr_starts, end = gr_ends)
-
-  gr_seq_vec <- as.vector(seqnames(red_gr))
-  gr_seqnames <- c(gr_seq_vec, gr_seq_vec)
-  gr_bps <- GRanges(seqnames = gr_seqnames, ranges = gr_ir_ob, seqinfo = seqinfo(gr_ob))
+  gr_bps <- get_bps(red_gr) + basep_range*0.5
 
   # Heatmap
   hm_prep <- getSeq(gen_seq, gr_bps)
