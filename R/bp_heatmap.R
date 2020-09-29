@@ -36,7 +36,5 @@ bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
 
   # Heatmap
   hm_prep <- getSeq(gen_seq, gr_bps)
-  hm_fin <- PatternHeatmap(hm_prep, pattern = pat, c(-basep_range,basep_range))
-
-  return(hm_fin)
+  PatternHeatmap(hm_prep, pattern = pat, c(-basep_range,basep_range))
 }
