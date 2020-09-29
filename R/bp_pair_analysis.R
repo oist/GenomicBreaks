@@ -24,29 +24,11 @@ bp_pair_analysis <- function(gr_ref_q1, gr_ref_q2, win, lab){
 
   ## Construct g1_rco (1st GRanges object)
   # IRanges object
-  q1_starts1 <- start(ranges(gr_ref_q1)) - (win*0.5)
-  q1_starts2 <- end(ranges(gr_ref_q1)) - (win*0.5)
-  q1_starts <- c(q1_starts1, q1_starts2)
-  q1_ends1 <- start(ranges(gr_ref_q1)) + (win*0.5 -1)
-  q1_ends2 <- end(ranges(gr_ref_q1)) + (win*0.5 -1)
-  q1_ends <- c(q1_ends1, q1_ends2)
-  q1_ir_ob <- IRanges(start = q1_starts, end = q1_ends)
-  # GR object
-  g1_vec_seq <- as.vector(seqnames(gr_ref_q1))
-  gr1_seqnames <- c(g1_vec_seq, g1_vec_seq)
-  g1_rco <- GRanges(seqnames = gr1_seqnames, ranges = q1_ir_ob, seqinfo = seqinfo(gr_ref_q1))
-
+  g1_rco <- get_bps(gr_ref_q1) + win/2
 
   ## Construct g2_rco (2nd GRanges object)
   # IRanges object
-  q2_starts <- start(ranges(gr_ref_q2))
-  q2_ends <- end(ranges(gr_ref_q2))
-  q2_bps <- c(q2_starts, q2_ends)
-  q2_ir_ob <- IRanges(start = q2_bps, end = q2_bps)
-  # GR object
-  g2_vec_seq <- as.vector(seqnames(gr_ref_q2))
-  gr2_seqnames <- c(g2_vec_seq, g2_vec_seq)
-  g2_rco <- GRanges(seqnames = gr2_seqnames, ranges = q2_ir_ob, seqinfo = seqinfo(gr_ref_q2))
+  g2_rco <- get_bps(gr_ref_q2)
 
   # Correcting seqlevels/lengths
   g1_i <- g1_rco == trim(g1_rco)
