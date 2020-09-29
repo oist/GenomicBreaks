@@ -20,13 +20,9 @@ bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
   where_seqs <- match(as.vector(seqnames(gr_ob)), seqlevels(gr_ob))
   all_seq_len <- as.numeric(seqlengths(gr_ob))[where_seqs]
 
-  ind_start1 <- start(gr_ob) < basep_range*0.5
-  ind_start2 <- (start(gr_ob) + (basep_range*0.5 -1)) > all_seq_len
-  ind_end1 <- (end(gr_ob) + (basep_range*0.5 -1)) > all_seq_len
-  ind_end2 <- end(gr_ob) < basep_range*0.5
-
-  mas_ind <- ind_start1 + ind_start2 + ind_end1 + ind_end2
-  fin_ind <- mas_ind == 0
+  suppressWarnings(
+  fin_ind <- (gr_ob + basep_range/2) == trim(gr_ob + basep_range/2)
+  )
 
   red_gr <- gr_ob[fin_ind]
 
