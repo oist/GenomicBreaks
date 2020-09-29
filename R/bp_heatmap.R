@@ -20,15 +20,12 @@ bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
   where_seqs <- match(as.vector(seqnames(gr_ob)), seqlevels(gr_ob))
   all_seq_len <- as.numeric(seqlengths(gr_ob))[where_seqs]
 
+  # Suppress warnings about overflow
   suppressWarnings(
-  fin_ind <- (gr_ob + basep_range/2) == trim(gr_ob + basep_range/2)
+  gr_bps <- get_bps(gr_ob) + basep_range/2
   )
-
-  red_gr <- gr_ob[fin_ind]
-
-  # Construct new GRanges object from red_gr
-
-  gr_bps <- get_bps(red_gr) + basep_range*0.5
+  # Remove the ranges that overflow.
+  gr_bps <- gr_bps[gr_bps == trim(gr_bps)]
 
   # Heatmap
   hm_prep <- getSeq(gen_seq, gr_bps)
