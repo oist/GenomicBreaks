@@ -11,7 +11,6 @@
 #' @import GenomicRanges
 #' @import IRanges
 #' @import GenomeInfoDb
-#' @importFrom schoolmath is.even
 #' @importFrom heatmaps CoverageHeatmap
 
 # We construct two GRanges objects to feed into CoverageHeatMaps
@@ -19,7 +18,7 @@
 bp_pair_analysis <- function(gr_ref_q1, gr_ref_q2, win, lab){
 
   # Failsafes
-  if(!(is.even(win))){stop("win should be an even number")}
+  if( win/2 != floor(win/2) ) stop("win should be an even number")
   if(!(is.character(lab) && (length(lab) == 1))){stop("lab must be a string")}
 
   ## Construct g1_rco (1st GRanges object)

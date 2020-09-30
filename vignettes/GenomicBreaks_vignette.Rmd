@@ -23,7 +23,6 @@ library(Biostrings)
 library(graphics)
 library(heatmaps)
 library(stats)
-library(schoolmath)
 })
 
 # These will need to be installed by the user
