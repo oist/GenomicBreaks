@@ -33,7 +33,7 @@ bp_pair_analysis <- function(gr_ref_q1, gr_ref_q2, win, lab){
   )
   g2_rco <- g2_rco[g2_rco == trim(g2_rco)]
 
-  combined= range(c(g1_rco,g2_rco))
+  combined <- range(c(g1_rco,g2_rco))
 
   seqlevels(g1_rco) = as.character(seqnames(combined))
   seqlevels(g2_rco) = as.character(seqnames(combined))
@@ -41,7 +41,5 @@ bp_pair_analysis <- function(gr_ref_q1, gr_ref_q2, win, lab){
   seqlengths(g2_rco) = end(combined)
 
   # Heatmap
-  heat_map <- CoverageHeatmap(windows = g1_rco, track = g2_rco, label = lab, coords = c(-win*0.5, win*0.5))
-  return(heat_map)
-
+  CoverageHeatmap(windows = g1_rco, track = g2_rco, label = lab, coords = c(-win*0.5, win*0.5))
 }
