@@ -22,18 +22,16 @@ bp_pair_analysis <- function(gr_ref_q1, gr_ref_q2, win, lab){
   if(!(is.character(lab) && (length(lab) == 1))){stop("lab must be a string")}
 
   ## Construct g1_rco (1st GRanges object)
-  # IRanges object
+  suppressWarnings(
   g1_rco <- get_bps(gr_ref_q1) + win/2
+  )
+  g1_rco <- g1_rco[g1_rco == trim(g1_rco)]
 
   ## Construct g2_rco (2nd GRanges object)
-  # IRanges object
+  suppressWarnings(
   g2_rco <- get_bps(gr_ref_q2)
-
-  # Correcting seqlevels/lengths
-  g1_i <- g1_rco == trim(g1_rco)
-  g1_rco <- g1_rco[g1_i]
-  g2_i <- g2_rco == trim(g2_rco)
-  g2_rco <- g2_rco[g2_i]
+  )
+  g2_rco <- g2_rco[g2_rco == trim(g2_rco)]
 
   combined= range(c(g1_rco,g2_rco))
 
