@@ -13,8 +13,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
 
 The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages
 
-```{r loadlib, echo=T, results='hide', message=F, warning=F}
-
+```{r loadlib, echo=T, results='hide'}
+suppressPackageStartupMessages({
 library(GenomicRanges)
 library(IRanges)
 library(GenomeInfoDb)
@@ -23,9 +23,10 @@ library(Biostrings)
 library(graphics)
 library(heatmaps)
 library(stats)
-library(schoolmath)
+})
 
 # These will need to be installed by the user
+library("BSgenome.Odioica.local.Okinawa.I69")
 library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 
@@ -37,7 +38,12 @@ and look at the primary data structure that this package deals with.
 
 ```{r GRanges object}
 
-gr_O_Oki
+gr_O_Oki -> gr_O_Oki.bak
+gr_O_Oki$query <- GRanges(gr_O_Oki$name)
+strand(gr_O_Oki) <- strand(gr_O_Oki$query)
+strand(gr_O_Oki$query) <- "*"
+
+#gr_O_Oki <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz', bsgenome_ref = BSgenome.Odioica.local.Okinawa.I69, bsgenome_query = BSgenome.Odioica.local.OSKA2016)
 
 ```
 
@@ -64,7 +70,7 @@ Many of the functions of the GenomicBreaks package require a GRanges object as i
 
 ```{r query GRanges}
 
-q_Oki <- GRanges(gr_O_Oki$name)
+q_Oki <- gr_O_Oki$query
 q_Oki
 
 ```

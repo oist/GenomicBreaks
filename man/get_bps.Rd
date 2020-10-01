@@ -15,3 +15,7 @@ GRanges object of the breakpoints
 \description{
 Given a GRanges object, the function produces a GRanges object detailing the breakpoints only. The only converted data is that of the main GRanges subject, and no metadata is processed or carried through
 }
+\examples{
+gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges(1:4, width=4:1))
+get_bps(gr)
+}

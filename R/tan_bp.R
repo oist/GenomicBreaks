@@ -1,9 +1,9 @@
 #' Breakpoint proximity to Tandem Repeats
 #'
-#' This function classifies breakpoints in terms of its proximity to tandem repeats (but can be generalised to any property whos coverage is binary).
+#' This function classifies breakpoints in terms of its proximity to tandem repeats (but can be generalised to any property whose coverage is binary).
 #'
 #' @param gr_ob GRanges object containing pairwise alignment
-#' @param tan GRanges object containing tandem repeat (or characterisitc of interest) coverage
+#' @param tan GRanges object containing tandem repeat (or characteristic of interest) coverage
 #' @param tol range in which breakpoints will be classified as "near" to a tandem repeat
 #' @param query_tf logical value that, if set to TRUE, will classify bps in query coordinates as opposed to reference (default)
 #' @return A list containing 3 GRanges objects of breakpoints far, near and within tandem repeats.
@@ -16,18 +16,10 @@ tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
 
   # extract query as GRanges object
   if(query_tf == TRUE){
-  gr_q <- GRanges(gr_ob$name)}
+    gr_q <- gr_ob$query}
   else{gr_q <- gr_ob}
 
-  # construct GRanges object of query bps
-  q_starts <- start(ranges(gr_q))
-  q_ends <- end(ranges(gr_q))
-  q_bps <- c(q_starts, q_ends)
-  q_ir_ob <- IRanges(start = q_bps, end = q_bps)
-  q_seqs1 <- as.vector(seqnames(gr_q))
-  q_seqs2 <- c(q_seqs1, q_seqs1)
-
-  gr_bps <- GRanges(seqnames = q_seqs2, ranges = q_ir_ob)
+  gr_bps <- get_bps(gr_q)
 
   # bps in tandem repeat
   bp_tan_overlap <- overlapsAny(gr_bps, tan)
@@ -54,7 +46,5 @@ tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
   near_in_bps <- c(bps_in_tan, bps_near_tan)
   bps_out_tan <- subsetByOverlaps(gr_bps, near_in_bps, invert = TRUE)
 
-  output <- list(bps_in_tan, bps_near_tan, bps_out_tan)
-  return(output)
-
+  list(bps_in_tan, bps_near_tan, bps_out_tan)
 }

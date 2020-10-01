@@ -4,12 +4,13 @@
 #'
 #' @param gr_ob GRanges object containing pairwise alignment
 #' @return GRanges object of the breakpoints
-#' @export
+#' @examples
 #' gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges(1:4, width=4:1))
 #' get_bps(gr)
 #' @importFrom GenomicRanges start end GRanges
 #' @importFrom IRanges IRanges
 #' @importFrom GenomeInfoDb seqnames
+#' @export
 
 get_bps <- function(gr_ob){
 
