@@ -3,22 +3,33 @@
 #' Given a GRanges object, the function produces a GRanges object detailing the breakpoints only. The only converted data is that of the main GRanges subject, and no metadata is processed or carried through
 #'
 #' @param gr_ob GRanges object containing pairwise alignment
+#' @param direction Will return the breakpoints on `both`, `left` or `right` side(s) of the range.
+#' @param stranded If `TRUE`, will assign a `+` strand to the left-side breakpoints and a `-` strand to the right-side ones.
 #' @return GRanges object of the breakpoints
 #' @examples
 #' gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges(1:4, width=4:1))
 #' get_bps(gr)
+#' get_bps(gr, direction = "left")
+#' get_bps(gr, stranded = TRUE)
+#' get_bps(gr, direction = "right", stranded = TRUE)
 #' @importFrom GenomicRanges start end GRanges
 #' @importFrom IRanges IRanges
 #' @importFrom GenomeInfoDb seqnames
 #' @export
 
-get_bps <- function(gr_ob){
-
-  gr_starts <- start(gr_ob) # start bps
-  gr_ends <- end(gr_ob) # end bps
-  bps_s_e <- c(gr_starts, gr_ends) # concatenate start and end bps
-  bps_ir <- IRanges(start = bps_s_e, end = bps_s_e) # IRanges object needed for constructing GRanges object
-  bps_vec_seq <- seqnames(gr_ob)
-  bps_seqs <- c(bps_vec_seq, bps_vec_seq)
-  GRanges(seqnames = bps_seqs, ranges = bps_ir, seqinfo = seqinfo(gr_ob))
+get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE) {
+  direction <- match.arg(direction) # stops if `direction` is not `both`, `left` or `right`
+  gr_starts <- flank(gr_ob, -1, start = TRUE ) # start bps
+  gr_ends   <- flank(gr_ob, -1, start = FALSE) # end bps
+  if (stranded) {
+    strand(gr_starts) <- "+"
+    strand(gr_ends)   <- "-"
+  }
+  if (direction == "both") {
+    c(gr_starts, gr_ends) # concatenate start and end bps
+  } else if (direction == "left") {
+    gr_starts
+  } else if (direction == "right") {
+    gr_ends
+  }
 }
