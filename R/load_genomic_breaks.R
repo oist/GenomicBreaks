@@ -28,7 +28,7 @@
 #' @export
 
 load_genomic_breaks <- function(file, bsgenome_ref, bsgenome_query) {
-  gb <- import.gff3(file, genome = seqinfo(bsgenome_ref))
+  gb <- import.gff3(file, genome = deparse(substitute(bsgenome_ref)))
   # Discard cross_genome_match parent (used for block display in Zenbu)
   gb <- gb[gb$type == "match_part"]
   # Discard unused information
