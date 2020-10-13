@@ -32,15 +32,6 @@ coalesce_contigs <- function(gr_ob, tol){
   gr_ext <- gr_ob
   q_ext <- gr_ob$query
 
-  # Do this in a loop, one ref scaffold at a time
-  #######################################################
-  ref_scafs <- seqlevelsInUse(gr_ob)
-  ref_gap_sizes_total <- vector(length = length(gr_ob))
-  q_gap_sizes_total <- vector(length = length(gr_ob))
-  ref_con_met_total <- vector(length = length(gr_ob))
-  q_con_met_total <- vector(length = length(gr_ob))
-  qscaf_con_met_total <- vector(length = length(gr_ob))
-
   # end point considerations in query (when same scaffold is not continuous)
   c1 <- head(  end(gr_ob$query), -1)
   c2 <- tail(start(gr_ob$query), -1)
@@ -56,21 +47,6 @@ coalesce_contigs <- function(gr_ob, tol){
   compare2 <- head(seqnames(gr_ob$query), -1)
   qscaf_con_met_total <- c(compare1 == compare2, FALSE)
 
-  k = 1 #counter
-  for (i in 1:length(ref_scafs)){
-    gr_now <- gr_ob[seqnames(gr_ob) == ref_scafs[i]]
-    gr_len <- length(gr_now)
-    if (gr_len == 1){
-      k <- (k + gr_len)
-      next()}
-
-    # extract query block (blocks of the same scaffolds in query)
-    q_now <- gr_now$query
-    q_seq <- as.vector(seqnames(q_now))
-
-    k <- (k + gr_len)
-
-  }
   #######################################################################
 
   # find intersection
