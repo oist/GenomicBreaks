@@ -50,7 +50,7 @@ coalesce_contigs <- function(gr_ob, tol){
   #######################################################################
 
   # find intersection
-  con_met_total = (ref_con_met_total + q_con_met_total + qscaf_con_met_total + qorder_con_met_total) == 4
+  con_met_total = (ref_con_met_total & q_con_met_total & qscaf_con_met_total & qorder_con_met_total)
 
   # apply extension to intersected zone (applying just to end points) (ref only)
   r_add <- ref_gap_sizes_total
