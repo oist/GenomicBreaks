@@ -49,6 +49,9 @@ coalesce_contigs <- function(gr_ob, tol){
   ref_gap_sizes_total <- c(distance(head(gr_ob, -1), tail(gr_ob, -1)) + 1, NA)
   ref_con_met_total <- ref_gap_sizes_total <= tol
 
+  q_gap_sizes_total <- c(distance(head(gr_ob$query, -1), tail(gr_ob$query, -1)) + 1, NA)
+  q_con_met_total <- q_gap_sizes_total <= tol
+
   k = 1 #counter
   for (i in 1:length(ref_scafs)){
     gr_now <- gr_ob[seqnames(gr_ob) == ref_scafs[i]]
@@ -64,16 +67,6 @@ coalesce_contigs <- function(gr_ob, tol){
     compare2 <- head(q_seq, -1)
     compare_q <- c(compare1 == compare2, FALSE)
 
-    # find where conditions of <tol are met in query
-    q_starts <- tail(start(q_now), -1)
-    q_ends   <- head  (end(q_now), -1)
-    q_gap_sizes <- c(q_starts - q_ends, tol + 1)
-
-
-    q_con_met <- q_gap_sizes <= tol
-
-    q_gap_sizes_total[(k):(gr_len+k-1)] <- q_gap_sizes
-    q_con_met_total[(k):(gr_len+k-1)] <- q_con_met
     qscaf_con_met_total[(k):(gr_len+k-1)] <- compare_q
 
     k <- (k + gr_len)
