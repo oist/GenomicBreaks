@@ -52,6 +52,10 @@ coalesce_contigs <- function(gr_ob, tol){
   q_gap_sizes_total <- c(distance(head(gr_ob$query, -1), tail(gr_ob$query, -1)) + 1, NA)
   q_con_met_total <- q_gap_sizes_total <= tol
 
+  compare1 <- tail(seqnames(gr_ob$query), -1)
+  compare2 <- head(seqnames(gr_ob$query), -1)
+  qscaf_con_met_total <- c(compare1 == compare2, FALSE)
+
   k = 1 #counter
   for (i in 1:length(ref_scafs)){
     gr_now <- gr_ob[seqnames(gr_ob) == ref_scafs[i]]
@@ -63,11 +67,6 @@ coalesce_contigs <- function(gr_ob, tol){
     # extract query block (blocks of the same scaffolds in query)
     q_now <- gr_now$query
     q_seq <- as.vector(seqnames(q_now))
-    compare1 <- tail(q_seq, -1)
-    compare2 <- head(q_seq, -1)
-    compare_q <- c(compare1 == compare2, FALSE)
-
-    qscaf_con_met_total[(k):(gr_len+k-1)] <- compare_q
 
     k <- (k + gr_len)
 
