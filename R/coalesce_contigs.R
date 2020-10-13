@@ -28,12 +28,9 @@
 
 coalesce_contigs <- function(gr_ob, tol){
 
-  # extract query as GRanges object
-  gr_q <- gr_ob$query
-
   # define new GRanges object for output
   gr_ext <- gr_ob
-  q_ext <- gr_q
+  q_ext <- gr_ob$query
 
   # Do this in a loop, one ref scaffold at a time
   #######################################################
@@ -45,8 +42,8 @@ coalesce_contigs <- function(gr_ob, tol){
   qscaf_con_met_total <- vector(length = length(gr_ob))
 
   # end point considerations in query (when same scaffold is not continuous)
-  c1 <- end(gr_q)[1:(length(gr_q)-1)]
-  c2 <- start(gr_q)[2:length(gr_q)]
+  c1 <- end(gr_ob$query)[1:(length(gr_ob$query)-1)]
+  c2 <- start(gr_ob$query)[2:length(gr_ob$query)]
   qorder_con_met_total <- c(c1<c2, FALSE)
 
   k = 1 #counter
