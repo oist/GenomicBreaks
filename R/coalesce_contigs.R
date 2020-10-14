@@ -57,7 +57,7 @@ coalesce_contigs <- function(gr_ob, tol){
   gr_ob$r_add <- gr_ob$ref_gap_sizes_total
   gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
-  end(ranges(gr_ext)) <- end(ranges(gr_ext)) + r_add
+  end(gr_ext) <- end(gr_ext) + gr_ob$r_add
 
   # reduce and concatenate
   gr_red <- reduce(gr_ext, min.gapwidth=0)
