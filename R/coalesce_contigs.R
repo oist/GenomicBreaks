@@ -35,26 +35,27 @@ coalesce_contigs <- function(gr_ob, tol){
   # end point considerations in query (when same scaffold is not continuous)
   c1 <- head(  end(gr_ob$query), -1)
   c2 <- tail(start(gr_ob$query), -1)
-  qorder_con_met_total <- c(c1<c2, FALSE)
+  gr_ob$qorder_con_met_total <- c(c1<c2, FALSE)
 
-  ref_gap_sizes_total <- c(distance(head(gr_ob, -1), tail(gr_ob, -1)) + 1, NA)
-  ref_con_met_total <- ref_gap_sizes_total <= tol
+  gr_ob$ref_gap_sizes_total <- c(distance(head(gr_ob, -1), tail(gr_ob, -1)) + 1, NA)
+  gr_ob$ref_con_met_total <- gr_ob$ref_gap_sizes_total <= tol
 
-  q_gap_sizes_total <- c(distance(head(gr_ob$query, -1), tail(gr_ob$query, -1)) + 1, NA)
-  q_con_met_total <- q_gap_sizes_total <= tol
+  gr_ob$q_gap_sizes_total <- c(distance(head(gr_ob$query, -1), tail(gr_ob$query, -1)) + 1, NA)
 
   compare1 <- tail(seqnames(gr_ob$query), -1)
   compare2 <- head(seqnames(gr_ob$query), -1)
-  qscaf_con_met_total <- c(compare1 == compare2, FALSE)
+  gr_ob$qscaf_con_met_total <- c(compare1 == compare2, FALSE)
+  gr_ob$q_con_met_total <- gr_ob$q_gap_sizes_total <= tol
 
   #######################################################################
 
   # find intersection
-  con_met_total = (ref_con_met_total & q_con_met_total & qscaf_con_met_total & qorder_con_met_total)
+  gr_ob$con_met_total = (gr_ob$ref_con_met_total & gr_ob$q_con_met_total & gr_ob$q_col_with_next)
+  gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  r_add <- ref_gap_sizes_total
-  r_add[!con_met_total] = 0
+  gr_ob$r_add <- gr_ob$ref_gap_sizes_total
+  gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
   end(ranges(gr_ext)) <- end(ranges(gr_ext)) + r_add
 
