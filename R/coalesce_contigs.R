@@ -72,28 +72,16 @@ coalesce_contigs <- function(gr_ob, tol){
 
   # 3 comparisons -> starts&ends, starts only, ends only (with scaffold match ofc)
   # start&end
-  o_ends <- as.character(end(ranges(gr_ob)))
-  o_starts <- as.character(start(ranges(gr_ob)))
-  o_scafs <- as.vector(seqnames(gr_ob))
-  original_comp_int <- paste(o_scafs, o_starts)
-  original_se_comp <- paste(original_comp_int, o_ends)
-
-  r_ends <- as.character(end(ranges(gr_red)))
-  r_starts <- as.character(start(ranges(gr_red)))
-  r_scafs <- as.vector(seqnames(gr_red))
-  red_comp_int <- paste(r_scafs, r_starts)
-  red_se_comp <- paste(red_comp_int, r_ends)
-
-  se_match <- match(red_se_comp, original_se_comp)
+  se_match <- match(gr_red,
+                    gr_ob)
 
   # starts
-  s_match <- match(red_comp_int, original_comp_int)
+  s_match  <- match(flank(gr_red, -1, ignore.strand=TRUE, start=TRUE),
+                    flank(gr_ob,  -1, ignore.strand=TRUE, start=TRUE))
 
   # ends
-  original_e_comp <- paste(o_scafs, o_ends)
-  red_e_comp <- paste(r_scafs, r_ends)
-
-  e_match <- match(red_e_comp, original_e_comp)
+  e_match  <- match(flank(gr_red, -1, ignore.strand=TRUE, start=FALSE),
+                    flank(gr_ob,  -1, ignore.strand=TRUE, start=FALSE))
 
   # construct q_red using match info
   # start&end match
