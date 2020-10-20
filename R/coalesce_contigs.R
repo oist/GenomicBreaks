@@ -32,17 +32,26 @@ coalesce_contigs <- function(gr_ob, tol){
   gr_ext <- gr_ob
   q_ext <- gr_ob$query
 
-  # end point considerations in query (when same scaffold is not continuous)
-  c1 <- head(  end(gr_ob$query), -1)
-  c2 <- tail(start(gr_ob$query), -1)
-  gr_ob$qorder_con_met_total <- c(c1<c2, FALSE)
+  # Check colinearity of query ranges
 
+  # The names of the precede() and follow() functions are a bit confusing;
+  # check the help page if needed.
+
+  # Position of the next block minus position of the current block equals
+  # to 1 when they are colinear.  See for instance `precede(gb3$query) - 1:3`
+  gr_ob$qnext <- precede(gr_ob$query) - seq_along(gr_ob$query)
+
+  # Position of the previous block minus position of the current block equals
+  # to 1 when they are anti-colinear.  See for instance `follow(gb2$query) - 1:3`
+  gr_ob$qprev <- follow( gr_ob$query) - seq_along(gr_ob$query)
+
+  # When the reference strand is "+", we want the query blocks to be colinear
+  # and when the reference is "-" we want them to be anti-colinear.
+  gr_ob$q_col_with_next <- ( strand(gr_ob) == "+" & gr_ob$qnext == 1 ) |
+                           ( strand(gr_ob) == "-" & gr_ob$qprev == 1 )
 
   dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
 
-  compare1 <- tail(seqnames(gr_ob$query), -1)
-  compare2 <- head(seqnames(gr_ob$query), -1)
-  gr_ob$qscaf_con_met_total <- c(compare1 == compare2, FALSE)
   gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
   gr_ob$ref_con_met_total <- gr_ob$ref_gap_sizes_total <= tol
 
