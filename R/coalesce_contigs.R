@@ -82,79 +82,15 @@ coalesce_contigs <- function(gr_ob, tol){
 
   gr_red <- reduceAndSort(gr_ext)
 
-  # Use match to construct q_red
-  ########################################################################
-  # initialise vectors for q_red
-  qr_starts <- vector(length = length(gr_red))
-  qr_ends <- vector(length = length(gr_red))
-  qr_seqnames <- vector(length = length(gr_red))
-  qr_strand <- vector(length = length(gr_red))
+  # apply extension to intersected zone (applying just to end points) (query only)
+  gr_ob$q_add <- gr_ob$q_gap_sizes_total
+  gr_ob[gr_ob$con_met_total != TRUE]$q_add <- 0
 
-  # 3 comparisons -> starts&ends, starts only, ends only (with scaffold match ofc)
-  # start&end
-  se_match <- match(gr_red,
-                    gr_ob)
+  end(  q_ext[strand(gr_ob) == "+"]) <- end(  q_ext[strand(gr_ob) == "+"]) + gr_ob[strand(gr_ob) == "+"]$q_add
+  start(q_ext[strand(gr_ob) == "-"]) <- start(q_ext[strand(gr_ob) == "-"]) - gr_ob[strand(gr_ob) == "-"]$q_add
 
-  # starts
-  s_match  <- match(flank(gr_red, -1, ignore.strand=TRUE, start=TRUE),
-                    flank(gr_ob,  -1, ignore.strand=TRUE, start=TRUE))
+  # reduce and concatenate
+  gr_red$query <- reduceAndSort(q_ext)
 
-  # ends
-  e_match  <- match(flank(gr_red, -1, ignore.strand=TRUE, start=FALSE),
-                    flank(gr_ob,  -1, ignore.strand=TRUE, start=FALSE))
-
-  # construct q_red using match info
-  # start&end match
-  qr_starts[which(!is.na(se_match))] = start(ranges(q_ext))[na.omit(se_match)]
-  qr_ends[which(!is.na(se_match))] = end(ranges(q_ext))[na.omit(se_match)]
-  qr_seqnames[which(!is.na(se_match))] = as.vector(seqnames(q_ext)[na.omit(se_match)])
-  qr_strand[which(!is.na(se_match))] = as.vector(strand(q_ext)[na.omit(se_match)])
-
-  # start only match
-  se_where_1 <- match(se_match, s_match)
-  s_only_match <- s_match
-  s_only_match[na.omit(se_where_1)] <- NA
-
-  qr_starts[which(!is.na(s_only_match))] = start(ranges(q_ext))[na.omit(s_only_match)]
-  qr_seqnames[which(!is.na(s_only_match))] = as.vector(seqnames(q_ext)[na.omit(s_only_match)])
-  qr_strand[which(!is.na(s_only_match))] = as.vector(strand(q_ext)[na.omit(s_only_match)])
-
-  # end only match
-  se_where_2 <- match(se_match, e_match)
-  e_only_match <- e_match
-  e_only_match[na.omit(se_where_2)] <- NA
-
-  qr_ends[which(!is.na(e_only_match))] = end(ranges(q_ext))[na.omit(e_only_match)]
-  qr_seqnames[which(!is.na(se_match))] = as.vector(seqnames(q_ext)[na.omit(se_match)])
-  qr_strand[which(!is.na(se_match))] = as.vector(strand(q_ext)[na.omit(se_match)])
-
-  # final steps
-  # construct seqnames Rle
-
-
-  # construct strand Rle
-
-
-  qr_red <- GRanges(seqnames = Rle(qr_seqnames), strand = Rle(qr_strand), IRanges(start = qr_starts, end = qr_ends))
-  gr_red$name <- qr_red
-  return(gr_red)
-  ########################################################################
-
-  # for theorectical testing (yay it works)
-  ########################################################################
-  if (FALSE){
-  se_match2 <- as.vector(na.omit(match(original_se_comp, red_se_comp)))
-  s_match2 <- as.vector(na.omit(match(original_comp_int, red_comp_int)))
-  e_match2 <- as.vector(na.omit(match(original_e_comp, red_e_comp)))
-  matches <- sort(unique(c(se_match2, s_match2, e_match2)))
-  red_vec <- 1:length(gr_red)
-  theory_test <- any(matches!=red_vec)
-  a <- 1
-
-
-  }
-  ########################################################################
-
-
-
+  gr_red
 }
