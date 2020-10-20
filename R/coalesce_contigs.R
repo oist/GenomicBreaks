@@ -37,14 +37,16 @@ coalesce_contigs <- function(gr_ob, tol){
   c2 <- tail(start(gr_ob$query), -1)
   gr_ob$qorder_con_met_total <- c(c1<c2, FALSE)
 
-  gr_ob$ref_gap_sizes_total <- c(distance(head(gr_ob, -1), tail(gr_ob, -1)) + 1, NA)
-  gr_ob$ref_con_met_total <- gr_ob$ref_gap_sizes_total <= tol
 
-  gr_ob$q_gap_sizes_total <- c(distance(head(gr_ob$query, -1), tail(gr_ob$query, -1)) + 1, NA)
+  dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
 
   compare1 <- tail(seqnames(gr_ob$query), -1)
   compare2 <- head(seqnames(gr_ob$query), -1)
   gr_ob$qscaf_con_met_total <- c(compare1 == compare2, FALSE)
+  gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
+  gr_ob$ref_con_met_total <- gr_ob$ref_gap_sizes_total <= tol
+
+  gr_ob$q_gap_sizes_total <- dist2next(gr_ob$query)
   gr_ob$q_con_met_total <- gr_ob$q_gap_sizes_total <= tol
 
   #######################################################################
