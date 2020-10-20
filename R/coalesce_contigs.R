@@ -28,6 +28,8 @@
 
 coalesce_contigs <- function(gr_ob, tol){
 
+  gr_ob <- sort(gr_ob, ignore.strand = TRUE)
+
   # define new GRanges object for output
   gr_ext <- gr_ob
   q_ext <- gr_ob$query
