@@ -62,7 +62,14 @@ coalesce_contigs <- function(gr_ob, tol){
   end(gr_ext) <- end(gr_ext) + gr_ob$r_add
 
   # reduce and concatenate
-  gr_red <- reduce(gr_ext, min.gapwidth=0)
+  reduceAndSort <- function (gr) {
+    gr <- reduce(gr, min.gapwidth = 0, with.revmap = TRUE)
+    gr$order <- order(unlist(lapply(gr$revmap, head, 1)))
+    gr[gr$order]
+    granges(gr)
+  }
+
+  gr_red <- reduceAndSort(gr_ext)
 
   # Use match to construct q_red
   ########################################################################
