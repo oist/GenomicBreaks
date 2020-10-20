@@ -16,15 +16,11 @@
 
 bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
 
-  # Remove breakpoints that occur too close to the edges of scaffolds
-  where_seqs <- match(as.vector(seqnames(gr_ob)), seqlevels(gr_ob))
-  all_seq_len <- as.numeric(seqlengths(gr_ob))[where_seqs]
-
   # Suppress warnings about overflow
   suppressWarnings(
   gr_bps <- get_bps(gr_ob) + basep_range/2
   )
-  # Remove the ranges that overflow.
+  # Remove the out-of-bound ranges.
   gr_bps <- gr_bps[gr_bps == trim(gr_bps)]
 
   # Heatmap
