@@ -55,15 +55,14 @@ coalesce_contigs <- function(gr_ob, tol){
   dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
 
   gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
-  gr_ob$ref_con_met_total <- gr_ob$ref_gap_sizes_total <= tol
-
   gr_ob$q_gap_sizes_total <- dist2next(gr_ob$query)
-  gr_ob$q_con_met_total <- gr_ob$q_gap_sizes_total <= tol
 
   #######################################################################
 
   # find intersection
-  gr_ob$con_met_total = (gr_ob$ref_con_met_total & gr_ob$q_con_met_total & gr_ob$q_col_with_next)
+  gr_ob$con_met_total <- gr_ob$ref_gap_sizes_total <= tol &
+                         gr_ob$q_gap_sizes_total   <= tol &
+                         gr_ob$q_col_with_next
   gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
