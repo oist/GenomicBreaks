@@ -17,6 +17,7 @@
 #' @param file Path to a file in GFF3 format
 #' @param bsgenome_ref A `BSgenome` object representing the reference genome.
 #' @param bsgenome_query A `BSgenome` object representing the query genome.
+#' @param sort Returns the object sorted, ignoring strand information.
 #'
 #' @return Returns a `GRanges object` where each element represents a pairwise
 #' alignment block.  The `granges` part of the object contains the coordinates
@@ -27,7 +28,7 @@
 #' @importFrom rtracklayer import.gff3
 #' @export
 
-load_genomic_breaks <- function(file, bsgenome_ref, bsgenome_query) {
+load_genomic_breaks <- function(file, bsgenome_ref, bsgenome_query, sort = TRUE) {
   gb <- import.gff3(file, genome = deparse(substitute(bsgenome_ref)))
   # Discard cross_genome_match parent (used for block display in Zenbu)
   gb <- gb[gb$type == "match_part"]
@@ -36,5 +37,6 @@ load_genomic_breaks <- function(file, bsgenome_ref, bsgenome_query) {
   # Convert query coordinates to GRanges
   gb$query <- GRanges(gb$Name, seqinfo = seqinfo(bsgenome_query))
   gb$Name <- NULL
+  if (sort) gb <- sort(gb, ignore.strand = TRUE)
   gb
 }
