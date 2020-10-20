@@ -29,10 +29,11 @@ get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FA
     strand(gr_ends)   <- "*"
   }
   if (direction == "both") {
-    c(gr_starts, gr_ends) # concatenate start and end bps
+    gr <- c(gr_starts, gr_ends) # concatenate start and end bps
   } else if (direction == "left") {
-    gr_starts
+    gr <- gr_starts
   } else if (direction == "right") {
-    gr_ends
+    gr <- gr_ends
   }
+  granges(sort(gr, ignore.strand = TRUE))
 }
