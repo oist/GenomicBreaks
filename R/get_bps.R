@@ -24,6 +24,9 @@ get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FA
   if (stranded) {
     strand(gr_starts) <- "+"
     strand(gr_ends)   <- "-"
+  } else {
+    strand(gr_starts) <- "*"
+    strand(gr_ends)   <- "*"
   }
   if (direction == "both") {
     c(gr_starts, gr_ends) # concatenate start and end bps
