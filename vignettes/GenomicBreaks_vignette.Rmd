@@ -123,13 +123,17 @@ The resulting GRanges object has far fewer alignments and therefore far fewer al
 
 ## Tandem repeats
 
-Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced lsit, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented. 
+Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
 
 ```{r echo=T, message=F, warning=F}
 
+tan_O <- rtracklayer::import.gff3("inst/extdata/OSKA2016.tantanf4w100.gff3.gz")
+tan_O <- GRanges(tan_O, seqinfo = seqinfo(OSKA2016))
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
 
+tan_Oki <- rtracklayer::import.gff3("inst/extdata/I69-5.tantanf4w100.gff3.gz")
+tan_Oki <- GRanges(tan_Oki, seqinfo = seqinfo(OKI2018_I69))
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
 
