@@ -101,11 +101,9 @@ Large alignments can often appear cluttered with alignment breaks, spanning just
 For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignment:
 
 ```{r coalescing algorithm}
-
+gr_O_Oki
 reduced_gr_O_Oki <- coalesce_contigs(gr_ob = gr_O_Oki, tol = 500)
 reduced_gr_O_Oki
-length(gr_O_Oki)
-length(reduced_gr_O_Oki)
 
 ```
 
