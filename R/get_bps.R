@@ -17,7 +17,7 @@
 #' @importFrom GenomeInfoDb seqnames
 #' @export
 
-get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE) {
+get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE, sorted = TRUE) {
   direction <- match.arg(direction) # stops if `direction` is not `both`, `left` or `right`
   gr_starts <- flank(gr_ob, -1, start = TRUE ) # start bps
   gr_ends   <- flank(gr_ob, -1, start = FALSE) # end bps
@@ -35,5 +35,6 @@ get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FA
   } else if (direction == "right") {
     gr <- gr_ends
   }
-  granges(sort(gr, ignore.strand = TRUE))
+  if (sorted) gr <- sort(gr, ignore.strand = TRUE)
+  granges(gr)
 }
