@@ -51,15 +51,19 @@ This is a GRanges object, quantifying the pairwise alignment between genomes of 
 
 The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
 
-Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909373 and 909853 in scaffold_1 of the query genome as alignment stops. 
+Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
 
 The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
 
 ```{r get bps}
-
-gr_O_Oki_stops <- get_bps(gr_ob = gr_O_Oki)
-gr_O_Oki_stops
-
+gr_O_Oki
+get_bps(gr_O_Oki)
+get_bps(gr_O_Oki, direction = "left")
+get_bps(gr_O_Oki,                      stranded = TRUE)
+get_bps(gr_O_Oki,                      stranded = TRUE, sorted = FALSE)
+get_bps(gr_O_Oki, direction = "right", stranded = TRUE)
+get_bps(gr_O_Oki$query, sorted = FALSE)
+get_bps(gr_O_Oki$query)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
