@@ -66,13 +66,10 @@ Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genom
 
 This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
 
-Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be transformed as follows:
+Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be accessed as follows:
 
 ```{r query GRanges}
-
-q_Oki <- gr_O_Oki$query
-q_Oki
-
+gr_O_Oki$query
 ```
 
 ## Visualising alignments
