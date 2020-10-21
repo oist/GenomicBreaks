@@ -6,6 +6,7 @@
 #' @param gen_seq This should be either a BSgenome object or a DNAStringSet object, such that the genome sequence is contained in this input
 #' @param basep_range range over which heatmap characteristic is plotted. Breakpoints will be aligned at the center of this.
 #' @param pat character string of desired pattern/characteristic to be plotted on heatmap
+#' @param ... Pass other arguments to \code{get_bps}.
 #' @return Heatmap of pattern around centred breakpoints
 #' @export
 #' @import GenomicRanges
@@ -14,11 +15,11 @@
 #' @importFrom heatmaps PatternHeatmap
 #' @importFrom Biostrings getSeq
 
-bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat){
+bp_heatmap <- function(gr_ob, gen_seq, basep_range, pat, ...){
 
   # Suppress warnings about overflow
   suppressWarnings(
-  gr_bps <- get_bps(gr_ob) + basep_range/2
+  gr_bps <- get_bps(gr_ob, ...) + basep_range/2
   )
   # Remove the out-of-bound ranges.
   gr_bps <- gr_bps[gr_bps == trim(gr_bps)]
