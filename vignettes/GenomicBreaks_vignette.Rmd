@@ -23,6 +23,8 @@ library(Biostrings)
 library(graphics)
 library(heatmaps)
 library(stats)
+library(dplyr)
+library(ggplot2)
 })
 
 # These will need to be installed by the user
@@ -105,6 +107,16 @@ gr_O_Oki
 reduced_gr_O_Oki <- coalesce_contigs(gr_ob = gr_O_Oki, tol = 500)
 reduced_gr_O_Oki
 
+rbind(
+  data.frame(
+    width  = width(gr_O_Oki),
+    object = "gr_O_Oki"
+  ),
+  data.frame(
+    width  = width(reduced_gr_O_Oki),
+    object= "reduced_gr_O_Oki"
+  )
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object)
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
