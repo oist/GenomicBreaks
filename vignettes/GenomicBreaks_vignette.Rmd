@@ -142,7 +142,9 @@ tan_gr_Oki
 We can use another script to plot the density of tandem repeats around alignment stops (and breakpoints). In the following plots, breakpoints are aligned at the centre of the plots. Intuitively, this function can be generalised to see the density of any binary coverage characteristic around breakpoints, given a GRanges object with per-base coverage of a given characteristic. Here we stick with tandem repeat info:
 
 ```{r echo=T, message=F, warning=F}
-hm_tan_O <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 1000, lab = "Osaka ~ Okinawa")
+hm_tan_O <- gr_O_Oki %>%
+  tandem_coverage(tan_ref = tan_O, win = 1000, lab = "Osaka ~ Okinawa") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
 
 #hm_tan_Oki <- tandem_coverage(gr_ob = q_Oki, tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa")
 
@@ -181,17 +183,18 @@ fin_gr_O_Oki
 
 ## Nucleaic acid content heatmaps
 
-We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleaic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
+We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
 
 ```{r echo=T, message=F, warning=F}
+hm_GC1 <- gr_O_Oki %>%
+  bp_heatmap(gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+plotHeatmap(hm_GC1)
 
-hm_GC1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
-hm_GC1 <- smoothHeatmap(hm_GC1, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_GC1)
-
-hm_GC2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
-hm_GC2 <- smoothHeatmap(hm_GC2, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_GC2)
+hm_GC2 <- reduced_gr_O_Oki %>%
+  bp_heatmap(gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %>%
+  plotHeatmap
 
 ```
 
