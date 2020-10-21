@@ -26,7 +26,7 @@ library(stats)
 })
 
 # These will need to be installed by the user
-library("BSgenome.Odioica.local.Okinawa.I69")
+library("BSgenome.Odioica.local.OKI2018.I69")
 library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 
@@ -37,14 +37,10 @@ library(GenomicBreaks)
 and look at the primary data structure that this package deals with. 
 
 ```{r GRanges object}
-
-gr_O_Oki -> gr_O_Oki.bak
-gr_O_Oki$query <- GRanges(gr_O_Oki$name)
-strand(gr_O_Oki) <- strand(gr_O_Oki$query)
-strand(gr_O_Oki$query) <- "*"
-
-#gr_O_Oki <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz', bsgenome_ref = BSgenome.Odioica.local.Okinawa.I69, bsgenome_query = BSgenome.Odioica.local.OSKA2016)
-
+gr_O_Oki <- load_genomic_breaks('inst/extdata/OSKA2016__I69-5.gff3.gz',  bsgenome_ref = OSKA2016,    bsgenome_query = OKI2018_I69)
+gr_Oki_O <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz',  bsgenome_ref = OKI2018_I69, bsgenome_query = OSKA2016)
+gr_Oki_N <- load_genomic_breaks('inst/extdata/I69-5__Norway.gff3.gz',    bsgenome_ref = OKI2018_I69, bsgenome_query = OdB3)
+gr_O_N   <- load_genomic_breaks('inst/extdata/OSKA2016__Norway.gff3.gz', bsgenome_ref = OSKA2016,    bsgenome_query = OdB3)
 ```
 
 This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
