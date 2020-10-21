@@ -78,7 +78,7 @@ We can use the function `scaf_align_plot` to see the alignment of query scaffold
 
 ```{r echo=T, message=F, warning=F}
 
-scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2", ref_name = "Osaka", query_name = "Okinawa")
+scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2")
 
 ```
 
