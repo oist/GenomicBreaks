@@ -19,8 +19,8 @@
 
 get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE, sorted = TRUE) {
   direction <- match.arg(direction) # stops if `direction` is not `both`, `left` or `right`
-  gr_starts <- flank(gr_ob, -1, start = TRUE ) # start bps
-  gr_ends   <- flank(gr_ob, -1, start = FALSE) # end bps
+  gr_starts <- flank(gr_ob, -1, start = TRUE,  ignore.strand = TRUE) # start bps
+  gr_ends   <- flank(gr_ob, -1, start = FALSE, ignore.strand = TRUE) # end bps
   if (stranded) {
     strand(gr_starts) <- "+"
     strand(gr_ends)   <- "-"
