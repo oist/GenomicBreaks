@@ -23,7 +23,7 @@ library(Biostrings)
 library(graphics)
 library(heatmaps)
 library(stats)
-library(dplyr)
+library(magrittr)
 library(ggplot2)
 })
 
