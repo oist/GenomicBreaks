@@ -220,6 +220,75 @@ plotHeatmapList(list(sm_GC2, sm_tata2))
 
 The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occuring directly after promotor regions. 
 
+## Cluster analysis
+
+
+```{r cluster_analysis}
+# Accessory functions
+clusterHeatmap <- function(hm, k = 2) kmeans(image(hm), k)
+
+orderHeatmap <- function(hm, cl) {
+  image(hm) <- image(hm)[order(cl$cluster),]
+  hm
+}
+
+subsetHeatmap <- function(hm, bool) {
+  image(hm) <- image(hm)[bool,]
+  hm
+}
+
+# DAta
+hm_GC   <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "GC",     direction = "left")
+hm_TATA <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "TATA",   direction = "left")
+hm_tan  <- tandem_coverage(gr_Oki_O, tan_Oki, win = 1000, lab = "Tandem", direction = "left")
+
+# Define 3 K-mean clusters
+clusterHeatmap(hm_GC, 3) -> hm_cl_k4
+
+# Order and smooth
+shm_GC <- orderHeatmap(hm_GC, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+shm_TATA <- orderHeatmap(hm_TATA, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+shm_tan <- orderHeatmap(hm_tan, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+# Plot the ordered data
+plotHeatmapList(list(shm_GC, shm_TATA, shm_tan))
+par(mfrow = c(1,1)) # plotHeatmapList messes with mrfrow...
+plotHeatmapMeta(list(hm_GC, hm_TATA, hm_tan))
+
+plotHeatmapMeta(list(subsetHeatmap(hm_GC, hm_cl_k4$cluster == 1),
+                     subsetHeatmap(hm_GC, hm_cl_k4$cluster == 2),
+                     subsetHeatmap(hm_GC, hm_cl_k4$cluster == 3)))
+
+kmeanOrderedPlot <- function (hm, k=3, seed = 1) {
+  set.seed(seed)
+  
+  cl <- kmeans(image(hm), k)
+  mat <- image(hm)[order(cl$cluster),]
+  
+  kmhm = Heatmap(
+    mat,
+    coords=c(-500,500),
+    label="kmeans",
+    scale=range(mat))
+  
+  plotHeatmapList(kmhm,
+                  cex.label=1.5,
+                  partition=as.vector(table(cl$cluster)),
+                  partition.legend=TRUE,
+                  partition.lines=TRUE,
+                  legend=TRUE,
+                  legend.pos="r",
+                  legend.width=0.3)
+}
+
+kmeanOrderedPlot(shm_GC)
+```
+
 ## Evidence for breakpoint hotspots
 
 The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
