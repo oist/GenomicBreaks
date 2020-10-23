@@ -207,16 +207,15 @@ The alignment stops are ordered in such a way that start (or left breaks) are ce
 
 Now looking at TATA content:
 
-```{r echo=T, message=F, warning=F}
+```{r TATA}
+hm_tata1 <- bp_heatmap(gr_O_Oki, basep_range = 1000, pat = "TATA", direction = "left")
+sm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
 
-hm_tata1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
-hm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_tata1)
+hm_tata2 <- bp_heatmap(reduced_gr_O_Oki, basep_range = 1000, pat = "TATA", direction = "left")
+sm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
 
-hm_tata2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
-hm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_tata2)
-
+plotHeatmapList(list(sm_tata1, sm_tata2))
+plotHeatmapList(list(sm_GC2, sm_tata2))
 ```
 
 The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occuring directly after promotor regions. 
