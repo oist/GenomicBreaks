@@ -121,6 +121,39 @@ rbind(
 
 The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
 
+## Trivial inversions
+
+### Representation
+
+The inversion below:
+
+```
+┌───────────────┬───────────────┬───────────────┐
+│ XSR:101-200:+ │ XSR:201-300:- │ XSR:301-400:+ │  (OKI2018_I69)
+└───────────────┴───────────────┴───────────────┘
+┌───────────────┬───────────────┬───────────────┐
+│  S1:101-200:+ │  S1:201-300:+ │  S1:301-400:+ │  (OSKA2016)
+└───────────────┴───────────────┴───────────────┘
+```
+
+Is represented as:
+
+```{r ideal_breakpoints}
+inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
+inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+inv
+
+library("Gviz")
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name = "genome")
+trk <- AnnotationTrack(inv, name = "inv")
+plotTracks(list(gen, trk))
+```
+
+*Without an outgroup it is not possible to know in which genome the break happened.*
+
+Nevertheless, the outward regions are syntenic in both genomes.
+
 ## Tandem repeats
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
