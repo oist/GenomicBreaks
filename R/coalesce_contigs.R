@@ -28,167 +28,68 @@
 
 coalesce_contigs <- function(gr_ob, tol){
 
-  # extract query as GRanges object
-  gr_q <- gr_ob$query
+  gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
   # define new GRanges object for output
   gr_ext <- gr_ob
-  q_ext <- gr_q
+  q_ext <- gr_ob$query
 
-  # Do this in a loop, one ref scaffold at a time
-  #######################################################
-  ref_scafs <- seqlevelsInUse(gr_ob)
-  ref_gap_sizes_total <- vector(length = length(gr_ob))
-  q_gap_sizes_total <- vector(length = length(gr_ob))
-  ref_con_met_total <- vector(length = length(gr_ob))
-  q_con_met_total <- vector(length = length(gr_ob))
-  qscaf_con_met_total <- vector(length = length(gr_ob))
+  # Check colinearity of query ranges
 
-  # end point considerations in query (when same scaffold is not continuous)
-  c1 <- end(gr_q)[1:(length(gr_q)-1)]
-  c2 <- start(gr_q)[2:length(gr_q)]
-  qorder_con_met_total <- c(c1<c2, FALSE)
+  # The names of the precede() and follow() functions are a bit confusing;
+  # check the help page if needed.
 
-  k = 1 #counter
-  for (i in 1:length(ref_scafs)){
-    gr_now <- gr_ob[seqnames(gr_ob) == ref_scafs[i]]
-    gr_len <- length(gr_now)
-    if (gr_len == 1){
-      k <- (k + gr_len)
-      next()}
+  # Position of the next block minus position of the current block equals
+  # to 1 when they are colinear.  See for instance `precede(gb3$query) - 1:3`
+  gr_ob$qnext <- precede(gr_ob$query) - seq_along(gr_ob$query)
 
-    # extract query block (blocks of the same scaffolds in query)
-    q_now <- gr_now$query
-    q_seq <- as.vector(seqnames(q_now))
-    compare1 <- q_seq[2:length(q_seq)]
-    compare2 <- q_seq[1:(length(q_seq) - 1)]
-    compare_q <- c(compare1 == compare2, FALSE)
+  # Position of the previous block minus position of the current block equals
+  # to 1 when they are anti-colinear.  See for instance `follow(gb2$query) - 1:3`
+  gr_ob$qprev <- follow( gr_ob$query) - seq_along(gr_ob$query)
 
-    # find where conditions of <tol are met in ref
-    ref_starts <- start(gr_now)[2:length(gr_now)] # define starts
-    ref_ends   <-   end(gr_now)[1:length(gr_now) - 1] # define ends
-    ref_gap_sizes <- c(ref_starts - ref_ends, tol + 1)
+  # When the reference strand is "+", we want the query blocks to be colinear
+  # and when the reference is "-" we want them to be anti-colinear.
+  gr_ob$q_col_with_next <- ( strand(gr_ob) == "+" & gr_ob$qnext == 1 ) |
+                           ( strand(gr_ob) == "-" & gr_ob$qprev == 1 )
 
-    if(any(ref_gap_sizes < 0)){stop("gap sizes should not be negative")}
+  dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
 
-    ref_con_met <- ref_gap_sizes <= tol
+  gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
+  gr_ob$q_gap_sizes_total <- dist2next(gr_ob$query)
 
-    # find where conditions of <tol are met in query
-    q_starts <- start(q_now)[2:length(q_now)]
-    q_ends <- end(q_now)[1:length(q_now) - 1]
-    q_gap_sizes <- c(q_starts - q_ends, tol + 1)
-
-
-    q_con_met <- q_gap_sizes <= tol
-
-    ref_gap_sizes_total[(k):(gr_len+k-1)] <- ref_gap_sizes
-    q_gap_sizes_total[(k):(gr_len+k-1)] <- q_gap_sizes
-    ref_con_met_total[(k):(gr_len+k-1)] <- ref_con_met
-    q_con_met_total[(k):(gr_len+k-1)] <- q_con_met
-    qscaf_con_met_total[(k):(gr_len+k-1)] <- compare_q
-
-    k <- (k + gr_len)
-
-  }
   #######################################################################
 
   # find intersection
-  con_met_total = (ref_con_met_total + q_con_met_total + qscaf_con_met_total + qorder_con_met_total) == 4
+  gr_ob$con_met_total <- gr_ob$ref_gap_sizes_total <= tol &
+                         gr_ob$q_gap_sizes_total   <= tol &
+                         gr_ob$q_col_with_next
+  gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  r_add <- ref_gap_sizes_total
-  r_add[!con_met_total] = 0
+  gr_ob$r_add <- gr_ob$ref_gap_sizes_total
+  gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
-  end(ranges(gr_ext)) <- end(ranges(gr_ext)) + r_add
+  end(gr_ext) <- end(gr_ext) + gr_ob$r_add
 
   # reduce and concatenate
-  gr_red <- reduce(gr_ext, min.gapwidth=0)
-
-  # Use match to construct q_red
-  ########################################################################
-  # initialise vectors for q_red
-  qr_starts <- vector(length = length(gr_red))
-  qr_ends <- vector(length = length(gr_red))
-  qr_seqnames <- vector(length = length(gr_red))
-  qr_strand <- vector(length = length(gr_red))
-
-  # 3 comparisons -> starts&ends, starts only, ends only (with scaffold match ofc)
-  # start&end
-  o_ends <- as.character(end(ranges(gr_ob)))
-  o_starts <- as.character(start(ranges(gr_ob)))
-  o_scafs <- as.vector(seqnames(gr_ob))
-  original_comp_int <- paste(o_scafs, o_starts)
-  original_se_comp <- paste(original_comp_int, o_ends)
-
-  r_ends <- as.character(end(ranges(gr_red)))
-  r_starts <- as.character(start(ranges(gr_red)))
-  r_scafs <- as.vector(seqnames(gr_red))
-  red_comp_int <- paste(r_scafs, r_starts)
-  red_se_comp <- paste(red_comp_int, r_ends)
-
-  se_match <- match(red_se_comp, original_se_comp)
-
-  # starts
-  s_match <- match(red_comp_int, original_comp_int)
-
-  # ends
-  original_e_comp <- paste(o_scafs, o_ends)
-  red_e_comp <- paste(r_scafs, r_ends)
-
-  e_match <- match(red_e_comp, original_e_comp)
-
-  # construct q_red using match info
-  # start&end match
-  qr_starts[which(!is.na(se_match))] = start(ranges(q_ext))[na.omit(se_match)]
-  qr_ends[which(!is.na(se_match))] = end(ranges(q_ext))[na.omit(se_match)]
-  qr_seqnames[which(!is.na(se_match))] = as.vector(seqnames(q_ext)[na.omit(se_match)])
-  qr_strand[which(!is.na(se_match))] = as.vector(strand(q_ext)[na.omit(se_match)])
-
-  # start only match
-  se_where_1 <- match(se_match, s_match)
-  s_only_match <- s_match
-  s_only_match[na.omit(se_where_1)] <- NA
-
-  qr_starts[which(!is.na(s_only_match))] = start(ranges(q_ext))[na.omit(s_only_match)]
-  qr_seqnames[which(!is.na(s_only_match))] = as.vector(seqnames(q_ext)[na.omit(s_only_match)])
-  qr_strand[which(!is.na(s_only_match))] = as.vector(strand(q_ext)[na.omit(s_only_match)])
-
-  # end only match
-  se_where_2 <- match(se_match, e_match)
-  e_only_match <- e_match
-  e_only_match[na.omit(se_where_2)] <- NA
-
-  qr_ends[which(!is.na(e_only_match))] = end(ranges(q_ext))[na.omit(e_only_match)]
-  qr_seqnames[which(!is.na(se_match))] = as.vector(seqnames(q_ext)[na.omit(se_match)])
-  qr_strand[which(!is.na(se_match))] = as.vector(strand(q_ext)[na.omit(se_match)])
-
-  # final steps
-  # construct seqnames Rle
-
-
-  # construct strand Rle
-
-
-  qr_red <- GRanges(seqnames = Rle(qr_seqnames), strand = Rle(qr_strand), IRanges(start = qr_starts, end = qr_ends))
-  gr_red$name <- qr_red
-  return(gr_red)
-  ########################################################################
-
-  # for theorectical testing (yay it works)
-  ########################################################################
-  if (FALSE){
-  se_match2 <- as.vector(na.omit(match(original_se_comp, red_se_comp)))
-  s_match2 <- as.vector(na.omit(match(original_comp_int, red_comp_int)))
-  e_match2 <- as.vector(na.omit(match(original_e_comp, red_e_comp)))
-  matches <- sort(unique(c(se_match2, s_match2, e_match2)))
-  red_vec <- 1:length(gr_red)
-  theory_test <- any(matches!=red_vec)
-  a <- 1
-
-
+  reduceAndSort <- function (gr) {
+    gr <- reduce(gr, min.gapwidth = 0, with.revmap = TRUE)
+    gr$order <- order(unlist(lapply(gr$revmap, head, 1)))
+    gr[gr$order]
+    granges(gr)
   }
-  ########################################################################
 
+  gr_red <- reduceAndSort(gr_ext)
 
+  # apply extension to intersected zone (applying just to end points) (query only)
+  gr_ob$q_add <- gr_ob$q_gap_sizes_total
+  gr_ob[gr_ob$con_met_total != TRUE]$q_add <- 0
 
+  end(  q_ext[strand(gr_ob) == "+"]) <- end(  q_ext[strand(gr_ob) == "+"]) + gr_ob[strand(gr_ob) == "+"]$q_add
+  start(q_ext[strand(gr_ob) == "-"]) <- start(q_ext[strand(gr_ob) == "-"]) - gr_ob[strand(gr_ob) == "-"]$q_add
+
+  # reduce and concatenate
+  gr_red$query <- reduceAndSort(q_ext)
+
+  gr_red
 }

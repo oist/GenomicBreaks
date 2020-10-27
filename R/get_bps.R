@@ -17,19 +17,24 @@
 #' @importFrom GenomeInfoDb seqnames
 #' @export
 
-get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE) {
+get_bps <- function(gr_ob, direction = c("both", "left", "right"), stranded = FALSE, sorted = TRUE) {
   direction <- match.arg(direction) # stops if `direction` is not `both`, `left` or `right`
-  gr_starts <- flank(gr_ob, -1, start = TRUE ) # start bps
-  gr_ends   <- flank(gr_ob, -1, start = FALSE) # end bps
+  gr_starts <- flank(gr_ob, -1, start = TRUE,  ignore.strand = TRUE) # start bps
+  gr_ends   <- flank(gr_ob, -1, start = FALSE, ignore.strand = TRUE) # end bps
   if (stranded) {
     strand(gr_starts) <- "+"
     strand(gr_ends)   <- "-"
+  } else {
+    strand(gr_starts) <- "*"
+    strand(gr_ends)   <- "*"
   }
   if (direction == "both") {
-    c(gr_starts, gr_ends) # concatenate start and end bps
+    gr <- c(gr_starts, gr_ends) # concatenate start and end bps
   } else if (direction == "left") {
-    gr_starts
+    gr <- gr_starts
   } else if (direction == "right") {
-    gr_ends
+    gr <- gr_ends
   }
+  if (sorted) gr <- sort(gr, ignore.strand = TRUE)
+  granges(gr)
 }

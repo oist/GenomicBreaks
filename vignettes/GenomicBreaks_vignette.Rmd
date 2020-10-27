@@ -23,10 +23,12 @@ library(Biostrings)
 library(graphics)
 library(heatmaps)
 library(stats)
+library(magrittr)
+library(ggplot2)
 })
 
 # These will need to be installed by the user
-library("BSgenome.Odioica.local.Okinawa.I69")
+library("BSgenome.Odioica.local.OKI2018.I69")
 library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 
@@ -37,42 +39,39 @@ library(GenomicBreaks)
 and look at the primary data structure that this package deals with. 
 
 ```{r GRanges object}
-
-gr_O_Oki -> gr_O_Oki.bak
-gr_O_Oki$query <- GRanges(gr_O_Oki$name)
-strand(gr_O_Oki) <- strand(gr_O_Oki$query)
-strand(gr_O_Oki$query) <- "*"
-
-#gr_O_Oki <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz', bsgenome_ref = BSgenome.Odioica.local.Okinawa.I69, bsgenome_query = BSgenome.Odioica.local.OSKA2016)
-
+gr_O_Oki <- load_genomic_breaks('inst/extdata/OSKA2016__I69-5.gff3.gz',  bsgenome_ref = OSKA2016,    bsgenome_query = OKI2018_I69)
+gr_Oki_O <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz',  bsgenome_ref = OKI2018_I69, bsgenome_query = OSKA2016)
+gr_Oki_N <- load_genomic_breaks('inst/extdata/I69-5__Norway.gff3.gz',    bsgenome_ref = OKI2018_I69, bsgenome_query = OdB3)
+gr_O_N   <- load_genomic_breaks('inst/extdata/OSKA2016__Norway.gff3.gz', bsgenome_ref = OSKA2016,    bsgenome_query = OdB3)
 ```
 
 This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
 
 The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
 
-Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909373 and 909853 in scaffold_1 of the query genome as alignment stops. 
+Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
 
 The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
 
 ```{r get bps}
-
-gr_O_Oki_stops <- get_bps(gr_ob = gr_O_Oki)
-gr_O_Oki_stops
-
+gr_O_Oki
+get_bps(gr_O_Oki)
+get_bps(gr_O_Oki, direction = "left")
+get_bps(gr_O_Oki,                      stranded = TRUE)
+get_bps(gr_O_Oki,                      stranded = TRUE, sorted = FALSE)
+get_bps(gr_O_Oki, direction = "right", stranded = TRUE)
+get_bps(gr_O_Oki$query, sorted = FALSE)
+get_bps(gr_O_Oki$query)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
 
 This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
 
-Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be transformed as follows:
+Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be accessed as follows:
 
 ```{r query GRanges}
-
-q_Oki <- gr_O_Oki$query
-q_Oki
-
+gr_O_Oki$query
 ```
 
 ## Visualising alignments
@@ -81,7 +80,7 @@ We can use the function `scaf_align_plot` to see the alignment of query scaffold
 
 ```{r echo=T, message=F, warning=F}
 
-scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2", ref_name = "Osaka", query_name = "Okinawa")
+scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2")
 
 ```
 
@@ -104,25 +103,37 @@ Large alignments can often appear cluttered with alignment breaks, spanning just
 For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignment:
 
 ```{r coalescing algorithm}
-
+gr_O_Oki
 reduced_gr_O_Oki <- coalesce_contigs(gr_ob = gr_O_Oki, tol = 500)
 reduced_gr_O_Oki
-length(gr_O_Oki)
-length(reduced_gr_O_Oki)
 
+rbind(
+  data.frame(
+    width  = width(gr_O_Oki),
+    object = "gr_O_Oki"
+  ),
+  data.frame(
+    width  = width(reduced_gr_O_Oki),
+    object= "reduced_gr_O_Oki"
+  )
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object)
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
 
 ## Tandem repeats
 
-Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced lsit, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented. 
+Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
 
 ```{r echo=T, message=F, warning=F}
 
+tan_O <- rtracklayer::import.gff3("inst/extdata/OSKA2016.tantanf4w100.gff3.gz")
+tan_O <- GRanges(tan_O, seqinfo = seqinfo(OSKA2016))
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
 
+tan_Oki <- rtracklayer::import.gff3("inst/extdata/I69-5.tantanf4w100.gff3.gz")
+tan_Oki <- GRanges(tan_Oki, seqinfo = seqinfo(OKI2018_I69))
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
 
@@ -131,15 +142,20 @@ tan_gr_Oki
 We can use another script to plot the density of tandem repeats around alignment stops (and breakpoints). In the following plots, breakpoints are aligned at the centre of the plots. Intuitively, this function can be generalised to see the density of any binary coverage characteristic around breakpoints, given a GRanges object with per-base coverage of a given characteristic. Here we stick with tandem repeat info:
 
 ```{r echo=T, message=F, warning=F}
-hm_tan_O <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 1000, lab = "Osaka ~ Okinawa")
+hm_tan_O <- gr_O_Oki %>%
+  tandem_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
+  plotHeatmap
 
-#hm_tan_Oki <- tandem_coverage(gr_ob = q_Oki, tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa")
+hm_red_tan_O <- reduced_gr_O_Oki %>%
+  tandem_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
+  plotHeatmap
 
-par(mfrow = c(2,1))
-plotHeatmapList(hm_tan_O)
-plotHeatmapMeta(hm_tan_O)
-
-# come back to this
+hm_tan_Oki <- gr_Oki_O %>%
+  tandem_coverage(tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
+  plotHeatmapList
 ```
 ## Coverage
 
@@ -170,37 +186,108 @@ fin_gr_O_Oki
 
 ## Nucleaic acid content heatmaps
 
-We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleaic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
+We can use the GenomicBreaks function `bp_heatmap` to plot the desired nucleic acid content, with the alignment stops centred on the graph. Lets look at GC content before and after coalescing: 
 
 ```{r echo=T, message=F, warning=F}
+hm_GC1 <- bp_heatmap(gr_O_Oki,         basep_range = 1000, pat = "GC", direction = "left")
+hm_GC2 <- bp_heatmap(reduced_gr_O_Oki, basep_range = 1000, pat = "GC", direction = "left")
 
-hm_GC1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
-hm_GC1 <- smoothHeatmap(hm_GC1, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_GC1)
+maxHeight <- 2000
+sm_GC2_Height <- round(maxHeight * length(hm_GC2) / length(hm_GC1))
 
-hm_GC2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "GC")
-hm_GC2 <- smoothHeatmap(hm_GC2, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_GC2)
+sm_GC1 <- smoothHeatmap(hm_GC1, output.size = c(maxHeight,     500), algorithm = "kernel")
+sm_GC2 <- smoothHeatmap(hm_GC2, output.size = c(sm_GC2_Height, 500), algorithm = "kernel")
 
+# Trying to plot the two heatmaps with different height according to their conntent,
+# but without success...
+plotHeatmapList(list(sm_GC1, sm_GC2), groups = 1:2)
 ```
 
 The alignment stops are ordered in such a way that start (or left breaks) are centred on the top half of the plot, and end alignment stops are centred on the bottom. This is why we see different directionality in the plots. At the alignment stops, the GC content seems to be lower, but higher once within the aligned region. 
 
 Now looking at TATA content:
 
-```{r echo=T, message=F, warning=F}
+```{r TATA}
+hm_tata1 <- bp_heatmap(gr_O_Oki, basep_range = 1000, pat = "TATA", direction = "left")
+sm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
 
-hm_tata1 <- bp_heatmap(gr_ob = gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
-hm_tata1 <- smoothHeatmap(hm_tata1, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_tata1)
+hm_tata2 <- bp_heatmap(reduced_gr_O_Oki, basep_range = 1000, pat = "TATA", direction = "left")
+sm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
 
-hm_tata2 <- bp_heatmap(gr_ob = reduced_gr_O_Oki, gen_seq = BSgenome.Odioica.local.OSKA2016, basep_range = 1000, pat = "TATA")
-hm_tata2 <- smoothHeatmap(hm_tata2, output.size = c(2000,500), algorithm = "kernel")
-plotHeatmapList(hm_tata2)
-
+plotHeatmapList(list(sm_tata1, sm_tata2))
+plotHeatmapList(list(sm_GC2, sm_tata2))
 ```
 
 The directionaility here is consistent with the GC content analysis. Furthermore; "TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)" - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. doi:10.1093/nar/24.15.3100. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occuring directly after promotor regions. 
+
+## Cluster analysis
+
+
+```{r cluster_analysis}
+# Accessory functions
+clusterHeatmap <- function(hm, k = 2) kmeans(image(hm), k)
+
+orderHeatmap <- function(hm, cl) {
+  image(hm) <- image(hm)[order(cl$cluster),]
+  hm
+}
+
+subsetHeatmap <- function(hm, bool) {
+  image(hm) <- image(hm)[bool,]
+  hm
+}
+
+# DAta
+hm_GC   <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "GC",     direction = "left")
+hm_TATA <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "TATA",   direction = "left")
+hm_tan  <- tandem_coverage(gr_Oki_O, tan_Oki, win = 1000, lab = "Tandem", direction = "left")
+
+# Define 3 K-mean clusters
+clusterHeatmap(hm_GC, 3) -> hm_cl_k4
+
+# Order and smooth
+shm_GC <- orderHeatmap(hm_GC, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+shm_TATA <- orderHeatmap(hm_TATA, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+shm_tan <- orderHeatmap(hm_tan, hm_cl_k4) %>%
+  smoothHeatmap(output.size = c(2000,500), algorithm = "kernel")
+
+# Plot the ordered data
+plotHeatmapList(list(shm_GC, shm_TATA, shm_tan))
+par(mfrow = c(1,1)) # plotHeatmapList messes with mrfrow...
+plotHeatmapMeta(list(hm_GC, hm_TATA, hm_tan))
+
+plotHeatmapMeta(list(subsetHeatmap(hm_GC, hm_cl_k4$cluster == 1),
+                     subsetHeatmap(hm_GC, hm_cl_k4$cluster == 2),
+                     subsetHeatmap(hm_GC, hm_cl_k4$cluster == 3)))
+
+kmeanOrderedPlot <- function (hm, k=3, seed = 1) {
+  set.seed(seed)
+  
+  cl <- kmeans(image(hm), k)
+  mat <- image(hm)[order(cl$cluster),]
+  
+  kmhm = Heatmap(
+    mat,
+    coords=c(-500,500),
+    label="kmeans",
+    scale=range(mat))
+  
+  plotHeatmapList(kmhm,
+                  cex.label=1.5,
+                  partition=as.vector(table(cl$cluster)),
+                  partition.legend=TRUE,
+                  partition.lines=TRUE,
+                  legend=TRUE,
+                  legend.pos="r",
+                  legend.width=0.3)
+}
+
+kmeanOrderedPlot(shm_GC)
+```
 
 ## Evidence for breakpoint hotspots
 
