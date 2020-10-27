@@ -154,6 +154,47 @@ plotTracks(list(gen, trk))
 
 Nevertheless, the outward regions are syntenic in both genomes.
 
+### Detection
+
+```{r detect_trivial_insertions}
+plusMinPlus <- function (gr) {
+  gr$oneNext <- precede(gr, tail(gr, -1), ignore.strand = T) - seq_along(gr) == 0
+  gr$twoNext <- precede(gr, tail(gr, -2), ignore.strand = T) - seq_along(gr) == 0
+  gr$oneDiffStrand <- strand(gr) != c(strand(tail(gr, -1)), factor("*"))
+  gr$twoSameStrand <- strand(gr) == c(strand(tail(gr, -2)), factor(c("*", "*")))
+  gr$plusMinPlus <- gr$oneNext & gr$twoNext & gr$oneDiffStrand & gr$twoSameStrand
+  if (any(is.na(gr$plusMinPlus)))
+    gr[is.na(gr$plusMinPlus)]$plusMinPlus <- FALSE
+  gr
+}
+
+plusMinPlus(inv)
+plusMinPlus(reduced_gr_O_Oki)$plusMinPlus == TRUE
+plusMinPlus(gr_O_Oki)$plusMinPlus == TRUE
+
+coalesce_contigs(gr_Oki_O, 500000) -> a
+coalesce_contigs(sort(gr_Oki_O, i=T), 500000) -> b
+identical(a,b)
+plusMinPlus(a) -> x
+x
+
+r <- 1:3
+gen <- GenomeAxisTrack(name="OKI2018_I69")
+ide <- IdeogramTrack(chromosome = "chr1", genome = "OKI2018_I69", bands =
+                       data.frame(chrom="chr1", chromStart=0, chromEnd=14533022, name="chr1", gieStain="gneg"))
+trk <- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])
+plotTracks(list(ide, gen, trk), featureAnnotation = "id")
+
+gen <- GenomeAxisTrack(name="OSKA2016")
+ide <- IdeogramTrack(chromosome = "S1", genome = "OSKA2016", bands =
+                       data.frame(chrom="S1", chromStart=0, chromEnd=6807127, name="S1", gieStain="gneg"))
+
+trk <- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])
+plotTracks(list(ide,gen,trk), featureAnnotation = "id")
+```
+
+All `FALSE` ?  Shock !
+
 ## Tandem repeats
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
