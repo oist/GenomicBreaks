@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
 
 ## Introduction
 
-The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages
+The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages.
 
 ```{r loadlib, echo=T, results='hide'}
 suppressPackageStartupMessages({
@@ -36,18 +36,41 @@ library(GenomicBreaks)
 
 ```
 
-and look at the primary data structure that this package deals with. 
+### GenomicBreaks object
+
+Let's load data from genome alignments.
 
 ```{r GRanges object}
 gr_O_Oki <- load_genomic_breaks('inst/extdata/OSKA2016__I69-5.gff3.gz',  bsgenome_ref = OSKA2016,    bsgenome_query = OKI2018_I69)
 gr_Oki_O <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz',  bsgenome_ref = OKI2018_I69, bsgenome_query = OSKA2016)
 gr_Oki_N <- load_genomic_breaks('inst/extdata/I69-5__Norway.gff3.gz',    bsgenome_ref = OKI2018_I69, bsgenome_query = OdB3)
 gr_O_N   <- load_genomic_breaks('inst/extdata/OSKA2016__Norway.gff3.gz', bsgenome_ref = OSKA2016,    bsgenome_query = OdB3)
+
+gr_O_Oki
+gr_O_Oki$query
 ```
 
-This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
+Pairwise genome alignments are loaded in `GRanges` object.  By convention, we
+write that query genome (the one that was provided as a FASTA file) is aligned
+t the reference genome (the one that was indexed by the aligner). The reference
+genome (left) is the main part of the object, and the query genome information
+(right) is contained in the metadata of the structure.  Information on contig
+or scaffold length is loaded a `BSgenome` objects, from which `seqinfo` data
+is extracted and passed to the `GRanges`.  By convention, strand information
+of the alignment is held by the reference `GRanges`, and the query `GRanges`
+are strandless.  The objects are sorted by `seqname` first.
 
-The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
+Although we are not using object-oriented classes for the moment, we will refer
+to the `GRanges` objects returned by `load_genomic_breaks` as `GenomicBreaks`
+objects.
+
+In the example displayed above, the object contains the pairwise alignment
+between genomes of two _Oikopleura dioica_ individuals; one from Osaka assembly
+_OSKA2016_ (reference) and one from Okinawa assembly _OKI2018_I69_ (query).
+
+The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments.
+
+### Breakpoints and alignment stops
 
 Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
 
@@ -67,12 +90,6 @@ get_bps(gr_O_Oki$query)
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
 
 This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
-
-Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be accessed as follows:
-
-```{r query GRanges}
-gr_O_Oki$query
-```
 
 ## Visualising alignments
 
