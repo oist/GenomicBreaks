@@ -4,7 +4,7 @@
 #'
 #' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "query".
 #' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
-#' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.
+#' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.  The returned object is sorted (ignoring strand).
 #' @examples
 #' gb1       <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
 #' gb1$query <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
@@ -91,5 +91,5 @@ coalesce_contigs <- function(gr_ob, tol){
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
 
-  gr_red
+  sort(gr_red, ignore.strand = TRUE)
 }
