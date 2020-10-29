@@ -121,13 +121,12 @@ For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignm
 
 ```{r coalescing algorithm}
 gr_O_Oki
-tol <- 1e7
-reduced_gr_O_Oki <- coalesce_contigs(gr_O_Oki, tol = tol)
+reduced_gr_O_Oki <- coalesce_contigs(gr_O_Oki, tol = 1e7)
 reduced_gr_O_Oki
-reduced_gr_O_Oki <- coalesce_contigs(reduced_gr_O_Oki, tol = tol)
-reduced_gr_O_Oki
-reduced_gr_O_Oki <- coalesce_contigs(reduced_gr_O_Oki, tol = tol)
-reduced_gr_O_Oki
+
+gr_Oki_O
+reduced_gr_Oki_O <- coalesce_contigs(gr_Oki_O, tol = 1e7)
+reduced_gr_Oki_O
 
 rbind(
   data.frame(
