@@ -26,7 +26,7 @@
 
 # algorithm is vectorized for efficiency
 
-coalesce_contigs <- function(gr_ob, tol){
+coalesce_contigs <- function(gr_ob, tol = Inf) {
 
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
