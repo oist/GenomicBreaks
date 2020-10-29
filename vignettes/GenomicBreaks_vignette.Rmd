@@ -179,8 +179,8 @@ Nevertheless, the outward regions are syntenic in both genomes.
 
 ```{r detect_trivial_insertions}
 plusMinPlus <- function (gr) {
-  gr$oneNext <- precede(gr, tail(gr, -1), ignore.strand = T) - seq_along(gr) == 0
-  gr$twoNext <- precede(gr, tail(gr, -2), ignore.strand = T) - seq_along(gr) == 0
+  gr$oneNext <- precede(gr$query, tail(gr$query, -1), ignore.strand = T) - seq_along(gr) == 0
+  gr$twoNext <- c(gr$oneNext[-1], NA)
   gr$oneDiffStrand <- strand(gr) != c(strand(tail(gr, -1)), factor("*"))
   gr$twoSameStrand <- strand(gr) == c(strand(tail(gr, -2)), factor(c("*", "*")))
   gr$plusMinPlus <- gr$oneNext & gr$twoNext & gr$oneDiffStrand & gr$twoSameStrand
