@@ -23,6 +23,7 @@
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @importFrom stats na.omit
+#' @include dist2next.R
 
 # algorithm is vectorized for efficiency
 
@@ -52,21 +53,18 @@ coalesce_contigs <- function(gr_ob, tol = Inf) {
   gr_ob$q_col_with_next <- ( strand(gr_ob) == "+" & gr_ob$qnext == 1 ) |
                            ( strand(gr_ob) == "-" & gr_ob$qprev == 1 )
 
-  dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
-
-  gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
-  gr_ob$q_gap_sizes_total <- dist2next(gr_ob$query)
+  gr_ob <- dist2next(gr_ob)
 
   #######################################################################
 
   # find intersection
-  gr_ob$con_met_total <- gr_ob$ref_gap_sizes_total <= tol &
-                         gr_ob$q_gap_sizes_total   <= tol &
+  gr_ob$con_met_total <- gr_ob$rdist < tol + 1 &
+                         gr_ob$qdist < tol + 1 &
                          gr_ob$q_col_with_next
   gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  gr_ob$r_add <- gr_ob$ref_gap_sizes_total
+  gr_ob$r_add <- gr_ob$rdist
   gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
   end(gr_ext) <- end(gr_ext) + gr_ob$r_add
@@ -82,7 +80,7 @@ coalesce_contigs <- function(gr_ob, tol = Inf) {
   gr_red <- reduceAndSort(gr_ext)
 
   # apply extension to intersected zone (applying just to end points) (query only)
-  gr_ob$q_add <- gr_ob$q_gap_sizes_total
+  gr_ob$q_add <- gr_ob$qdist
   gr_ob[gr_ob$con_met_total != TRUE]$q_add <- 0
 
   end(  q_ext[strand(gr_ob) == "+"]) <- end(  q_ext[strand(gr_ob) == "+"]) + gr_ob[strand(gr_ob) == "+"]$q_add
