@@ -178,9 +178,22 @@ Nevertheless, the outward regions are syntenic in both genomes.
 
 ### Detection
 
+```{r detect_trivial_invertions}
+sapply(gbs, function(gb) sum(flagInversions(coalesce_contigs(gb))$inv))
 
-flagInversions(reduced_gr_Oki_O)$inv == TRUE
-flagInversions(gr_Oki_O)$inv == TRUE
+flagInversions(reduced_gr_Oki_O) -> x
+
+rbind(
+  data.frame(
+    width  = x[x$inv]$rdist,
+    object = "Reference"
+  ),
+  data.frame(
+    width  = x[x$inv]$qdist,
+    object= "Query"
+  )
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) +scale_x_log10() +
+  ggtitle("Width of the left-side unaligned region in inversions detected in reduced_gr_Oki_O")
 
 coalesce_contigs(gr_Oki_O, 500000) -> a
 coalesce_contigs(sort(gr_Oki_O, i=T), 500000) -> b
@@ -189,7 +202,6 @@ x
 flagInversions(reduced_gr_Oki_O) -> x
 
 r <- 1:3
-sapply(gbs, function(gb) sum(flagInversions(coalesce_contigs(gb))$inv))
 
 seqinfo2gieStain <- function(si) {
   data.frame(
