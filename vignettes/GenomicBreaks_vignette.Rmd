@@ -3,10 +3,17 @@ title: "GenomicBreaks Vignette"
 author: "Charlotte West"
 date: "3/27/2020"
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{GenomicBreaks}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%', cache = TRUE)
 ```
 
 ## Introduction
@@ -41,10 +48,10 @@ library(GenomicBreaks)
 Let's load data from genome alignments.
 
 ```{r GRanges object}
-gr_O_Oki <- load_genomic_breaks('inst/extdata/OSKA2016__I69-5.gff3.gz',  bsgenome_ref = OSKA2016,    bsgenome_query = OKI2018_I69)
-gr_Oki_O <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz',  bsgenome_ref = OKI2018_I69, bsgenome_query = OSKA2016)
-gr_Oki_N <- load_genomic_breaks('inst/extdata/I69-5__Norway.gff3.gz',    bsgenome_ref = OKI2018_I69, bsgenome_query = OdB3)
-gr_O_N   <- load_genomic_breaks('inst/extdata/OSKA2016__Norway.gff3.gz', bsgenome_ref = OSKA2016,    bsgenome_query = OdB3)
+gr_O_Oki <- load_genomic_breaks(system.file("extdata/OSKA2016__I69-5.gff3.gz",  package="GenomicBreaks"), OSKA2016,    OKI2018_I69)
+gr_Oki_O <- load_genomic_breaks(system.file("extdata/I69-5__OSKA2016.gff3.gz",  package="GenomicBreaks"), OKI2018_I69, OSKA2016)
+gr_Oki_N <- load_genomic_breaks(system.file("extdata/I69-5__Norway.gff3.gz",    package="GenomicBreaks"), OKI2018_I69, OdB3)
+gr_O_N   <- load_genomic_breaks(system.file("extdata/OSKA2016__Norway.gff3.gz", package="GenomicBreaks"), OSKA2016,    OdB3)
 
 # Store in a list to easier iterate on all of them.
 gbs <- SimpleList(gr_O_Oki=gr_O_Oki, gr_Oki_O=gr_Oki_O, gr_Oki_N=gr_Oki_N, gr_O_N=gr_O_N)
@@ -233,12 +240,12 @@ Repeated regions of genomes are notoriously difficult to assemble and align. Thu
 
 ```{r echo=T, message=F, warning=F}
 
-tan_O <- rtracklayer::import.gff3("inst/extdata/OSKA2016.tantanf4w100.gff3.gz")
+tan_O <- rtracklayer::import.gff3(system.file("extdata/OSKA2016.tantanf4w100.gff3.gz",  package="GenomicBreaks"))
 tan_O <- GRanges(tan_O, seqinfo = seqinfo(OSKA2016))
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
 
-tan_Oki <- rtracklayer::import.gff3("inst/extdata/I69-5.tantanf4w100.gff3.gz")
+tan_Oki <- rtracklayer::import.gff3(system.file("extdata/I69-5.tantanf4w100.gff3.gz",  package="GenomicBreaks"))
 tan_Oki <- GRanges(tan_Oki, seqinfo = seqinfo(OKI2018_I69))
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
@@ -269,8 +276,8 @@ Another characteristic of alignment stops that we can examine is the coverage de
 
 ```{r echo=T, message=F, warning=F}
 
-cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
-cov_gr_O_Oki
+# cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
+# cov_gr_O_Oki
 
 ```
 
@@ -281,9 +288,9 @@ The function `master_bp_analysis` brings together the information about tandem r
 
 ```{r echo=T, message=F, warning=F}
 
-fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
-                                   q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
-fin_gr_O_Oki
+# fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
+#                                    q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
+# fin_gr_O_Oki
 
 ```
 
@@ -329,7 +336,7 @@ The directionaility here is consistent with the GC content analysis. Furthermore
 ## Cluster analysis
 
 
-```{r cluster_analysis}
+```{r cluster_analysis, fig.height=20, fig.width=20}
 # Accessory functions
 clusterHeatmap <- function(hm, k = 2) kmeans(image(hm), k)
 
@@ -401,11 +408,11 @@ The function `bp_pair_analysis` takes two pairwise alignments with the same refe
 
 ```{r echo=T, message=F, warning=F}
 
-hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
-plotHeatmapMeta(hm1)
-
-hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
-plotHeatmapMeta(hm2)
+# hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
+# plotHeatmapMeta(hm1)
+# 
+# hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
+# plotHeatmapMeta(hm2)
 
 ```
 
@@ -413,10 +420,10 @@ The accumulation of alignment breaks of one pairwise alignment onto another sugg
 
 ```{r echo=T, message=F, warning=F}
 
-reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
-
-hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
-plotHeatmapMeta(hm3)
+# reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
+# 
+# hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
+# plotHeatmapMeta(hm3)
 
 ```
 
@@ -426,11 +433,11 @@ The function `tandem_coverage` will plot the coverage of tandem repeats around c
 
 ```{r echo=T, message=F, warning=F}
 
-hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
-plotHeatmapMeta(hm_tan1)
-
-hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
-plotHeatmapMeta(hm_tan2)
+# hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
+# plotHeatmapMeta(hm_tan1)
+# 
+# hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
+# plotHeatmapMeta(hm_tan2)
 
 # should I also add comparison of proportions of tandem proximities before and after coalescion?
 
@@ -444,11 +451,11 @@ There appears to be less tandem repeats around alignment stops after coalescion,
 As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this particular assembly is quite good. In fact, we can investigate the coverge over alignment stops from the information obtained using `master_bp_analysis`. 
 
 ```{r echo=T, message=F, warning=F}
-fin_Oki <- fin_gr_O_Oki[[2]]
-min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
-min_cov
-length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
-length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
+# fin_Oki <- fin_gr_O_Oki[[2]]
+# min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
+# min_cov
+# length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
+# length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
 
 ```
 
