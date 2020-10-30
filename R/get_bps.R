@@ -5,9 +5,10 @@
 #' @param gr_ob GRanges object containing pairwise alignment
 #' @param direction Will return the breakpoints on `both`, `left` or `right` side(s) of the range.
 #' @param stranded If `TRUE`, will assign a `+` strand to the left-side breakpoints and a `-` strand to the right-side ones.
+#' @param sorted Sorts the object before returning it.
 #' @return GRanges object of the breakpoints
 #' @examples
-#' gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges(1:4, width=4:1))
+#' gr <- GenomicRanges::GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges::IRanges(1:4, width=4:1))
 #' get_bps(gr)
 #' get_bps(gr, direction = "left")
 #' get_bps(gr, stranded = TRUE)

@@ -12,6 +12,7 @@ LazyData: true
 Depends: R (>= 3.6.0)
 Imports:
   rtracklayer,
+  S4Vectors,
   heatmaps,
   GenomicRanges,
   IRanges,

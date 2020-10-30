@@ -4,7 +4,7 @@
 \alias{load_genomic_breaks}
 \title{Load pairwise genome alignments}
 \usage{
-load_genomic_breaks(file, bsgenome_ref, bsgenome_query)
+load_genomic_breaks(file, bsgenome_ref, bsgenome_query, sort = TRUE)
 }
 \arguments{
 \item{file}{Path to a file in GFF3 format}
@@ -12,6 +12,8 @@ load_genomic_breaks(file, bsgenome_ref, bsgenome_query)
 \item{bsgenome_ref}{A \code{BSgenome} object representing the reference genome.}
 
 \item{bsgenome_query}{A \code{BSgenome} object representing the query genome.}
+
+\item{sort}{Returns the object sorted, ignoring strand information.}
 }
 \value{
 Returns a \verb{GRanges object} where each element represents a pairwise

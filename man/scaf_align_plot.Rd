@@ -4,16 +4,12 @@
 \alias{scaf_align_plot}
 \title{Plot Alignment of Single Reference Scaffold}
 \usage{
-scaf_align_plot(gr_ob, scaf, ref_name, query_name)
+scaf_align_plot(gr_ob, scaf)
 }
 \arguments{
 \item{gr_ob}{GRanges object containing pairwise alignment}
 
 \item{scaf}{Character string of the name of the scaffold you wish to plot}
-
-\item{ref_name}{Reference genome name}
-
-\item{query_name}{Query genome name}
 }
 \value{
 A plot of the query scaffold alignments to the chosen reference scaffold

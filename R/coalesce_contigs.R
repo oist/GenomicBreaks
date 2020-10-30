@@ -6,17 +6,17 @@
 #' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
 #' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.  The returned object is sorted (ignoring strand).
 #' @examples
-#' gb1       <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
-#' gb1$query <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
 #' coalesce_contigs(gb1, 500)
-#' gb2       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb2$query <- GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
+#' gb2       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb2$query <- GenomicRanges::GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
 #' coalesce_contigs(gb2, 500)
-#' gb3       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb3$query <- GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
+#' gb3       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb3$query <- GenomicRanges::GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
 #' coalesce_contigs(gb3, 500)
-#' gb4       <- GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
-#' gb4$query <- GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
+#' gb4       <- GenomicRanges::GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
+#' gb4$query <- GenomicRanges::GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
 #' coalesce_contigs(gb4, 500)
 #' @export
 #' @importFrom GenomicRanges GRanges

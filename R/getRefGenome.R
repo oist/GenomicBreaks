@@ -1,14 +1,13 @@
 #' @name getRefGenome
 #'
 #' @title Attempt to load a BSgenome
-#' @details Internal function that retreives a BSgenome object or throws an error if not available. Adapted from the CAGEr package.
+#' @details Internal function that retrieves a BSgenome object or throws an error if not available. Adapted from the CAGEr package.
 #' @return A BSgenome object
 #' @param reference.genome name of genome package (and also genome data object)
 #' @author Charles Plessy
 #' @importFrom utils installed.packages
 #' @export
-#' @noRd
-
+#' @keywords internal
 
 getRefGenome <- function(reference.genome) {
 

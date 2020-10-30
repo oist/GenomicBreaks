@@ -13,12 +13,13 @@
 #' genomes respectively.
 #'
 #' @examples
-#' gb1       <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
-#' gb1$query <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
+#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
+#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
 #' dist2next(gb1)
 #' dist2next(gb1, ignore.strand = TRUE)
 #'
 #' @importFrom GenomicRanges distance
+#' @importFrom utils head tail
 #' @export
 
 dist2next <- function (gr_ob, ignore.strand = FALSE) {
