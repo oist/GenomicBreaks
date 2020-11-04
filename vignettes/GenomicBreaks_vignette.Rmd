@@ -138,6 +138,14 @@ gr_Oki_O
 reduced_gr_Oki_O <- coalesce_contigs(gr_Oki_O)
 reduced_gr_Oki_O
 
+gr_Oki_N
+reduced_gr_Oki_N <- coalesce_contigs(gr_Oki_N)
+reduced_gr_Oki_N
+
+gr_O_N
+reduced_gr_O_N <- coalesce_contigs(gr_O_N)
+reduced_gr_O_N
+
 rbind(
   data.frame(
     width  = width(gr_O_Oki),
@@ -147,10 +155,26 @@ rbind(
     width  = width(reduced_gr_O_Oki),
     object= "reduced_gr_O_Oki"
   )
-) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object)
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) + scale_x_log10()
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
+
+## Annotation of narrow-width alignments
+
+ - What do they represent ?
+ - Keep or discard ?
+
+```{r}
+doubleCoalesce <- function (gb, width = 1000) {
+  gb <- gb[width(gb) >= width]
+  coalesce_contigs(gb)
+}
+
+doubleReduced_gr_Oki_O <- doubleCoalesce(reduced_gr_Oki_O)
+doubleReduced_gr_Oki_N <- doubleCoalesce(reduced_gr_Oki_N)
+doubleReduced_gr_O_N <- doubleCoalesce(reduced_gr_O_N)
+```
 
 ## Genome plots with genoPlotR
 
@@ -217,6 +241,57 @@ compList <- list(
     roi[seqnames(roi$query) == roiNameC] %>% gb2comp
   )
 plot_gene_map(dsList, compList)
+```
+
+## Extract ranges from the same reference region in two GenomicBreaks objects
+
+```{r intersect_GBs}
+intersectGBs <- function (gb1, gb2) {
+  roi <- range(gb1, ignore.strand = TRUE)
+  gb2[subjectHits(findOverlaps(roi, gb2))]
+}
+#roi <- GRanges("chr1:1222000-1240000")
+#roi <- GRanges("chr1:1023578-1032430")
+#roi <- GRanges("chr1:2668866-2692347")
+roi <- GRanges("chr1:6379932-6505436")
+#roi <- GRanges("chr1:6683567-6744168")
+roi <- GRanges("chr1:7711018-7734330")
+#roi <- GRanges("chr1:7711018-7734330") + 10000
+
+roi_Oki_O <- intersectGBs(roi, doubleReduced_gr_Oki_O)
+roi_Oki_N <- intersectGBs(roi, doubleReduced_gr_Oki_N)
+roi2 <- range(intersectGBs(roi, doubleReduced_gr_Oki_O)$query)
+roi_O_N <- intersectGBs(roi2, doubleReduced_gr_O_N)
+```
+
+### Plot a simple region.
+
+This region can be plotted because there is a one-to-one correspondence
+between alignments to Osaka and alignments to Norway.
+
+```{r plot_intersect_GBs}
+roiNameO <- seqlevelsInUse(roi_Oki_O$query)[1]
+roiNameOki <- seqlevelsInUse(roi)[1]
+roiNameN <- seqlevelsInUse(roi_Oki_N$query)[1]
+
+dsList <-   list(
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gbQuery2dna_seq,
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gbRef2dna_seq,
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbRef2dna_seq,
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbQuery2dna_seq
+    )
+names(dsList) <- c(roiNameO, roiNameOki, roiNameOki, roiNameN)
+
+tmpgb <- roi_Oki_O
+tmpgb$query <- granges(roi_Oki_N)
+
+compList <- list(
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% swap %>% gb2comp,
+    tmpgb %>% gb2comp,
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gb2comp
+  )
+
+plot_gene_map(dsList, compList, dna_seg_scale=TRUE)
 ```
 
 ## Trivial inversions
