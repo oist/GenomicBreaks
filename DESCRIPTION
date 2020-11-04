@@ -23,7 +23,16 @@ Imports:
   BSgenome
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: knitr
+Suggests:
+  BSgenome.Odioica.local.OKI2018.I69,
+  BSgenome.Odioica.local.OSKA2016,
+  BSgenome.Odioica.local.Odioica.reference.v3.0,
+  ggplot2,
+  gridExtra,
+  Gviz,
+  knitr,
+  magrittr,
+  rmarkdown
 VignetteBuilder: knitr
 Collate: 
     'align_scaf_plot_2.R'
