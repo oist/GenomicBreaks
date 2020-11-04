@@ -9,7 +9,7 @@ tan_bp(gr_ob, tan, tol, query_tf = FALSE)
 \arguments{
 \item{gr_ob}{GRanges object containing pairwise alignment}
 
-\item{tan}{GRanges object containing tandem repeat (or characterisitc of interest) coverage}
+\item{tan}{GRanges object containing tandem repeat (or characteristic of interest) coverage}
 
 \item{tol}{range in which breakpoints will be classified as "near" to a tandem repeat}
 
@@ -19,5 +19,5 @@ tan_bp(gr_ob, tan, tol, query_tf = FALSE)
 A list containing 3 GRanges objects of breakpoints far, near and within tandem repeats.
 }
 \description{
-This function classifies breakpoints in terms of its proximity to tandem repeats (but can be generalised to any property whos coverage is binary).
+This function classifies breakpoints in terms of its proximity to tandem repeats (but can be generalised to any property whose coverage is binary).
 }

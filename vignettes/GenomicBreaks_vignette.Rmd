@@ -3,15 +3,22 @@ title: "GenomicBreaks Vignette"
 author: "Charlotte West"
 date: "3/27/2020"
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{GenomicBreaks}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%')
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%', cache = TRUE)
 ```
 
 ## Introduction
 
-The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages
+The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages.
 
 ```{r loadlib, echo=T, results='hide'}
 suppressPackageStartupMessages({
@@ -36,18 +43,44 @@ library(GenomicBreaks)
 
 ```
 
-and look at the primary data structure that this package deals with. 
+### GenomicBreaks object
+
+Let's load data from genome alignments.
 
 ```{r GRanges object}
-gr_O_Oki <- load_genomic_breaks('inst/extdata/OSKA2016__I69-5.gff3.gz',  bsgenome_ref = OSKA2016,    bsgenome_query = OKI2018_I69)
-gr_Oki_O <- load_genomic_breaks('inst/extdata/I69-5__OSKA2016.gff3.gz',  bsgenome_ref = OKI2018_I69, bsgenome_query = OSKA2016)
-gr_Oki_N <- load_genomic_breaks('inst/extdata/I69-5__Norway.gff3.gz',    bsgenome_ref = OKI2018_I69, bsgenome_query = OdB3)
-gr_O_N   <- load_genomic_breaks('inst/extdata/OSKA2016__Norway.gff3.gz', bsgenome_ref = OSKA2016,    bsgenome_query = OdB3)
+gr_O_Oki <- load_genomic_breaks(system.file("extdata/OSKA2016__I69-5.gff3.gz",  package="GenomicBreaks"), OSKA2016,    OKI2018_I69)
+gr_Oki_O <- load_genomic_breaks(system.file("extdata/I69-5__OSKA2016.gff3.gz",  package="GenomicBreaks"), OKI2018_I69, OSKA2016)
+gr_Oki_N <- load_genomic_breaks(system.file("extdata/I69-5__Norway.gff3.gz",    package="GenomicBreaks"), OKI2018_I69, OdB3)
+gr_O_N   <- load_genomic_breaks(system.file("extdata/OSKA2016__Norway.gff3.gz", package="GenomicBreaks"), OSKA2016,    OdB3)
+
+# Store in a list to easier iterate on all of them.
+gbs <- SimpleList(gr_O_Oki=gr_O_Oki, gr_Oki_O=gr_Oki_O, gr_Oki_N=gr_Oki_N, gr_O_N=gr_O_N)
+
+gr_O_Oki
+gr_O_Oki$query
 ```
 
-This is a GRanges object, quantifying the pairwise alignment between genomes of two Oikopleura dioica individuals; one from Osaka (reference) and one from Okinawa (query).  In whole genome alignment, the query genome is aligned TO the reference genome. The reference genome (left) is the main part of the object, and the query genome information (right) is contained in the metadata of the structure.
+Pairwise genome alignments are loaded in `GRanges` object.  By convention, we
+write that query genome (the one that was provided as a FASTA file) is aligned
+t the reference genome (the one that was indexed by the aligner). The reference
+genome (left) is the main part of the object, and the query genome information
+(right) is contained in the metadata of the structure.  Information on contig
+or scaffold length is loaded a `BSgenome` objects, from which `seqinfo` data
+is extracted and passed to the `GRanges`.  By convention, strand information
+of the alignment is held by the reference `GRanges`, and the query `GRanges`
+are strandless.  The objects are sorted by `seqname` first.
 
-The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments. 
+Although we are not using object-oriented classes for the moment, we will refer
+to the `GRanges` objects returned by `load_genomic_breaks` as `GenomicBreaks`
+objects.
+
+In the example displayed above, the object contains the pairwise alignment
+between genomes of two _Oikopleura dioica_ individuals; one from Osaka assembly
+_OSKA2016_ (reference) and one from Okinawa assembly _OKI2018_I69_ (query).
+
+The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments.
+
+### Breakpoints and alignment stops
 
 Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
 
@@ -67,12 +100,6 @@ get_bps(gr_O_Oki$query)
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
 
 This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
-
-Many of the functions of the GenomicBreaks package require a GRanges object as input. So if the user wants to perform analyses on the query genome, its metadata can be accessed as follows:
-
-```{r query GRanges}
-gr_O_Oki$query
-```
 
 ## Visualising alignments
 
@@ -104,8 +131,12 @@ For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignm
 
 ```{r coalescing algorithm}
 gr_O_Oki
-reduced_gr_O_Oki <- coalesce_contigs(gr_ob = gr_O_Oki, tol = 500)
+reduced_gr_O_Oki <- coalesce_contigs(gr_O_Oki)
 reduced_gr_O_Oki
+
+gr_Oki_O
+reduced_gr_Oki_O <- coalesce_contigs(gr_Oki_O)
+reduced_gr_Oki_O
 
 rbind(
   data.frame(
@@ -121,18 +152,100 @@ rbind(
 
 The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
 
+## Trivial inversions
+
+### Representation
+
+The inversion below:
+
+```
+┌───────────────┬───────────────┬───────────────┐
+│ XSR:101-200:+ │ XSR:201-300:- │ XSR:301-400:+ │  (OKI2018_I69)
+└───────────────┴───────────────┴───────────────┘
+┌───────────────┬───────────────┬───────────────┐
+│  S1:101-200:+ │  S1:201-300:+ │  S1:301-400:+ │  (OSKA2016)
+└───────────────┴───────────────┴───────────────┘
+```
+
+Is represented as:
+
+```{r ideal_breakpoints}
+example("flagInversions")
+
+library("Gviz")
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name = "genome")
+trk <- AnnotationTrack(inv, name = "inv")
+plotTracks(list(gen, trk))
+```
+
+*Without an outgroup it is not possible to know in which genome the break happened.*
+
+Nevertheless, the outward regions are syntenic in both genomes.
+
+### Detection
+
+```{r detect_trivial_invertions}
+sapply(gbs, function(gb) sum(flagInversions(coalesce_contigs(gb))$inv))
+
+x <- dist2next(ignore.strand = TRUE, flagInversions(reduced_gr_Oki_O))
+
+rbind(
+  data.frame(
+    width  = x[x$inv]$rdist,
+    object = "Reference"
+  ),
+  data.frame(
+    width  = x[x$inv]$qdist,
+    object= "Query"
+  )
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) +scale_x_log10() +
+  ggtitle("Width of the left-side unaligned region in inversions detected in reduced_gr_Oki_O")
+
+pmpcoord <- which(x$inv == TRUE)
+pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
+pmpcoord <- sort(unique(pmpcoord))
+x[pmpcoord]
+
+seqinfo2gieStain <- function(si) {
+  data.frame(
+    chrom      = seqlevels(si),
+    chromStart = 0,
+    chromEnd   = seqlengths(si),
+    name       = seqlevels(si),
+    gieStain   = "gneg"
+  )
+}
+
+#r <- 63:70
+r <- 94:98
+#r <- 316:319
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name="OKI2018_I69")
+ide <- IdeogramTrack(chromosome = seqlevelsInUse(x[r]), genome = "OKI2018_I69", bands = seqinfo2gieStain(OKI2018_I69))
+trk <- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])
+p1 <- grid::grid.grabExpr(plotTracks(list(ide, gen, trk), featureAnnotation = "id"))
+
+gen2 <- GenomeAxisTrack(name="OSKA2016")
+ide2 <- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r]), genome = "OSKA2016", bands = seqinfo2gieStain(OSKA2016))
+trk2 <- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])
+p2 <- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "id"))
+
+gridExtra::grid.arrange(p1, p2, nrow=2)
+```
+
 ## Tandem repeats
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
 
 ```{r echo=T, message=F, warning=F}
 
-tan_O <- rtracklayer::import.gff3("inst/extdata/OSKA2016.tantanf4w100.gff3.gz")
+tan_O <- rtracklayer::import.gff3(system.file("extdata/OSKA2016.tantanf4w100.gff3.gz",  package="GenomicBreaks"))
 tan_O <- GRanges(tan_O, seqinfo = seqinfo(OSKA2016))
 tan_gr_O <- tan_bp(gr_ob = gr_O_Oki, tan = tan_O, tol = 50)
 tan_gr_O
 
-tan_Oki <- rtracklayer::import.gff3("inst/extdata/I69-5.tantanf4w100.gff3.gz")
+tan_Oki <- rtracklayer::import.gff3(system.file("extdata/I69-5.tantanf4w100.gff3.gz",  package="GenomicBreaks"))
 tan_Oki <- GRanges(tan_Oki, seqinfo = seqinfo(OKI2018_I69))
 tan_gr_Oki <- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)
 tan_gr_Oki
@@ -163,8 +276,8 @@ Another characteristic of alignment stops that we can examine is the coverage de
 
 ```{r echo=T, message=F, warning=F}
 
-cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
-cov_gr_O_Oki
+# cov_gr_O_Oki <- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)
+# cov_gr_O_Oki
 
 ```
 
@@ -175,9 +288,9 @@ The function `master_bp_analysis` brings together the information about tandem r
 
 ```{r echo=T, message=F, warning=F}
 
-fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
-                                   q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
-fin_gr_O_Oki
+# fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
+#                                    q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
+# fin_gr_O_Oki
 
 ```
 
@@ -223,7 +336,7 @@ The directionaility here is consistent with the GC content analysis. Furthermore
 ## Cluster analysis
 
 
-```{r cluster_analysis}
+```{r cluster_analysis, fig.height=20, fig.width=20}
 # Accessory functions
 clusterHeatmap <- function(hm, k = 2) kmeans(image(hm), k)
 
@@ -295,11 +408,11 @@ The function `bp_pair_analysis` takes two pairwise alignments with the same refe
 
 ```{r echo=T, message=F, warning=F}
 
-hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
-plotHeatmapMeta(hm1)
-
-hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
-plotHeatmapMeta(hm2)
+# hm1 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")
+# plotHeatmapMeta(hm1)
+# 
+# hm2 <- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")
+# plotHeatmapMeta(hm2)
 
 ```
 
@@ -307,10 +420,10 @@ The accumulation of alignment breaks of one pairwise alignment onto another sugg
 
 ```{r echo=T, message=F, warning=F}
 
-reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
-
-hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
-plotHeatmapMeta(hm3)
+# reduced_gr_O_N <- coalesce_contigs(gr_ob = gr_O_N, tol = 500)
+# 
+# hm3 <- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")
+# plotHeatmapMeta(hm3)
 
 ```
 
@@ -320,11 +433,11 @@ The function `tandem_coverage` will plot the coverage of tandem repeats around c
 
 ```{r echo=T, message=F, warning=F}
 
-hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
-plotHeatmapMeta(hm_tan1)
-
-hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
-plotHeatmapMeta(hm_tan2)
+# hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
+# plotHeatmapMeta(hm_tan1)
+# 
+# hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
+# plotHeatmapMeta(hm_tan2)
 
 # should I also add comparison of proportions of tandem proximities before and after coalescion?
 
@@ -338,11 +451,11 @@ There appears to be less tandem repeats around alignment stops after coalescion,
 As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this particular assembly is quite good. In fact, we can investigate the coverge over alignment stops from the information obtained using `master_bp_analysis`. 
 
 ```{r echo=T, message=F, warning=F}
-fin_Oki <- fin_gr_O_Oki[[2]]
-min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
-min_cov
-length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
-length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
+# fin_Oki <- fin_gr_O_Oki[[2]]
+# min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
+# min_cov
+# length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
+# length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
 
 ```
 

@@ -4,7 +4,7 @@
 \alias{tandem_coverage}
 \title{Tandem Repeat Coverage Heatmap}
 \usage{
-tandem_coverage(gr_ob, tan_ref, win, lab)
+tandem_coverage(gr_ob, tan_ref, win, lab, ...)
 }
 \arguments{
 \item{gr_ob}{GRanges object containing pairwise alignment}
@@ -14,6 +14,8 @@ tandem_coverage(gr_ob, tan_ref, win, lab)
 \item{win}{window over which to observe tandem coverage over each breakpoint}
 
 \item{lab}{label for the plot}
+
+\item{...}{Other arguments passed to \code{get_bps}`.}
 }
 \value{
 The output is a coverage heatmap that can be plotted with smoothHeatmap(output), then pipe into plotHeatmapLis

@@ -4,29 +4,30 @@
 #'
 #' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "query".
 #' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
-#' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.
+#' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.  The returned object is sorted (ignoring strand).
 #' @examples
-#' gb1       <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
-#' gb1$query <- GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
+#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
 #' coalesce_contigs(gb1, 500)
-#' gb2       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb2$query <- GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
+#' gb2       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb2$query <- GenomicRanges::GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
 #' coalesce_contigs(gb2, 500)
-#' gb3       <- GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb3$query <- GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
+#' gb3       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
+#' gb3$query <- GenomicRanges::GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
 #' coalesce_contigs(gb3, 500)
-#' gb4       <- GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
-#' gb4$query <- GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
+#' gb4       <- GenomicRanges::GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
+#' gb4$query <- GenomicRanges::GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
 #' coalesce_contigs(gb4, 500)
 #' @export
 #' @importFrom GenomicRanges GRanges
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @importFrom stats na.omit
+#' @include dist2next.R
 
 # algorithm is vectorized for efficiency
 
-coalesce_contigs <- function(gr_ob, tol){
+coalesce_contigs <- function(gr_ob, tol = Inf) {
 
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
@@ -52,37 +53,34 @@ coalesce_contigs <- function(gr_ob, tol){
   gr_ob$q_col_with_next <- ( strand(gr_ob) == "+" & gr_ob$qnext == 1 ) |
                            ( strand(gr_ob) == "-" & gr_ob$qprev == 1 )
 
-  dist2next <- function (gr) c(distance(head(gr, -1), tail(gr, -1)) + 1, NA)
-
-  gr_ob$ref_gap_sizes_total <- dist2next(gr_ob)
-  gr_ob$q_gap_sizes_total <- dist2next(gr_ob$query)
+  gr_ob <- dist2next(gr_ob)
 
   #######################################################################
 
   # find intersection
-  gr_ob$con_met_total <- gr_ob$ref_gap_sizes_total <= tol &
-                         gr_ob$q_gap_sizes_total   <= tol &
+  gr_ob$con_met_total <- gr_ob$rdist < tol + 1 &
+                         gr_ob$qdist < tol + 1 &
                          gr_ob$q_col_with_next
   gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  gr_ob$r_add <- gr_ob$ref_gap_sizes_total
+  gr_ob$r_add <- gr_ob$rdist
   gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
   end(gr_ext) <- end(gr_ext) + gr_ob$r_add
 
-  # reduce and concatenate
+  # reduce, concatenate, and restore original order
   reduceAndSort <- function (gr) {
     gr <- reduce(gr, min.gapwidth = 0, with.revmap = TRUE)
     gr$order <- order(unlist(lapply(gr$revmap, head, 1)))
-    gr[gr$order]
+    gr <- gr[gr$order]
     granges(gr)
   }
 
   gr_red <- reduceAndSort(gr_ext)
 
   # apply extension to intersected zone (applying just to end points) (query only)
-  gr_ob$q_add <- gr_ob$q_gap_sizes_total
+  gr_ob$q_add <- gr_ob$qdist
   gr_ob[gr_ob$con_met_total != TRUE]$q_add <- 0
 
   end(  q_ext[strand(gr_ob) == "+"]) <- end(  q_ext[strand(gr_ob) == "+"]) + gr_ob[strand(gr_ob) == "+"]$q_add
@@ -91,5 +89,5 @@ coalesce_contigs <- function(gr_ob, tol){
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
 
-  gr_red
+  sort(gr_red, ignore.strand = TRUE)
 }

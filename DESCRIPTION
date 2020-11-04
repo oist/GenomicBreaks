@@ -6,12 +6,13 @@ Author: Charlotte West
 Maintainer: Charlotte West <charwest1@hotmail.co.uk>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: BSD 3
+License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6.0)
 Imports:
   rtracklayer,
+  S4Vectors,
   heatmaps,
   GenomicRanges,
   IRanges,
@@ -20,7 +21,33 @@ Imports:
   graphics,
   Biostrings,
   BSgenome
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: knitr
+Suggests:
+  BSgenome.Odioica.local.OKI2018.I69,
+  BSgenome.Odioica.local.OSKA2016,
+  BSgenome.Odioica.local.Odioica.reference.v3.0,
+  ggplot2,
+  gridExtra,
+  Gviz,
+  knitr,
+  magrittr,
+  rmarkdown
 VignetteBuilder: knitr
+Collate: 
+    'align_scaf_plot_2.R'
+    'bp_coverage.R'
+    'bp_heatmap.R'
+    'bp_pair_analysis.R'
+    'dist2next.R'
+    'coalesce_contigs.R'
+    'flagInversions.R'
+    'getRefGenome.R'
+    'get_bps.R'
+    'int_frag.R'
+    'load_genomic_breaks.R'
+    'master_bp_analysis.R'
+    'scaf_align_plot.R'
+    'swap.R'
+    'tan_bp.R'
+    'tandem_coverage.R'

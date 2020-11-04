@@ -10,6 +10,7 @@
 #' @import GenomicRanges
 #' @import IRanges
 #' @import GenomeInfoDb
+#' @importFrom S4Vectors queryHits
 #' @importFrom stats na.omit
 
 # if window is greater than possible rang (i.e extends outside of a scaffold) then just give greatest possible range, even if asymmetric
