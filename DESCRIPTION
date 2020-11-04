@@ -42,6 +42,7 @@ Collate:
     'bp_pair_analysis.R'
     'dist2next.R'
     'coalesce_contigs.R'
+    'flagInsersions.R'
     'flagInversions.R'
     'getRefGenome.R'
     'get_bps.R'

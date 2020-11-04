@@ -301,6 +301,65 @@ p2 <- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "
 gridExtra::grid.arrange(p1, p2, nrow=2)
 ```
 
+## Trivial insersions
+
+### Representation
+
+The in<b>s</b>ersion below:
+
+```
+┌───────────────┬───────────────┬───────────────┐
+│ XSR:101-200:+ │ XSR:201-300:+ │ XSR:301-400:+ │  (OKI2018_I69)
+└───────────────┴───────────────┴───────────────┘
+┌───────────────┬───────────────┬───────────────┐
+│  S1:101-200:+ │  S2:801-900:+ │  S1:201-300:+ │  (OSKA2016)
+└───────────────┴───────────────┴───────────────┘
+```
+
+Is represented as:
+
+```{r ideal_insertions}
+example("flagInsersions")
+
+library("Gviz")
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name = "genome")
+trk <- AnnotationTrack(ins, name = "ins")
+plotTracks(list(gen, trk))
+```
+
+*Without an outgroup it is not possible to know in which genome the break happened.*
+
+### Detection
+
+```{r detect_trivial_insertions}
+sapply(gbs, function(gb) sum(flagInsersions(coalesce_contigs(gb))$ins))
+
+y <- flagInsersions(reduced_gr_Oki_O)
+
+#r <- 63:70
+r <- 23:30
+#r <- 316:319
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name="OKI2018_I69")
+ide <- IdeogramTrack(chromosome = seqlevelsInUse(x[r]), genome = "OKI2018_I69", bands = seqinfo2gieStain(OKI2018_I69))
+trk <- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])
+p1 <- grid::grid.grabExpr(plotTracks(list(ide, gen, trk), featureAnnotation = "id"))
+
+gen2 <- GenomeAxisTrack(name="OSKA2016")
+ide2 <- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r])[1], genome = "OSKA2016", bands = seqinfo2gieStain(OSKA2016))
+trk2 <- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])
+p2 <- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "id"))
+
+
+gen3 <- GenomeAxisTrack(name="OSKA2016")
+ide3 <- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r])[2], genome = "OSKA2016", bands = seqinfo2gieStain(OSKA2016))
+trk3 <- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])
+p3 <- grid::grid.grabExpr(plotTracks(list(ide3,gen3,trk3), featureAnnotation = "id"))
+
+gridExtra::grid.arrange(p1, p2, p3, nrow=3)
+```
+
 ## Tandem repeats
 
 Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.

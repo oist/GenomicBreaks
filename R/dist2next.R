@@ -6,6 +6,7 @@
 #' to Inf arbitrarily.
 #'
 #' @param gr_ob A GenomicBreaks object.
+#' @param step Distance to the n^th^ block (default: first).
 #' @param ignore.strand Calculate distance for ranges on different starands.
 #'
 #' @return Returns the object with two extra metadata colums, `rdist` and
@@ -13,18 +14,25 @@
 #' genomes respectively.
 #'
 #' @examples
-#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
-#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:-"))
+#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:201-300:+", "chr1:400-500:+", "chr1:700-800:-"))
+#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:201-300:+", "chr1:400-500:+", "chr1:700-800:-"))
 #' dist2next(gb1)
 #' dist2next(gb1, ignore.strand = TRUE)
+#' dist2next(gb1, 2)
 #'
 #' @importFrom GenomicRanges distance
 #' @importFrom utils head tail
 #' @export
 
-dist2next <- function (gr_ob, ignore.strand = FALSE) {
-  d2n <- function(gr) c(distance(head(gr, -1), tail(gr, -1), ignore.strand) + 1, Inf)
-  gr_ob$rdist <- d2n(gr_ob)
-  gr_ob$qdist <- d2n(gr_ob$query)
+dist2next <- function (gr_ob, step = 1, ignore.strand = FALSE) {
+  d2n <- function(gr, step) {
+    c( distance( head(gr, -step)
+               , tail(gr, -step)
+               , ignore.strand) + 1  # Why is there +1 here ??
+     , rep(Inf, step)
+     )
+  }
+  gr_ob$rdist <- d2n(gr_ob      , step)
+  gr_ob$qdist <- d2n(gr_ob$query, step)
   gr_ob
 }
