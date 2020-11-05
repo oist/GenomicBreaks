@@ -198,11 +198,13 @@ gr2dna_seg <- function (gr) {
 
 gbRef2dna_seq <- function (gb) {
   if (is.null(names(gb))) names(gb) <- as.character(gb)
+  strand(gb) <- "+"
   gr2dna_seg(gb)
 }
 
 gbQuery2dna_seq <- function (gb) {
   if (is.null(names(gb$query))) names(gb$query) <- as.character(gb)
+  strand(gb$query) <- strand(gb)
   gr2dna_seg(gb$query)
 }
 
