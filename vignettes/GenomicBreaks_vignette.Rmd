@@ -171,22 +171,14 @@ reduced_gr_Oki_N
 gr_O_N
 reduced_gr_O_N <- coalesce_contigs(gr_O_N)
 reduced_gr_O_N
-
-rbind(
-  data.frame(
-    width  = width(gr_O_Oki),
-    object = "gr_O_Oki"
-  ),
-  data.frame(
-    width  = width(reduced_gr_O_Oki),
-    object= "reduced_gr_O_Oki"
-  )
-) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) + scale_x_log10()
 ```
 
-The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.
+The resulting GRanges object has far fewer alignments and therefore far fewer
+alignment stops. The algorithm is an initial step in alignment stop filtering,
+with the goal of a reduced number of alignment stops that have a high
+probability of being breakpoints.
 
-## Annotation of narrow-width alignments
+### Narrow-width alignments
 
  - What do they represent ?
  - Keep or discard ?
@@ -198,8 +190,52 @@ doubleCoalesce <- function (gb, width = 1000) {
 }
 
 doubleReduced_gr_Oki_O <- doubleCoalesce(reduced_gr_Oki_O)
+doubleReduced_gr_O_Oki <- doubleCoalesce(reduced_gr_O_Oki)
 doubleReduced_gr_Oki_N <- doubleCoalesce(reduced_gr_Oki_N)
 doubleReduced_gr_O_N <- doubleCoalesce(reduced_gr_O_N)
+```
+
+### Summary plot
+
+```{r width_after_coalescing}
+rbind(
+  data.frame(
+    width  = width(gr_O_Oki),
+    object = "01 gr_O_Oki"
+  ),
+  data.frame(
+    width  = width(reduced_gr_O_Oki),
+    object= "02 reduced_gr_O_Oki"
+  ),
+  data.frame(
+    width  = width(doubleReduced_gr_O_Oki),
+    object= "03 doubleReduced_gr_O_Oki"
+  ),
+  data.frame(
+    width  = width(gr_Oki_O),
+    object = "04 gr_Oki_O"
+  ),
+  data.frame(
+    width  = width(reduced_gr_Oki_O),
+    object= "05 reduced_gr_Oki_O"
+  ),
+  data.frame(
+    width  = width(doubleReduced_gr_Oki_O),
+    object= "06 doubleReduced_gr_Oki_O"
+  ),
+  data.frame(
+    width  = width(gr_O_N),
+    object = "07 gr_O_N"
+  ),
+  data.frame(
+    width  = width(reduced_gr_O_N),
+    object= "08 reduced_gr_O_N"
+  ),
+  data.frame(
+    width  = width(doubleReduced_gr_O_N),
+    object= "09 doubleReduced_gr_O_N"
+  )
+) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object, ncol = 3) + scale_x_log10()
 ```
 
 ## Genome plots with genoPlotR
