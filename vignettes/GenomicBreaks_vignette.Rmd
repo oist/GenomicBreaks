@@ -101,6 +101,32 @@ Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genom
 
 This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
 
+## Phylogenetic tree
+
+We assume that the _North Pacific_ and the _Atlantic_ species are more related
+to each other than to the _Okinawa_ species.
+
+The purpose of the `mkTree` function is to make new trees with the same topology
+and scaffold names instead of species names.  If there is a way to simple relabel
+leaves in existing tree, please let me know.
+
+```{r phylogenetic_tree, fig.height=4, fig.width=6, dev="svg"}
+requireNamespace("ade4")
+mkTree <- function (Oki, Osaka, Norway) {
+  ade4::newick2phylog(
+    paste0(
+      "(", Oki, ":2,",
+        "(", Osaka, ":1, ",
+             Norway, ":1",
+        "):1",
+      ");"
+    )
+  )
+}
+tree <- mkTree("Okinawa", "North Pacific", "Norway")
+plot(tree)
+```
+
 ## Visualising alignments
 
 We can use the function `scaf_align_plot` to see the alignment of query scaffolds/chromosomes onto a specific reference scaffold/chromosome of interest.
