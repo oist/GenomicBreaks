@@ -724,11 +724,41 @@ hm_tan2 <- feature_coverage(gr_ob = reduced_gr_O_Oki, feat = tan_O, win = 4000, 
 plotHeatmapMeta(hm_tan2)
 
 # should I also add comparison of proportions of tandem proximities before and after coalescion?
+```
 
+There appears to be less tandem repeats around alignment stops after coalescion,
+inferring that perhaps that some are artefacts of difficult alignment near to
+tandem repeats. 
+
+
+## Gene feature coverage around alignment stops (breakpoints)
+
+The function `feature_coverage` will plot the coverage of tandem repeats around
+centred alignment stops. 
+
+```{r genomic_features}
+#zcat OKI2018_I69_1.0.gene_models.gff3.gz | awk '$7 != "-"' > /tmp/plusstrand.gff3
+tx_OKI <- rtracklayer::import.gff3("/tmp/plusstrand.gff3")
+tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
+tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
+
+hm_genes_OKI      <- feature_coverage(gr_Oki_O, feat = genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
+hm_promoters_OKI  <- feature_coverage(gr_Oki_O, feat = promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
+hm_exons_OKI      <- feature_coverage(gr_Oki_O, feat = exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
+hm_introns_OKI    <- feature_coverage(gr_Oki_O, feat = intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
+hm_cds_OKI        <- feature_coverage(gr_Oki_O, feat = cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
+hm_5utrs_OKI      <- feature_coverage(gr_Oki_O, feat = unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
+hm_3utrs_OKI      <- feature_coverage(gr_Oki_O, feat = unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
+
+plotHeatmapMeta(list(hm_genes_OKI, hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_cds_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
+plotHeatmapMeta(list(hm_genes_OKI))
+plotHeatmapMeta(list(hm_exons_OKI, hm_cds_OKI))
+plotHeatmapMeta(list(hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
+plotHeatmapMeta(list(hm_exons_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
+plotHeatmapMeta(list(hm_5utrs_OKI, hm_3utrs_OKI))
 ```
 
 There appears to be less tandem repeats around alignment stops after coalescion, inferring that perhaps that some are artefacts of difficult alignment near to tandem repeats. 
-
 
 ## Okinawa genome coverage
 
