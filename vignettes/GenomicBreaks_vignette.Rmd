@@ -537,17 +537,17 @@ We can use another script to plot the density of tandem repeats around alignment
 
 ```{r echo=T, message=F, warning=F}
 hm_tan_O <- gr_O_Oki %>%
-  tandem_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  feature_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
   smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
   plotHeatmap
 
 hm_red_tan_O <- reduced_gr_O_Oki %>%
-  tandem_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  feature_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
   smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
   plotHeatmap
 
 hm_tan_Oki <- gr_Oki_O %>%
-  tandem_coverage(tan_ref = tan_Oki, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
+  feature_coverage(tan_Oki, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %>%
   smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
   plotHeatmapList
 ```
@@ -632,9 +632,9 @@ subsetHeatmap <- function(hm, bool) {
 }
 
 # DAta
-hm_GC   <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "GC",     direction = "left")
-hm_TATA <- bp_heatmap(     gr_Oki_O, basep_range  = 1000, pat = "TATA",   direction = "left")
-hm_tan  <- tandem_coverage(gr_Oki_O, tan_Oki, win = 1000, lab = "Tandem", direction = "left")
+hm_GC   <- bp_heatmap(      gr_Oki_O, basep_range  = 1000, pat = "GC",     direction = "left")
+hm_TATA <- bp_heatmap(      gr_Oki_O, basep_range  = 1000, pat = "TATA",   direction = "left")
+hm_tan  <- feature_coverage(gr_Oki_O, tan_Oki, win = 1000, lab = "Tandem", direction = "left")
 
 # Define 3 K-mean clusters
 clusterHeatmap(hm_GC, 3) -> hm_cl_k4
@@ -710,15 +710,16 @@ The accumulation of alignment breaks of one pairwise alignment onto another sugg
 
 ## Tandem repeat coverage around alignment stops (breakpoints)
 
-The function `tandem_coverage` will plot the coverage of tandem repeats around centred alignment stops. 
+The function `feature_coverage` will plot the coverage of tandem repeats around
+centred alignment stops. 
 
 ```{r echo=T, message=F, warning=F}
 
-# hm_tan1 <- tandem_coverage(gr_ob = gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "Osk ~ Oki")
-# plotHeatmapMeta(hm_tan1)
-# 
-# hm_tan2 <- tandem_coverage(gr_ob = reduced_gr_O_Oki, tan_ref = tan_O, win = 2000, lab = "OSK~Oki (coalesced)")
-# plotHeatmapMeta(hm_tan2)
+hm_tan1 <- feature_coverage(gr_ob = gr_O_Oki, feat = tan_O, win = 4000, lab = "Osk ~ Oki", direction = "left")
+plotHeatmapMeta(hm_tan1)
+ 
+hm_tan2 <- feature_coverage(gr_ob = reduced_gr_O_Oki, feat = tan_O, win = 4000, lab = "OSK~Oki (coalesced)", direction = "left")
+plotHeatmapMeta(hm_tan2)
 
 # should I also add comparison of proportions of tandem proximities before and after coalescion?
 

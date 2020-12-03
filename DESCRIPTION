@@ -42,6 +42,7 @@ Collate:
     'bp_pair_analysis.R'
     'dist2next.R'
     'coalesce_contigs.R'
+    'feature_coverage.R'
     'flagInsersions.R'
     'flagInversions.R'
     'getRefGenome.R'
@@ -52,4 +53,3 @@ Collate:
     'scaf_align_plot.R'
     'swap.R'
     'tan_bp.R'
-    'tandem_coverage.R'
