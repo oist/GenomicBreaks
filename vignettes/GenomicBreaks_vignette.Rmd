@@ -1,7 +1,9 @@
 ---
 title: "GenomicBreaks Vignette"
-author: "Charlotte West"
-date: "3/27/2020"
+author: 
+ - "Charlotte West"
+ - "Charles Plessy"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding[utf8]{inputenc}
