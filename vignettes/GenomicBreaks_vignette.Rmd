@@ -24,6 +24,7 @@ The GenomicBreaks R package contains tools for visualising and analysing charact
 
 ```{r loadlib, echo=T, results='hide'}
 suppressPackageStartupMessages({
+library(GenomicFeatures)
 library(GenomicRanges)
 library(IRanges)
 library(GenomeInfoDb)
@@ -737,8 +738,7 @@ The function `feature_coverage` will plot the coverage of tandem repeats around
 centred alignment stops. 
 
 ```{r genomic_features}
-#zcat OKI2018_I69_1.0.gene_models.gff3.gz | awk '$7 != "-"' > /tmp/plusstrand.gff3
-tx_OKI <- rtracklayer::import.gff3("/tmp/plusstrand.gff3")
+tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
 tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
 tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
 
@@ -753,7 +753,7 @@ hm_3utrs_OKI      <- feature_coverage(gr_Oki_O, feat = unlist(threeUTRsByTranscr
 plotHeatmapMeta(list(hm_genes_OKI, hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_cds_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
 plotHeatmapMeta(list(hm_genes_OKI))
 plotHeatmapMeta(list(hm_exons_OKI, hm_cds_OKI))
-plotHeatmapMeta(list(hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
+plotHeatmapMeta(list(hm_exons_OKI, hm_introns_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
 plotHeatmapMeta(list(hm_exons_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
 plotHeatmapMeta(list(hm_5utrs_OKI, hm_3utrs_OKI))
 ```
