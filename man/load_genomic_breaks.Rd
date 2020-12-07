@@ -4,38 +4,58 @@
 \alias{load_genomic_breaks}
 \title{Load pairwise genome alignments}
 \usage{
-load_genomic_breaks(file, bsgenome_ref, bsgenome_query, sort = TRUE)
+load_genomic_breaks(
+  file,
+  target_bsgenome,
+  query_bsgenome,
+  sort = TRUE,
+  type = "match_part"
+)
 }
 \arguments{
-\item{file}{Path to a file in GFF3 format}
+\item{file}{Path to a file in GFF3 format.}
 
-\item{bsgenome_ref}{A \code{BSgenome} object representing the reference genome.}
+\item{target_bsgenome}{A \code{BSgenome} object representing the target genome.}
 
-\item{bsgenome_query}{A \code{BSgenome} object representing the query genome.}
+\item{query_bsgenome}{A \code{BSgenome} object representing the query genome.}
 
 \item{sort}{Returns the object sorted, ignoring strand information.}
+
+\item{type}{Sequence ontology term representing an alignment block
+(default: \code{match_part}).}
 }
 \value{
 Returns a \verb{GRanges object} where each element represents a pairwise
 alignment block.  The \code{granges} part of the object contains the coordinates
-on the \emph{reference} genome, and the \code{query} metadata column contains the query
+on the \emph{target} genome, and the \code{query} metadata column contains the \emph{query}
 coordinates in \code{GRanges} format.  The \code{seqinfo} of each \code{BSgenome} object
 passed as parameters are copied to the \code{GRanges} objects accordingly.
 }
 \description{
-Loads alignments of a query genome to a reference genome from a text file in
-GFF3 format
+Loads alignments of a \emph{query} genome to a \emph{target} genome from a text file in
+GFF3 format.  By convention, the \emph{target} genome is the one that was indexed
+by the aligner.
 }
 \details{
 This function expects the pairwise alignment to be represented in GFF3 format
 in the following way:
 \itemize{
-\item Alignments blocks are represented by \code{match_part} entries in the \emph{type}
-column  Other entries will be discarded.
-\item The coordinate system of the file is the one of the \emph{reference} genome.
+\item Alignments blocks are represented by entries in specific sequence ontology
+term in the \emph{type} column.  Other entries will be discarded.  The default
+type is \code{match_part}.
+\item The coordinate system of the file is the one of the \emph{target} genome.
 \item The \code{Target} tag in the \emph{attribute} column contains the coordinates of
-the match in the \emph{query} genome.
+the match in the \emph{query} genome.  (Sorry that it is confusing…)
 \item Stand information is set so that \emph{query} genome coordinates are always on
 the \emph{plus} strand.
 }
+}
+\examples{
+\dontrun{
+load_genomic_breaks(
+  system.file("extdata/OSKA2016__I69-5.gff3.gz", package="GenomicBreaks"),
+  target = OSKA2016,
+  query = OKI2018_I69)
+}
+
 }
