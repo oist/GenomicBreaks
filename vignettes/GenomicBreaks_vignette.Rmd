@@ -313,10 +313,6 @@ plot_gene_map(dsList, compList)
 ## Extract ranges from the same reference region in two GenomicBreaks objects
 
 ```{r intersect_GBs}
-intersectGBs <- function (gb1, gb2) {
-  roi <- range(gb1, ignore.strand = TRUE)
-  gb2[subjectHits(findOverlaps(roi, gb2))]
-}
 #roi <- GRanges("chr1:1222000-1240000")
 #roi <- GRanges("chr1:1023578-1032430")
 #roi <- GRanges("chr1:2668866-2692347")
@@ -325,10 +321,10 @@ roi <- GRanges("chr1:6379932-6505436")
 roi <- GRanges("chr1:7711018-7734330")
 #roi <- GRanges("chr1:7711018-7734330") + 10000
 
-roi_Oki_O <- intersectGBs(roi, doubleReduced_gr_Oki_O)
-roi_Oki_N <- intersectGBs(roi, doubleReduced_gr_Oki_N)
-roi2 <- range(intersectGBs(roi, doubleReduced_gr_Oki_O)$query)
-roi_O_N <- intersectGBs(roi2, doubleReduced_gr_O_N)
+roi_Oki_O <- subsetByOverlaps(doubleReduced_gr_Oki_O, roi)
+roi_Oki_N <- subsetByOverlaps(doubleReduced_gr_Oki_N, roi)
+roi2 <- range(subsetByOverlaps(doubleReduced_gr_Oki_O, roi)$query)
+roi_O_N <- subsetByOverlaps(doubleReduced_gr_O_N, roi2)
 ```
 
 ### Plot a simple region.
