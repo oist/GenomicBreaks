@@ -741,14 +741,16 @@ The function `feature_coverage` will plot the coverage of tandem repeats around
 centred alignment stops. 
 
 ```{r genomic_features}
+current_GB <- gr_Oki_O # To ease recomputing with another object
+#current_GB <- reduced_gr_Oki_O
 
-hm_genes_OKI      <- feature_coverage(gr_Oki_O, feat = genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
-hm_promoters_OKI  <- feature_coverage(gr_Oki_O, feat = promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
-hm_exons_OKI      <- feature_coverage(gr_Oki_O, feat = exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
-hm_introns_OKI    <- feature_coverage(gr_Oki_O, feat = intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
-hm_cds_OKI        <- feature_coverage(gr_Oki_O, feat = cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
-hm_5utrs_OKI      <- feature_coverage(gr_Oki_O, feat = unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
-hm_3utrs_OKI      <- feature_coverage(gr_Oki_O, feat = unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
+hm_genes_OKI      <- feature_coverage(current_GB, genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
+hm_promoters_OKI  <- feature_coverage(current_GB, promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
+hm_exons_OKI      <- feature_coverage(current_GB, exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
+hm_introns_OKI    <- feature_coverage(current_GB, intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
+hm_cds_OKI        <- feature_coverage(current_GB, cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
+hm_5utrs_OKI      <- feature_coverage(current_GB, unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
+hm_3utrs_OKI      <- feature_coverage(current_GB, unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
 
 plotHeatmapMeta(list(hm_genes_OKI, hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_cds_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
 plotHeatmapMeta(list(hm_genes_OKI))
