@@ -43,7 +43,14 @@ library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 
 library(GenomicBreaks)
+```
 
+Loading genome annotations.
+
+```{r load_genomic_features}
+tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
+tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
+tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
 ```
 
 ### GenomicBreaks object
@@ -734,9 +741,6 @@ The function `feature_coverage` will plot the coverage of tandem repeats around
 centred alignment stops. 
 
 ```{r genomic_features}
-tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
-tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
-tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
 
 hm_genes_OKI      <- feature_coverage(gr_Oki_O, feat = genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
 hm_promoters_OKI  <- feature_coverage(gr_Oki_O, feat = promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
