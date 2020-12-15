@@ -384,7 +384,12 @@ plot_gene_map(dsList, compList, dna_seg_scale=TRUE, tree=mkTree(roiNameOki, roiN
 
 ### Representation
 
-The inversion below:
+In the triplet of alignments below below, the middle block is on a different
+strand than its neighbors, and they would be colinear otherwise.  This represents
+an inversion.  *Without an outgroup it is not possible to know in which of the
+target or query genome the break happened.*
+
+Let's call "gaps" the unaligned regions between the blocks.
 
 ```
 ┌───────────────┬───────────────┬───────────────┐
@@ -395,7 +400,7 @@ The inversion below:
 └───────────────┴───────────────┴───────────────┘
 ```
 
-Is represented as:
+It is represented as:
 
 ```{r ideal_breakpoints}
 example("flagInversions")
@@ -407,16 +412,14 @@ trk <- AnnotationTrack(inv, name = "inv")
 plotTracks(list(gen, trk))
 ```
 
-*Without an outgroup it is not possible to know in which genome the break happened.*
 
-Nevertheless, the outward regions are syntenic in both genomes.
-
-### Detection
+### Number of trivial inversions
 
 ```{r detect_trivial_invertions}
 sapply(gbs, function(gb) sum(flagInversions(coalesce_contigs(gb))$inv))
+```
 
-x <- dist2next(ignore.strand = TRUE, flagInversions(reduced_gr_Oki_O))
+Approximately 1/4 less inversions are detected in Osaka–Norway comparisons.
 
 rbind(
   data.frame(
