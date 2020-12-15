@@ -465,8 +465,6 @@ filterInv3 <- function(gr) {
 data.frame(width=width(lgaps_Oki_O)) %>%
   ggplot(aes(width)) + geom_histogram() +  scale_x_log10()
 
-x <- reduced_gr_Oki_O %>% flagInversions() %>% dist2next(ignore.strand = TRUE)
-
 rbind(
   data.frame(
     width  = x[x$inv]$rdist,
@@ -626,7 +624,11 @@ t.test(score(pwmHits), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
 t.test(score(subsetByOverlaps(pwmHits, invs)), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
 ```
 
+### Representation of some inversions
+
 ```{r}
+x <- reduced_gr_Oki_O %>% flagInversions() %>% dist2next(ignore.strand = TRUE)
+
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
