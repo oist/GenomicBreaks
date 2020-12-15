@@ -526,6 +526,40 @@ slPWM <- seqLogo::makePWM(pwm)
 
 A palindromic (rAAGCsGCwwmkCGrCTTyn) motif is found in the left gaps.
 
+```{r screenJaspar}
+checkJaspar <- function (pwm) {
+  #---- see https://compgenomr.github.io/book/motif-discovery.html
+  pwmLib <- getMatrixSet(
+    JASPAR2018::JASPAR2018,
+    opts = list(
+      collection = 'CORE',
+   #   species    = 'Homo sapiens',
+      matrixtype = 'PWM'))
+  
+  pwm_sim <- PWMSimilarity( pwmLib, PWMat,  method = 'Pearson')
+
+  pwmLibDf <- data.frame(
+    ID        = sapply(pwmLib, ID),
+    name      = sapply(pwmLib, name),
+    row.names = seq_along(pwmLib)
+  )
+  pwmLibDf$similarity <- pwm_sim[pwmLibDf$ID]
+  pwmLibDf[order(-pwmLibDf$similarity),]
+}
+
+PWMat <- PWMatrix(ID="rAAGCsGCwwmkCGrCTTyn", profileMatrix = pwm)
+pwm_res <- checkJaspar(PWMat)
+head(pwm_res)
+
+pwmhalf <- pwm[,2:8]
+pwmhalf_res <- checkJaspar(PWMatrix(ID="AAGCnGC", profileMatrix = pwmhalf))
+head(pwmhalf_res)
+```
+
+But a search in Jaspar with either the full motif or its halof did not reveal
+strong hits.  Visual inspection of PRDM9 sequence logos via Google did not show
+similarity either.
+
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
