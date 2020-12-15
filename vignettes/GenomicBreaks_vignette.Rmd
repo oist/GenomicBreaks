@@ -578,6 +578,29 @@ Hits coordinates were encoded in a BED file uploaded to the ZENBU genome browser
 Visual inspection gave me the impression that the motif might be related to
 repeats.
 
+### Whole-genome search of the motif
+
+Disappointingly, the motif is found equally in gaps and inversions when searched
+with its PWM.
+
+```{r }
+# No exact match
+vmatchPattern("AAGCsGCwwmkCGrCTTyn", OKI2018_I69)
+
+pwmHits <- matchPWM(pwm, OKI2018_I69)
+length(pwmHits)
+hist(score(pwmHits))
+
+hist(score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
+hist(score(subsetByOverlaps(pwmHits, invs)))
+
+# Scores in gaps are higher than average.
+t.test(score(pwmHits), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
+
+# Scores in gaps and inversions are not different 
+t.test(score(subsetByOverlaps(pwmHits, invs)), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
+```
+
 ```{r}
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
