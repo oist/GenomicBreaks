@@ -505,6 +505,27 @@ I was tempted to explain this difference with A/T homopolymer stetches.  But
 de novo motif prediction with rGADEM finds AT-rich motifs in any set of Oik
 sequences that I have tried.
 
+```{r search_for_motifs_in_inversions}
+library("rGADEM")
+# Slow !
+# gadem <- GADEM(invSeq_Oki_O, verbose=1, genome=OKI2018_I69)
+# consensus(gadem)
+# [1] "nAAAAwwnnnrAAAAn"
+
+# gadem <- GADEM(lgapsSeq_Oki_O, verbose=1, genome=OKI2018_I69)
+# consensus(gadem)
+# [1] "rAAGCsGCwwmkCGrCTTyn" "nAAAAwwnnwnAAAAAn"    "nTTTsAAAAw"           "nCCTGAsTCAGGkTTTn"    "nTTTTTnnnnrAAAn"      "wTAAGGGTrTCm"
+
+#saveRDS(gadem, file = "lgapsSeq_Oki_O_gadem.rds")
+gadem <- readRDS("lgapsSeq_Oki_O_gadem.rds")
+
+pwm <- rGADEM::getPWM(gadem)[[1]]
+seqLogo::seqLogo(pwm)
+slPWM <- seqLogo::makePWM(pwm)
+```
+
+A palindromic (rAAGCsGCwwmkCGrCTTyn) motif is found in the left gaps.
+
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
