@@ -560,6 +560,25 @@ But a search in Jaspar with either the full motif or its halof did not reveal
 strong hits.  Visual inspection of PRDM9 sequence logos via Google did not show
 similarity either.
 
+### Export rAAGCsGCwwmkCGrCTTyn alignments to a file
+
+```{r pwmHitSequenceExportForGLAM2}
+gademHitsToBS <- function(gadem, n) {
+  alignList <- gadem[[n]]@alignList
+  pwmSeqs <- sapply(alignList, function(align) align@seq)
+  Biostrings::DNAStringSet(pwmSeqs)
+}
+
+pwmSeqs <- gademHitsToBS(gadem, 1)
+writeXStringSet(pwmBS, file="firstGapsGADEMpwm.fasta")
+```
+
+The GLAM2 motif finder was run on this file, and then to screen the genome.
+Hits coordinates were encoded in a BED file uploaded to the ZENBU genome browser.
+Visual inspection gave me the impression that the motif might be related to
+repeats.
+
+```{r}
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
