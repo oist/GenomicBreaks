@@ -571,12 +571,18 @@ gademHitsToBS <- function(gadem, n) {
 
 pwmSeqs <- gademHitsToBS(gadem, 1)
 writeXStringSet(pwmBS, file="firstGapsGADEMpwm.fasta")
+
+# writeXStringSet(lgapsSeq_Oki_O, file="firstGaps.fasta")
+# I used this FASTA export to search for motifs with GLAM2, and it also
+# returned A/T polymers.
 ```
 
 The GLAM2 motif finder was run on this file, and then to screen the genome.
 Hits coordinates were encoded in a BED file uploaded to the ZENBU genome browser.
 Visual inspection gave me the impression that the motif might be related to
 repeats.
+
+GLAM2 search of the gap sequences did not return a motif similar to "AAGCsGCwwmkCGrCTTyn".
 
 ### Whole-genome search of the motif
 
