@@ -522,6 +522,25 @@ gadem <- readRDS("lgapsSeq_Oki_O_gadem.rds")
 pwm <- rGADEM::getPWM(gadem)[[1]]
 seqLogo::seqLogo(pwm)
 slPWM <- seqLogo::makePWM(pwm)
+
+#RGadem positive control: check introns ?
+# set.seed(1664)
+# intr <- sample(intronicParts(tx_OKI), 1000)
+# intr <- BSgenome::getSeq(OKI2018_I69, intr)
+# gadem <- GADEM(intr, verbose=1, genome=OKI2018_I69)
+# > consensus(gadem)
+# [1] "nAAAAwnnwnAAAwn"
+# Also found motifs like rryCAATTbwTkCGmAkyT
+
+
+#RGadem positive control: check promoters ?
+# set.seed(1664)
+# prom <- sample(promoters(tx_OKI), 1000)
+# prom <- BSgenome::getSeq(OKI2018_I69, prom)
+# gadem <- GADEM(prom, verbose=1, genome=OKI2018_I69)
+# consensus(gadem)
+# [1] "nAAAAwwnwnnAAAAwn" "nTTTTCTTyn"       
+# Also found motifs like TTTmAAAA
 ```
 
 A palindromic (rAAGCsGCwwmkCGrCTTyn) motif is found in the left gaps.
