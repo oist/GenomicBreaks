@@ -421,10 +421,56 @@ sapply(gbs, function(gb) sum(flagInversions(coalesce_contigs(gb))$inv))
 
 Approximately 1/4 less inversions are detected in Osaka–Norway comparisons.
 
+### Isolate the left-side gaps in inversions
+
+```{r search_for_inversions}
+
+lgaps <- function(reduced_gr) {
+  # Flag inversions.
+  #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE
+  lgaps <- flagInversions(reduced_gr)
+  # Extract inversions
+  invs <- lgaps[lgaps$inv]
+  # Extend inversion of 1 bp so that they overlap with their neighbor gap
+  invs <- shift(invs, 1)
+  # Remove strand information
+  strand(lgaps) <- "*"
+  # Then extract gap positions ignoring strand
+  lgaps <- gaps(lgaps)
+  # Remove bogus gaps on + and - strands
+  lgaps <- lgaps[strand(lgaps) == "*"] 
+  # Return the gaps overlapping with the flagged inversions
+  subsetByOverlaps(lgaps, invs)
+}
+
+# Get inverted blocks
+filterInv <- function(gr) {
+  gr <- flagInversions(gr)
+  names(gr) <- seq_along(gr)
+  gr[which(gr$inv)+1]
+}
+
+# Same with flanking regions
+filterInv3 <- function(gr) {
+  gr <- flagInversions(gr)
+  names(gr) <- seq_along(gr)
+  gr[sort(unique(c( which(gr$inv)
+                  , which(gr$inv)+1
+                  , which(gr$inv)+2)))]
+}
+
+#filterInv3(reduced_gr_Oki_O) %>% Head(20)
+#filterInv3(reduced_gr_Oki_N) %>% Head(20)
+
+data.frame(width=width(lgaps_Oki_O)) %>%
+  ggplot(aes(width)) + geom_histogram() +  scale_x_log10()
+
+x <- reduced_gr_Oki_O %>% flagInversions() %>% dist2next(ignore.strand = TRUE)
+
 rbind(
   data.frame(
     width  = x[x$inv]$rdist,
-    object = "target"
+    object = "Target"
   ),
   data.frame(
     width  = x[x$inv]$qdist,
@@ -433,6 +479,9 @@ rbind(
 ) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) +scale_x_log10() +
   ggtitle("Width of the left-side unaligned region in inversions detected in reduced_gr_Oki_O")
 
+lgaps_Oki_O <- lgaps(reduced_gr_Oki_O)
+lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
+```
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
