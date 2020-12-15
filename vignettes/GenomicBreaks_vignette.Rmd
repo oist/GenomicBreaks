@@ -482,6 +482,29 @@ rbind(
 lgaps_Oki_O <- lgaps(reduced_gr_Oki_O)
 lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
 ```
+
+### AT richness
+
+```{r at_richness}
+## Genome average
+weighted.mean(letterFrequency(getSeq(OKI2018_I69), "AT", as.prob = TRUE),
+              seqlengths(OKI2018_I69))
+
+## Inverted regions are AT-rich as usual.
+invSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69,  filterInv(reduced_gr_Oki_O))
+letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE) %>% summary()
+
+## But gaps are a bit more AT-rich.
+letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE) %>% summary()
+
+## This difference is significant.
+t.test(letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE), letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE))
+```
+
+I was tempted to explain this difference with A/T homopolymer stetches.  But
+de novo motif prediction with rGADEM finds AT-rich motifs in any set of Oik
+sequences that I have tried.
+
 pmpcoord <- which(x$inv == TRUE)
 pmpcoord <- c(pmpcoord, pmpcoord + 1, pmpcoord + 2)
 pmpcoord <- sort(unique(pmpcoord))
