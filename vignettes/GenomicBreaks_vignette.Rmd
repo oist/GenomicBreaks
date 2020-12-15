@@ -71,13 +71,13 @@ gr_O_Oki$query
 ```
 
 Pairwise genome alignments are loaded in `GRanges` object.  By convention, we
-write that query genome (the one that was provided as a FASTA file) is aligned
-t the reference genome (the one that was indexed by the aligner). The reference
+write that _query_ genome (the one that was provided as a FASTA file) is aligned
+to the _target_ genome (the one that was indexed by the aligner).  The target
 genome (left) is the main part of the object, and the query genome information
 (right) is contained in the metadata of the structure.  Information on contig
-or scaffold length is loaded a `BSgenome` objects, from which `seqinfo` data
+or scaffold length is loaded from `BSgenome` objects, from which `seqinfo` data
 is extracted and passed to the `GRanges`.  By convention, strand information
-of the alignment is held by the reference `GRanges`, and the query `GRanges`
+of the alignment is held by the target `GRanges`, and the query `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 Although we are not using object-oriented classes for the moment, we will refer
@@ -85,14 +85,14 @@ to the `GRanges` objects returned by `load_genomic_breaks` as `GenomicBreaks`
 objects.
 
 In the example displayed above, the object contains the pairwise alignment
-between genomes of two _Oikopleura dioica_ individuals; one from Osaka assembly
-_OSKA2016_ (reference) and one from Okinawa assembly _OKI2018_I69_ (query).
+between genomes of two dioceous Oikopleura individuals; one from Osaka assembly
+_OSKA2016_ (target) and one from Okinawa assembly _OKI2018_I69_ (query).
 
 The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments.
 
 ### Breakpoints and alignment stops
 
-Let us define an **alignment stop** to be a position defined in either the reference or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the reference would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
+Let us define an **alignment stop** to be a position defined in either the target or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the target would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
 
 The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
 
@@ -139,7 +139,7 @@ plot(tree)
 
 ## Visualising alignments
 
-We can use the function `scaf_align_plot` to see the alignment of query scaffolds/chromosomes onto a specific reference scaffold/chromosome of interest.
+We can use the function `scaf_align_plot` to see the alignment of query scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.
 
 ```{r echo=T, message=F, warning=F}
 
@@ -149,7 +149,7 @@ scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2")
 
 Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top. 
 
-We can plot alignments for two of the reference scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
+We can plot alignments for two of the target scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
 
 ```{r echo=T, message=F, warning=F}
 
@@ -157,11 +157,11 @@ align_scaf_plot_2(gr_ob = gr_O_Oki, scaf = c("S7","S5"))
 
 ```
 
-As you can see, scaffold 2 of the query genome aligns to the majority of both reference scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
+As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
 
 ## Coalescing alignments
 
-Large alignments can often appear cluttered with alignment breaks, spanning just a few basepairs. When the alignments skips this short distance, it is likely an artefact of the aligner and not a true breakpoint. Furthermore, we do not consider SNPs here to be breakpoints. Therefore, the algorithm in `coalesce_contigs` is used to produce a new GRanges object with fewer alignment breaks by coalescing alignments separated by short (user specified) distances. This distance need be agreeable in both the reference and query genome in order for the coalscion to happen. 
+Large alignments can often appear cluttered with alignment breaks, spanning just a few basepairs. When the alignments skips this short distance, it is likely an artefact of the aligner and not a true breakpoint. Furthermore, we do not consider SNPs here to be breakpoints. Therefore, the algorithm in `coalesce_contigs` is used to produce a new GRanges object with fewer alignment breaks by coalescing alignments separated by short (user specified) distances. This distance need be agreeable in both the target and query genome in order for the coalscion to happen. 
 
 For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignment:
 
@@ -421,7 +421,7 @@ x <- dist2next(ignore.strand = TRUE, flagInversions(reduced_gr_Oki_O))
 rbind(
   data.frame(
     width  = x[x$inv]$rdist,
-    object = "Reference"
+    object = "target"
   ),
   data.frame(
     width  = x[x$inv]$qdist,
@@ -523,7 +523,7 @@ gridExtra::grid.arrange(p1, p2, p3, nrow=3)
 
 ## Tandem repeats
 
-Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the reference genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
+Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop's proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function `tan_bp` will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the target genome tandem coverage. Setting `query_tf = TRUE` will switch the outcome to be query genome oriented.
 
 ```{r echo=T, message=F, warning=F}
 
@@ -559,7 +559,7 @@ hm_tan_Oki <- gr_Oki_O %>%
 ```
 ## Coverage
 
-Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for reference or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function `bp_coverage` returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns. 
+Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for target or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function `bp_coverage` returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns. 
 
 ```{r echo=T, message=F, warning=F}
 
@@ -571,7 +571,7 @@ Another characteristic of alignment stops that we can examine is the coverage de
 
 ## Breakpoint classification - master script
 
-The function `master_bp_analysis` brings together the information about tandem repeats and coverage, as well as coalescing the alignment. It can perform the analyses for both the reference and the query genome, depending on the available input data. The output is split into two GRanges objects; one for the reference genome and one for the query, with associated information in the metadata columns. 
+The function `master_bp_analysis` brings together the information about tandem repeats and coverage, as well as coalescing the alignment. It can perform the analyses for both the target and the query genome, depending on the available input data. The output is split into two GRanges objects; one for the target genome and one for the query, with associated information in the metadata columns. 
 
 ```{r echo=T, message=F, warning=F}
 
@@ -691,7 +691,7 @@ kmeanOrderedPlot(shm_GC)
 
 ## Evidence for breakpoint hotspots
 
-The function `bp_pair_analysis` takes two pairwise alignments with the same reference genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent reference genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
+The function `bp_pair_analysis` takes two pairwise alignments with the same target genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent target genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori
 
 ```{r echo=T, message=F, warning=F}
 
