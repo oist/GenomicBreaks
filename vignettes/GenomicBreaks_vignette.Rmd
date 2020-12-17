@@ -51,6 +51,9 @@ Loading genome annotations.
 tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
 tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
 tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
+
+OKI_longShort <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69.arms.gff3", package = "GenomicBreaks"))
+OKI_longShort <- GRanges(OKI_longShort, seqinfo = seqinfo(OKI2018_I69), strand = "*")
 ```
 
 ### GenomicBreaks object
