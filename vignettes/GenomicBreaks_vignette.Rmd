@@ -953,26 +953,69 @@ The function `feature_coverage` will plot the coverage of tandem repeats around
 centred alignment stops. 
 
 ```{r genomic_features}
-current_GB <- gr_Oki_O # To ease recomputing with another object
-#current_GB <- reduced_gr_Oki_O
+#current_GB <- gr_Oki_O # To ease recomputing with another object
+current_GB <- reduced_gr_Oki_O
+hmList_OKI <- list()
 
-hm_genes_OKI      <- feature_coverage(current_GB, genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
-hm_promoters_OKI  <- feature_coverage(current_GB, promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
-hm_exons_OKI      <- feature_coverage(current_GB, exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
-hm_introns_OKI    <- feature_coverage(current_GB, intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
-hm_cds_OKI        <- feature_coverage(current_GB, cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
-hm_5utrs_OKI      <- feature_coverage(current_GB, unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
-hm_3utrs_OKI      <- feature_coverage(current_GB, unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
+hmList_OKI$genes      <- feature_coverage(current_GB, genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
+hmList_OKI$promoters  <- feature_coverage(current_GB, promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
+hmList_OKI$exons      <- feature_coverage(current_GB, exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
+hmList_OKI$introns    <- feature_coverage(current_GB, intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
+hmList_OKI$cds        <- feature_coverage(current_GB, cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
+hmList_OKI$utrs5      <- feature_coverage(current_GB, unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
+hmList_OKI$utrs3      <- feature_coverage(current_GB, unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
+hmList_OKI$pwm        <- feature_coverage(current_GB, pwmHits                              , win = 2000, lab = "PWM", direction = "left")
 
-plotHeatmapMeta(list(hm_genes_OKI, hm_promoters_OKI, hm_exons_OKI, hm_introns_OKI, hm_cds_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
-plotHeatmapMeta(list(hm_genes_OKI))
-plotHeatmapMeta(list(hm_exons_OKI, hm_cds_OKI))
-plotHeatmapMeta(list(hm_exons_OKI, hm_introns_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
-plotHeatmapMeta(list(hm_exons_OKI, hm_5utrs_OKI, hm_3utrs_OKI))
-plotHeatmapMeta(list(hm_5utrs_OKI, hm_3utrs_OKI))
+plotHeatmapMeta(hmList_OKI)
+plotHeatmapMeta(hmList_OKI$genes)
+plotHeatmapMeta(hmList_OKI[c("exons", "cds")])
+plotHeatmapMeta(hmList_OKI[c("exons", "introns", "utrs5", "utrs3", "pwm")])
+plotHeatmapMeta(hmList_OKI[c("introns", "utrs5", "utrs3", "pwm")])
+plotHeatmapMeta(hmList_OKI[c("utrs5", "utrs3", "pwm")])
 ```
 
-There appears to be less tandem repeats around alignment stops after coalescion, inferring that perhaps that some are artefacts of difficult alignment near to tandem repeats. 
+Aligned regions are enriched in exons and depleted in introns.  Is it because
+exons are more alignable or is it because it is deleterous to break genes
+in exons ?
+
+## Gene feature coverage around PWM hits
+
+Let's look at coverage around PWM hits of the AAGCsGCwwmkCGrCTTyn motif
+
+```{r genomic_features_pwmHits}
+current_GB <- pwmHits
+
+hmList_PWM_OKI <- list()
+hmList_PWM_OKI$genes     <- feature_coverage(current_GB, genes(tx_OKI),                         win = 2000, lab = "Oki genes", direction = "left")
+hmList_PWM_OKI$promoters <- feature_coverage(current_GB, promoters(tx_OKI),                     win = 2000, lab = "Oki promoters", direction = "left")
+hmList_PWM_OKI$exons     <- feature_coverage(current_GB, exonicParts(tx_OKI),                   win = 2000, lab = "Oki exons", direction = "left")
+hmList_PWM_OKI$introns   <- feature_coverage(current_GB, intronicParts(tx_OKI),                 win = 2000, lab = "Oki introns", direction = "left")
+hmList_PWM_OKI$cds       <- feature_coverage(current_GB, cds(tx_OKI),                           win = 2000, lab = "Oki cds", direction = "left")
+hmList_PWM_OKI$utrs5     <- feature_coverage(current_GB, unlist(fiveUTRsByTranscript(tx_OKI)),  win = 2000, lab = "Oki 5′ UTRs", direction = "left")
+hmList_PWM_OKI$utrs3     <- feature_coverage(current_GB, unlist(threeUTRsByTranscript(tx_OKI)), win = 2000, lab = "Oki 3′ UTRs", direction = "left")
+
+plotHeatmapMeta(hmList_PWM_OKI)
+plotHeatmapMeta(hmList_PWM_OKI[c("exons", "introns")])
+plotHeatmapMeta(hmList_PWM_OKI[c("exons", "utrs5", "utrs3")])
+plotHeatmapMeta(hmList_PWM_OKI[c("utrs5", "utrs3")])
+```
+
+They are enriched in introns...
+
+```{r genomic_features3}
+
+# Sandbox to make sanity checks.
+
+a <- reduced_gr_Oki_O
+b <- unlist(fiveUTRsByTranscript(tx_OKI))
+
+hm_a <- feature_coverage(a, b, win = 2000, lab = "All ranges", direction = "left")
+hm_b <- feature_coverage(subsetByOverlaps(a,  b), b, win = 2000, lab = "Subsetted ranges", direction = "left")
+
+plotHeatmapMeta(list(hm_a))
+plotHeatmapMeta(list(hm_b))
+```
+
 
 ## Okinawa genome coverage
 
