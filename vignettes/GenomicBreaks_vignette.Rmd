@@ -625,6 +625,13 @@ t.test(score(pwmHits), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
 
 # Scores in gaps and inversions are not different 
 t.test(score(subsetByOverlaps(pwmHits, invs)), score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
+
+rtracklayer::export.bed(pwmHits, "AAGCsGCwwmkCGrCTTyn.bed")
+
+# PWM hits seem to be more abundant on short arms.
+OKI_longShort$pwmHitsPerMb <- countOverlaps(OKI_longShort, pwmHits) / width(OKI_longShort) * 1e6
+# But with a naive approach the difference is not satistically significant.
+t.test(c(159, 185, 188), c(77, 142, 160))
 ```
 
 ### Representation of some inversions
