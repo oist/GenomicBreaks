@@ -617,6 +617,9 @@ pwmHits <- matchPWM(pwm, OKI2018_I69)
 length(pwmHits)
 hist(score(pwmHits))
 
+# Less hits, with lower scores, in the mm10 genome.
+pwmHitsmm10 <- matchPWM(pwm, BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10)
+
 hist(score(subsetByOverlaps(pwmHits, lgaps_Oki_O)))
 hist(score(subsetByOverlaps(pwmHits, invs)))
 
