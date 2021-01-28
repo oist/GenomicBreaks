@@ -42,19 +42,23 @@
 
 load_genomic_breaks <- function (
   file,
-  target_bsgenome,
-  query_bsgenome,
+  target_bsgenome = NULL,
+  query_bsgenome = NULL,
   sort = TRUE,
   type = "match_part")
 {
   gb <- import.gff3(file)
-  gb <- GRanges(gb, seqinfo = seqinfo(target_bsgenome))
+  if (! is.null(target_bsgenome))
+    gb <- GRanges(gb, seqinfo = seqinfo(target_bsgenome))
   # Discard cross_genome_match parent (used for block display in Zenbu)
   gb <- gb[gb$type == type]
   # Discard unused information
   gb$phase <- gb$Parent <- gb$Target <- gb$ID <- gb$source <- gb$type <- NULL
   # Convert query coordinates to GRanges
-  gb$query <- GRanges(gb$Name, seqinfo = seqinfo(query_bsgenome))
+  if (! is.null(query_bsgenome))
+    gb$query <- GRanges(gb$Name, seqinfo = seqinfo(query_bsgenome))
+  else
+    gb$query <- GRanges(gb$Name)
   gb$Name <- NULL
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   gb
