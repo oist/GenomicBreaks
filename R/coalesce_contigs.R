@@ -31,10 +31,6 @@ coalesce_contigs <- function(gr_ob, tol = Inf) {
 
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
-  # define new GRanges object for output
-  gr_ext <- gr_ob
-  q_ext <- gr_ob$query
-
   # Check colinearity of query ranges
 
   # The names of the precede() and follow() functions are a bit confusing;
@@ -67,6 +63,13 @@ coalesce_contigs <- function(gr_ob, tol = Inf) {
   gr_ob$r_add <- gr_ob$rdist
   gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
 
+  #######################################################################
+
+  # define new GRanges object for output
+  gr_ext <- gr_ob
+  q_ext <- gr_ob$query
+  strand(q_ext) <- strand(gr_ob) # Guard against merging blocks on opposite strands
+
   end(gr_ext) <- end(gr_ext) + gr_ob$r_add
 
   # reduce, concatenate, and restore original order
@@ -88,6 +91,7 @@ coalesce_contigs <- function(gr_ob, tol = Inf) {
 
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
+  strand(gr_red$query) <- "*" # Restore un-strandedness
 
   sort(gr_red, ignore.strand = TRUE)
 }
