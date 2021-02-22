@@ -1,6 +1,7 @@
 #' Algorithm for Coalescing Pairwise Alignments
 #'
 #' This algorithm take in pairwise alignment, and reduces the number of alignments by coalescing fragments that are within close proximity (user determined). Fragmented alignments can cause artificial breakpoints arising from incorrect basecalls, misassembly and misalignments.
+#' @param minwidth Remove the intervals whose width smaller than this value.
 #'
 #' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "query".
 #' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
@@ -26,9 +27,12 @@
 #' @include dist2next.R
 
 # algorithm is vectorized for efficiency
+coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
 
-coalesce_contigs <- function(gr_ob, tol = Inf) {
+  # Drop blocks that are narrower than `drop`
 
+  gr_ob <- gr_ob[width(gr_ob) >= minwidth]
+  gr_ob <- gr_ob[width(gr_ob$query) >= minwidth]
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
   # Check colinearity of query ranges
