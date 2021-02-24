@@ -33,6 +33,10 @@ coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
 
   gr_ob <- gr_ob[width(gr_ob) >= minwidth]
   gr_ob <- gr_ob[width(gr_ob$query) >= minwidth]
+
+  if (length(gr_ob) == 0)
+    return(gr_ob)
+
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
   # Check colinearity of query ranges
