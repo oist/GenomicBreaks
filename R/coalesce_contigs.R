@@ -1,24 +1,71 @@
-#' Algorithm for Coalescing Pairwise Alignments
+#' Coalesce Pairwise Alignments
 #'
-#' This algorithm take in pairwise alignment, and reduces the number of alignments by coalescing fragments that are within close proximity (user determined). Fragmented alignments can cause artificial breakpoints arising from incorrect basecalls, misassembly and misalignments.
+#' This algorithm take in genome-to-genome alignment, represented as a
+#' collection of intervals in a query genome paired with intervals in a target
+#' genome.  It reduces the number of pairs by coalescing pairs that are
+#' within close proximity on the same strand (user determined).
+#'
+#' @note Fragmented alignments arising from incorrect basecalls, misassembly or
+#' misalignments can cause us to infer artificial breakpoints
+#'
+#' Internally, the `coalesce_contigs` function uses the `precede` and `follow`
+#' functions of the `GenomicRanges` package.  For a given range, these functions
+#' return the index position of the range it precedes or follows, or
+#' `NA` as the first range follows nothing and the last range preceeds nothing.
+#' See the examples for details.
+#'
+#' @param gr_ob `GenomicBreaks` object of the pairwise alignment, with reference
+#'        genome as the `GRanges` of the object, and query genome alignment in
+#'        the metadata column `query`.
+#' @param tol width of gap that will be bridged in coalescing. The gap must be
+#'        less than or equal to `tol` in both the reference and query case.
 #' @param minwidth Remove the intervals whose width smaller than this value.
 #'
-#' @param gr_ob GRanges object of the pairwise alignment, with reference genome as the subject of the GRanges object, and query genome alignment in the metadata column "query".
-#' @param tol width of gap that will be bridged in coalescing. The gap must be less than or equal to \code{"tol"} in both the reference and query case.
-#' @return new GRanges object of similar structure (GRanges main object is reference genome and metadata is query genome) but with a reduced number of alignment fragments due to coalescion.  The returned object is sorted (ignoring strand).
+#' @return Returns a new `GenomicBreaks` object with a reduced number of
+#' alignment fragments due to coalescion.  The returned object is sorted
+#' ignoring strand.
+#'
 #' @examples
-#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
-#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:400-500:+", "chr1:700-800:+"))
-#' coalesce_contigs(gb1, 500)
-#' gb2       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb2$query <- GenomicRanges::GRanges(c("chr2:2700-2800:+", "chr2:2400-2500:+", "chr2:2100-2200:+"))
-#' coalesce_contigs(gb2, 500)
-#' gb3       <- GenomicRanges::GRanges(c("chr1:100-200:-", "chr1:400-500:-", "chr1:700-800:-"))
-#' gb3$query <- GenomicRanges::GRanges(c("chr2:2100-2200:+", "chr2:2400-2500:+", "chr2:2700-2800:+"))
-#' coalesce_contigs(gb3, 500)
-#' gb4       <- GenomicRanges::GRanges(c("chr3:100-200:+", "chr3:700-800:+", "chr4:500-600:+"))
-#' gb4$query <- GenomicRanges::GRanges(c("chr7:1100-1200:+", "chr7:1700-1800:+", "chr7:1500-1600:+"))
-#' coalesce_contigs(gb4, 500)
+#' # Ranges on the plus strand that should coalesce
+#' gb1       <- GenomicRanges::GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
+#' gb1$query <- GenomicRanges::GRanges(c(A="Que:100-200",   B="Que:400-500"))
+#' gb1
+#' coalesce_contigs(gb1)
+#'
+#' # Reference range [1] precedes reference range [2]
+#' GenomicRanges::precede(gb1)
+#' # Query range [1] precedes query range [2]
+#' GenomicRanges::precede(gb1$query)
+#'
+#' # Ranges on the minus strand that should coalesce
+#' gb2       <- GenomicRanges::GRanges(c(B="Ref:100-200:-", A="Ref:400-500:-"))
+#' gb2$query <- GenomicRanges::GRanges(c(B="Que:400-500",   A="Que:100-200"))
+#' gb2$qname <- names(gb2$query)
+#' gb2
+#' # Reference range [1] follows reference range [2]
+#' GenomicRanges::follow(gb2)
+#' # Or, ignoring strand, reference range [1] precedes reference range [2]
+#' GenomicRanges::precede(gb2, ignore.strand = TRUE)
+#' # Query range [1] follows query range [2]
+#' GenomicRanges::follow(gb2$query)
+#' coalesce_contigs(gb2)
+#'
+#' # Ranges on the minus strand that should not coalesce because they are not
+#' # ordered properly
+#' gb3       <- GenomicRanges::GRanges(c("Ref:100-200:-", "Ref:400-500:-"))
+#' gb3$query <- GenomicRanges::GRanges(c("Que:100-200",   "Que:400-500"))
+#' # Reference range [1] follows reference range [2]
+#' GenomicRanges::follow(gb3)
+#' # Query range [1] follows query range [2]
+#' GenomicRanges::precede(gb3$query)
+#' coalesce_contigs(gb3)
+#'
+#' Ranges on the plus strand that should not coalesce because they are not
+#' ordered properly
+#' gb4       <- GenomicRanges::GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
+#' gb4$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
+#' coalesce_contigs(gb4)
+#'
 #' @export
 #' @importFrom GenomicRanges GRanges
 #' @import IRanges
@@ -26,7 +73,6 @@
 #' @importFrom stats na.omit
 #' @include dist2next.R
 
-# algorithm is vectorized for efficiency
 coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
 
   # Drop blocks that are narrower than `drop`
@@ -37,6 +83,7 @@ coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
   if (length(gr_ob) == 0)
     return(gr_ob)
 
+  # The rest of the algorithm assumes that the reference ranges are sorted
   gr_ob <- sort(gr_ob, ignore.strand = TRUE)
 
   # Check colinearity of query ranges
@@ -45,11 +92,11 @@ coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
   # check the help page if needed.
 
   # Position of the next block minus position of the current block equals
-  # to 1 when they are colinear.  See for instance `precede(gb3$query) - 1:3`
+  # to 1 when they are colinear.
   gr_ob$qnext <- precede(gr_ob$query) - seq_along(gr_ob$query)
 
   # Position of the previous block minus position of the current block equals
-  # to 1 when they are anti-colinear.  See for instance `follow(gb2$query) - 1:3`
+  # to 1 when they are anti-colinear.
   gr_ob$qprev <- follow( gr_ob$query) - seq_along(gr_ob$query)
 
   # When the reference strand is "+", we want the query blocks to be colinear

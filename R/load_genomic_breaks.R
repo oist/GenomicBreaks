@@ -31,6 +31,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library("BSgenome.Odioica.local.OSKA2016")
+#' library("BSgenome.Odioica.local.OKI2018.I69")
 #' load_genomic_breaks(
 #'   system.file("extdata/OSKA2016__I69-5.gff3.gz", package="GenomicBreaks"),
 #'   target = OSKA2016,
