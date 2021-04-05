@@ -32,9 +32,13 @@ strandNames <- function(gb, flip = FALSE, query = FALSE) {
   sn
 }
 
+#' @export
+
 queryStrandNames <- function(gb, flip = FALSE) {
   strandNames(gb = gb, flip = flip, query = TRUE)
 }
+
+#' @export
 
 flipStrandNames <- function (x, ...) {
   UseMethod("flipStrandNames", x)
@@ -56,6 +60,7 @@ flipStrandNames.default <- function (sn) {
   sn <- sub("\\*", "+", sn)
   sn
 }
+#' @export
 
 flipStrandNames.list <- function (l) {
   lapply(l, flipStrandNames)
