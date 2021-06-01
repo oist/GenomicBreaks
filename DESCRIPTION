@@ -50,6 +50,7 @@ Collate:
     'int_frag.R'
     'load_genomic_breaks.R'
     'longestMatchesInTarget.R'
+    'makeInversions.R'
     'master_bp_analysis.R'
     'scaf_align_plot.R'
     'serviceFunctions.R'
