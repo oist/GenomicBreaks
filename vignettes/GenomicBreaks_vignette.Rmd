@@ -37,15 +37,23 @@ library(ggplot2)
 
 ### BSgenome packages
 
-Teh BSgenome packages are distributed in a drat directory hosted on GitHub
+The Oikopleura BSgenome packages are distributed in a drat directory hosted on GitHub
 ((oist/plessy_oikgenomes_drat)[https://oist.github.io/plessy_oikgenomes_drat/]).
+
 To install them:
 
-```{r install_BSgenome_packages, eval=FALSE}
+```{r install_drat_BSgenome_packages, eval=FALSE}
 install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OSKA2016", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+```
+
+Other BSgenome packages are distributed by Bioconductor
+
+```{r install_Bioc_BSgenome_pacakges, eval=FALSE}
+BiocManager::install("BSgenome.Hsapiens.UCSC.hg38")
+BiocManager::install("BSgenome.Ptroglodytes.UCSC.panTro6")
 ```
 
 ```{r load_BSgenome_packages}
