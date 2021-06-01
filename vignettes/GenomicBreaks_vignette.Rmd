@@ -14,38 +14,56 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = '70%', cache = TRUE)
+```{r setup}
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_knit$set(verbose = TRUE)
 ```
 
-## Introduction
+# Introduction
 
-The GenomicBreaks R package contains tools for visualising and analysing characteristics associated with 'breakpoints' between pairwise genome alignments. We will clarify the definition of 'breakpoint' shortly. For now, let us start by loading the libraries of the necessary packages.
+The GenomicBreaks R package contains tools for visualising and analysing
+characteristics associated with 'breakpoints' between pairs of genomes.
+
+## Load pacakges
+
+Core packages that provide functions we use a lot.
 
 ```{r loadlib, echo=T, results='hide'}
 suppressPackageStartupMessages({
-library(GenomicFeatures)
 library(GenomicRanges)
-library(IRanges)
-library(GenomeInfoDb)
-library(BSgenome)
-library(Biostrings)
-library(graphics)
-library(heatmaps)
-library(stats)
-library(magrittr)
 library(ggplot2)
 })
+```
 
+### BSgenome packages
+
+Teh BSgenome packages are distributed in a drat directory hosted on GitHub
+((oist/plessy_oikgenomes_drat)[https://oist.github.io/plessy_oikgenomes_drat/]).
+To install them:
+
+```{r install_BSgenome_packages, eval=FALSE}
+install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+install.packages("BSgenome.Odioica.local.OSKA2016", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+```
+
+```{r load_BSgenome_packages}
 # These will need to be installed by the user
 library("BSgenome.Odioica.local.OKI2018.I69")
 library("BSgenome.Odioica.local.OSKA2016")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
+```
 
+### The GenomicBreaks package itself
+
+```{r load_GenomicBreaks}
 library(GenomicBreaks)
 ```
 
-Loading genome annotations.
+## Load data
+
+### Genome annotations.
 
 ```{r load_genomic_features}
 tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
