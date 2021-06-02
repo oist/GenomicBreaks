@@ -25,7 +25,7 @@ load_genomic_breaks(
 (default: \code{match_part}).}
 }
 \value{
-Returns a \verb{GRanges object} where each element represents a pairwise
+Returns a \code{\link{GRanges}} object where each element represents a pairwise
 alignment block.  The \code{granges} part of the object contains the coordinates
 on the \emph{target} genome, and the \code{query} metadata column contains the \emph{query}
 coordinates in \code{GRanges} format.  The \code{seqinfo} of each \code{BSgenome} object
