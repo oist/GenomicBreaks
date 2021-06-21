@@ -11,6 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6.0)
 Imports:
+  CNEr,
   rtracklayer,
   S4Vectors,
   heatmaps,
@@ -36,6 +37,7 @@ Suggests:
   rmarkdown
 VignetteBuilder: knitr
 Collate: 
+    'GenomicBreaks.R'
     'align_scaf_plot_2.R'
     'bp_coverage.R'
     'bp_heatmap.R'
