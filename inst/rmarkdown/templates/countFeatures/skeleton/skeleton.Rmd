@@ -1,0 +1,84 @@
+---
+title: "Count features"
+author: "Charles Plessy"
+date: "01/06/2021"
+output: html_document
+params:
+  axtFile: "~/FromSango/OSKA2016__OKI2018_I69_1.0/OSKA2016__OKI2018_I69_1.0.axt"
+  prefix: "test"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+How to use this Rmarkdown template:
+
+It is essential to set `R_LIBS_USER` to an empty value, otherwise it will
+attempt to load packages from the user's library, which were compiled in
+a different envirnoment that the Singularity image.
+
+```
+R_LIBS_USER='' R -e 'rmarkdown::render("inst/rmarkdown/templates/countFeatures/skeleton/skeleton.Rmd",     output_file = "./toto.html", params = list(alnFile = "/home/charles/FromSango/OSKA2016__Norway.gff3"))'
+```
+
+```{r load_data}
+library("GenomicBreaks")
+library("GenomicRanges")
+#attachNamespace(params$BSgenome1)
+#attachNamespace(params$BSgenome2)
+
+# GenomicBreaks object
+# gb_match <- load_genomic_breaks(params$alnFile, type = "match",      target_bsgenome = get(params$BSgenome1), query_bsgenome = get(params$BSgenome2))
+# gb_parts <- load_genomic_breaks(params$alnFile, type = "match_part", target_bsgenome = get(params$BSgenome1), query_bsgenome = get(params$BSgenome2))
+#gb_match <- load_genomic_breaks(params$alnFile, type = "match",      target_bsgenome = get(params$BSgenome1))
+#gb_parts <- load_genomic_breaks(params$alnFile, type = "match_part", target_bsgenome = get(params$BSgenome1))
+# CNEr object
+axt <- CNEr::readAxt(params$axtFile)
+# seqlevels(axt@first)  <- seqlevels(get(params$BSgenome1))
+# seqinfo(axt@first)    <- seqinfo(get(params$BSgenome1))
+# seqlevels(axt@second) <- seqlevels(get(params$BSgenome2))
+# seqinfo(axt@second)   <- seqinfo(get(params$BSgenome2))
+
+#gp <- as(axt, "GRangePairs")
+#syntenicDotplot(axt, firstChrs=c("S4"), secondChrs="chr2", type="dot")
+
+# See https://github.com/ge11232002/CNEr/blob/61ec06cc6dc01c9df77fe6e41e467e8fb91633db/R/Axt-methods.R#L59-L72
+compResults <- summary(axt)
+compResults / sum(compResults)
+```
+
+ - The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
+ - The `gb_parts` object contains ranges that correspond to aligned regions only.
+   (Therefore they have a score)
+
+Let's call the intervals between two alignment parts “_Unaligned_” sequences.
+We need a function that returns only them.  Bioconductor's `gaps()` function
+will return also the unaligned sequences between the start/end of chromosome
+and the first/last block.  The `cleanGaps` function below removes them before
+returning the object.
+   
+```{r clean_gaps}
+cleanGaps <- function(gb) {
+  # Drop all seq info, otherwise gaps() adds artificial results on unused strands
+  gb <- GRanges(seqnames = seqnames(gb), ranges = ranges(gb), strand = "*")
+  gps <- gaps(gb)
+  gpsList <- split(gps, seqnames(gps), drop = TRUE)
+  cleanList <- endoapply(gpsList, \(x) x[-1])
+  unlist(cleanList)
+}
+```
+
+```{r count_features}
+report <- list()
+report[["alignment_summary"]] <- as.list(compResults)
+report[["alignment_summary"]][["percent_mismatch"]] <- compResults["?"] / sum(compResults) * 100
+report[["number_of_ranges"]] <- length(CNEr::first(axt))
+report[["aligned_width_summary"]] <- as.list(summary(width(CNEr::first(axt))))
+report[["unaligned_width_summary"]] <- as.list(summary(width(cleanGaps(CNEr::first(axt)))))
+yaml <- yaml::as.yaml(report)
+yaml::write_yaml(yaml, paste0(params$prefix, ".yaml"))
+cat(yaml)
+```
