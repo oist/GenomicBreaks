@@ -1,0 +1,5 @@
+name: Aggregate results
+create_dir: true
+description: >
+  Collects the statistics calculated by the Count Features template and
+  consolidates them in a table.

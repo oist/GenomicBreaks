@@ -1,0 +1,116 @@
+---
+title: "Aggregate Results"
+author: "Charles Plessy"
+date: "21/06/2021"
+output: html_document
+params:
+  resultsDir: "~/projects/GenomicBreaks_results/"
+  prefix: "test"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+How to use this Rmarkdown template:
+
+It is essential to set `R_LIBS_USER` to an empty value, otherwise it will
+attempt to load packages from the user's library, which were compiled in a
+different environment than the GenomicBreakds Singularity image.
+
+Example command
+
+```
+R_LIBS_USER='' R -e 'rmarkdown::render("inst/rmarkdown/templates/aggregateResults/skeleton/skeleton.Rmd", output_file = "./toto.html", params = list(resultsDir = "/path/do/dir/with/yaml/files"))'
+```
+
+```{r load_data}
+library("yaml")
+yamlFiles <- list.files(params$resultsDir, pattern = "*.yaml", full.names = TRUE)
+names(yamlFiles) <- yamlFiles |> basename() |> sub(pat = ".yaml", rep="")
+
+getStats <- function(file) {
+  y <- yaml::read_yaml(file) |> yaml::yaml.load()
+  res <- list()
+  res$unaligned_mean_width <- y$unaligned_width_summary$Mean
+  res$aligned_mean_width   <- y$aligned_width_summary$Mean
+  res$similarity           <- 100 - y$alignment_summary$percent_mismatch
+  res$aligned_regions      <- y$number_of_ranges
+  unlist(res)
+}
+
+# getStats_long <- function(file) {
+#   pairName <- file |> basename() |> sub(pat = ".yaml", rep="")
+#   y <- yaml::read_yaml(file) |> yaml::yaml.load()
+#   rbind(
+#     list(name = pairName, stat = "unaligned_mean_width", value = y$unaligned_width_summary$Mean),
+#     list(name = pairName, stat = "aligned_mean_width", value = y$aligned_width_summary$Mean),
+#     list(name = pairName, stat = "similarity", value = 100 - y$alignment_summary$percent_mismatch)
+#   )
+# }
+
+df <- do.call(rbind, lapply(yamlFiles, getStats)) |> as.data.frame()
+df$similarity[is.na(df$similarity)] <- 100
+df$species1 <- strsplit(rownames(df), "__") |> lapply(\(.) .[1]) |> unlist()
+df$species2 <- strsplit(rownames(df), "__") |> lapply(\(.) .[2]) |> unlist()
+```
+
+```{r plot_data}
+library("ggplot2")
+p <- ggplot(df) +
+  aes( x = similarity, y = aligned_regions) +
+  aes(color = species1) +
+  xlab("Similarity between aligned regions") +
+  ylab("Number of aligned regions") +
+  geom_point()
+p
+# p + geom_text(aes(label=species2))
+
+p2 <- ggplot(df) +
+  aes( x = similarity, y = aligned_mean_width) +
+  aes(color = species1) +
+  xlab("Similarity between aligned regions") +
+  ylab("Width of aligned regions") +
+  scale_y_log10() +
+  geom_point()
+p2
+```
+
+```{r plot_similarity}
+sim <- df[c("similarity", "species1", "species2")]
+sim <- sim[order(sim$similarity, decreasing = FALSE), ]
+ggplot(sim) +
+  aes(similarity, species2) +
+  geom_point() +
+  facet_grid(species1 ~ ., scales = "free", space = "free")
+
+# subsetAndLevel <- function (x, species) {
+#   x <- subset(x, species1 == species)
+#   x$species2 <- factor(x$species2, levels = x$species2)
+#   x
+# }
+
+plotSortedSubset <- function (x, species) {
+  x <- subset(x, species1 == species)
+  x$species2 <- factor(x$species2, levels = x$species2)
+  x
+  ggplot(x) +
+    aes(similarity, species2) +
+    geom_point() +
+    facet_wrap(~species1) +
+    scale_y_discrete(position="right") +
+    ylab(NULL)
+}
+
+p_Bar <- plotSortedSubset(sim, "Bar2_p4")
+p_Oki <- plotSortedSubset(sim, "OKI2018_I69_1.0")
+p_Osa <- plotSortedSubset(sim, "OSKA2016v1.9")
+p_Cio <- plotSortedSubset(sim, "C_rob_HT")
+
+
+requireNamespace("ggpubr")
+ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
+
+```
