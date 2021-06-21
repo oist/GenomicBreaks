@@ -6,5 +6,11 @@
 \alias{GBreaks}
 \title{The GenomicBreaks class}
 \description{
-The \code{GBreaks} class is a simple wrapper to the \code{GRanges} class
+The \code{GBreaks} class is a simple wrapper to the \code{\link{GRanges}} class.
+}
+\details{
+Aligned sequences of the \emph{target} genome are represented as the main
+ranges of the \code{GRanges} object, and their counterparts in the \emph{query} genome
+are represented as a \code{GRanges} object sored in the the metadata column
+\code{query}.
 }
