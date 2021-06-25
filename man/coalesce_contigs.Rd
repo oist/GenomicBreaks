@@ -4,12 +4,10 @@
 \alias{coalesce_contigs}
 \title{Coalesce Pairwise Alignments}
 \usage{
-coalesce_contigs(gr_ob, tol = Inf, minwidth = 0)
+coalesce_contigs(gb, tol = Inf, minwidth = 0)
 }
 \arguments{
-\item{gr_ob}{\code{GenomicBreaks} object of the pairwise alignment, with reference
-genome as the \code{GRanges} of the object, and query genome alignment in
-the metadata column \code{query}.}
+\item{gb}{\code{\link{GBreaks}} object of the pairwise alignment.}
 
 \item{tol}{width of gap that will be bridged in coalescing. The gap must be
 less than or equal to \code{tol} in both the reference and query case.}
@@ -22,7 +20,7 @@ alignment fragments due to coalescion.  The returned object is sorted
 ignoring strand.
 }
 \description{
-This algorithm take in genome-to-genome alignment, represented as a
+This algorithm take in a genome-to-genome alignment, represented as a
 collection of intervals in a query genome paired with intervals in a target
 genome.  It reduces the number of pairs by coalescing pairs that are
 within close proximity on the same strand (user determined).
@@ -33,9 +31,9 @@ misalignments can cause us to infer artificial breakpoints
 
 Internally, the \code{coalesce_contigs} function uses the \code{precede} and \code{follow}
 functions of the \code{GenomicRanges} package.  For a given range, these functions
-return the index position of the range it precedes or follows, or
-\code{NA} as the first range follows nothing and the last range preceeds nothing.
-See the examples for details.
+return the index position of the range it precedes or follows, or \code{NA} as the
+first range follows nothing and the last range precedes nothing.  See the
+examples for details.
 }
 \examples{
 # Ranges on the plus strand that should coalesce
