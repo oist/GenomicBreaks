@@ -4,7 +4,7 @@ author: "Charles Plessy"
 date: "21/06/2021"
 output: html_document
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-v1.1.1/genomicbreaks/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -35,9 +35,13 @@ getStats <- function(file) {
   y <- yaml::read_yaml(file) |> yaml::yaml.load()
   res <- list()
   res$unaligned_mean_width <- y$unaligned_width_summary$Mean
-  res$aligned_mean_width   <- y$aligned_width_summary$Mean
-  res$similarity           <- 100 - y$alignment_summary$percent_mismatch
-  res$aligned_regions      <- y$number_of_ranges
+  res$aligned_mean_width   <- y$width_summary_aligned$Mean
+  res$collapsed_mean_width <- y$width_summary_collapsed$Mean
+  res$similarity           <- y$percent_similarity * 100
+  res$aligned_regions      <- y$number_of_ranges_part
+  res$collapsed_regions    <- y$number_of_ranges_col
+  res$collapsed_regions2   <- y$number_of_ranges_match
+  res$aligned_total        <- y$aligned_total
   unlist(res)
 }
 
@@ -113,4 +117,14 @@ p_Cio <- plotSortedSubset(sim, "C_rob_HT")
 requireNamespace("ggpubr")
 ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
 
+```
+
+
+```{r plot_tot_align}
+sim <- df[c("aligned_total", "species1", "species2")]
+sim <- sim[order(sim$aligned_total, decreasing = FALSE), ]
+ggplot(sim) +
+  aes(aligned_total, species2) +
+  geom_point() +
+  facet_grid(species1 ~ ., scales = "free", space = "free")
 ```
