@@ -1,6 +1,6 @@
 #' Coalesce Pairwise Alignments
 #'
-#' This algorithm take in genome-to-genome alignment, represented as a
+#' This algorithm take in a genome-to-genome alignment, represented as a
 #' collection of intervals in a query genome paired with intervals in a target
 #' genome.  It reduces the number of pairs by coalescing pairs that are
 #' within close proximity on the same strand (user determined).
@@ -10,20 +10,17 @@
 #'
 #' Internally, the `coalesce_contigs` function uses the `precede` and `follow`
 #' functions of the `GenomicRanges` package.  For a given range, these functions
-#' return the index position of the range it precedes or follows, or
-#' `NA` as the first range follows nothing and the last range preceeds nothing.
-#' See the examples for details.
+#' return the index position of the range it precedes or follows, or `NA` as the
+#' first range follows nothing and the last range precedes nothing.  See the
+#' examples for details.
 #'
-#' @param gr_ob `GenomicBreaks` object of the pairwise alignment, with reference
-#'        genome as the `GRanges` of the object, and query genome alignment in
-#'        the metadata column `query`.
-#' @param tol width of gap that will be bridged in coalescing. The gap must be
-#'        less than or equal to `tol` in both the reference and query case.
+#' @param gb [`GBreaks`] object of the pairwise alignment.
+#' @param tol Unaligned region of width lesser than or equal to `tol` in both
+#'        the reference and query case will be bridged in coalescing.
 #' @param minwidth Remove the intervals whose width smaller than this value.
 #'
-#' @return Returns a new `GenomicBreaks` object with a reduced number of
-#' alignment fragments due to coalescion.  The returned object is sorted
-#' ignoring strand.
+#' @return Returns a new `GBreaks` object with a reduced number of alignmens
+#' fragments due to coalescion.  The returned object is sorted ignoring strand.
 #'
 #' @examples
 #' # Ranges on the plus strand that should coalesce
@@ -73,18 +70,18 @@
 #' @importFrom stats na.omit
 #' @include dist2next.R
 
-coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
+coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
 
   # Drop blocks that are narrower than `drop`
 
-  gr_ob <- gr_ob[width(gr_ob) >= minwidth]
-  gr_ob <- gr_ob[width(gr_ob$query) >= minwidth]
+  gb <- gb[width(gb) >= minwidth]
+  gb <- gb[width(gb$query) >= minwidth]
 
-  if (length(gr_ob) == 0)
-    return(gr_ob)
+  if (length(gb) == 0)
+    return(gb)
 
   # The rest of the algorithm assumes that the reference ranges are sorted
-  gr_ob <- sort(gr_ob, ignore.strand = TRUE)
+  gb <- sort(gb, ignore.strand = TRUE)
 
   # Check colinearity of query ranges
 
@@ -93,39 +90,39 @@ coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
 
   # Position of the next block minus position of the current block equals
   # to 1 when they are colinear.
-  gr_ob$qnext <- precede(gr_ob$query) - seq_along(gr_ob$query)
+  gb$qnext <- precede(gb$query) - seq_along(gb$query)
 
   # Position of the previous block minus position of the current block equals
   # to 1 when they are anti-colinear.
-  gr_ob$qprev <- follow( gr_ob$query) - seq_along(gr_ob$query)
+  gb$qprev <- follow( gb$query) - seq_along(gb$query)
 
   # When the reference strand is "+", we want the query blocks to be colinear
   # and when the reference is "-" we want them to be anti-colinear.
-  gr_ob$q_col_with_next <- ( strand(gr_ob) == "+" & gr_ob$qnext == 1 ) |
-                           ( strand(gr_ob) == "-" & gr_ob$qprev == 1 )
+  gb$q_col_with_next <- ( strand(gb) == "+" & gb$qnext == 1 ) |
+                           ( strand(gb) == "-" & gb$qprev == 1 )
 
-  gr_ob <- dist2next(gr_ob)
+  gb <- dist2next(gb)
 
   #######################################################################
 
   # find intersection
-  gr_ob$con_met_total <- gr_ob$rdist < tol + 1 &
-                         gr_ob$qdist < tol + 1 &
-                         gr_ob$q_col_with_next
-  gr_ob$con_met_total[is.na(gr_ob$con_met_total)] <- FALSE
+  gb$con_met_total <- gb$rdist < tol + 1 &
+                         gb$qdist < tol + 1 &
+                         gb$q_col_with_next
+  gb$con_met_total[is.na(gb$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  gr_ob$r_add <- gr_ob$rdist
-  gr_ob[gr_ob$con_met_total != TRUE]$r_add <- 0
+  gb$r_add <- gb$rdist
+  gb[gb$con_met_total != TRUE]$r_add <- 0
 
   #######################################################################
 
   # define new GRanges object for output
-  gr_ext <- gr_ob
-  q_ext <- gr_ob$query
-  strand(q_ext) <- strand(gr_ob) # Guard against merging blocks on opposite strands
+  gr_ext <- gb
+  q_ext <- gb$query
+  strand(q_ext) <- strand(gb) # Guard against merging blocks on opposite strands
 
-  end(gr_ext) <- end(gr_ext) + gr_ob$r_add
+  end(gr_ext) <- end(gr_ext) + gb$r_add
 
   # reduce, concatenate, and restore original order
   reduceAndSort <- function (gr) {
@@ -138,11 +135,11 @@ coalesce_contigs <- function(gr_ob, tol = Inf, minwidth = 0) {
   gr_red <- reduceAndSort(gr_ext)
 
   # apply extension to intersected zone (applying just to end points) (query only)
-  gr_ob$q_add <- gr_ob$qdist
-  gr_ob[gr_ob$con_met_total != TRUE]$q_add <- 0
+  gb$q_add <- gb$qdist
+  gb[gb$con_met_total != TRUE]$q_add <- 0
 
-  end(  q_ext[strand(gr_ob) == "+"]) <- end(  q_ext[strand(gr_ob) == "+"]) + gr_ob[strand(gr_ob) == "+"]$q_add
-  start(q_ext[strand(gr_ob) == "-"]) <- start(q_ext[strand(gr_ob) == "-"]) - gr_ob[strand(gr_ob) == "-"]$q_add
+  end(  q_ext[strand(gb) == "+"]) <- end(  q_ext[strand(gb) == "+"]) + gb[strand(gb) == "+"]$q_add
+  start(q_ext[strand(gb) == "-"]) <- start(q_ext[strand(gb) == "-"]) - gb[strand(gb) == "-"]$q_add
 
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
