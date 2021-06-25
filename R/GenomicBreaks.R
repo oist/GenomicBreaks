@@ -14,6 +14,14 @@ GBreaks <- setClass("GBreaks", contains = "GRanges")
 
 #' Conversion from [`CNEr::Axt`] objects
 #'
+#' @note By default, in the _Axt_ objects produced by the [`CNEr::readAxt`]
+#' function, the coordinates of the query genome are represented with the same
+#' numerical value as in the original file.  In _Axt_ files, when the alignment
+#' is on the minus strand, the query genome coordinates have their origin on
+#' the reverse-complement strand.  Therefore, although in the _CNEr_ object
+#' they are stored in a _GRanges_ object, they do not represent genomic ranges.
+#' In order to do so, there is a [`CNEr::fixCoordinates`] function.
+#'
 #' @importFrom CNEr first second
 #' @name as
 #' @export
