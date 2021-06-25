@@ -2,9 +2,13 @@
 title: "Count features"
 author: "Charles Plessy"
 date: "01/06/2021"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 params:
-  axtFile: "~/FromSango/OSKA2016__OKI2018_I69_1.0/OSKA2016__OKI2018_I69_1.0.axt"
+  axtFile: "~/projects/GenomicBreaks_testData/OSKA2016v1.9.09.swap.swapped.axt"
+  gffFile: "~/projects/GenomicBreaks_testData/OSKA2016v1.9.09.swap.swapped.gff3"
+  id: "OSKA2016v1.9.09"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -12,47 +16,72 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(progress = TRUE, verbose = TRUE, root.dir = system2("pwd", stdout = TRUE))
 ```
 
 How to use this Rmarkdown template:
 
-It is essential to set `R_LIBS_USER` to an empty value, otherwise it will
-attempt to load packages from the user's library, which were compiled in
-a different envirnoment that the Singularity image.
+It is essential to set `R_LIBS_USER` to an empty value, otherwise `R` will
+attempt to load packages from the user's library, which were compiled in a
+different environment than the GenomicBreakd Singularity image.
+
+Example command
 
 ```
-R_LIBS_USER='' R -e 'rmarkdown::render("inst/rmarkdown/templates/countFeatures/skeleton/skeleton.Rmd",     output_file = "./toto.html", params = list(alnFile = "/home/charles/FromSango/OSKA2016__Norway.gff3"))'
+R_LIBS_USER='' R -e 'rmarkdown::render("thisTemplate.Rmd", output_file = "./outFile.html", params = list(axtFile = "/path/do/dir/with/alignment/files"))'
+```
+
+Load data
+---------
+
+We load alignment data in [axt](https://genome-asia.ucsc.edu/goldenPath/help/axt.html)
+format using the Bioconductor package [CNEr](https://bioconductor.org/packages/release/bioc/html/CNEr.html).
+However, we can not use the _Axt_ objects for synteny analysis with the
+_GenomicBreaks_ pacakge as they would need to be processed with the _CNEr_'s
+`fixCoordinates` function before conversion to a _GBreaks_ format, which
+requires information on chromosome length that we do not provide to this workflow.
+
+The _GBreaks_ objects are lighter as they do not contain sequence information,
+and are the native format in our _GenomicBreaks_ package.  They wrap the
+_GRanges_ class and therefore are easier to intereact with.
+
+```{r load_libraries}
+requireNamespace("CNEr", quietly = TRUE)
+library("GenomicBreaks")
+suppressPackageStartupMessages(library("GenomicRanges"))
 ```
 
 ```{r load_data}
-library("GenomicBreaks")
-library("GenomicRanges")
-#attachNamespace(params$BSgenome1)
-#attachNamespace(params$BSgenome2)
-
-# GenomicBreaks object
-# gb_match <- load_genomic_breaks(params$alnFile, type = "match",      target_bsgenome = get(params$BSgenome1), query_bsgenome = get(params$BSgenome2))
-# gb_parts <- load_genomic_breaks(params$alnFile, type = "match_part", target_bsgenome = get(params$BSgenome1), query_bsgenome = get(params$BSgenome2))
-#gb_match <- load_genomic_breaks(params$alnFile, type = "match",      target_bsgenome = get(params$BSgenome1))
-#gb_parts <- load_genomic_breaks(params$alnFile, type = "match_part", target_bsgenome = get(params$BSgenome1))
-# CNEr object
+# Load the alignment in an Axt object
 axt <- CNEr::readAxt(params$axtFile)
-# seqlevels(axt@first)  <- seqlevels(get(params$BSgenome1))
-# seqinfo(axt@first)    <- seqinfo(get(params$BSgenome1))
-# seqlevels(axt@second) <- seqlevels(get(params$BSgenome2))
-# seqinfo(axt@second)   <- seqinfo(get(params$BSgenome2))
 
-#gp <- as(axt, "GRangePairs")
-#syntenicDotplot(axt, firstChrs=c("S4"), secondChrs="chr2", type="dot")
+# Load alignment information from GFF3 files to GBreaks objects.
+# The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
+gb_match <- load_genomic_breaks(params$gffFile, type = "match") #,      target_bsgenome = get(params$BSgenome1))
 
-# See https://github.com/ge11232002/CNEr/blob/61ec06cc6dc01c9df77fe6e41e467e8fb91633db/R/Axt-methods.R#L59-L72
-compResults <- summary(axt)
-compResults / sum(compResults)
+# The `gb_parts` object contains ranges that correspond to aligned regions only.  (Therefore they have a score)
+gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_bsgenome = get(params$BSgenome1))
+
+# See https://github.com/ge11232002/CNEr/blob/61ec06cc6dc01c9df77fe6e41e467e8fb91633db/R/Axt-methods.R#L59-L60
+compResults <- Biostrings::compareStrings(CNEr::targetSeqs(axt), CNEr::querySeqs(axt))
+compResults <- table(unlist(strsplit(compResults, "")))
 ```
 
- - The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
- - The `gb_parts` object contains ranges that correspond to aligned regions only.
-   (Therefore they have a score)
+Quote from `compareStrings()` manual page:
+
+> combines two equal-length strings that are assumed to be aligned into a single
+> character string containing that replaces mismatches with `?`, insertions with
+> `+`, and deletions with `-`.
+
+Process data
+------------
+
+```{r process_data}
+gb_col <- coalesce_contigs(gb_parts)
+```
+
+Extract information
+-------------------
 
 Let's call the intervals between two alignment parts “_Unaligned_” sequences.
 We need a function that returns only them.  Bioconductor's `gaps()` function
@@ -69,16 +98,62 @@ cleanGaps <- function(gb) {
   cleanList <- endoapply(gpsList, \(x) x[-1])
   unlist(cleanList)
 }
+gb_parts_unal <- cleanGaps(gb_parts)
+gb_col_unal   <- cleanGaps(gb_col)
+
 ```
+
+Calculate numbers and prepare them for export in a YAML file.
+
+The alignment length is relative to the target (indexed) genome.
 
 ```{r count_features}
 report <- list()
 report[["alignment_summary"]] <- as.list(compResults)
-report[["alignment_summary"]][["percent_mismatch"]] <- compResults["?"] / sum(compResults) * 100
-report[["number_of_ranges"]] <- length(CNEr::first(axt))
-report[["aligned_width_summary"]] <- as.list(summary(width(CNEr::first(axt))))
-report[["unaligned_width_summary"]] <- as.list(summary(width(cleanGaps(CNEr::first(axt)))))
+report[["aligned_total"]] <- sum(compResults[c("A", "C", "G", "T", "+", "?")], na.rm = TRUE)
+report[["percent_similarity"]] <- 1 - compResults["?"] / report[["aligned_total"]]
+
+report[["number_of_ranges_axt"]] <- length(CNEr::first(axt))
+report[["number_of_ranges_part"]] <- length(gb_parts)
+report[["number_of_ranges_col"]] <- length(gb_col)
+report[["number_of_ranges_match"]] <- length(gb_match)
+
+
+report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
+report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
+report[["width_summary_match"]] <- as.list(summary(width(gb_match)))
+report[["width_summary_unaligned"]] <- as.list(summary(width(gb_parts_unal)))
+report[["width_summary_uncollapsed"]] <- as.list(summary(width(gb_col_unal)))
+
 yaml <- yaml::as.yaml(report)
 yaml::write_yaml(yaml, paste0(params$prefix, ".yaml"))
 cat(yaml)
+```
+
+
+```{r plot_widths, dev = c('svg', 'png')}
+
+# To handle cases where everything is collapsed
+gb_col_unal__ <-
+  if(length(gb_col_unal) == 0) {
+    IRanges(start = 1, width = 0)
+  } else {
+    gb_col_unal
+  }
+
+
+df <- rbind(
+  data.frame(what = "aligned",     width = width(     gb_parts)),
+  data.frame(what = "unaligned",   width = width(gb_parts_unal)),
+  data.frame(what = "collapsed",   width = width(       gb_col)),
+  data.frame(what = "uncollapsed", width = width(gb_col_unal__)),
+  data.frame(what = "match",       width = width(     gb_match))
+)
+
+library(ggplot2)
+ggplot(df) +
+  aes(width) +
+  geom_histogram() +
+  scale_x_log10() +
+  facet_wrap(~what, nrow = 2)
 ```
