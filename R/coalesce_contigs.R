@@ -19,7 +19,7 @@
 #'        the reference and query case will be bridged in coalescing.
 #' @param minwidth Remove the intervals whose width smaller than this value.
 #'
-#' @return Returns a new `GBreaks` object with a reduced number of alignmens
+#' @return Returns a new `GBreaks` object with a reduced number of alignments
 #' fragments due to coalescion.  The returned object is sorted ignoring strand.
 #'
 #' @examples
