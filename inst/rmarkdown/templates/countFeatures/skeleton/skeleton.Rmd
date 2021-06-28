@@ -6,9 +6,9 @@ output:
   html_document: 
     keep_md: yes
 params:
-  axtFile: "~/projects/GenomicBreaks_testData/OSKA2016v1.9.09.swap.swapped.axt"
-  gffFile: "~/projects/GenomicBreaks_testData/OSKA2016v1.9.09.swap.swapped.gff3"
-  id: "OSKA2016v1.9.09"
+  axtFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/OSKA2016v1.9__Bar2_p4.axt.gz"
+  gffFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/OSKA2016v1.9__Bar2_p4.gff.gz"
+  id: "OSKA2016v1.9__Bar2"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -100,7 +100,6 @@ cleanGaps <- function(gb) {
 }
 gb_parts_unal <- cleanGaps(gb_parts)
 gb_col_unal   <- cleanGaps(gb_col)
-
 ```
 
 Calculate numbers and prepare them for export in a YAML file.
@@ -118,13 +117,91 @@ report[["number_of_ranges_part"]] <- length(gb_parts)
 report[["number_of_ranges_col"]] <- length(gb_col)
 report[["number_of_ranges_match"]] <- length(gb_match)
 
-
 report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
 report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
 report[["width_summary_match"]] <- as.list(summary(width(gb_match)))
 report[["width_summary_unaligned"]] <- as.list(summary(width(gb_parts_unal)))
 report[["width_summary_uncollapsed"]] <- as.list(summary(width(gb_col_unal)))
+```
 
+```{r study_inversions}
+gb_col <- flagInversions(gb_col)
+sum(gb_col$inv)
+invPos <- which(gb_col$inv) + 1
+invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
+gb_col[gb_col$inv]
+gb_col[invContext][1:11]
+(report[["width_summary_inversions"]] <- as.list(summary(width(gb_col[invPos]))))
+
+# Histogram of the widths
+ggplot(data.frame(width = width(gb_col[gb_col$inv]))) +
+  aes(width) +
+  geom_histogram() +
+  scale_x_log10()
+
+# Why are the inversions overwhelmingly on the plus strand ?
+ggplot(data.frame(strand = strand(gb_col[gb_col$inv]))) +
+  aes(strand) +
+  geom_bar()
+
+# Flip strands
+gb_inv_flipped <- gb_col
+# Note that the `inv` flag marks the beginning of an inversion pattern of length 3
+# Therefore the strands need to be flipped at inv + 1
+strand(gb_inv_flipped)[invPos] <- ifelse (strand(gb_inv_flipped)[invPos] == "+", "-", "+")
+gb_inv_flipped[gb_inv_flipped$inv]
+gb_inv_flipped[invContext][1:11]
+
+# One more round is needed to resolve the inversions that were next to each other.
+remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+
+# One more round is needed to resolve the inversions that were next to each other.
+remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+
+# One more round is needed to resolve the inversions that were next to each other.
+remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+
+# One more round is needed to resolve the inversions that were next to each other.
+remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+
+# Do we need another round ?
+which(flagInversions(gb_inv_flipped)$inv) + 1
+
+gb_inv_col <- coalesce_contigs(gb_inv_flipped)
+
+flagInversions(gb_inv_col)$inv
+
+as.list(summary(width(gb_inv_col)))
+```
+
+```{r study_insersions}
+gb_col <- flagInsersions(gb_col)
+sum(gb_col$ins)
+insContext <- which(gb_col$ins)
+insContext <- c(insContext -1, insContext, insContext + 1) |> unique() |> sort()
+gb_col[gb_col$ins]
+gb_col[insContext][1:11]
+(report[["width_summary_insersions"]] <- as.list(summary(width(gb_col[gb_col$ins]))))
+
+# Histogram of the widths
+ggplot(data.frame(width = width(gb_col[gb_col$ins]))) +
+  aes(width) +
+  geom_histogram() +
+  scale_x_log10()
+
+# Why are the inversions overwhelmingly on the plus strand ?
+ggplot(data.frame(strand = strand(gb_col[gb_col$ins]))) +
+  aes(strand) +
+  geom_bar()
+```
+
+Export the results to a YAML file.
+
+```{r export_results}
 yaml <- yaml::as.yaml(report)
 yaml::write_yaml(yaml, paste0(params$prefix, ".yaml"))
 cat(yaml)
