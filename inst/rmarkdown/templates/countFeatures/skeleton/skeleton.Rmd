@@ -241,7 +241,7 @@ report[["number_of ranges_indel"]]    <- sum(gb_col$inv)
 
 report[["N50_part"]]  <- weighted.mean(width(gb_parts), as.numeric(width(gb_parts)))
 report[["N50_match"]] <- weighted.mean(width(gb_match), as.numeric(width(gb_match)))
-report[["synteny_index_summary"]] <- sapply(split(gb_parts, seqnames(gb_parts)), \(x) tail(sort(sum(width(split(x, seqnames(x$query))))), 1) / sum(width(x)))
+report[["synteny_index"]] <- GenomicBreaks::synteny_index(gb_parts)
 
 report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
 report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
