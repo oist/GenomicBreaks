@@ -58,4 +58,5 @@ Collate:
     'serviceFunctions.R'
     'strandNames.R'
     'swap.R'
+    'synteny_index.R'
     'tan_bp.R'
