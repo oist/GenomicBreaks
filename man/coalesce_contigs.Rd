@@ -9,15 +9,14 @@ coalesce_contigs(gb, tol = Inf, minwidth = 0)
 \arguments{
 \item{gb}{\code{\link{GBreaks}} object of the pairwise alignment.}
 
-\item{tol}{width of gap that will be bridged in coalescing. The gap must be
-less than or equal to \code{tol} in both the reference and query case.}
+\item{tol}{Unaligned region of width lesser than or equal to \code{tol} in both
+the reference and query case will be bridged in coalescing.}
 
 \item{minwidth}{Remove the intervals whose width smaller than this value.}
 }
 \value{
-Returns a new \code{GenomicBreaks} object with a reduced number of
-alignment fragments due to coalescion.  The returned object is sorted
-ignoring strand.
+Returns a new \code{GBreaks} object with a reduced number of alignments
+fragments due to coalescion.  The returned object is sorted ignoring strand.
 }
 \description{
 This algorithm take in a genome-to-genome alignment, represented as a

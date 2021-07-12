@@ -6,3 +6,12 @@
 \description{
 Conversion from \code{\link[CNEr:Axt-class]{CNEr::Axt}} objects
 }
+\note{
+By default, in the \emph{Axt} objects produced by the \code{\link[CNEr:readAxt]{CNEr::readAxt}}
+function, the coordinates of the query genome are represented with the same
+numerical value as in the original file.  In \emph{Axt} files, when the alignment
+is on the minus strand, the query genome coordinates have their origin on
+the reverse-complement strand.  Therefore, although in the \emph{CNEr} object
+they are stored in a \emph{GRanges} object, they do not represent genomic ranges.
+In order to do so, there is a \code{\link[CNEr:fixCoordinates]{CNEr::fixCoordinates}} function.
+}
