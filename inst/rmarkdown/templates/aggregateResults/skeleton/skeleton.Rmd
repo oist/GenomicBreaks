@@ -4,7 +4,7 @@ author: "Charles Plessy"
 date: "21/06/2021"
 output: html_document
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-v1.1.1/genomicbreaks/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-v1.1.3/genomicbreaks/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -42,6 +42,7 @@ getStats <- function(file) {
   res$collapsed_regions    <- y$number_of_ranges_col
   res$collapsed_regions2   <- y$number_of_ranges_match
   res$aligned_total        <- y$aligned_total
+  res$unaligned_total      <- y$unal_total
   unlist(res)
 }
 
@@ -121,10 +122,12 @@ ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
 
 
 ```{r plot_tot_align}
-sim <- df[c("aligned_total", "species1", "species2")]
-sim <- sim[order(sim$aligned_total, decreasing = FALSE), ]
+sim <- df[c("aligned_total", "unaligned_total", "species1", "species2")]
+sim$aligned_prop <- sim$aligned_total / (sim$aligned_total + sim$unaligned_total)
+sim
+sim <- sim[order(sim$aligned_prop, decreasing = FALSE), ]
 ggplot(sim) +
-  aes(aligned_total, species2) +
+  aes(aligned_prop, species2) +
   geom_point() +
   facet_grid(species1 ~ ., scales = "free", space = "free")
 ```
