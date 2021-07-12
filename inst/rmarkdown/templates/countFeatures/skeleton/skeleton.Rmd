@@ -6,9 +6,9 @@ output:
   html_document: 
     keep_md: yes
 params:
-  axtFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/OSKA2016v1.9__Bar2_p4.axt.gz"
-  gffFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/OSKA2016v1.9__Bar2_p4.gff.gz"
-  id: "OSKA2016v1.9__Bar2"
+  axtFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/Bar2_p4__OSKA2016v1.9.axt.gz"
+  gffFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/Bar2_p4__OSKA2016v1.9.gff.gz"
+  id: "Bar2_p4__OSKA2016v1.9"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -47,11 +47,16 @@ _GRanges_ class and therefore are easier to intereact with.
 
 ```{r load_libraries}
 requireNamespace("CNEr", quietly = TRUE)
+library("ggplot2")
 library("GenomicBreaks")
 suppressPackageStartupMessages(library("GenomicRanges"))
 ```
 
 ```{r load_data}
+# Display parameters
+
+params
+
 # Load the alignment in an Axt object
 axt <- CNEr::readAxt(params$axtFile)
 
@@ -73,15 +78,14 @@ Quote from `compareStrings()` manual page:
 > character string containing that replaces mismatches with `?`, insertions with
 > `+`, and deletions with `-`.
 
-Process data
-------------
+Coalesce contigs and study unaligned regions
+--------------------------------------------
 
 ```{r process_data}
 gb_col <- coalesce_contigs(gb_parts)
 ```
 
-Extract information
--------------------
+### Extract information
 
 Let's call the intervals between two alignment parts “_Unaligned_” sequences.
 We need a function that returns only them.  Bioconductor's `gaps()` function
@@ -102,114 +106,7 @@ gb_parts_unal <- cleanGaps(gb_parts)
 gb_col_unal   <- cleanGaps(gb_col)
 ```
 
-Calculate numbers and prepare them for export in a YAML file.
-
-The alignment length is relative to the target (indexed) genome.
-
-```{r count_features}
-report <- list()
-report[["alignment_summary"]] <- as.list(compResults)
-report[["aligned_total"]] <- sum(compResults[c("A", "C", "G", "T", "+", "?")], na.rm = TRUE)
-report[["percent_similarity"]] <- 1 - compResults["?"] / report[["aligned_total"]]
-
-report[["number_of_ranges_axt"]] <- length(CNEr::first(axt))
-report[["number_of_ranges_part"]] <- length(gb_parts)
-report[["number_of_ranges_col"]] <- length(gb_col)
-report[["number_of_ranges_match"]] <- length(gb_match)
-
-report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
-report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
-report[["width_summary_match"]] <- as.list(summary(width(gb_match)))
-report[["width_summary_unaligned"]] <- as.list(summary(width(gb_parts_unal)))
-report[["width_summary_uncollapsed"]] <- as.list(summary(width(gb_col_unal)))
-```
-
-```{r study_inversions}
-gb_col <- flagInversions(gb_col)
-sum(gb_col$inv)
-invPos <- which(gb_col$inv) + 1
-invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
-gb_col[gb_col$inv]
-gb_col[invContext][1:11]
-(report[["width_summary_inversions"]] <- as.list(summary(width(gb_col[invPos]))))
-
-# Histogram of the widths
-ggplot(data.frame(width = width(gb_col[gb_col$inv]))) +
-  aes(width) +
-  geom_histogram() +
-  scale_x_log10()
-
-# Why are the inversions overwhelmingly on the plus strand ?
-ggplot(data.frame(strand = strand(gb_col[gb_col$inv]))) +
-  aes(strand) +
-  geom_bar()
-
-# Flip strands
-gb_inv_flipped <- gb_col
-# Note that the `inv` flag marks the beginning of an inversion pattern of length 3
-# Therefore the strands need to be flipped at inv + 1
-strand(gb_inv_flipped)[invPos] <- ifelse (strand(gb_inv_flipped)[invPos] == "+", "-", "+")
-gb_inv_flipped[gb_inv_flipped$inv]
-gb_inv_flipped[invContext][1:11]
-
-# One more round is needed to resolve the inversions that were next to each other.
-remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-
-# One more round is needed to resolve the inversions that were next to each other.
-remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-
-# One more round is needed to resolve the inversions that were next to each other.
-remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-
-# One more round is needed to resolve the inversions that were next to each other.
-remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-
-# Do we need another round ?
-which(flagInversions(gb_inv_flipped)$inv) + 1
-
-gb_inv_col <- coalesce_contigs(gb_inv_flipped)
-
-flagInversions(gb_inv_col)$inv
-
-as.list(summary(width(gb_inv_col)))
-```
-
-```{r study_insersions}
-gb_col <- flagInsersions(gb_col)
-sum(gb_col$ins)
-insContext <- which(gb_col$ins)
-insContext <- c(insContext -1, insContext, insContext + 1) |> unique() |> sort()
-gb_col[gb_col$ins]
-gb_col[insContext][1:11]
-(report[["width_summary_insersions"]] <- as.list(summary(width(gb_col[gb_col$ins]))))
-
-# Histogram of the widths
-ggplot(data.frame(width = width(gb_col[gb_col$ins]))) +
-  aes(width) +
-  geom_histogram() +
-  scale_x_log10()
-
-# Why are the inversions overwhelmingly on the plus strand ?
-ggplot(data.frame(strand = strand(gb_col[gb_col$ins]))) +
-  aes(strand) +
-  geom_bar()
-```
-
-Export the results to a YAML file.
-
-```{r export_results}
-yaml <- yaml::as.yaml(report)
-yaml::write_yaml(yaml, paste0(params$prefix, ".yaml"))
-cat(yaml)
-```
-
-
 ```{r plot_widths, dev = c('svg', 'png')}
-
 # To handle cases where everything is collapsed
 gb_col_unal__ <-
   if(length(gb_col_unal) == 0) {
@@ -217,7 +114,6 @@ gb_col_unal__ <-
   } else {
     gb_col_unal
   }
-
 
 df <- rbind(
   data.frame(what = "aligned",     width = width(     gb_parts)),
@@ -227,10 +123,139 @@ df <- rbind(
   data.frame(what = "match",       width = width(     gb_match))
 )
 
-library(ggplot2)
 ggplot(df) +
   aes(width) +
   geom_histogram() +
   scale_x_log10() +
   facet_wrap(~what, nrow = 2)
+```
+
+
+Inversions
+----------
+
+```{r study_inversions}
+gb_col <- flagInversions(gb_col)
+sum(gb_col$inv)
+invPos <- NULL
+if (any(gb_col$inv)) {
+  invPos <- which(gb_col$inv) + 1
+  invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
+  gb_col[gb_col$inv]
+  gb_col[invContext][1:11]
+  
+  # Histogram of the widths
+  ggplot(data.frame(width = width(gb_col[gb_col$inv]))) +
+    aes(width) +
+    geom_histogram() +
+    scale_x_log10()
+  
+  # Why are the inversions overwhelmingly on the plus strand ?
+  ggplot(data.frame(strand = strand(gb_col[gb_col$inv]))) +
+    aes(strand) +
+    geom_bar()
+  
+  # Flip strands
+  gb_inv_flipped <- gb_col
+  # Note that the `inv` flag marks the beginning of an inversion pattern of length 3
+  # Therefore the strands need to be flipped at inv + 1
+  strand(gb_inv_flipped)[invPos] <- ifelse (strand(gb_inv_flipped)[invPos] == "+", "-", "+")
+  gb_inv_flipped[gb_inv_flipped$inv]
+  gb_inv_flipped[invContext][1:11]
+  
+  # One more round is needed to resolve the inversions that were next to each other.
+  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+  
+  # One more round is needed to resolve the inversions that were next to each other.
+  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+  
+  # One more round is needed to resolve the inversions that were next to each other.
+  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+  
+  # One more round is needed to resolve the inversions that were next to each other.
+  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
+  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
+  
+  # Do we need another round ?
+  which(flagInversions(gb_inv_flipped)$inv) + 1
+  
+  gb_inv_col <- coalesce_contigs(gb_inv_flipped)
+  
+  flagInversions(gb_inv_col)$inv
+  
+  as.list(summary(width(gb_inv_col)))
+}
+```
+
+Insertions / deletions
+----------------------
+
+Patterns that can be described as insertions in the target genome.
+
+```{r study_insersions}
+gb_col <- flagInsersions(gb_col)
+sum(gb_col$ins)
+insPos <- NULL
+if (any(gb_col$ins)) {
+  insPos <- which(gb_col$ins) + 1
+  insContext <- c(insPos -1 , insPos, insPos + 1) |> unique() |> sort()
+  gb_col[insPos]
+  gb_col[insContext][1:11]
+  
+  # Histogram of the widths
+  ggplot(data.frame(width = width(gb_col[insPos]))) +
+    aes(width) +
+    geom_histogram() +
+    scale_x_log10()
+  
+  # Why are the inversions overwhelmingly on the plus strand ?
+  ggplot(data.frame(strand = strand(gb_col[insPos]))) +
+    aes(strand) +
+    geom_bar()
+}
+```
+
+
+Calculate numbers and prepare them for export in a YAML file
+------------------------------------------------------------
+
+The alignment length is relative to the target (indexed) genome.
+
+```{r count_features}
+report <- list()
+report[["alignment_summary"]] <- as.list(compResults)
+report[["aligned_total"]] <- sum(compResults[c("A", "C", "G", "T", "+", "?")], na.rm = TRUE)
+report[["match_part_total"]] <- sum(width(gb_parts))
+report[["unal_total"]] <- sum(width(gb_parts_unal))
+report[["percent_similarity"]] <- 1 - compResults["?"] / report[["aligned_total"]]
+
+report[["number_of_ranges_axt"]] <- length(CNEr::first(axt))
+report[["number_of_ranges_part"]] <- length(gb_parts)
+report[["number_of_ranges_col"]] <- length(gb_col)
+report[["number_of_ranges_match"]] <- length(gb_match)
+report[["number_of ranges_inverted"]] <- sum(gb_col$inv)
+report[["number_of ranges_indel"]]    <- sum(gb_col$inv)
+
+report[["N50_part"]]  <- weighted.mean(width(gb_parts), as.numeric(width(gb_parts)))
+report[["N50_match"]] <- weighted.mean(width(gb_match), as.numeric(width(gb_match)))
+report[["synteny_index_summary"]] <- sapply(split(gb_parts, seqnames(gb_parts)), \(x) tail(sort(sum(width(split(x, seqnames(x$query))))), 1) / sum(width(x)))
+
+report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
+report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
+report[["width_summary_match"]] <- as.list(summary(width(gb_match)))
+report[["width_summary_unaligned"]] <- as.list(summary(width(gb_parts_unal)))
+report[["width_summary_uncollapsed"]] <- as.list(summary(width(gb_col_unal)))
+report[["width_summary_inversions"]] <- as.list(summary(width(gb_col[invPos])))
+report[["width_summary_insersions"]] <- as.list(summary(width(gb_col[insPos])))
+```
+
+Export the results to a YAML file.
+
+```{r export_results}
+yaml <- yaml::as.yaml(report)
+yaml::write_yaml(yaml, paste0(params$prefix, ".yaml"))
+cat(yaml)
 ```
