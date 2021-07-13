@@ -17,6 +17,8 @@
 #' DNA strands_, or in technical terms: sequences that are on the same feature,
 #' regardless of strand orientation.
 #'
+#' @family Similarity indexes
+#'
 #' @returns Returns a numeric value between 0 and 1.
 #'
 #' @examples
@@ -27,7 +29,7 @@
 #' @export
 
 synteny_index <- function(gb) {
-  gbl <- split(gb, seqnames(gb))
+  gbl <- split(gb, droplevels(seqnames(gb)))
   # Calculate an index for each sequence feature
   synIdx <- sapply(gbl, \(x) {
     # Largest sum of all widths

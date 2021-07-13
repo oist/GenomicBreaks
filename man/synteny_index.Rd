@@ -35,3 +35,8 @@ gb$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que
 synteny_index(gb)
 
 }
+\seealso{
+Other Similarity indexes: 
+\code{\link{correlation_index}()}
+}
+\concept{Similarity indexes}
