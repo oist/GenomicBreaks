@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: bioconductor/bioconductor_docker:RELEASE_3_13
+From: bioconductor/bioconductor_docker:devel
 
 %files
     . /GenomicBreaksSource
