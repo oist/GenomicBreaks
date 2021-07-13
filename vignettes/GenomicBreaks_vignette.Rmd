@@ -138,7 +138,36 @@ get_bps(gr_O_Oki$query)
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
 
-This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors. 
+This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors.
+
+## Measures of distance
+
+### Synteny index
+
+Ad-hoc index measuring to what extent a scaffold of the _target_ genome is mostly
+aligned to a single scaffold in the _query_ genome.   See
+`?GenomicBreaks::synteny_index` for details.
+
+
+```{r}
+sapply(list(gr_O_Oki, gr_O_N, gr_Oki_O, gr_Oki_N), synteny_index)
+```
+
+The problem with this index is that it requires genomes to be complete
+chromosome assemblies.
+
+### Correlation
+
+Ad-hoc index measuring the correlation of the coordinates of the syntenic
+alignments in scaffolds of a _target_ genome and their best match in the
+_query_ genome.  See `?GenomicBreaks::correlation_index` for details.
+
+```{r}
+sapply(list(gr_O_Oki, gr_O_N, gr_Oki_O, gr_Oki_N), correlation_index)
+```
+
+This index is more robust to the presence of uncollapsed haplotypes in the
+_query_ genome.
 
 ## Phylogenetic tree
 
