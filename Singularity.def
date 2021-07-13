@@ -12,4 +12,5 @@ From: bioconductor/bioconductor_docker:devel
     R -e 'BiocManager::install(c("CNEr"))'
     R -e 'BiocManager::install(c("rmarkdown"))'
     R -e 'BiocManager::install(c("ggplot2"))'
+    R -e 'BiocManager::install(c("weights"))'
     R CMD INSTALL /GenomicBreaksSource
