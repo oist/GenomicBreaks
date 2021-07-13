@@ -257,6 +257,28 @@ synteny_index <- function(gb) {
 
 report[["synteny_index"]] <- synteny_index(gb_parts)
 
+correlation_index <- function(gb) {
+  gbl <- split(gb, droplevels(seqnames(gb)))
+  # Calculate an index for each sequence feature
+  corIdx <- sapply(gbl, \(x) {
+    # Keep only matches to the best query
+    bestQuery <- x$query |> seqnames() |> table() |> sort() |> tail(1) |> names()
+    x <- x[seqnames(x$query) == bestQuery]
+    if (length(x) == 1) return (1)
+    # Save widths, to be used as weights later
+    weights <- width(x)
+    #  calculate center coordinates
+    x <- resize(x, fix="center", width = 1)
+    x$query <- resize(x$query, fix="center", width = 1)
+    weights::wtd.cor(start(x), start(x$query), weights)[1]
+  })
+  # Average by the sum of all widths
+  weighted.mean(corIdx, sum(width(gbl)))
+}
+
+report[["correlation_index"]] <- correlation_index(gb_parts)
+
+
 report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
 report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
 report[["width_summary_match"]] <- as.list(summary(width(gb_match)))
