@@ -21,7 +21,8 @@ Imports:
   stats,
   graphics,
   Biostrings,
-  BSgenome
+  BSgenome,
+  weights
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
@@ -44,6 +45,7 @@ Collate:
     'bp_pair_analysis.R'
     'dist2next.R'
     'coalesce_contigs.R'
+    'correlation_index.R'
     'feature_coverage.R'
     'flagInsersions.R'
     'flagInversions.R'
