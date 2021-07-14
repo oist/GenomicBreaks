@@ -76,3 +76,13 @@ gb4$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que
 coalesce_contigs(gb4)
 
 }
+\seealso{
+Other Colinearity functions: 
+\code{\link{flagColinearAlignments}()}
+}
+\author{
+Charlotte West
+
+Charles Plessy
+}
+\concept{Colinearity functions}

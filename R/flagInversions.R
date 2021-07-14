@@ -20,6 +20,8 @@
 #' @return Returns the `GenomicBreaks` object with an extra `inv` metadata
 #' column.
 #'
+#' @family Flagging functions
+#'
 #' @examples
 #' inv       <- GenomicRanges::GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
 #' inv$query <- GenomicRanges::GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))

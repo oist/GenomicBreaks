@@ -34,3 +34,9 @@ inv$query <- GenomicRanges::GRanges(c( "S1:101-200",    "S1:201-300",     "S1:30
 flagInversions(inv)
 
 }
+\seealso{
+Other Flagging functions: 
+\code{\link{flagColinearAlignments}()},
+\code{\link{flagInsersions}()}
+}
+\concept{Flagging functions}

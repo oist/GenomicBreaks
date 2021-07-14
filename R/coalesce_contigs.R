@@ -22,6 +22,11 @@
 #' @return Returns a new `GBreaks` object with a reduced number of alignments
 #' fragments due to coalescion.  The returned object is sorted ignoring strand.
 #'
+#' @family Colinearity functions
+#'
+#' @author Charlotte West
+#' @author Charles Plessy
+#'
 #' @examples
 #' # Ranges on the plus strand that should coalesce
 #' gb1       <- GenomicRanges::GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
