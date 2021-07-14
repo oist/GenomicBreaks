@@ -5,6 +5,7 @@ date: "21/06/2021"
 output: html_document
 params:
   resultsDir: "~/projects/GenomicBreaks_results/results-v2/genomicbreaks/"
+  alnDir:     "~/projects/GenomicBreaks_results/results-v2/last/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -169,3 +170,37 @@ ggplot(sim) +
   geom_point() +
   facet_grid(species1 ~ ., scales = "free", space = "free")
 ```
+
+A closer look at the Ciona alignments
+-------------------------------------
+
+```{r}
+C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_int_R.gff.gz"))
+C_int_P__C_rob_HT <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_rob_HT.gff.gz"))
+C_int_P__C_sav    <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_sav.gff.gz"))
+C_int_P__St_cla   <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__St_cla.gff.gz"))
+
+C_int_P__list <- list(C_int_P__C_int_R  = C_int_P__C_int_R,
+                      C_int_P__C_rob_HT = C_int_P__C_rob_HT,
+                      C_int_P__C_sav    = C_int_P__C_sav,
+                      C_int_P__St_cla   = C_int_P__St_cla)
+
+sapply(C_int_P__list, length)
+sapply(C_int_P__list, synteny_index)
+sapply(C_int_P__list, correlation_index)
+```
+
+Our question is: why are there so many alignments in int/int and int/rob
+comparisons despite these species are highly syntenic ?  What does interrupt the
+alignments ?
+
+```{r}
+flagColinearAlignments(C_int_P__C_int_R, details = TRUE) |> head(11)
+C_int_P__C_int_R_col <- coalesce_contigs(C_int_P__C_int_R)
+flagColinearAlignments(C_int_P__C_int_R_col, details = TRUE) |> head(11)
+```
+
+Colinearity seem to be interrupted by short-width alignments to non-homologous
+contigs.  This needs to be checked again once the alignment pipeline has been
+updated (update LAST version, posmask later, replace maf-swap and pass -fMAF+
+to last-split).  A different seeding scheme can also be tested.
