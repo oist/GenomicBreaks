@@ -17,6 +17,8 @@ the reference and query case will be bridged in coalescing.}
 \value{
 Returns a new \code{GBreaks} object with a reduced number of alignments
 fragments due to coalescion.  The returned object is sorted ignoring strand.
+For convenience during analysis sessions, its \emph{score} is set to the width of
+the ranges on the \emph{target} genome.
 }
 \description{
 This algorithm take in a genome-to-genome alignment, represented as a

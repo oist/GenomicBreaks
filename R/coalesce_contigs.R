@@ -21,6 +21,8 @@
 #'
 #' @return Returns a new `GBreaks` object with a reduced number of alignments
 #' fragments due to coalescion.  The returned object is sorted ignoring strand.
+#' For convenience during analysis sessions, its _score_ is set to the width of
+#' the ranges on the _target_ genome.
 #'
 #' @family Colinearity functions
 #'
@@ -149,6 +151,8 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
   strand(gr_red$query) <- "*" # Restore un-strandedness
+
+  score(gr_red) <- width(gr_red)
 
   sort(gr_red, ignore.strand = TRUE)
 }
