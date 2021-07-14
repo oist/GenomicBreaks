@@ -21,7 +21,7 @@ column indicating if an alignment is colinear with the next one.  If the
 of the following and previous alignments on the \emph{target} and \emph{query} genomes
 (\code{tfoll}, \code{tprev}, \code{qfoll}, \code{qprev}), a partial colinearity flag for each
 genome (\code{t_col} and \code{q_col}), and the distance to the next alignment on
-each genome (\code{rdist} and \code{qdist}).
+each genome (\code{tdist} and \code{qdist}).
 }
 \description{
 Flags alignments that are colinear with the next one in sequence order.

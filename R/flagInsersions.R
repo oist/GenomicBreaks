@@ -35,12 +35,12 @@
 flagInsersions <- function (gr_ob, tol = Inf) {
   gr <- gr_ob # save the original object
   gr_ob <- dist2next(gr_ob)
-  gr_ob$rdist2 <- c(gr_ob$rdist[-1], Inf)
+  gr_ob$tdist2 <- c(gr_ob$tdist[-1], Inf)
   gr_ob$qdist2 <- dist2next(gr_ob, step = 2)$qdist # Important difference with flagIn*s*ertions.
   gr_ob$twoNext <- precede(gr_ob$query, tail(gr_ob$query, -2), ignore.strand = T) - seq_along(gr_ob) == 0
   gr$ins <- gr_ob$twoNext          &
-            gr_ob$rdist  < tol + 1 &
-            gr_ob$rdist2 < tol + 1 &
+            gr_ob$tdist  < tol + 1 &
+            gr_ob$tdist2 < tol + 1 &
             gr_ob$qdist2 < tol + 1
   if (any(is.na(gr$ins)))
     gr[is.na(gr$ins)]$ins <- FALSE

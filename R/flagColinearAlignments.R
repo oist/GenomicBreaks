@@ -26,7 +26,7 @@
 #' of the following and previous alignments on the _target_ and _query_ genomes
 #' (`tfoll`, `tprev`, `qfoll`, `qprev`), a partial colinearity flag for each
 #' genome (`t_col` and `q_col`), and the distance to the next alignment on
-#' each genome (`rdist` and `qdist`).
+#' each genome (`tdist` and `qdist`).
 #'
 #' @examples
 #' # Ranges on the plus strand that should coalesce
@@ -117,14 +117,14 @@ flagColinearAlignments <- function(gb, tol = Inf, details = FALSE) {
   # Calculate distance and check if it is within tolerance threshold
   # See 18939aa98b2db83a2360d5a0e92966581de4799e about tol + 1
   gb <- dist2next(gb)
-  gb$colinear <- gb$rdist < tol + 1 &
+  gb$colinear <- gb$tdist < tol + 1 &
                  gb$qdist < tol + 1 &
                  gb$q_col
   gb$colinear[is.na(gb$colinear)] <- FALSE
 
   if (! isTRUE(details)) {
     gb$tfoll <- gb$qfoll <- gb$tprev <- gb$qprev <- NULL
-    gb$t_col <- gb$q_col <- gb$rdist <- gb$qdist <- NULL
+    gb$t_col <- gb$q_col <- gb$tdist <- gb$qdist <- NULL
   }
 
   gb

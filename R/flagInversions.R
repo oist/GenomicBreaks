@@ -34,7 +34,7 @@
 flagInversions <- function (gr_ob, tol = Inf) {
   gr <- gr_ob # save the original object
   gr_ob <- dist2next(gr_ob, ignore.strand = TRUE)
-  gr_ob$rdist2 <- c(gr_ob$rdist[-1], Inf)
+  gr_ob$tdist2 <- c(gr_ob$tdist[-1], Inf)
   gr_ob$qdist2 <- c(gr_ob$qdist[-1], Inf)
   gr_ob$oneNext <- precede(gr_ob$query, tail(gr_ob$query, -1), ignore.strand = T) - seq_along(gr_ob) == 0
   gr_ob$twoNext <- c(gr_ob$oneNext[-1], NA)
@@ -44,8 +44,8 @@ flagInversions <- function (gr_ob, tol = Inf) {
             gr_ob$twoNext          &
             gr_ob$oneDiffStrand    &
             gr_ob$twoSameStrand    &
-            gr_ob$rdist  < tol + 1 &   # We need `< tol + 1`
-            gr_ob$rdist2 < tol + 1 &   # and not `<= tol`
+            gr_ob$tdist  < tol + 1 &   # We need `< tol + 1`
+            gr_ob$tdist2 < tol + 1 &   # and not `<= tol`
             gr_ob$qdist  < tol + 1 &   # Because of comparisons to
             gr_ob$qdist2 < tol + 1     # infinite distance returned by dist2next.
   if (any(is.na(gr$inv)))

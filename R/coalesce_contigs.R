@@ -111,13 +111,13 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   #######################################################################
 
   # find intersection
-  gb$con_met_total <- gb$rdist < tol + 1 &
+  gb$con_met_total <- gb$tdist < tol + 1 &
                          gb$qdist < tol + 1 &
                          gb$q_col_with_next
   gb$con_met_total[is.na(gb$con_met_total)] <- FALSE
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  gb$r_add <- gb$rdist
+  gb$r_add <- gb$tdist
   gb[gb$con_met_total != TRUE]$r_add <- 0
 
   #######################################################################

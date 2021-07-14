@@ -9,7 +9,7 @@
 #' @param step Distance to the n^th^ block (default: first).
 #' @param ignore.strand Calculate distance for ranges on different starands.
 #'
-#' @return Returns the object with two extra metadata colums, `rdist` and
+#' @return Returns the object with two extra metadata colums, `tdist` and
 #' `qdist`, containing the distance to the next range in the reference and query
 #' genomes respectively.
 #'
@@ -32,7 +32,7 @@ dist2next <- function (gr_ob, step = 1, ignore.strand = FALSE) {
      , rep(Inf, step)
      )
   }
-  gr_ob$rdist <- d2n(gr_ob      , step)
+  gr_ob$tdist <- d2n(gr_ob      , step)
   gr_ob$qdist <- d2n(gr_ob$query, step)
   gr_ob
 }

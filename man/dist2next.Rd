@@ -14,7 +14,7 @@ dist2next(gr_ob, step = 1, ignore.strand = FALSE)
 \item{ignore.strand}{Calculate distance for ranges on different starands.}
 }
 \value{
-Returns the object with two extra metadata colums, \code{rdist} and
+Returns the object with two extra metadata colums, \code{tdist} and
 \code{qdist}, containing the distance to the next range in the reference and query
 genomes respectively.
 }
