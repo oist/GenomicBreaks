@@ -43,7 +43,9 @@ getStats <- function(file) {
   res$collapsed_regions    <- y$number_of_ranges_col
   res$collapsed_regions2   <- y$number_of_ranges_match
   res$aligned_total        <- y$aligned_total
+  res$collapsed_total      <- y$collapsed_total
   res$unaligned_total      <- y$unal_total
+  res$uncollapsed_total    <- y$uncol_total
   res$synteny_index        <- y$synteny_index
   res$correlation_index    <- y$correlation_index
   res$N50_part             <- y$N50_part
@@ -88,6 +90,27 @@ p <- ggplot(df) +
   ylab("Number of collapsed regions") +
   geom_point()
 p
+
+ggplot(df) +
+  aes( x = similarity, y = aligned_total / (aligned_total + unaligned_total)) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("Fraction of the genome aligned") +
+  geom_point()
+
+ggplot(df) +
+  aes( x = similarity, y = collapsed_total / (collapsed_total + uncollapsed_total)) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("Fraction of the genome collapsed") +
+  geom_point()
+
+ggplot(df) +
+  aes( x = similarity, y = aligned_total) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("Number of aligned bases") +
+  geom_point()
 
 ggplot(df) +
   aes( x = similarity, y = aligned_mean_width) +
