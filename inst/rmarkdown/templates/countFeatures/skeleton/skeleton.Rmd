@@ -6,8 +6,8 @@ output:
   html_document: 
     keep_md: yes
 params:
-  axtFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/Bar2_p4__OSKA2016v1.9.axt.gz"
-  gffFile: "~/projects/GenomicBreaks_results/results-v1.1.1/last/Bar2_p4__OSKA2016v1.9.gff.gz"
+  axtFile: "~/projects/GenomicBreaks_results/results-v2.3/last/Bar2_p4__OSKA2016v1.9.axt.gz"
+  gffFile: "~/projects/GenomicBreaks_results/results-v2.3/last/Bar2_p4__OSKA2016v1.9.gff.gz"
   id: "Bar2_p4__OSKA2016v1.9"
   prefix: "test"
 editor_options: 
@@ -227,9 +227,11 @@ The alignment length is relative to the target (indexed) genome.
 ```{r count_features}
 report <- list()
 report[["alignment_summary"]] <- as.list(compResults)
-report[["aligned_total"]] <- sum(compResults[c("A", "C", "G", "T", "+", "?")], na.rm = TRUE)
-report[["match_part_total"]] <- sum(width(gb_parts))
-report[["unal_total"]] <- sum(width(gb_parts_unal))
+report[["CNEr_total"]] <- sum(compResults[c("A", "C", "G", "T", "+", "?")], na.rm = TRUE)
+report[["aligned_total"]] <- sum(width(gb_parts))
+report[["collapsed_total"]] <- sum(width(gb_col))
+report[["unal_total"]]  <- sum(width(gb_parts_unal))
+report[["uncol_total"]] <- sum(width(gb_col_unal))
 report[["percent_similarity"]] <- 1 - compResults["?"] / report[["aligned_total"]]
 
 report[["number_of_ranges_axt"]] <- length(CNEr::first(axt))
@@ -241,43 +243,8 @@ report[["number_of ranges_indel"]]    <- sum(gb_col$inv)
 
 report[["N50_part"]]  <- weighted.mean(width(gb_parts), as.numeric(width(gb_parts)))
 report[["N50_match"]] <- weighted.mean(width(gb_match), as.numeric(width(gb_match)))
-
-synteny_index <- function(gb) {
-  gbl <- split(gb, seqnames(gb))
-  # Calculate an index for each sequence feature
-  synIdx <- sapply(gbl, \(x) {
-    # Largest sum of all widths
-    alnOnMainHit <- split(x, seqnames(x$query)) |> width() |> sum() |> sort() |> tail(1)
-    # Normalise by the sum of all widths
-    alnOnMainHit / sum(width(x))
-  })
-  # Average by the sum of all widths
-  weighted.mean(synIdx, sum(width(gbl)))
-}
-
 report[["synteny_index"]] <- synteny_index(gb_parts)
-
-correlation_index <- function(gb) {
-  gbl <- split(gb, droplevels(seqnames(gb)))
-  # Calculate an index for each sequence feature
-  corIdx <- sapply(gbl, \(x) {
-    # Keep only matches to the best query
-    bestQuery <- x$query |> seqnames() |> table() |> sort() |> tail(1) |> names()
-    x <- x[seqnames(x$query) == bestQuery]
-    if (length(x) == 1) return (1)
-    # Save widths, to be used as weights later
-    weights <- width(x)
-    #  calculate center coordinates
-    x <- resize(x, fix="center", width = 1)
-    x$query <- resize(x$query, fix="center", width = 1)
-    weights::wtd.cor(start(x), start(x$query), weights)[1]
-  })
-  # Average by the sum of all widths
-  weighted.mean(corIdx, sum(width(gbl)))
-}
-
 report[["correlation_index"]] <- correlation_index(gb_parts)
-
 
 report[["width_summary_aligned"]] <- as.list(summary(width(gb_parts)))
 report[["width_summary_collapsed"]] <- as.list(summary(width(gb_col)))
