@@ -133,15 +133,13 @@ ggplot(df) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Synteny index") +
-  scale_y_log10() +
   geom_point()
 
 ggplot(df) +
-  aes( x = similarity, y = correlation_index) +
-  aes(color = species1) +
+  aes( x = similarity, y = abs(correlation_index)) +
+  aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
-  ylab("Correlation index") +
-  scale_y_log10() +
+  ylab("abs(correlation index)") +
   geom_point()
 ```
 
