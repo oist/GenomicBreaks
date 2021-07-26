@@ -138,11 +138,11 @@ Inversions
 gb_col <- flagInversions(gb_col)
 sum(gb_col$inv)
 invPos <- NULL
-if (any(gb_col$inv)) {
+if (sum(gb_col$inv) > 10) {
   invPos <- which(gb_col$inv) + 1
   invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
   gb_col[gb_col$inv]
-  gb_col[invContext][1:11]
+  gb_col[invContext] |> head(11)
   
   # Histogram of the widths
   ggplot(data.frame(width = width(gb_col[gb_col$inv]))) +
@@ -161,7 +161,7 @@ if (any(gb_col$inv)) {
   # Therefore the strands need to be flipped at inv + 1
   strand(gb_inv_flipped)[invPos] <- ifelse (strand(gb_inv_flipped)[invPos] == "+", "-", "+")
   gb_inv_flipped[gb_inv_flipped$inv]
-  gb_inv_flipped[invContext][1:11]
+  gb_inv_flipped[invContext] |> head(11)
   
   # One more round is needed to resolve the inversions that were next to each other.
   remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
@@ -199,11 +199,11 @@ Patterns that can be described as insertions in the target genome.
 gb_col <- flagInsersions(gb_col)
 sum(gb_col$ins)
 insPos <- NULL
-if (any(gb_col$ins)) {
+if (sum(gb_col$ins) > 10) {
   insPos <- which(gb_col$ins) + 1
   insContext <- c(insPos -1 , insPos, insPos + 1) |> unique() |> sort()
   gb_col[insPos]
-  gb_col[insContext][1:11]
+  gb_col[insContext] |> head(11)
   
   # Histogram of the widths
   ggplot(data.frame(width = width(gb_col[insPos]))) +
