@@ -4,8 +4,8 @@ author: "Charles Plessy"
 date: "21/06/2021"
 output: html_document
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-v2/genomicbreaks/"
-  alnDir:     "~/projects/GenomicBreaks_results/results-v2/last/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-v2.8/genomicbreaks/"
+  alnDir:     "~/projects/GenomicBreaks_results/results-v2.8/last/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -70,6 +70,10 @@ df$species2 <- strsplit(rownames(df), "__") |> lapply(\(.) .[2]) |> unlist()
 df$speciesGroup <- "Drosophila"
 df$speciesGroup[df$species1 %in% c("Bar2_p4", "OSKA2016v1.9", "OKI2018_I69_1.0")] <- "Oikopleura"
 df$speciesGroup[df$species1 %in% c("C_rob_HT", "C_int_P")] <- "Ciona"
+df$speciesGroup[df$species1 %in% c("NEAR")] <- "NEAR"
+df$speciesGroup[df$species1 %in% c("YASS")] <- "YASS"
+df$speciesGroup[df$species1 %in% c("RY32")] <- "RY32"
+
 ```
 
 ```{r plot_data}
@@ -196,15 +200,16 @@ A closer look at the Ciona alignments
 -------------------------------------
 
 ```{r}
+suppressPackageStartupMessages(library("GenomicBreaks"))
 C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_int_R.gff.gz"))
 C_int_P__C_rob_HT <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_rob_HT.gff.gz"))
 C_int_P__C_sav    <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_sav.gff.gz"))
-C_int_P__St_cla   <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__St_cla.gff.gz"))
+#C_int_P__St_cla   <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__St_cla.gff.gz"))
 
 C_int_P__list <- list(C_int_P__C_int_R  = C_int_P__C_int_R,
                       C_int_P__C_rob_HT = C_int_P__C_rob_HT,
-                      C_int_P__C_sav    = C_int_P__C_sav,
-                      C_int_P__St_cla   = C_int_P__St_cla)
+                      C_int_P__C_sav    = C_int_P__C_sav)
+                   #   C_int_P__St_cla   = C_int_P__St_cla)
 
 sapply(C_int_P__list, length)
 sapply(C_int_P__list, synteny_index)
