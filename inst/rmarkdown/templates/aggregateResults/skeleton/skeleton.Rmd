@@ -4,8 +4,8 @@ author: "Charles Plessy"
 date: "21/06/2021"
 output: html_document
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-v2.8/genomicbreaks/"
-  alnDir:     "~/projects/GenomicBreaks_results/results-v2.8/last/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-2-9/genomicbreaks/"
+  alnDir:     "~/projects/GenomicBreaks_results/results-2-9/last/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -71,9 +71,8 @@ df$speciesGroup <- "Drosophila"
 df$speciesGroup[df$species1 %in% c("Bar2_p4", "OSKA2016v1.9", "OKI2018_I69_1.0")] <- "Oikopleura"
 df$speciesGroup[df$species1 %in% c("C_rob_HT", "C_int_P")] <- "Ciona"
 df$speciesGroup[df$species1 %in% c("NEAR")] <- "NEAR"
-df$speciesGroup[df$species1 %in% c("YASS")] <- "YASS"
-df$speciesGroup[df$species1 %in% c("RY32")] <- "RY32"
-
+df$speciesGroup[df$species1 %in% c("YASS", "YASSW")] <- "YASS"
+df$speciesGroup[df$species1 %in% c("RY32", "RY32W")] <- "RY32"
 ```
 
 ```{r plot_data}
@@ -224,6 +223,37 @@ alignments ?
 flagColinearAlignments(C_int_P__C_int_R, details = TRUE) |> head(11)
 C_int_P__C_int_R_col <- coalesce_contigs(C_int_P__C_int_R)
 flagColinearAlignments(C_int_P__C_int_R_col, details = TRUE) |> head(11)
+
+NEAR__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "NEAR__C_int_P__C_int_R.gff.gz"))
+YASS__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASS__C_int_P__C_int_R.gff.gz"))
+RY32__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32__C_int_P__C_int_R.gff.gz"))
+YASSW__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASSW__C_int_P__C_int_R.gff.gz"))
+RY32W__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32W__C_int_P__C_int_R.gff.gz"))
+
+flagColinearAlignments(NEAR__C_int_P__C_int_R, details = TRUE) |> head(11)
+NEAR__C_int_P__C_int_R_col <- coalesce_contigs(NEAR__C_int_P__C_int_R)
+flagColinearAlignments(NEAR__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+coalesce_contigs(NEAR__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+
+flagColinearAlignments(YASS__C_int_P__C_int_R, details = TRUE) |> head(11)
+YASS__C_int_P__C_int_R_col <- coalesce_contigs(YASS__C_int_P__C_int_R)
+flagColinearAlignments(YASS__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+coalesce_contigs(YASS__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+
+flagColinearAlignments(YASSW__C_int_P__C_int_R, details = TRUE) |> head(11)
+YASSW__C_int_P__C_int_R_col <- coalesce_contigs(YASSW__C_int_P__C_int_R)
+flagColinearAlignments(YASSW__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+coalesce_contigs(YASSW__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+
+flagColinearAlignments(RY32__C_int_P__C_int_R, details = TRUE) |> head(11)
+RY32__C_int_P__C_int_R_col <- coalesce_contigs(RY32__C_int_P__C_int_R)
+flagColinearAlignments(RY32__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+coalesce_contigs(RY32__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+
+flagColinearAlignments(RY32W__C_int_P__C_int_R, details = TRUE) |> head(11)
+RY32W__C_int_P__C_int_R_col <- coalesce_contigs(RY32W__C_int_P__C_int_R)
+flagColinearAlignments(RY32W__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+coalesce_contigs(RY32W__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
 ```
 
 Colinearity seem to be interrupted by short-width alignments to non-homologous
