@@ -6,10 +6,9 @@ output:
   html_document: 
     keep_md: yes
 params:
-  axtFile: "~/projects/GenomicBreaks_results/results-v2.3/last/Bar2_p4__OSKA2016v1.9.axt.gz"
-  gffFile: "~/projects/GenomicBreaks_results/results-v2.3/last/Bar2_p4__OSKA2016v1.9.gff.gz"
-  id: "Bar2_p4__OSKA2016v1.9"
-  prefix: "test"
+  axtFile: "~/projects/GenomicBreaks_results/results-2-9/last/Bar2_p4__OSKA2016v1.9.axt.gz"
+  gffFile: "~/projects/GenomicBreaks_results/results-2-9/last/Bar2_p4__OSKA2016v1.9.gff.gz"
+  prefix: "Bar2_p4__OSKA2016v1.9"
 editor_options: 
   chunk_output_type: console
 ---
@@ -19,11 +18,18 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(progress = TRUE, verbose = TRUE, root.dir = system2("pwd", stdout = TRUE))
 ```
 
+```{r load_libraries}
+requireNamespace("CNEr", quietly = TRUE)
+library("ggplot2")
+library("GenomicBreaks")
+suppressPackageStartupMessages(library("GenomicRanges"))
+```
+
 How to use this Rmarkdown template:
 
 It is essential to set `R_LIBS_USER` to an empty value, otherwise `R` will
 attempt to load packages from the user's library, which were compiled in a
-different environment than the GenomicBreakd Singularity image.
+different environment than the GenomicBreaks Singularity image.
 
 Example command
 
@@ -35,22 +41,9 @@ Load data
 ---------
 
 We load alignment data in [axt](https://genome-asia.ucsc.edu/goldenPath/help/axt.html)
-format using the Bioconductor package [CNEr](https://bioconductor.org/packages/release/bioc/html/CNEr.html).
-However, we can not use the _Axt_ objects for synteny analysis with the
-_GenomicBreaks_ pacakge as they would need to be processed with the _CNEr_'s
-`fixCoordinates` function before conversion to a _GBreaks_ format, which
-requires information on chromosome length that we do not provide to this workflow.
-
-The _GBreaks_ objects are lighter as they do not contain sequence information,
-and are the native format in our _GenomicBreaks_ package.  They wrap the
-_GRanges_ class and therefore are easier to intereact with.
-
-```{r load_libraries}
-requireNamespace("CNEr", quietly = TRUE)
-library("ggplot2")
-library("GenomicBreaks")
-suppressPackageStartupMessages(library("GenomicRanges"))
-```
+format using the Bioconductor package [CNEr](https://bioconductor.org/packages/release/bioc/html/CNEr.html),
+as it allows to easily calculate the percentage similarity between the aligned
+regions.
 
 ```{r load_data}
 # Display parameters
@@ -59,13 +52,6 @@ params
 
 # Load the alignment in an Axt object
 axt <- CNEr::readAxt(params$axtFile)
-
-# Load alignment information from GFF3 files to GBreaks objects.
-# The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
-gb_match <- load_genomic_breaks(params$gffFile, type = "match") #,      target_bsgenome = get(params$BSgenome1))
-
-# The `gb_parts` object contains ranges that correspond to aligned regions only.  (Therefore they have a score)
-gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_bsgenome = get(params$BSgenome1))
 
 # See https://github.com/ge11232002/CNEr/blob/61ec06cc6dc01c9df77fe6e41e467e8fb91633db/R/Axt-methods.R#L59-L60
 compResults <- Biostrings::compareStrings(CNEr::targetSeqs(axt), CNEr::querySeqs(axt))
@@ -81,7 +67,23 @@ Quote from `compareStrings()` manual page:
 Coalesce contigs and study unaligned regions
 --------------------------------------------
 
-```{r process_data}
+We can not use the _Axt_ objects for synteny analysis with the _GenomicBreaks_
+package as they would need to be processed with the _CNEr_'s `fixCoordinates`
+function before conversion to a _GBreaks_ format, which requires information on
+chromosome length that we do not provide to this workflow.
+
+The _GBreaks_ objects are lighter as they do not contain sequence information,
+and are the native format in our _GenomicBreaks_ package.  They wrap the
+_GRanges_ class and therefore are easy to interact with.
+
+```{r coalesce_contigs}
+# Load alignment information from GFF3 files to GBreaks objects.
+# The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
+gb_match <- load_genomic_breaks(params$gffFile, type = "match") #,      target_bsgenome = get(params$BSgenome1))
+
+# The `gb_parts` object contains ranges that correspond to aligned regions only.  (Therefore they have a score)
+gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_bsgenome = get(params$BSgenome1))
+
 gb_col <- coalesce_contigs(gb_parts)
 ```
 
