@@ -37,7 +37,9 @@ flagInsersions(ins)
 }
 \seealso{
 Other Flagging functions: 
+\code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
+\code{\link{flagInterruptions}()},
 \code{\link{flagInversions}()}
 }
 \concept{Flagging functions}

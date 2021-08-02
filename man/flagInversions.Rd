@@ -36,7 +36,9 @@ flagInversions(inv)
 }
 \seealso{
 Other Flagging functions: 
+\code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
-\code{\link{flagInsersions}()}
+\code{\link{flagInsersions}()},
+\code{\link{flagInterruptions}()}
 }
 \concept{Flagging functions}
