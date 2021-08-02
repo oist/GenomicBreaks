@@ -4,7 +4,7 @@
 \alias{flagColinearAlignments}
 \title{Flag colinear alignments}
 \usage{
-flagColinearAlignments(gb, tol = Inf, details = FALSE)
+flagColinearAlignments(gb, tol = Inf, minwidth = 0, details = FALSE)
 }
 \arguments{
 \item{gb}{\code{\link{GBreaks}} object of the pairwise alignment.}
@@ -12,7 +12,9 @@ flagColinearAlignments(gb, tol = Inf, details = FALSE)
 \item{tol}{Unaligned regions larger than this \emph{tolerance} threshold will
 interrupt colinearity.}
 
-\item{details}{Returns more metadata columns if \code{TRUE}}
+\item{minwidth}{Remove the intervals whose width smaller than this value.}
+
+\item{details}{Returns more metadata columns if \code{TRUE}.}
 }
 \value{
 Returns a modified \code{GBreaks} object with a new \code{colinear} metadata
@@ -40,6 +42,10 @@ the last range precedes nothing.  See the examples for details.
 \note{
 The flags are only valid as long as the Genomic Breaks object is not
 modified by removing alignments or sorting them in a different order.
+
+Pay attention that if the \code{mindwidth} option is passed, some intervals
+are discarded from the returned object.  This parameter might be removed in
+the future if too confusing or useless.
 }
 \examples{
 # Ranges on the plus strand that should coalesce
@@ -85,7 +91,9 @@ flagColinearAlignments(gb4)
 }
 \seealso{
 Other Flagging functions: 
+\code{\link{flagAll}()},
 \code{\link{flagInsersions}()},
+\code{\link{flagInterruptions}()},
 \code{\link{flagInversions}()}
 
 Other Colinearity functions: 

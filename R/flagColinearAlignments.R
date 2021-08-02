@@ -18,7 +18,12 @@
 #' @param gb [`GBreaks`] object of the pairwise alignment.
 #' @param tol Unaligned regions larger than this _tolerance_ threshold will
 #'        interrupt colinearity.
-#' @param details Returns more metadata columns if `TRUE`
+#' @param minwidth Remove the intervals whose width smaller than this value.
+#' @param details Returns more metadata columns if `TRUE`.
+#'
+#' @note Pay attention that if the `mindwidth` option is passed, some intervals
+#' are discarded from the returned object.  This parameter might be removed in
+#' the future if too confusing or useless.
 #'
 #' @return Returns a modified `GBreaks` object with a new `colinear` metadata
 #' column indicating if an alignment is colinear with the next one.  If the
@@ -82,7 +87,11 @@
 #' @importFrom stats na.omit
 #' @include dist2next.R
 
-flagColinearAlignments <- function(gb, tol = Inf, details = FALSE) {
+flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE) {
+  # Drop blocks that are narrower than `minwidth`
+  gb <- gb[width(gb) >= minwidth]
+  gb <- gb[width(gb$query) >= minwidth]
+
   # Handle empty objects
   if (length(gb) == 0) return(gb)
 
