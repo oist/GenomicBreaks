@@ -49,6 +49,7 @@ Collate:
     'feature_coverage.R'
     'flagColinearAlignments.R'
     'flagInsersions.R'
+    'flagInterruptions.R'
     'flagInversions.R'
     'getRefGenome.R'
     'get_bps.R'
