@@ -4,8 +4,8 @@ author: "Charles Plessy"
 date: "21/06/2021"
 output: html_document
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-2-9/genomicbreaks/"
-  alnDir:     "~/projects/GenomicBreaks_results/results-2-9/last/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-2-16/genomicbreaks/"
+  alnDir:     "~/projects/GenomicBreaks_results/results-2-16/last/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -50,6 +50,10 @@ getStats <- function(file) {
   res$correlation_index    <- y$correlation_index
   res$N50_part             <- y$N50_part
   res$N50_match            <- y$N50_match
+  res$N50_col              <- y$N50_col
+  res$L50_match            <- y$L50_match
+  res$L50_part             <- y$L50_part
+  res$L50_col              <- y$L50_col
   unlist(res)
 }
 
@@ -73,48 +77,89 @@ df$speciesGroup[df$species1 %in% c("C_rob_HT", "C_int_P")] <- "Ciona"
 df$speciesGroup[df$species1 %in% c("NEAR")] <- "NEAR"
 df$speciesGroup[df$species1 %in% c("YASS", "YASSW")] <- "YASS"
 df$speciesGroup[df$species1 %in% c("RY32", "RY32W")] <- "RY32"
+
+df.benchmark <- df[df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
+df <-  df[! df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
 ```
 
-```{r plot_data}
+### Number of aligned and collapsed regions
+
+The number of aligned regions is low at highest similarities because their
+length increases, and is also low at lowest similarities because less and less
+regions can be alined.  A peak can be envisioned at around 80% identity.
+
+```{r plot_similarity_vs_nubmer_of_aligned_regions}
 library("ggplot2")
-p <- ggplot(df) +
+ggplot(df) +
   aes( x = similarity, y = aligned_regions) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Number of aligned regions") +
   geom_point()
-p
-# p + geom_text(aes(label=species2))
+```
 
-p <- ggplot(df) +
+The bell-shape pattern is even more prominent when normalising by total alignment
+size as a proxy for genome size.
+
+```{r plot_similarity_vs_nubmer_of_aligned_regions_norm_by_total_align_size}
+library("ggplot2")
+ggplot(df) +
+  aes( x = similarity, y = aligned_regions / (aligned_total + unaligned_total)) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("Number of aligned regions / total alignment size") +
+  geom_point()
+```
+
+Collapsing the colinear regions reduces the number to 5 to 10 thousands in a
+broad range of similarities.
+
+```{r plot_similarity_vs_nubmer_of_collapsed_regions}
+ggplot(df) +
   aes( x = similarity, y = collapsed_regions) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Number of collapsed regions") +
   geom_point()
-p
+```
 
+Normalisation by total (collapsed) alignment size gives the impression that
+Oikopleura alignments are more resistant to collapsing.
+
+```{r plot_similarity_vs_nubmer_of_collapsed_regions_norm_by_total_align_size}
+ggplot(df) +
+  aes( x = similarity, y = collapsed_regions / (collapsed_total + uncollapsed_total)) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("Number of collapsed regions / total alignment size") +
+  geom_point()
+```
+
+### Fraction of the genome aligned
+
+```{r plot_similarity_vs_fraction_of_aligned_genome}
 ggplot(df) +
   aes( x = similarity, y = aligned_total / (aligned_total + unaligned_total)) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Fraction of the genome aligned") +
   geom_point()
+```
 
+```{r plot_similarity_vs_fraction_of_collapsed_genome}
 ggplot(df) +
   aes( x = similarity, y = collapsed_total / (collapsed_total + uncollapsed_total)) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Fraction of the genome collapsed") +
   geom_point()
+```
 
-ggplot(df) +
-  aes( x = similarity, y = aligned_total) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Number of aligned bases") +
-  geom_point()
+### Width of aligned region
 
+#### Mean
+
+```{r plot_similarity_vs_mean_width_of_aligned_regions}
 ggplot(df) +
   aes( x = similarity, y = aligned_mean_width) +
   aes(color = speciesGroup) +
@@ -122,22 +167,140 @@ ggplot(df) +
   ylab("Mean width of aligned regions") +
   scale_y_log10() +
   geom_point()
+```
 
+#### N50
+
+```{r plot_similarity_vs_N50_width_of_aligned_regions}
 ggplot(df) +
-  aes( x = similarity, y = N50_match) +
+  aes( x = similarity, y = N50_part) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("N50 of width of aligned regions") +
   scale_y_log10() +
   geom_point()
+```
 
+N50 Normalised by total alignment size.
+
+At equal similarity, the aligned regions in _Oikopleura_ are broader.
+
+On dot-plot they may look similar, but _Oikopleura_ genome is smaller…
+
+```{r plot_similarity_vs_normalised_N50_width_of_aligned_regions}
+ggplot(df) +
+  aes( x = similarity, y = N50_part / (aligned_total + unaligned_total)) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("N50 of width of aligned regions / aligned genome size") +
+  scale_y_log10() +
+  geom_point()
+```
+
+N50 and mean width correlate
+
+```{r plot_mean_width_vs_N50_width_of_aligned_regions}
+ggplot(df) +
+  aes( x = aligned_mean_width, y = N50_part) +
+  aes(color = speciesGroup) +
+  xlab("Mean width of aligned regions") +
+  ylab("N50 of width of aligned regions") +
+  scale_y_log10() +
+  scale_x_log10() +
+  geom_point()
+```
+
+#### L50
+
+```{r plot_similarity_vs_L50_width_of_aligned_regions}
+ggplot(df) +
+  aes( x = similarity, y = L50_part) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("L50 of width of aligned regions") +
+  geom_point()
+```
+
+(normalised)
+
+```{r plot_similarity_vs_L50_width_of_aligned_regions_norm_by_number_of_regions}
+ggplot(df) +
+  aes( x = similarity, y = L50_part / aligned_regions) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("L50 of width of aligned regions / # aligned regions") +
+  scale_y_log10() +
+  geom_point()
+```
+
+### Width of collapsed regions
+
+#### N50
+
+```{r plot_similarity_vs_N50_width_of_collapsed_regions}
+ggplot(df) +
+  aes( x = similarity, y = N50_col) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("N50 of width of collapsed regions") +
+  scale_y_log10() +
+  geom_point()
+```
+
+```{r plot_similarity_vs_normalised_N50_width_of_collapsed_regions}
+ggplot(df) +
+  aes( x = similarity, y = N50_col / ((collapsed_total + uncollapsed_total))) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("N50 of width of collapsed regions") +
+  scale_y_log10() +
+  geom_point()
+```
+
+#### L50
+
+```{r plot_similarity_vs_L50_width_of_collapsed_regions}
+ggplot(df) +
+  aes( x = similarity, y = L50_col) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("L50 of width of collapsed regions") +
+  scale_y_log10() +
+  geom_point()
+```
+
+(normalised)
+
+```{r plot_similarity_vs_L50_width_of_collapsed_regions_norm_by_number_of_regions}
+ggplot(df) +
+  aes( x = similarity, y = L50_col / collapsed_regions) +
+  aes(color = speciesGroup) +
+  xlab("Similarity between aligned regions") +
+  ylab("L50 of width of collapsed regions / # collapsed regions") +
+  scale_y_log10() +
+  geom_point()
+```
+
+### Synteny index
+
+The synteny index measures how little the homologous genomic regions move between chromosomes.
+
+Some of the dots are artefacts because of residual haplotypes.
+
+```{r plot_similarity_vs_synteny_index}
 ggplot(df) +
   aes( x = similarity, y = synteny_index) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
   ylab("Synteny index") +
   geom_point()
+```
 
+### Correlation index
+
+The correlation index measures how "off the diagonal" the alignments are
+
+```{r plot_similarity_vs_correlation_index}
 ggplot(df) +
   aes( x = similarity, y = abs(correlation_index)) +
   aes(color = speciesGroup) +
@@ -145,6 +308,8 @@ ggplot(df) +
   ylab("abs(correlation index)") +
   geom_point()
 ```
+
+### Nucleotide similarity, per genome pair
 
 ```{r plot_similarity}
 sim <- df[c("similarity", "species1", "species2")]
@@ -180,9 +345,7 @@ p_Cio <- plotSortedSubset(sim, "C_rob_HT")
 
 requireNamespace("ggpubr")
 ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
-
 ```
-
 
 ```{r plot_tot_align}
 sim <- df[c("aligned_total", "unaligned_total", "species1", "species2")]
@@ -203,12 +366,12 @@ suppressPackageStartupMessages(library("GenomicBreaks"))
 C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_int_R.gff.gz"))
 C_int_P__C_rob_HT <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_rob_HT.gff.gz"))
 C_int_P__C_sav    <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__C_sav.gff.gz"))
-#C_int_P__St_cla   <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__St_cla.gff.gz"))
+C_int_P__St_cla   <- load_genomic_breaks(paste0(params$alnDir, "C_int_P__St_cla.gff.gz"))
 
 C_int_P__list <- list(C_int_P__C_int_R  = C_int_P__C_int_R,
                       C_int_P__C_rob_HT = C_int_P__C_rob_HT,
-                      C_int_P__C_sav    = C_int_P__C_sav)
-                   #   C_int_P__St_cla   = C_int_P__St_cla)
+                      C_int_P__C_sav    = C_int_P__C_sav,
+                      C_int_P__St_cla   = C_int_P__St_cla)
 
 sapply(C_int_P__list, length)
 sapply(C_int_P__list, synteny_index)
@@ -220,40 +383,44 @@ comparisons despite these species are highly syntenic ?  What does interrupt the
 alignments ?
 
 ```{r}
-flagColinearAlignments(C_int_P__C_int_R, details = TRUE) |> head(11)
-C_int_P__C_int_R_col <- coalesce_contigs(C_int_P__C_int_R)
-flagColinearAlignments(C_int_P__C_int_R_col, details = TRUE) |> head(11)
+flagColinearAlignments(C_int_P__C_rob_HT, details = TRUE) |> head(11)
+C_int_P__C_rob_HT_col <- coalesce_contigs(C_int_P__C_rob_HT)
+flagColinearAlignments(C_int_P__C_rob_HT_col, details = TRUE) |> flagAll() |> head(30) |> as.data.frame()
+coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e4) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> flagAll() |> as.data.frame()
+coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> flagAll() |> as.data.frame()
+```
 
-NEAR__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "NEAR__C_int_P__C_int_R.gff.gz"))
-YASS__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASS__C_int_P__C_int_R.gff.gz"))
-RY32__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32__C_int_P__C_int_R.gff.gz"))
-YASSW__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASSW__C_int_P__C_int_R.gff.gz"))
-RY32W__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32W__C_int_P__C_int_R.gff.gz"))
-
-flagColinearAlignments(NEAR__C_int_P__C_int_R, details = TRUE) |> head(11)
-NEAR__C_int_P__C_int_R_col <- coalesce_contigs(NEAR__C_int_P__C_int_R)
-flagColinearAlignments(NEAR__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-coalesce_contigs(NEAR__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
-
-flagColinearAlignments(YASS__C_int_P__C_int_R, details = TRUE) |> head(11)
-YASS__C_int_P__C_int_R_col <- coalesce_contigs(YASS__C_int_P__C_int_R)
-flagColinearAlignments(YASS__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-coalesce_contigs(YASS__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
-
-flagColinearAlignments(YASSW__C_int_P__C_int_R, details = TRUE) |> head(11)
-YASSW__C_int_P__C_int_R_col <- coalesce_contigs(YASSW__C_int_P__C_int_R)
-flagColinearAlignments(YASSW__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-coalesce_contigs(YASSW__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
-
-flagColinearAlignments(RY32__C_int_P__C_int_R, details = TRUE) |> head(11)
-RY32__C_int_P__C_int_R_col <- coalesce_contigs(RY32__C_int_P__C_int_R)
-flagColinearAlignments(RY32__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-coalesce_contigs(RY32__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
-
-flagColinearAlignments(RY32W__C_int_P__C_int_R, details = TRUE) |> head(11)
-RY32W__C_int_P__C_int_R_col <- coalesce_contigs(RY32W__C_int_P__C_int_R)
-flagColinearAlignments(RY32W__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-coalesce_contigs(RY32W__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+```{r comparisons_of_seeding_schemes}
+# NEAR__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "NEAR__C_int_P__C_int_R.gff.gz"))
+# YASS__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASS__C_int_P__C_int_R.gff.gz"))
+# RY32__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32__C_int_P__C_int_R.gff.gz"))
+# YASSW__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "YASSW__C_int_P__C_int_R.gff.gz"))
+# RY32W__C_int_P__C_int_R  <- load_genomic_breaks(paste0(params$alnDir, "RY32W__C_int_P__C_int_R.gff.gz"))
+# 
+# flagColinearAlignments(NEAR__C_int_P__C_int_R, details = TRUE) |> head(11)
+# NEAR__C_int_P__C_int_R_col <- coalesce_contigs(NEAR__C_int_P__C_int_R)
+# flagColinearAlignments(NEAR__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+# coalesce_contigs(NEAR__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# 
+# flagColinearAlignments(YASS__C_int_P__C_int_R, details = TRUE) |> head(11)
+# YASS__C_int_P__C_int_R_col <- coalesce_contigs(YASS__C_int_P__C_int_R)
+# flagColinearAlignments(YASS__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+# coalesce_contigs(YASS__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# 
+# flagColinearAlignments(YASSW__C_int_P__C_int_R, details = TRUE) |> head(11)
+# YASSW__C_int_P__C_int_R_col <- coalesce_contigs(YASSW__C_int_P__C_int_R)
+# flagColinearAlignments(YASSW__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+# coalesce_contigs(YASSW__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# 
+# flagColinearAlignments(RY32__C_int_P__C_int_R, details = TRUE) |> head(11)
+# RY32__C_int_P__C_int_R_col <- coalesce_contigs(RY32__C_int_P__C_int_R)
+# flagColinearAlignments(RY32__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+# coalesce_contigs(RY32__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# 
+# flagColinearAlignments(RY32W__C_int_P__C_int_R, details = TRUE) |> head(11)
+# RY32W__C_int_P__C_int_R_col <- coalesce_contigs(RY32W__C_int_P__C_int_R)
+# flagColinearAlignments(RY32W__C_int_P__C_int_R_col, details = TRUE) |> head(11)
+# coalesce_contigs(RY32W__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
 ```
 
 Colinearity seem to be interrupted by short-width alignments to non-homologous
