@@ -6,9 +6,9 @@ output:
   html_document: 
     keep_md: yes
 params:
-  axtFile: "~/projects/GenomicBreaks_results/results-2-9/last/Bar2_p4__OSKA2016v1.9.axt.gz"
-  gffFile: "~/projects/GenomicBreaks_results/results-2-9/last/Bar2_p4__OSKA2016v1.9.gff.gz"
-  prefix: "Bar2_p4__OSKA2016v1.9"
+  axtFile: "~/projects/GenomicBreaks_results/results-2-12/last/OSKA2016v1.9__O_van.axt.gz"
+  gffFile: "~/projects/GenomicBreaks_results/results-2-12/last/OSKA2016v1.9__O_van.gff.gz"
+  prefix: "OSKA2016v1.9__O_van"
 editor_options: 
   chunk_output_type: console
 ---
@@ -76,16 +76,37 @@ The _GBreaks_ objects are lighter as they do not contain sequence information,
 and are the native format in our _GenomicBreaks_ package.  They wrap the
 _GRanges_ class and therefore are easy to interact with.
 
-```{r coalesce_contigs}
+```{r load_genomic_breaks}
 # Load alignment information from GFF3 files to GBreaks objects.
 # The `gb_match` object contains ranges that are already collapsed by `maf-convert`.
 gb_match <- load_genomic_breaks(params$gffFile, type = "match") #,      target_bsgenome = get(params$BSgenome1))
 
 # The `gb_parts` object contains ranges that correspond to aligned regions only.  (Therefore they have a score)
 gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_bsgenome = get(params$BSgenome1))
-
-gb_col <- coalesce_contigs(gb_parts)
 ```
+
+```{r flag_genomic_breaks}
+# gb_parts <- gb_parts |>
+#   flagColinearAlignments() |>
+#   flagInsersions() |>
+#   flagInversions()
+# sapply(mcols(gb_parts)[,c("colinear", "ins", "inv")], sum)
+```
+
+```{r coalesce_contigs}
+gb_col <- coalesce_contigs(gb_parts)
+gb_col$minw <- pmin(width(gb_col), width(gb_col$query))
+gb_col <- gb_col |> flagInsersions() |>  flagInversions()
+gb_col$col_1e3 <- NA
+# mcols(gb_col)[gb_col$minw >= 1e3, "col_1e3"] <- flagColinearAlignments(gb_col, minwidth = 1e3)$colinear
+# mcols(gb_col)[gb_col$minw >= 1e4, "col_1e4"] <- flagColinearAlignments(gb_col, minwidth = 1e4)$colinear
+# mcols(gb_col)[gb_col$minw >= 1e5, "col_1e5"] <- flagColinearAlignments(gb_col, minwidth = 1e5)$colinear
+```
+
+We flag the alignments again after discarding the shortest regions.  This
+allows the short colinear regions to consolidate first.  Thus, we only remove
+the short alignments that interrupt the colinearity of longer ones.
+
 
 ### Extract information
 
@@ -131,7 +152,6 @@ ggplot(df) +
   scale_x_log10() +
   facet_wrap(~what, nrow = 2)
 ```
-
 
 Inversions
 ----------
@@ -243,8 +263,12 @@ report[["number_of_ranges_match"]] <- length(gb_match)
 report[["number_of ranges_inverted"]] <- sum(gb_col$inv)
 report[["number_of ranges_indel"]]    <- sum(gb_col$inv)
 
-report[["N50_part"]]  <- weighted.mean(width(gb_parts), as.numeric(width(gb_parts)))
+report[["N50_part"]]  <- weighted.mean(width(gb_parts), as.numeric(width(gb_parts))) # as.num to avoid integer overflow
+report[["L50_part"]]  <- sum(width(gb_parts) > report[["N50_part"]])
+report[["N50_col"]]   <- weighted.mean(width(gb_col), as.numeric(width(gb_col)))
+report[["L50_col"]]   <- sum(width(gb_col) > report[["N50_col"]])
 report[["N50_match"]] <- weighted.mean(width(gb_match), as.numeric(width(gb_match)))
+report[["L50_match"]] <- sum(width(gb_match) > report[["N50_match"]])
 report[["synteny_index"]] <- synteny_index(gb_parts)
 report[["correlation_index"]] <- correlation_index(gb_parts)
 
