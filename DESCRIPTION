@@ -43,6 +43,7 @@ Collate:
     'bp_coverage.R'
     'bp_heatmap.R'
     'bp_pair_analysis.R'
+    'chain_contigs.R'
     'dist2next.R'
     'coalesce_contigs.R'
     'correlation_index.R'

@@ -97,6 +97,7 @@ Other Flagging functions:
 \code{\link{flagInversions}()}
 
 Other Colinearity functions: 
+\code{\link{chain_contigs}()},
 \code{\link{coalesce_contigs}()}
 }
 \author{

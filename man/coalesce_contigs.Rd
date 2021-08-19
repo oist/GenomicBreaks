@@ -80,6 +80,7 @@ coalesce_contigs(gb4)
 }
 \seealso{
 Other Colinearity functions: 
+\code{\link{chain_contigs}()},
 \code{\link{flagColinearAlignments}()}
 }
 \author{
