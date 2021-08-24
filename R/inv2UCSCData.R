@@ -31,6 +31,7 @@ inv2UCSCData <- function(gb) {
                            , description = "GenomicBreaks inversions"
                            , visibility="full")
     names(invObj) <- as.character(gb[triplet][2])
+    invObj$itemRgb <- "black"
     invObj
   }
 
