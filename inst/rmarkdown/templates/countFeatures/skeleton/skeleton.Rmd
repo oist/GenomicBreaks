@@ -138,12 +138,18 @@ gb_col_unal__ <-
     gb_col_unal
   }
 
+# Need to wrap in a function to handle empty GRanges objects...
+width2df <- function(what, gr) {
+  if (length(gr) == 0) return (NULL)
+  data.frame(what = what, width = width(gr))
+}
+
 df <- rbind(
-  data.frame(what = "aligned",     width = width(     gb_parts)),
-  data.frame(what = "unaligned",   width = width(gb_parts_unal)),
-  data.frame(what = "collapsed",   width = width(       gb_col)),
-  data.frame(what = "uncollapsed", width = width(gb_col_unal__)),
-  data.frame(what = "match",       width = width(     gb_match))
+  width2df(what = "aligned",     gr = gb_parts),
+  width2df(what = "unaligned",   gr = gb_parts_unal),
+  width2df(what = "collapsed",   gr = gb_col),
+  width2df(what = "uncollapsed", gr = gb_col_unal__),
+  width2df(what = "match",       gr = gb_match)
 )
 
 ggplot(df) +
