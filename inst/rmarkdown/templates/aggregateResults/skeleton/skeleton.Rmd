@@ -1,11 +1,13 @@
 ---
 title: "Aggregate Results"
 author: "Charles Plessy"
-date: "21/06/2021"
-output: html_document
+date: "24/08/2021"
+output: 
+  html_document: 
+    toc: yes
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-2-16/genomicbreaks/"
-  alnDir:     "~/projects/GenomicBreaks_results/results-2-16/last/"
+  resultsDir: "~/projects/GenomicBreaks_results/results-v3/genomicbreaks/"
+  alnDir:     "~/projects/GenomicBreaks_results/results-v3/last/"
   prefix: "test"
 editor_options: 
   chunk_output_type: console
@@ -15,17 +17,19 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-How to use this Rmarkdown template:
+How to use this Rmarkdown template in a Singularity image:
 
-It is essential to set `R_LIBS_USER` to an empty value, otherwise it will
-attempt to load packages from the user's library, which were compiled in a
-different environment than the GenomicBreakds Singularity image.
+`R_LIBS_USER` must be set to an empty value, otherwise `R` will attempt to load
+packages from the user's library, which were compiled in a different environment
+than the GenomicBreaks Singularity image.
 
-Example command
+Example command:
 
 ```
 R_LIBS_USER='' R -e 'rmarkdown::render("inst/rmarkdown/templates/aggregateResults/skeleton/skeleton.Rmd", output_file = "./toto.html", params = list(resultsDir = "/path/do/dir/with/yaml/files"))'
 ```
+
+## Data load
 
 ```{r load_data}
 library("yaml")
@@ -82,11 +86,15 @@ df.benchmark <- df[df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
 df <-  df[! df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
 ```
 
+## Results
+
 ### Number of aligned and collapsed regions
+
+#### Number of aligned regions
 
 The number of aligned regions is low at highest similarities because their
 length increases, and is also low at lowest similarities because less and less
-regions can be alined.  A peak can be envisioned at around 80% identity.
+regions can be aligned.  A peak can be imagined at around 80% or 85% identity.
 
 ```{r plot_similarity_vs_nubmer_of_aligned_regions}
 library("ggplot2")
@@ -98,8 +106,10 @@ ggplot(df) +
   geom_point()
 ```
 
-The bell-shape pattern is even more prominent when normalising by total alignment
-size as a proxy for genome size.
+#### Number of aligned regions, normalised by alignment size
+
+The bell-shape may be seen broader when normalising by total alignment size as a
+proxy for genome size.
 
 ```{r plot_similarity_vs_nubmer_of_aligned_regions_norm_by_total_align_size}
 library("ggplot2")
@@ -110,6 +120,8 @@ ggplot(df) +
   ylab("Number of aligned regions / total alignment size") +
   geom_point()
 ```
+
+#### Number of collapsed regions
 
 Collapsing the colinear regions reduces the number to 5 to 10 thousands in a
 broad range of similarities.
@@ -123,6 +135,8 @@ ggplot(df) +
   geom_point()
 ```
 
+#### Number of collapsed regions, normalised by collapsed alignment size.
+
 Normalisation by total (collapsed) alignment size gives the impression that
 Oikopleura alignments are more resistant to collapsing.
 
@@ -135,7 +149,12 @@ ggplot(df) +
   geom_point()
 ```
 
-### Fraction of the genome aligned
+### Fraction of the genome mapped
+
+#### Fraction of the genome aligned
+
+At equal similarity, a larger proportion of the _Oikopleura_ genome is aligned
+to other genomes.  Is that because there are less repeats ?
 
 ```{r plot_similarity_vs_fraction_of_aligned_genome}
 ggplot(df) +
@@ -146,6 +165,12 @@ ggplot(df) +
   geom_point()
 ```
 
+#### Fraction of the genome collapsed
+
+In contrast with above, _Oikopleura_ genomes are within the general trend when
+considering collapsed regions.  Is that because this bridges over repeat
+regions ?
+
 ```{r plot_similarity_vs_fraction_of_collapsed_genome}
 ggplot(df) +
   aes( x = similarity, y = collapsed_total / (collapsed_total + uncollapsed_total)) +
@@ -155,7 +180,7 @@ ggplot(df) +
   geom_point()
 ```
 
-### Width of aligned region
+### Width of aligned regions
 
 #### Mean
 
@@ -181,7 +206,23 @@ ggplot(df) +
   geom_point()
 ```
 
-N50 Normalised by total alignment size.
+#### N50 and mean width correlate
+
+As suggested by the similarity between the two plots above, N50 and mean width
+correlate.  Therefore I will only use N50 in the remaining plots below.
+
+```{r plot_mean_width_vs_N50_width_of_aligned_regions}
+ggplot(df) +
+  aes( x = aligned_mean_width, y = N50_part) +
+  aes(color = speciesGroup) +
+  xlab("Mean width of aligned regions") +
+  ylab("N50 of width of aligned regions") +
+  scale_y_log10() +
+  scale_x_log10() +
+  geom_point()
+```
+
+#### N50 normalised by total alignment size.
 
 At equal similarity, the aligned regions in _Oikopleura_ are broader.
 
@@ -197,20 +238,9 @@ ggplot(df) +
   geom_point()
 ```
 
-N50 and mean width correlate
-
-```{r plot_mean_width_vs_N50_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = aligned_mean_width, y = N50_part) +
-  aes(color = speciesGroup) +
-  xlab("Mean width of aligned regions") +
-  ylab("N50 of width of aligned regions") +
-  scale_y_log10() +
-  scale_x_log10() +
-  geom_point()
-```
-
 #### L50
+
+Smallest number of intervals containing at least 50 of the aligned regions.
 
 ```{r plot_similarity_vs_L50_width_of_aligned_regions}
 ggplot(df) +
@@ -221,7 +251,9 @@ ggplot(df) +
   geom_point()
 ```
 
-(normalised)
+#### L50 normalised by alignment size
+
+Maybe the plot looks flat because this normalisation makes little sense ?
 
 ```{r plot_similarity_vs_L50_width_of_aligned_regions_norm_by_number_of_regions}
 ggplot(df) +
@@ -247,12 +279,14 @@ ggplot(df) +
   geom_point()
 ```
 
+#### N50, normalised
+
 ```{r plot_similarity_vs_normalised_N50_width_of_collapsed_regions}
 ggplot(df) +
   aes( x = similarity, y = N50_col / ((collapsed_total + uncollapsed_total))) +
   aes(color = speciesGroup) +
   xlab("Similarity between aligned regions") +
-  ylab("N50 of width of collapsed regions") +
+  ylab("N50 of width of collapsed regions / total alignment size") +
   scale_y_log10() +
   geom_point()
 ```
@@ -269,7 +303,7 @@ ggplot(df) +
   geom_point()
 ```
 
-(normalised)
+#### L50, normalised
 
 ```{r plot_similarity_vs_L50_width_of_collapsed_regions_norm_by_number_of_regions}
 ggplot(df) +
@@ -311,7 +345,7 @@ ggplot(df) +
 
 ### Nucleotide similarity, per genome pair
 
-```{r plot_similarity}
+```{r plot_similarity, fig.height=20}
 sim <- df[c("similarity", "species1", "species2")]
 sim <- sim[order(sim$similarity, decreasing = FALSE), ]
 ggplot(sim) +
@@ -324,7 +358,11 @@ ggplot(sim) +
 #   x$species2 <- factor(x$species2, levels = x$species2)
 #   x
 # }
+```
 
+### Nucleotide similarity, per genome pair, for _Oikopleura_ and _C. robusta_.
+
+```{r}
 plotSortedSubset <- function (x, species) {
   x <- subset(x, species1 == species)
   x$species2 <- factor(x$species2, levels = x$species2)
@@ -347,9 +385,24 @@ requireNamespace("ggpubr")
 ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
 ```
 
-```{r plot_tot_align}
+### Aligned proportion, per genome pair
+
+```{r plot_tot_align, fig.height=20}
 sim <- df[c("aligned_total", "unaligned_total", "species1", "species2")]
 sim$aligned_prop <- sim$aligned_total / (sim$aligned_total + sim$unaligned_total)
+sim
+sim <- sim[order(sim$aligned_prop, decreasing = FALSE), ]
+ggplot(sim) +
+  aes(aligned_prop, species2) +
+  geom_point() +
+  facet_grid(species1 ~ ., scales = "free", space = "free")
+```
+
+### Collapsed aligned proportion, per genome pair
+
+```{r plot_tot_collapsed, fig.height=20}
+sim <- df[c("collapsed_total", "uncollapsed_total", "species1", "species2")]
+sim$aligned_prop <- sim$collapsed_total / (sim$collapsed_total + sim$uncollapsed_total)
 sim
 sim <- sim[order(sim$aligned_prop, decreasing = FALSE), ]
 ggplot(sim) +
