@@ -56,6 +56,7 @@ Collate:
     'getRefGenome.R'
     'get_bps.R'
     'int_frag.R'
+    'inv2UCSCData.R'
     'load_genomic_breaks.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
