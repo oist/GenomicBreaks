@@ -165,13 +165,8 @@ Inversions
 ```{r study_inversions}
 gb_col <- flagInversions(gb_col)
 sum(gb_col$inv)
-invPos <- NULL
+showInversions(gb_col) |> head(11)
 if (sum(gb_col$inv) > 10) {
-  invPos <- which(gb_col$inv) + 1
-  invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
-  gb_col[gb_col$inv]
-  gb_col[invContext] |> head(11)
-  
   # Histogram of the widths
   ggplot(data.frame(width = width(gb_col[gb_col$inv]))) +
     aes(width) +

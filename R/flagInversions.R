@@ -52,3 +52,23 @@ flagInversions <- function (gr_ob, tol = Inf) {
     gr[is.na(gr$inv)]$inv <- FALSE
   gr
 }
+
+#' Show inversions and their flanking blocks.
+#'
+#' @param gb A [`GenomicBreaks`] object processed with [`flagInversions`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @returns Returns the `GenomicBreaks` object in which all ranges that are not
+#' part of an inversion triplet have been discarded.  If the object was missing
+#' the `inv` metadata column, return the object after discarding all of its
+#' ranges.
+
+showInversions <- function(gb, rename = TRUE) {
+  if (is.null(gb$inv)) return(gb_col[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  invPos <- which(gb$inv) + 1
+  invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
+  gb[invContext]
+}
