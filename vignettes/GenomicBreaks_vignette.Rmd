@@ -59,7 +59,7 @@ BiocManager::install("BSgenome.Ptroglodytes.UCSC.panTro6")
 ```{r load_BSgenome_packages}
 # These will need to be installed by the user
 library("BSgenome.Odioica.local.OKI2018.I69")
-library("BSgenome.Odioica.local.OSKA2016")
+library("BSgenome.Odioica.local.OSKA2016v1.9")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 ```
 
@@ -84,16 +84,17 @@ OKI_longShort <- GRanges(OKI_longShort, seqinfo = seqinfo(OKI2018_I69), strand =
 
 ### GenomicBreaks object
 
-Let's load data from genome alignments.
+Let's load data from genome alignments, copied in the `Oidioi_pairwise_v3`
+directory.
 
 ```{r GRanges object}
-gr_O_Oki <- load_genomic_breaks(system.file("extdata/OSKA2016__I69-5.gff3.gz",  package="GenomicBreaks"), OSKA2016,    OKI2018_I69)
-gr_Oki_O <- load_genomic_breaks(system.file("extdata/I69-5__OSKA2016.gff3.gz",  package="GenomicBreaks"), OKI2018_I69, OSKA2016)
-gr_Oki_N <- load_genomic_breaks(system.file("extdata/I69-5__Norway.gff3.gz",    package="GenomicBreaks"), OKI2018_I69, OdB3)
-gr_O_N   <- load_genomic_breaks(system.file("extdata/OSKA2016__Norway.gff3.gz", package="GenomicBreaks"), OSKA2016,    OdB3)
+gr_Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
+gr_Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
+gr_Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
+gr_Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
 
 # Store in a list to easier iterate on all of them.
-gbs <- SimpleList(gr_O_Oki=gr_O_Oki, gr_Oki_O=gr_Oki_O, gr_Oki_N=gr_Oki_N, gr_O_N=gr_O_N)
+gbs <- SimpleList(gr_Osa_Oki=gr_Osa_Oki, gr_Oki_Osa=gr_Oki_Osa, gr_Oki_Nor=gr_Oki_Nor, gr_Osa_Nor=gr_Osa_Nor)
 
 gr_O_Oki
 gr_O_Oki$query
