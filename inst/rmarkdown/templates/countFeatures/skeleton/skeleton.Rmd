@@ -182,39 +182,6 @@ if (sum(gb_col$inv) > 10) {
   ggplot(data.frame(strand = strand(gb_col[gb_col$inv]))) +
     aes(strand) +
     geom_bar()
-  
-  # Flip strands
-  gb_inv_flipped <- gb_col
-  # Note that the `inv` flag marks the beginning of an inversion pattern of length 3
-  # Therefore the strands need to be flipped at inv + 1
-  strand(gb_inv_flipped)[invPos] <- ifelse (strand(gb_inv_flipped)[invPos] == "+", "-", "+")
-  gb_inv_flipped[gb_inv_flipped$inv]
-  gb_inv_flipped[invContext] |> head(11)
-  
-  # One more round is needed to resolve the inversions that were next to each other.
-  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-  
-  # One more round is needed to resolve the inversions that were next to each other.
-  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-  
-  # One more round is needed to resolve the inversions that were next to each other.
-  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-  
-  # One more round is needed to resolve the inversions that were next to each other.
-  remainingInvs <- which(flagInversions(gb_inv_flipped)$inv) + 1
-  strand(gb_inv_flipped)[remainingInvs] <- ifelse (strand(gb_inv_flipped)[remainingInvs] == "+", "-", "+")
-  
-  # Do we need another round ?
-  which(flagInversions(gb_inv_flipped)$inv) + 1
-  
-  gb_inv_col <- coalesce_contigs(gb_inv_flipped)
-  
-  flagInversions(gb_inv_col)$inv
-  
-  as.list(summary(width(gb_inv_col)))
 }
 ```
 
