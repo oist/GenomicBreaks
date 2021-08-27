@@ -146,13 +146,14 @@ Ad-hoc index measuring to what extent a scaffold of the _target_ genome is mostl
 aligned to a single scaffold in the _query_ genome.   See
 `?GenomicBreaks::synteny_index` for details.
 
-
 ```{r}
-sapply(list(gr_O_Oki, gr_O_N, gr_Oki_O, gr_Oki_N), synteny_index)
+sapply(gbs, synteny_index)
+synteny_index(gr_Oki_Nor)
+synteny_index(swap(gr_Oki_Nor))
 ```
 
-The problem with this index is that it requires genomes to be complete
-chromosome assemblies.
+The problem with this index is that it requires that at least the query
+genome is a complete chromosome assembly.
 
 ### Correlation
 
