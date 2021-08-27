@@ -58,6 +58,7 @@ Collate:
     'int_frag.R'
     'inv2UCSCData.R'
     'load_genomic_breaks.R'
+    'load_one_to_ones.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
     'master_bp_analysis.R'
