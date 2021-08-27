@@ -23,7 +23,7 @@
 #' @param type Sequence ontology term representing an alignment block
 #'        (default: `match_part`).
 #'
-#' @return Returns a [`GRanges`] object where each element represents a pairwise
+#' @return Returns a [`GBreaks`] object where each element represents a pairwise
 #' alignment block.  The `granges` part of the object contains the coordinates
 #' on the _target_ genome, and the `query` metadata column contains the _query_
 #' coordinates in `GRanges` format.  The `seqinfo` of each `BSgenome` object
@@ -63,5 +63,5 @@ load_genomic_breaks <- function (
     gb$query <- GRanges(gb$Name)
   gb$Name <- NULL
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
-  gb
+  as(gb, "GBreaks")
 }

@@ -96,11 +96,12 @@ gr_Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz"
 # Store in a list to easier iterate on all of them.
 gbs <- SimpleList(gr_Osa_Oki=gr_Osa_Oki, gr_Oki_Osa=gr_Oki_Osa, gr_Oki_Nor=gr_Oki_Nor, gr_Osa_Nor=gr_Osa_Nor)
 
-gr_O_Oki
-gr_O_Oki$query
+gr_Osa_Oki
+gr_Osa_Oki$query
 ```
 
-Pairwise genome alignments are loaded in `GRanges` object.  By convention, we
+Pairwise genome alignments are loaded in `GBreaks` objects that wrap the
+`GRanges` class.  By convention, we
 write that _query_ genome (the one that was provided as a FASTA file) is aligned
 to the _target_ genome (the one that was indexed by the aligner).  The target
 genome (left) is the main part of the object, and the query genome information
@@ -109,10 +110,6 @@ or scaffold length is loaded from `BSgenome` objects, from which `seqinfo` data
 is extracted and passed to the `GRanges`.  By convention, strand information
 of the alignment is held by the target `GRanges`, and the query `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
-
-Although we are not using object-oriented classes for the moment, we will refer
-to the `GRanges` objects returned by `load_genomic_breaks` as `GenomicBreaks`
-objects.
 
 In the example displayed above, the object contains the pairwise alignment
 between genomes of two dioceous Oikopleura individuals; one from Osaka assembly
