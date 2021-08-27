@@ -124,14 +124,14 @@ Let us define an **alignment stop** to be a position defined in either the targe
 The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
 
 ```{r get bps}
-gr_O_Oki
-get_bps(gr_O_Oki)
-get_bps(gr_O_Oki, direction = "left")
-get_bps(gr_O_Oki,                      stranded = TRUE)
-get_bps(gr_O_Oki,                      stranded = TRUE, sorted = FALSE)
-get_bps(gr_O_Oki, direction = "right", stranded = TRUE)
-get_bps(gr_O_Oki$query, sorted = FALSE)
-get_bps(gr_O_Oki$query)
+gr_Osa_Oki
+get_bps(gr_Osa_Oki)
+get_bps(gr_Osa_Oki, direction = "left")
+get_bps(gr_Osa_Oki,                      stranded = TRUE)
+get_bps(gr_Osa_Oki,                      stranded = TRUE, sorted = FALSE)
+get_bps(gr_Osa_Oki, direction = "right", stranded = TRUE)
+get_bps(gr_Osa_Oki$query, sorted = FALSE)
+get_bps(gr_Osa_Oki$query)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
