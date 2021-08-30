@@ -513,11 +513,17 @@ lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
 ATcontent <- function(g)
   weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g))
 
-sapply(c(Oki=OKI2018_I69, Osa=OSKA2016v1.9, Nor=OdB3), ATcontent)
+sapply(c(Oki=OKI2018_I69, Kum=KUM_M3, Osa=OSKA2016v1.9, Nor=OdB3), ATcontent)
 
 ## Inverted regions are AT-rich as usual.
-invSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Osa)))
-letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE) |> summary()
+invSeq <- SimpleList()
+invSeq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Osa)))
+invSeq$Oki_Kum <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Kum)))
+invSeq$Kum_Oki <- BSgenome::getSeq(KUM_M3,  swap(filterInv(flagInversions(coa$Oki_Kum))))
+invSeq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, filterInv(flagInversions(coa$Osa_Oki)))
+invSeq$Osa_Kum <- BSgenome::getSeq(OSKA2016v1.9, filterInv(flagInversions(coa$Osa_Kum)))
+
+sapply(invSeq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summary())
 
 ## But gaps are a bit more AT-rich.
 letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE) |> summary()
@@ -534,6 +540,10 @@ sequences that I have tried.
 library("rGADEM")
 # Slow !
 # Note that GADEM crashes on sequences longer than 50 kbp.
+gadems <- SimpleList()
+gadems$Oki_Kum <- GADEM(invSeq$Oki_Kum[width(invSeq$Oki_Kum) < 50000], verbose=1, genome=OKI2018_I69)
+gadems$Kum_Oki <- GADEM(invSeq$Kum_Oki[width(invSeq$Kum_Oki) < 50000], verbose=1, genome=KUM_M3)
+gadems$Osa_Oki <- GADEM(invSeq$Osa_Oki[width(invSeq$Osa_Oki) < 50000], verbose=1, genome=OSKA2016v1.9)
 # gadem <- GADEM(invSeq_Oki_O[width(invSeq_Oki_O) < 50000], verbose=1, genome=OKI2018_I69)
 # consensus(gadem)
 # [1] "nAAAAwwnnnrAAAAn"
