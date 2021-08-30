@@ -73,10 +73,24 @@ library(GenomicBreaks)
 ### Genome annotations.
 
 ```{r load_genomic_features}
-tx_OKI <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69_1.0.gene_models.gff3.gz", package = "GenomicBreaks"))
-tx_OKI <- GRanges(tx_OKI, seqinfo = seqinfo(OKI2018_I69))
-tx_OKI <- GenomicFeatures::makeTxDbFromGRanges(tx_OKI)
+annots <- SimpleList()
 
+gff2txdb <- function(file, genome) {
+  tx <- rtracklayer::import.gff3(file)
+  tx <- GRanges(tx, seqinfo = seqinfo(genome))
+  tx <- GenomicFeatures::makeTxDbFromGRanges(tx)
+}
+
+annots$Oki <- gff2txdb("Annotations/OKI2018_I69.v2/OKI2018_I69.v2.gm.gff", OKI2018_I69)
+annots$Osa <- gff2txdb("Annotations/OSKA2016v1.9/OSKA2016v1.9.gm.gff",     OSKA2016v1.9)
+# annots$Kum <- gff2txdb("Annotations/KUM-M3-7f/KUM-M3-7f.gm.gff", NULL)
+# annots$Bar <- gff2txdb("Annotations/Bar2_p4.Flye/Bar2_p4.Flye.gm.gff", NULL)
+# annots$Aom <- gff2txdb("Annotations/AOM-5-5f/AOM-5-5f.gm.gff", NULL)
+```
+
+### Long and short arms.
+
+```{r long_and_short_arms}
 OKI_longShort <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69.arms.gff3", package = "GenomicBreaks"))
 OKI_longShort <- GRanges(OKI_longShort, seqinfo = seqinfo(OKI2018_I69), strand = "*")
 ```
