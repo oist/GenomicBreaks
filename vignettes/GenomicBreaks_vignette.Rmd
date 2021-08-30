@@ -88,16 +88,14 @@ Let's load data from genome alignments, copied in the `Oidioi_pairwise_v3`
 directory.
 
 ```{r GRanges object}
-gr_Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
-gr_Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
-gr_Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
-gr_Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
+gbs <- SimpleList()
+gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
+gbs$Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
+gbs$Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
+gbs$Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
 
-# Store in a list to easier iterate on all of them.
-gbs <- SimpleList(gr_Osa_Oki=gr_Osa_Oki, gr_Oki_Osa=gr_Oki_Osa, gr_Oki_Nor=gr_Oki_Nor, gr_Osa_Nor=gr_Osa_Nor)
-
-gr_Osa_Oki
-gr_Osa_Oki$query
+gbs$Osa_Oki
+gbs$Osa_Oki$query
 ```
 
 Pairwise genome alignments are loaded in `GBreaks` objects that wrap the
@@ -124,14 +122,14 @@ Let us define an **alignment stop** to be a position defined in either the targe
 The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
 
 ```{r get bps}
-gr_Osa_Oki
-get_bps(gr_Osa_Oki)
-get_bps(gr_Osa_Oki, direction = "left")
-get_bps(gr_Osa_Oki,                      stranded = TRUE)
-get_bps(gr_Osa_Oki,                      stranded = TRUE, sorted = FALSE)
-get_bps(gr_Osa_Oki, direction = "right", stranded = TRUE)
-get_bps(gr_Osa_Oki$query, sorted = FALSE)
-get_bps(gr_Osa_Oki$query)
+gbs$Osa_Oki
+get_bps(gbs$Osa_Oki)
+get_bps(gbs$Osa_Oki, direction = "left")
+get_bps(gbs$Osa_Oki,                      stranded = TRUE)
+get_bps(gbs$Osa_Oki,                      stranded = TRUE, sorted = FALSE)
+get_bps(gbs$Osa_Oki, direction = "right", stranded = TRUE)
+get_bps(gbs$Osa_Oki$query, sorted = FALSE)
+get_bps(gbs$Osa_Oki$query)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
@@ -148,8 +146,8 @@ aligned to a single scaffold in the _query_ genome.   See
 
 ```{r}
 sapply(gbs, synteny_index)
-synteny_index(gr_Oki_Nor)
-synteny_index(swap(gr_Oki_Nor))
+synteny_index(gbs$Oki_Nor)
+synteny_index(swap(gbs$Oki_Nor))
 ```
 
 The problem with this index is that it requires that at least the query
@@ -162,7 +160,9 @@ alignments in scaffolds of a _target_ genome and their best match in the
 _query_ genome.  See `?GenomicBreaks::correlation_index` for details.
 
 ```{r}
-sapply(list(gr_O_Oki, gr_O_N, gr_Oki_O, gr_Oki_N), correlation_index)
+sapply(gbs, correlation_index)
+correlation_index(gbs$Oki_Nor)
+correlation_index(swap(gbs$Oki_Nor))
 ```
 
 This index is more robust to the presence of uncollapsed haplotypes in the
@@ -196,12 +196,12 @@ plot(tree)
 
 ## Visualising alignments
 
-We can use the function `scaf_align_plot` to see the alignment of query scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.
+We can use the function `scaf_align_plot` to see the alignment of query
+scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.
 
 ```{r echo=T, message=F, warning=F}
-
-scaf_align_plot(gr_ob = gr_O_Oki, scaf = "S2")
-
+scaf_align_plot(gbs$Osa_Oki, scaf = "Chr1")
+scaf_align_plot(gbs$Oki_Osa, scaf = "chr1")
 ```
 
 Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top. 
@@ -209,35 +209,27 @@ Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osak
 We can plot alignments for two of the target scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
 
 ```{r echo=T, message=F, warning=F}
-
-align_scaf_plot_2(gr_ob = gr_O_Oki, scaf = c("S7","S5"))
-
+align_scaf_plot_2(gbs$Osa_Oki, scaf = c("Chr1","Chr2"))
 ```
 
 As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
 
 ## Coalescing alignments
 
-Large alignments can often appear cluttered with alignment breaks, spanning just a few basepairs. When the alignments skips this short distance, it is likely an artefact of the aligner and not a true breakpoint. Furthermore, we do not consider SNPs here to be breakpoints. Therefore, the algorithm in `coalesce_contigs` is used to produce a new GRanges object with fewer alignment breaks by coalescing alignments separated by short (user specified) distances. This distance need be agreeable in both the target and query genome in order for the coalscion to happen. 
+Large syntenic regions can often appear cluttered with alignment breaks,
+spanning just a few basepairs.  They are either an artefact (for instance in
+case of incomplete purge of haplotypes) and or true breakpoint.  The algorithm
+in `coalesce_contigs` is used to produce a new GRanges object with fewer
+alignment breaks by coalescing alignments separated by short (user specified)
+distances.  This distance need be agreeable in both the target and query genome
+in order for the coalscion to happen. 
 
-For example, coalescing gaps of less than 500 basepairs in the `gr_O_Oki` alignment:
+For example, coalescing gaps of less than 500 basepairs in the `gbs$Osa_Oki` alignment:
 
 ```{r coalescing algorithm}
-gr_O_Oki
-reduced_gr_O_Oki <- coalesce_contigs(gr_O_Oki)
-reduced_gr_O_Oki
-
-gr_Oki_O
-reduced_gr_Oki_O <- coalesce_contigs(gr_Oki_O)
-reduced_gr_Oki_O
-
-gr_Oki_N
-reduced_gr_Oki_N <- coalesce_contigs(gr_Oki_N)
-reduced_gr_Oki_N
-
-gr_O_N
-reduced_gr_O_N <- coalesce_contigs(gr_O_N)
-reduced_gr_O_N
+coa <- sapply(gbs, coalesce_contigs) |> SimpleList()
+sapply(gbs, head)
+sapply(coa, head)
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer
@@ -251,58 +243,32 @@ probability of being breakpoints.
  - Keep or discard ?
 
 ```{r}
-doubleCoalesce <- function (gb, width = 1000) {
-  gb <- gb[width(gb) >= width]
-  coalesce_contigs(gb)
-}
-
-doubleReduced_gr_Oki_O <- doubleCoalesce(reduced_gr_Oki_O)
-doubleReduced_gr_O_Oki <- doubleCoalesce(reduced_gr_O_Oki)
-doubleReduced_gr_Oki_N <- doubleCoalesce(reduced_gr_Oki_N)
-doubleReduced_gr_O_N <- doubleCoalesce(reduced_gr_O_N)
+coaW1000 <- sapply(gbs, coalesce_contigs, minwidth = 1000) |> SimpleList()
+sapply(coaW1000, head)
 ```
 
 ### Summary plot
 
 ```{r width_after_coalescing}
-rbind(
-  data.frame(
-    width  = width(gr_O_Oki),
-    object = "01 gr_O_Oki"
-  ),
-  data.frame(
-    width  = width(reduced_gr_O_Oki),
-    object= "02 reduced_gr_O_Oki"
-  ),
-  data.frame(
-    width  = width(doubleReduced_gr_O_Oki),
-    object= "03 doubleReduced_gr_O_Oki"
-  ),
-  data.frame(
-    width  = width(gr_Oki_O),
-    object = "04 gr_Oki_O"
-  ),
-  data.frame(
-    width  = width(reduced_gr_Oki_O),
-    object= "05 reduced_gr_Oki_O"
-  ),
-  data.frame(
-    width  = width(doubleReduced_gr_Oki_O),
-    object= "06 doubleReduced_gr_Oki_O"
-  ),
-  data.frame(
-    width  = width(gr_O_N),
-    object = "07 gr_O_N"
-  ),
-  data.frame(
-    width  = width(reduced_gr_O_N),
-    object= "08 reduced_gr_O_N"
-  ),
-  data.frame(
-    width  = width(doubleReduced_gr_O_N),
-    object= "09 doubleReduced_gr_O_N"
+widthPlot <- function(gb_parts, gb_col, gb_colW1000) {
+  # Need to wrap in a function to handle empty GRanges objects...
+  width2df <- function(what, gb) {
+    if (length(gb) == 0) return (NULL)
+    data.frame(what = what, width = width(gb))
+  }
+  df <- rbind(
+    width2df(what = "aligned",     gb = gb_parts),
+    width2df(what = "collapsed",   gb = gb_col),
+    width2df(what = "collapsed minW1000", gb = gb_colW1000)
   )
-) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object, ncol = 3) + scale_x_log10()
+  ggplot(df) +
+    aes(width) +
+    geom_histogram() +
+    scale_x_log10() +
+    facet_wrap(~what, ncol = 1, scales = "free_y")
+}
+
+widthPlot(gbs$Osa_Oki, coa$Osa_Oki, coaW1000$Osa_Oki)
 ```
 
 ## Genome plots with genoPlotR
