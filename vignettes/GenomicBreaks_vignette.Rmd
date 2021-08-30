@@ -46,6 +46,7 @@ To install them:
 install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+install.packages("BSgenome.Odioica.local.KUM.M3", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 ```
 
 Other BSgenome packages are distributed by Bioconductor
@@ -60,8 +61,9 @@ BiocManager::install("BSgenome.Ptroglodytes.UCSC.panTro6")
 library("BSgenome.Odioica.local.OKI2018.I69")
 library("BSgenome.Odioica.local.OSKA2016v1.9")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
+library("BSgenome.Odioica.local.KUM.M3")
 
-genomes <- SimpleList(Oki = OKI2018_I69, Osa = OSKA2016v1.9, Nor = OdB3)
+genomes <- SimpleList(Oki = OKI2018_I69, Kum = KUM_M3, Osa = OSKA2016v1.9, Nor = OdB3)
 ```
 
 ### The GenomicBreaks package itself
