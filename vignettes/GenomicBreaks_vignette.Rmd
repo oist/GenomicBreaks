@@ -46,7 +46,6 @@ To install them:
 install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-install.packages("BSgenome.Odioica.local.OSKA2016", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 ```
 
 Other BSgenome packages are distributed by Bioconductor
