@@ -157,33 +157,29 @@ This package seeks to determine, of the group of alignment stops, which are like
 
 ### Synteny index
 
-Ad-hoc index measuring to what extent a scaffold of the _target_ genome is mostly
-aligned to a single scaffold in the _query_ genome.   See
-`?GenomicBreaks::synteny_index` for details.
+Ad-hoc index measuring to what extent a scaffold of the _target_ genome is
+mostly aligned to a single scaffold in the _query_ genome.   See
+`?GenomicBreaks::synteny_index` for details.  One limitation to the use of this
+index is that it requires that at least the _query_ genome is a complete
+chromosome assembly.
 
 ```{r}
 sapply(gbs, synteny_index)
-synteny_index(gbs$Oki_Nor)
-synteny_index(swap(gbs$Oki_Nor))
+sapply(gbs, \(g) swap(g) |> synteny_index())
 ```
-
-The problem with this index is that it requires that at least the query
-genome is a complete chromosome assembly.
 
 ### Correlation
 
 Ad-hoc index measuring the correlation of the coordinates of the syntenic
 alignments in scaffolds of a _target_ genome and their best match in the
-_query_ genome.  See `?GenomicBreaks::correlation_index` for details.
+_query_ genome.  See `?GenomicBreaks::correlation_index` for details.  This
+index is more robust to the presence of uncollapsed haplotypes in the _query_
+genome.
 
 ```{r}
 sapply(gbs, correlation_index)
-correlation_index(gbs$Oki_Nor)
-correlation_index(swap(gbs$Oki_Nor))
+sapply(gbs, \(g) swap(g) |> correlation_index())
 ```
-
-This index is more robust to the presence of uncollapsed haplotypes in the
-_query_ genome.
 
 ## Phylogenetic tree
 
