@@ -466,26 +466,11 @@ lgaps <- function(reduced_gr) {
   subsetByOverlaps(lgaps, invs)
 }
 
-# Get inverted blocks
-filterInv <- function(gr) {
-  gr <- flagInversions(gr)
-  names(gr) <- seq_along(gr)
-  gr[which(gr$inv)+1]
-}
-
-# Same with flanking regions
-filterInv3 <- function(gr) {
-  gr <- flagInversions(gr)
-  names(gr) <- seq_along(gr)
-  gr[sort(unique(c( which(gr$inv)
-                  , which(gr$inv)+1
-                  , which(gr$inv)+2)))]
-}
 
 #filterInv3(reduced_gr_Oki_O) %>% Head(20)
 #filterInv3(reduced_gr_Oki_N) %>% Head(20)
 
-data.frame(width=width(lgaps_Oki_O)) %>%
+data.frame(width=width(lgaps_Oki_O)) |>
   ggplot(aes(width)) + geom_histogram() +  scale_x_log10()
 
 rbind(
@@ -497,10 +482,12 @@ rbind(
     width  = x[x$inv]$qdist,
     object= "Query"
   )
-) %>% ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) +scale_x_log10() +
+) |> ggplot(aes(width)) + geom_histogram() + facet_wrap(~object) +scale_x_log10() +
   ggtitle("Width of the left-side unaligned region in inversions detected in reduced_gr_Oki_O")
 
-lgaps_Oki_O <- lgaps(reduced_gr_Oki_O)
+lgaps_Oki_O <- lgaps(coa$Oki_Osa)
+# Note that lgaps(gr_Oki_O) returns less inversions because
+# of situations where + - + is + - - + before collapsing. 
 lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
 ```
 
@@ -508,15 +495,17 @@ lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
 
 ```{r at_richness}
 ## Genome average
-weighted.mean(letterFrequency(getSeq(OKI2018_I69), "AT", as.prob = TRUE),
-              seqlengths(OKI2018_I69))
+ATcontent <- function(g)
+  weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g))
+
+sapply(c(Oki=OKI2018_I69, Osa=OSKA2016v1.9, Nor=OdB3), ATcontent)
 
 ## Inverted regions are AT-rich as usual.
-invSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69,  filterInv(reduced_gr_Oki_O))
-letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE) %>% summary()
+invSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Osa)))
+letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE) |> summary()
 
 ## But gaps are a bit more AT-rich.
-letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE) %>% summary()
+letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE) |> summary()
 
 ## This difference is significant.
 t.test(letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE), letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE))
