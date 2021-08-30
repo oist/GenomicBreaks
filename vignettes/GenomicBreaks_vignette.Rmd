@@ -86,8 +86,8 @@ gff2txdb <- function(file, genome) {
 }
 
 annots$Oki <- gff2txdb("Annotations/OKI2018_I69.v2/OKI2018_I69.v2.gm.gff", OKI2018_I69)
+annots$Kum <- gff2txdb("Annotations/KUM-M3-7f/KUM-M3-7f.gm.gff", KUM_M3)
 annots$Osa <- gff2txdb("Annotations/OSKA2016v1.9/OSKA2016v1.9.gm.gff",     OSKA2016v1.9)
-# annots$Kum <- gff2txdb("Annotations/KUM-M3-7f/KUM-M3-7f.gm.gff", NULL)
 # annots$Bar <- gff2txdb("Annotations/Bar2_p4.Flye/Bar2_p4.Flye.gm.gff", NULL)
 # annots$Aom <- gff2txdb("Annotations/AOM-5-5f/AOM-5-5f.gm.gff", NULL)
 ```
@@ -106,9 +106,11 @@ directory.
 
 ```{r GRanges object}
 gbs <- SimpleList()
-gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
 gbs$Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
+gbs$Oki_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3)
 gbs$Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
+gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
+gbs$Osa_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__KUM-M3-7f.gff.gz",       OSKA2016v1.9, KUM_M3)
 gbs$Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
 
 gbs$Osa_Oki
