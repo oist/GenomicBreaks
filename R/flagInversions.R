@@ -63,6 +63,8 @@ flagInversions <- function (gr_ob, tol = Inf) {
 #' part of an inversion triplet have been discarded.  If the object was missing
 #' the `inv` metadata column, return the object after discarding all of its
 #' ranges.
+#'
+#' @export
 
 showInversions <- function(gb, rename = TRUE) {
   if (is.null(gb$inv)) return(gb_col[0])
@@ -70,5 +72,27 @@ showInversions <- function(gb, rename = TRUE) {
     names(gb) <- seq_along(gb)
   invPos <- which(gb$inv) + 1
   invContext <- c(invPos -1 , invPos, invPos + 1) |> unique() |> sort()
+  gb[invContext]
+}
+
+#' Extract central blocks in inversions
+#'
+#' @param gb A [`GenomicBreaks`] object processed with [`flagInversions`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @returns Returns the `GenomicBreaks` object in which all ranges that are not
+#' the central part of an inversion triplet have been discarded.  If the object
+#' was missing the `inv` metadata column, return the object after discarding all
+#' of its ranges.
+#'
+#' @export
+
+filterInversions <- function(gb, rename = TRUE) {
+  if (is.null(gb$inv)) return(gb_col[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  invPos <- which(gb$inv) + 1
+  invContext <- c(invPos) |> unique() |> sort()
   gb[invContext]
 }
