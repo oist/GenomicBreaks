@@ -194,18 +194,21 @@ leaves in existing tree, please let me know.
 
 ```{r phylogenetic_tree, fig.height=4, fig.width=6, dev="svg"}
 requireNamespace("ade4")
-mkTree <- function (Oki, Osaka, Norway) {
+mkTree <- function (Oki, Kume, Osaka, Norway) {
   ade4::newick2phylog(
     paste0(
-      "(", Oki, ":2,",
-        "(", Osaka, ":1, ",
-             Norway, ":1",
+      "(",
+        "(", Oki, ":1, ",
+             Kume, ":1",
+        "):2,",
+        "(", Osaka, ":2, ",
+             Norway, ":2",
         "):1",
       ");"
     )
   )
 }
-tree <- mkTree("Okinawa", "North Pacific", "Norway")
+tree <- mkTree("Okinawa", "Kume", "North Pacific", "Norway")
 plot(tree)
 ```
 
