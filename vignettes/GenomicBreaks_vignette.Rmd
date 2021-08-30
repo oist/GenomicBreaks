@@ -518,7 +518,8 @@ sequences that I have tried.
 ```{r search_for_motifs_in_inversions}
 library("rGADEM")
 # Slow !
-# gadem <- GADEM(invSeq_Oki_O, verbose=1, genome=OKI2018_I69)
+# Note that GADEM crashes on sequences longer than 50 kbp.
+# gadem <- GADEM(invSeq_Oki_O[width(invSeq_Oki_O) < 50000], verbose=1, genome=OKI2018_I69)
 # consensus(gadem)
 # [1] "nAAAAwwnnnrAAAAn"
 
