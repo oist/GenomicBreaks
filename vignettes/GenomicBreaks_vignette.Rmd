@@ -154,14 +154,18 @@ between genomes of two dioceous _Oikopleura_ individuals; one from the Osaka
 assembly `OSKA2016` (_target_) and one from the Okinawa assembly `OKI2018_I69`
 (_query_).
 
-### Breakpoints and alignment stops
+## Breakpoints and alignment stops
 
-Let us define an **alignment stop** to be a position defined in either the target or query genome, where an alignment begins or ends. Looking at the first line in `gr_O_Oki` above, S1 positions 162 and 550 of the target would be defined as alignment stops. Correspondingly, we have positions 909374 and 909853 in XSR of the query genome as alignment stops. 
+Let us define an **alignment stop** to be a position defined in either the
+_target_ or _query_ genome, where an alignment begins or ends.  Looking at the
+first line in the `Osa_Oki` object above, `Chr1` positions 1535 and 1751 of the
+_target_ would be defined as alignment stops.  Correspondingly, we have
+positions 955913 and 956109 in `chr1` of the _query_ genome as alignment stops. 
 
-The function `get_bps` takes in a GRanges pairwise alignment, and produces a GRanges object of it's associated alignment stops. 
+The function `get_bps` takes in a `GBreaks` pairwise alignment, and produces a
+`GRanges` object of it's associated alignment stops. 
 
 ```{r get bps}
-gbs$Osa_Oki
 get_bps(gbs$Osa_Oki)
 get_bps(gbs$Osa_Oki, direction = "left")
 get_bps(gbs$Osa_Oki,                      stranded = TRUE)
@@ -171,9 +175,14 @@ get_bps(gbs$Osa_Oki$query, sorted = FALSE)
 get_bps(gbs$Osa_Oki$query)
 ```
 
-Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination. 
+Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a
+genomic structural mutation, arising from breakage and repair of the chromosome.
+Such structural events include insertion, deletion, inversion and translocation,
+and often arise during recombination. 
 
-This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors.
+This package seeks to determine, of the group of alignment stops, which are
+likely genomic breakpoints and analyse them.  Thus, filtering out alignment
+stops that are a result of bioinformatic errors.
 
 ## Measures of distance
 
