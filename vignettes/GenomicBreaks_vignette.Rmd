@@ -79,7 +79,12 @@ genomes <- SimpleList(
   # Less contiguous assemblies
   Kum = KUM_M3, Aom = AOM_5, Nor = OdB3)
 
+## Genome lengths
 sapply(genomes, \(g) sum(seqlengths(seqinfo(g))))
+
+## Genome average AT content
+sapply(genomes, \(g)
+  weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g)))
 ```
 
 ## Load data
@@ -571,12 +576,6 @@ lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, lgaps_Oki_O)
 ### AT richness
 
 ```{r at_richness}
-## Genome average
-ATcontent <- function(g)
-  weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g))
-
-sapply(c(Oki=OKI2018_I69, Kum=KUM_M3, Osa=OSKA2016v1.9, Nor=OdB3), ATcontent)
-
 ## Inverted regions are AT-rich as usual.
 invSeq <- SimpleList()
 invSeq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Osa)))
