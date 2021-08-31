@@ -556,7 +556,12 @@ inv.lgaps <- sapply(coa, lgaps) |> SimpleList()
 data.frame(width=width(inv.lgaps$Oki_Osa)) |>
   ggplot(aes(width)) + geom_histogram() +  scale_x_log10()
 
-lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, inv.lgaps$Oki_Osa)
+inv.lgaps.Seq <- SimpleList()
+
+inv.lgaps.Seq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Osa)
+inv.lgaps.Seq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, inv.lgaps$Osa_Oki)
+inv.lgaps.Seq$Oki_Bar <- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Bar)
+inv.lgaps.Seq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      inv.lgaps$Bar_Oki)
 ```
 
 ### AT richness
@@ -564,19 +569,27 @@ lgapsSeq_Oki_O <- BSgenome::getSeq(OKI2018_I69, inv.lgaps$Oki_Osa)
 ```{r at_richness}
 ## Inverted regions are AT-rich as usual.
 invSeq <- SimpleList()
-invSeq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Osa)))
-invSeq$Oki_Kum <- BSgenome::getSeq(OKI2018_I69,  filterInv(flagInversions(coa$Oki_Kum)))
-invSeq$Kum_Oki <- BSgenome::getSeq(KUM_M3,  swap(filterInv(flagInversions(coa$Oki_Kum))))
-invSeq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, filterInv(flagInversions(coa$Osa_Oki)))
-invSeq$Osa_Kum <- BSgenome::getSeq(OSKA2016v1.9, filterInv(flagInversions(coa$Osa_Kum)))
+invSeq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Osa)))
+invSeq$Oki_Bar <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Bar)))
+invSeq$Oki_Kum <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Kum)))
+invSeq$Kum_Oki <- BSgenome::getSeq(KUM_M3,  swap(filterInversions(flagInversions(coa$Oki_Kum))))
+invSeq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Oki)))
+invSeq$Osa_Bar <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Bar)))
+invSeq$Osa_Kum <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Kum)))
+invSeq$Bar_Osa <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Osa)))
+invSeq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Oki)))
+invSeq$Bar_Kum <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Kum)))
 
 sapply(invSeq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summary())
+genomes.AT
 
 ## But gaps are a bit more AT-rich.
-letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE) |> summary()
+sapply(inv.lgaps.Seq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summary())
 
 ## This difference is significant.
-t.test(letterFrequency(invSeq_Oki_O, "AT", as.prob = TRUE), letterFrequency(lgapsSeq_Oki_O, "AT", as.prob = TRUE))
+t.test(letterFrequency(invSeq$Oki_Osa, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Osa, "AT", as.prob = TRUE))
+t.test(letterFrequency(invSeq$Osa_Oki, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Osa_Oki, "AT", as.prob = TRUE))
+t.test(letterFrequency(invSeq$Oki_Bar, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Bar, "AT", as.prob = TRUE))
 ```
 
 I was tempted to explain this difference with A/T homopolymer stetches.  But
