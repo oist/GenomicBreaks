@@ -403,16 +403,28 @@ gb2comp <- function(gb) {
   as.comparison(df)
 }
 
-keepMainMatch <- function(gb) {
-  bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
-  gb[seqnames(gb$query) == bestMatch]
+plotApairOfChrs <- function(gb, chr) {
+  gb <- gb[seqnames(gb) == chr]
+    keepMainMatch <- function(gb) {
+    bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
+    gb[seqnames(gb$query) == bestMatch]
+  }
+  roi <- keepMainMatch(gb)
+  dsList <-   list(
+      roi |> gbQuery2dna_seq(),
+      roi |> gbRef2dna_seq()
+      )
+  
+  compList <- list(
+      roi |> swap() |> gb2comp()
+    )
+  plot_gene_map(dsList, compList)
 }
 
-roi <- keepMainMatch(coa$Oki_Osa)
-dsList <-   list(
-    roi |> gbQuery2dna_seq(),
-    roi |> gbRef2dna_seq()
-    )
+plotApairOfChrs(coa$Oki_Bar, "chr1")
+plotApairOfChrs(coa$Oki_Osa, "chr1")
+plotApairOfChrs(coa$Osa_Oki, "Chr1")
+plotApairOfChrs(coa$Osa_Bar, "Chr1")
 
 compList <- list(
     roi |> swap() |> gb2comp()
