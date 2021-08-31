@@ -43,9 +43,13 @@ The Oikopleura BSgenome packages are distributed in a drat directory hosted on G
 To install them:
 
 ```{r install_drat_BSgenome_packages, eval=FALSE}
-install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+# Chromosome assemblies
 install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+install.packages("BSgenome.Odioica.local.Bar2.p4", repos="https://oist.github.io/plessy_oikgenomes_drat/")
+
+# Less contiguous genomes
+install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 install.packages("BSgenome.Odioica.local.KUM.M3", repos="https://oist.github.io/plessy_oikgenomes_drat/")
 ```
 
@@ -60,10 +64,15 @@ BiocManager::install("BSgenome.Ptroglodytes.UCSC.panTro6")
 # These will need to be installed by the user
 library("BSgenome.Odioica.local.OKI2018.I69")
 library("BSgenome.Odioica.local.OSKA2016v1.9")
+library("BSgenome.Odioica.local.Bar2.p4")
 library("BSgenome.Odioica.local.Odioica.reference.v3.0")
 library("BSgenome.Odioica.local.KUM.M3")
 
-genomes <- SimpleList(Oki = OKI2018_I69, Kum = KUM_M3, Osa = OSKA2016v1.9, Nor = OdB3)
+genomes <- SimpleList(
+  # Chromosome assemblies
+  Oki = OKI2018_I69, Osa = OSKA2016v1.9, Bar = Bar2_p4,
+  # Less contiguous assemblies
+  Kum = KUM_M3, Nor = OdB3)
 ```
 
 ### The GenomicBreaks package itself
@@ -88,7 +97,7 @@ gff2txdb <- function(file, genome) {
 annots$Oki <- gff2txdb("Annotations/OKI2018_I69.v2/OKI2018_I69.v2.gm.gff", OKI2018_I69)
 annots$Kum <- gff2txdb("Annotations/KUM-M3-7f/KUM-M3-7f.gm.gff", KUM_M3)
 annots$Osa <- gff2txdb("Annotations/OSKA2016v1.9/OSKA2016v1.9.gm.gff",     OSKA2016v1.9)
-# annots$Bar <- gff2txdb("Annotations/Bar2_p4.Flye/Bar2_p4.Flye.gm.gff", NULL)
+annots$Bar <- gff2txdb("Annotations/Bar2_p4.Flye/Bar2_p4.Flye.gm.gff", Bar2_p4)
 # annots$Aom <- gff2txdb("Annotations/AOM-5-5f/AOM-5-5f.gm.gff", NULL)
 ```
 
@@ -107,11 +116,19 @@ directory.
 ```{r GRanges object}
 gbs <- SimpleList()
 gbs$Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
+gbs$Oki_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__Bar2_p4.gff.gz",      OKI2018_I69,  Bar2_p4)
 gbs$Oki_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3)
 gbs$Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
+
 gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
+gbs$Osa_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__Bar2_p4.gff.gz",         OSKA2016v1.9, Bar2_p4)
 gbs$Osa_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__KUM-M3-7f.gff.gz",       OSKA2016v1.9, KUM_M3)
 gbs$Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
+
+gbs$Bar_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OKI2018_I69_1.0.gff.gz",      Bar2_p4,     OKI2018_I69)
+gbs$Bar_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OSKA2016v1.9.gff.gz",         Bar2_p4,     OSKA2016v1.9)
+gbs$Bar_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__KUM-M3-7f.gff.gz",            Bar2_p4,     KUM_M3)
+gbs$Bar_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OdB3.gff.gz",                 Bar2_p4,     OdB3)
 
 gbs$Osa_Oki
 gbs$Osa_Oki$query
@@ -194,7 +211,7 @@ leaves in existing tree, please let me know.
 
 ```{r phylogenetic_tree, fig.height=4, fig.width=6, dev="svg"}
 requireNamespace("ade4")
-mkTree <- function (Oki, Kume, Osaka, Norway) {
+mkTree <- function (Oki, Kume, Osaka, Bar, Norway) {
   ade4::newick2phylog(
     paste0(
       "(",
@@ -202,13 +219,15 @@ mkTree <- function (Oki, Kume, Osaka, Norway) {
              Kume, ":1",
         "):2,",
         "(", Osaka, ":2, ",
-             Norway, ":2",
+          "(", Bar, ":1, ",
+               Norway, ":1",
+          "):1",
         "):1",
       ");"
     )
   )
 }
-tree <- mkTree("Okinawa", "Kume", "North Pacific", "Norway")
+tree <- mkTree("Okinawa", "Kume", "North Pacific", "Barcelona", "Norway")
 plot(tree)
 ```
 
@@ -652,7 +671,7 @@ with its PWM.
 vmatchPattern("AAGCsGCwwmkCGrCTTyn", OKI2018_I69)
 
 pwmHits <- sapply(genomes, matchPWM, pwm = pwm)
-length(pwmHits$Oki)
+sapply(pwmHits, length)
 hist(score(pwmHits$Oki))
 
 # Less hits, with lower scores, in the mm10 genome.
