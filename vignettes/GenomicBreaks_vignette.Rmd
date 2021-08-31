@@ -385,10 +385,10 @@ gbQuery2dna_seq <- function (gb) {
   gr2dna_seg(gb$query)
 }
 
-ds <- gr2dna_seg(reduced_gr_Oki_O[seqnames(reduced_gr_Oki_O) == "chr1"])
+# Plot whole chromosome 1
+ds <- gr2dna_seg(coa$Oki_Osa[seqnames(coa$Oki_Osa) == "chr1"])
 head(ds) ; tail(ds)
 plot_gene_map(list(ds))
-plot_gene_map(list(ds[2000:2100,]))
 
 gb2comp <- function(gb) {
   ref <- gr2dna_seg(gb)
@@ -403,21 +403,19 @@ gb2comp <- function(gb) {
   as.comparison(df)
 }
 
-roi <- reduced_gr_Oki_O[2044:2050]
-roiNameA <- seqlevelsInUse(roi$query)[3]
-roiNameB <- seqlevelsInUse(roi)[]
-roiNameC <- seqlevelsInUse(roi$query)[2]
-dsList <-   list(
-    roi[seqnames(roi$query) == roiNameA] %>% gbQuery2dna_seq,
-    roi                                  %>% gbRef2dna_seq,
-    roi[seqnames(roi$query) == roiNameC] %>% gbQuery2dna_seq
-    )
-names(dsList) <- c(roiNameA, roiNameB, roiNameC)
+keepMainMatch <- function(gb) {
+  bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
+  gb[seqnames(gb$query) == bestMatch]
+}
 
+roi <- keepMainMatch(coa$Oki_Osa)
+dsList <-   list(
+    roi |> gbQuery2dna_seq(),
+    roi |> gbRef2dna_seq()
+    )
 
 compList <- list(
-    roi[seqnames(roi$query) == roiNameA] %>% swap %>% gb2comp,
-    roi[seqnames(roi$query) == roiNameC] %>% gb2comp
+    roi |> swap() |> gb2comp()
   )
 plot_gene_map(dsList, compList)
 ```
