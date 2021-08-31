@@ -212,35 +212,46 @@ sapply(gbs, correlation_index)
 sapply(gbs, \(g) swap(g) |> correlation_index())
 ```
 
-## Phylogenetic tree
+## Phylogenetic cladogram
 
 We assume that the _North Pacific_ and the _Atlantic_ species are more related
-to each other than to the _Okinawa_ species.
-
-The purpose of the `mkTree` function is to make new trees with the same topology
-and scaffold names instead of species names.  If there is a way to simple relabel
-leaves in existing tree, please let me know.
+to each other than to the _Okinawan_ species.
 
 ```{r phylogenetic_tree, fig.height=4, fig.width=6, dev="svg"}
 requireNamespace("ade4")
-mkTree <- function (Oki, Kume, Osaka, Bar, Norway) {
-  ade4::newick2phylog(
-    paste0(
-      "(",
-        "(", Oki, ":1, ",
-             Kume, ":1",
-        "):2,",
-        "(", Osaka, ":2, ",
-          "(", Bar, ":1, ",
-               Norway, ":1",
-          "):1",
-        "):1",
-      ");"
+treeLeaf <- function(name, length=NULL) {
+  if(!is.null(length)) length <- paste0(':', length)
+  paste0(name, length)
+}
+
+treeNode <- function(branch1, branch2, length = NULL) {
+  if(!is.null(length)) length <- paste0(':', length)
+  paste0('(', branch1, ',', branch2, ')', length)
+}
+
+addRoot <- function(branch)  paste0(branch, ";")
+
+tree <-
+  addRoot(
+    treeNode(
+      treeNode( length = 2,
+        treeLeaf("Okinawa", 1),
+        treeLeaf("Kume", 1)
+      ),
+      treeNode( length = 1,
+        treeNode( length = 1,
+          treeLeaf("Osaka", 1),
+          treeLeaf("Aomori", 1)
+        ),
+        treeNode( length =1,
+          treeLeaf("Norway", 1),
+          treeLeaf("Barcelona", 1)
+        )
+      )
     )
   )
-}
-tree <- mkTree("Okinawa", "Kume", "North Pacific", "Barcelona", "Norway")
-plot(tree)
+
+plot(ade4::newick2phylog(tree))
 ```
 
 ## Visualising alignments
