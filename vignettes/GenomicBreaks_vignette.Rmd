@@ -288,8 +288,8 @@ For example, coalescing gaps of less than 500 basepairs in the `gbs$Osa_Oki` ali
 
 ```{r coalescing algorithm}
 coa <- sapply(gbs, coalesce_contigs) |> SimpleList()
-sapply(gbs, head)
-sapply(coa, head)
+sapply(gbs, length)
+sapply(coa, length)
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer
@@ -304,7 +304,7 @@ probability of being breakpoints.
 
 ```{r}
 coaW1000 <- sapply(gbs, coalesce_contigs, minwidth = 1000) |> SimpleList()
-sapply(coaW1000, head)
+sapply(coaW1000, length)
 ```
 
 ### Summary plot
@@ -328,7 +328,24 @@ widthPlot <- function(gb_parts, gb_col, gb_colW1000) {
     facet_wrap(~what, ncol = 1, scales = "free_y")
 }
 
-widthPlot(gbs$Osa_Oki, coa$Osa_Oki, coaW1000$Osa_Oki)
+width2df <- function(where, what, gbl) {
+  gb <- gbl[[where]]
+  if (length(gb) == 0) return (NULL)
+  data.frame(where = where, what = what, width = width(gb))
+}
+
+df <- rbind(
+  # do.call allows a list to replace "..." in a function call
+  do.call(rbind, lapply(names(gbs), width2df, "aligned", gbs)),
+  do.call(rbind, lapply(names(coa), width2df, "collapsed", coa)),
+  do.call(rbind, lapply(names(coaW1000), width2df, "collapsedW1000", coaW1000))
+)
+
+  ggplot(df) +
+    aes(width) +
+    geom_histogram() +
+    scale_x_log10() +
+    facet_wrap(~what + where, nrow = 3, scales = "free_y")
 ```
 
 ## Genome plots with genoPlotR
