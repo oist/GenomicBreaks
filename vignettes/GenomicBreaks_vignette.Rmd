@@ -21,17 +21,20 @@ knitr::opts_knit$set(verbose = TRUE)
 
 # Introduction
 
-The GenomicBreaks R package contains tools for visualising and analysing
-characteristics associated with 'breakpoints' between pairs of genomes.
+The _GenomicBreaks_ R package contains tools for visualising and analysing
+characteristics associated with _breakpoints_ between pairs of _genomes_.
 
 ## Load pacakges
 
 Core packages that provide functions we use a lot.
 
 ```{r loadlib, echo=T, results='hide'}
+library('GenomicBreaks')
 suppressPackageStartupMessages({
-library(GenomicRanges)
-library(ggplot2)
+  library('BSgenome')
+  library('GenomicFeatures')
+  library('GenomicRanges')
+  library('ggplot2')
 })
 ```
 
@@ -77,12 +80,6 @@ genomes <- SimpleList(
   Kum = KUM_M3, Aom = AOM_5, Nor = OdB3)
 
 sapply(genomes, \(g) sum(seqlengths(seqinfo(g))))
-```
-
-### The GenomicBreaks package itself
-
-```{r load_GenomicBreaks}
-library(GenomicBreaks)
 ```
 
 ## Load data
