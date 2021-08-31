@@ -114,43 +114,45 @@ OKI_longShort <- GRanges(OKI_longShort, seqinfo = seqinfo(OKI2018_I69), strand =
 Let's load data from genome alignments, copied in the `Oidioi_pairwise_v3`
 directory.
 
+Pairwise genome alignments are loaded in `GBreaks` objects that wrap the
+`GRanges` class.  By convention, we write that the _query_ genome (the one that
+was provided as a FASTA file) is aligned to the _target_ genome (the one that
+was indexed by the aligner).  The _target_ genome (on the left) is the main part
+of the object, and the _query_ genome information (right) is contained in the
+metadata columns (`mcols`) of the structure.  Information on contig or scaffold
+length is loaded from `BSgenome` objects, from which `seqinfo` data
+is extracted and passed to the `GRanges`.  By convention, strand information
+of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
+are strandless.  The objects are sorted by `seqname` first.
+
 ```{r GRanges object}
 gbs <- SimpleList()
 gbs$Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
 gbs$Oki_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__Bar2_p4.gff.gz",      OKI2018_I69,  Bar2_p4)
 gbs$Oki_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3)
+gbs$Oki_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__AOM-5-5f.gff.gz",     OKI2018_I69,  AOM_5)
 gbs$Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
 
 gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
 gbs$Osa_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__Bar2_p4.gff.gz",         OSKA2016v1.9, Bar2_p4)
 gbs$Osa_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__KUM-M3-7f.gff.gz",       OSKA2016v1.9, KUM_M3)
+gbs$Osa_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__AOM-5-5f.gff.gz",        OSKA2016v1.9, AOM_5)
 gbs$Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
 
 gbs$Bar_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OKI2018_I69_1.0.gff.gz",      Bar2_p4,     OKI2018_I69)
 gbs$Bar_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OSKA2016v1.9.gff.gz",         Bar2_p4,     OSKA2016v1.9)
 gbs$Bar_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__KUM-M3-7f.gff.gz",            Bar2_p4,     KUM_M3)
+gbs$Bar_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__AOM-5-5f.gff.gz",             Bar2_p4,     AOM_5)
 gbs$Bar_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OdB3.gff.gz",                 Bar2_p4,     OdB3)
 
 gbs$Osa_Oki
 gbs$Osa_Oki$query
 ```
 
-Pairwise genome alignments are loaded in `GBreaks` objects that wrap the
-`GRanges` class.  By convention, we
-write that _query_ genome (the one that was provided as a FASTA file) is aligned
-to the _target_ genome (the one that was indexed by the aligner).  The target
-genome (left) is the main part of the object, and the query genome information
-(right) is contained in the metadata of the structure.  Information on contig
-or scaffold length is loaded from `BSgenome` objects, from which `seqinfo` data
-is extracted and passed to the `GRanges`.  By convention, strand information
-of the alignment is held by the target `GRanges`, and the query `GRanges`
-are strandless.  The objects are sorted by `seqname` first.
-
 In the example displayed above, the object contains the pairwise alignment
-between genomes of two dioceous Oikopleura individuals; one from Osaka assembly
-_OSKA2016_ (target) and one from Okinawa assembly _OKI2018_I69_ (query).
-
-The process of pairwise genome alignment first requires the construction of two sequenced genomes, necessitating many steps; seqencing, basecalling, assembly, etc. In this process, errors inevitably arise - from incorrect base calls to misassemblies. These errors can be exacerbated in the alignment process, and coupled with difficult repeated regions, can cause failure to align homologous regions, or misalignments.
+between genomes of two dioceous _Oikopleura_ individuals; one from the Osaka
+assembly `OSKA2016` (_target_) and one from the Okinawa assembly `OKI2018_I69`
+(_query_).
 
 ### Breakpoints and alignment stops
 
