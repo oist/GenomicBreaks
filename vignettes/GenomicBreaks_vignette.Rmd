@@ -80,11 +80,11 @@ genomes <- SimpleList(
   Kum = KUM_M3, Aom = AOM_5, Nor = OdB3)
 
 ## Genome lengths
-sapply(genomes, \(g) sum(seqlengths(seqinfo(g))))
+(genome.lengths <- sapply(genomes, \(g) sum(seqlengths(seqinfo(g)))))
 
 ## Genome average AT content
-sapply(genomes, \(g)
-  weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g)))
+(genomes.AT <- sapply(genomes, \(g)
+  weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g))))
 ```
 
 ## Load data
