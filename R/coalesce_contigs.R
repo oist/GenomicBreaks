@@ -105,7 +105,7 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
 
   # When the reference strand is "+", we want the query blocks to be colinear
   # and when the reference is "-" we want them to be anti-colinear.
-  gb$q_col_with_next <- ( strand(gb) == "+" & gb$qnext == 1 ) |
+  gb$q_col_with_next <- ( decode(strand(gb)) %in% c("+", "*") & gb$qnext == 1 ) |
                            ( strand(gb) == "-" & gb$qprev == 1 )
 
   gb <- dist2next(gb)
@@ -146,6 +146,7 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gb[gb$con_met_total != TRUE]$q_add <- 0
 
   end(  q_ext[strand(gb) == "+"]) <- end(  q_ext[strand(gb) == "+"]) + gb[strand(gb) == "+"]$q_add
+  end(  q_ext[strand(gb) == "*"]) <- end(  q_ext[strand(gb) == "*"]) + gb[strand(gb) == "*"]$q_add
   start(q_ext[strand(gb) == "-"]) <- start(q_ext[strand(gb) == "-"]) - gb[strand(gb) == "-"]$q_add
 
   # reduce and concatenate
