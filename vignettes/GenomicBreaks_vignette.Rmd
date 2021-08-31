@@ -559,7 +559,9 @@ data.frame(width=width(inv.lgaps$Oki_Osa)) |>
 inv.lgaps.Seq <- SimpleList()
 
 inv.lgaps.Seq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Osa)
+inv.lgaps.Seq$Oki_Kum <- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Kum)
 inv.lgaps.Seq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, inv.lgaps$Osa_Oki)
+inv.lgaps.Seq$Osa_Aom <- BSgenome::getSeq(OSKA2016v1.9, inv.lgaps$Osa_Aom)
 inv.lgaps.Seq$Oki_Bar <- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Bar)
 inv.lgaps.Seq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      inv.lgaps$Bar_Oki)
 ```
@@ -576,6 +578,7 @@ invSeq$Kum_Oki <- BSgenome::getSeq(KUM_M3,  swap(filterInversions(flagInversions
 invSeq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Oki)))
 invSeq$Osa_Bar <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Bar)))
 invSeq$Osa_Kum <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Kum)))
+invSeq$Osa_Aom <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Aom)))
 invSeq$Bar_Osa <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Osa)))
 invSeq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Oki)))
 invSeq$Bar_Kum <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Kum)))
@@ -590,6 +593,7 @@ sapply(inv.lgaps.Seq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summa
 t.test(letterFrequency(invSeq$Oki_Osa, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Osa, "AT", as.prob = TRUE))
 t.test(letterFrequency(invSeq$Osa_Oki, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Osa_Oki, "AT", as.prob = TRUE))
 t.test(letterFrequency(invSeq$Oki_Bar, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Bar, "AT", as.prob = TRUE))
+t.test(letterFrequency(invSeq$Oki_Kum, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Kum, "AT", as.prob = TRUE))
 ```
 
 I was tempted to explain this difference with A/T homopolymer stetches.  But
@@ -601,7 +605,13 @@ library("rGADEM")
 # Slow !
 # Note that GADEM crashes on sequences longer than 50 kbp.
 gadems <- SimpleList()
-gadems$Oki_Kum <- GADEM(invSeq$Oki_Kum[width(invSeq$Oki_Kum) < 50000], verbose=1, genome=OKI2018_I69)
+gadems$Oki_Osa <- GADEM(inv.lgaps.Seq$Oki_Osa[width(inv.lgaps.Seq$Oki_Osa) < 50000], verbose=1, genome=OKI2018_I69)
+gadems$Oki_Kum <- GADEM(inv.lgaps.Seq$Oki_Kum[width(inv.lgaps.Seq$Oki_Kum) < 50000], verbose=1, genome=OKI2018_I69)
+
+gadems$Osa_Oki <- GADEM(inv.lgaps.Seq$Osa_Oki[width(inv.lgaps.Seq$Osa_Oki) < 50000], verbose=1, genome=OSKA2016v1.9)
+gadems$Osa_Aom <- GADEM(inv.lgaps.Seq$Osa_Aom[width(inv.lgaps.Seq$Osa_Aom) < 50000], verbose=1, genome=OSKA2016v1.9)
+
+
 gadems$Kum_Oki <- GADEM(invSeq$Kum_Oki[width(invSeq$Kum_Oki) < 50000], verbose=1, genome=KUM_M3)
 gadems$Osa_Oki <- GADEM(invSeq$Osa_Oki[width(invSeq$Osa_Oki) < 50000], verbose=1, genome=OSKA2016v1.9)
 # gadem <- GADEM(invSeq_Oki_O[width(invSeq_Oki_O) < 50000], verbose=1, genome=OKI2018_I69)
@@ -615,9 +625,8 @@ gadems$Osa_Oki <- GADEM(invSeq$Osa_Oki[width(invSeq$Osa_Oki) < 50000], verbose=1
 #saveRDS(gadem, file = "lgapsSeq_Oki_O_gadem.rds")
 gadem <- readRDS("lgapsSeq_Oki_O_gadem.rds")
 
+for (n in seq_along(gadem@motifList)) seqLogo::seqLogo(rGADEM::getPWM(gadem)[[n]])
 pwm <- rGADEM::getPWM(gadem)[[1]]
-seqLogo::seqLogo(pwm)
-slPWM <- seqLogo::makePWM(pwm)
 
 #RGadem positive control: check introns ?
 # set.seed(1664)
@@ -641,6 +650,19 @@ slPWM <- seqLogo::makePWM(pwm)
 
 A palindromic (rAAGCsGCwwmkCGrCTTyn) motif is found in the left gaps.
 
+Or could it be `GCCGCnnnGCGGC` ?  Its frequency in genomes is something like:
+```
+  Oki   Osa   Bar   Kum   Aom   Nor 
+10827  2273  1967 10880  2210  2247 
+```
+
+On the other hand, a motif containing GCGAAGCGAA identified in Osa_Oki shows:
+
+```
+  Oki   Osa   Bar   Kum   Aom   Nor 
+  483 21360 23340   501 21594 16413 
+```
+  
 ```{r screenJaspar}
 checkJaspar <- function (pwm) {
   #---- see https://compgenomr.github.io/book/motif-discovery.html
@@ -710,7 +732,9 @@ vmatchPattern("AAGCsGCwwmkCGrCTTyn", OKI2018_I69)
 
 pwmHits <- sapply(genomes, matchPWM, pwm = pwm)
 sapply(pwmHits, length)
-hist(score(pwmHits$Oki))
+hist(pwmHits$Oki$score)
+hist(pwmHits$Osa$score)
+
 
 # Less hits, with lower scores, in the mm10 genome.
 pwmHitsmm10 <- matchPWM(pwm, BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10)
