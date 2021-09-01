@@ -573,6 +573,7 @@ where `+ - +` was `+ - - +` before collapsing.
 ```{r detect_trivial_invertions}
 sapply(gbs, function(gb) sum(flagInversions(gb)$inv))
 sapply(coa, function(gb) sum(flagInversions(gb)$inv))
+sapply(coa2, function(gb) sum(flagInversions(gb)$inv))
 ```
 
 ### Isolate the left-side gaps in inversions
