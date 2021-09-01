@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 Dockerfile
 Singularity.def
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
