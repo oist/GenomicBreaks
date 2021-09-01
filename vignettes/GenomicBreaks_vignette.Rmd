@@ -307,20 +307,14 @@ alignment stops. The algorithm is an initial step in alignment stop filtering,
 with the goal of a reduced number of alignment stops that have a high
 probability of being breakpoints.
 
-### Narrow-width alignments
+### Width summary plots
 
- - What do they represent ?
- - Keep or discard ?
-
-```{r}
-coaW1000 <- sapply(gbs, coalesce_contigs, minwidth = 1000) |> SimpleList()
-sapply(coaW1000, length)
-```
-
-### Summary plot
+The distribution of widths is not the same on long and short arms.  For this
+reason, it would be unwise to filter by width on some operations such as
+coalescing.
 
 ```{r width_after_coalescing}
-widthPlot <- function(gb_parts, gb_col, gb_colW1000) {
+widthPlot <- function(gb_parts, gb_col) {
   # Need to wrap in a function to handle empty GRanges objects...
   width2df <- function(what, gb) {
     if (length(gb) == 0) return (NULL)
@@ -328,8 +322,7 @@ widthPlot <- function(gb_parts, gb_col, gb_colW1000) {
   }
   df <- rbind(
     width2df(what = "aligned",     gb = gb_parts),
-    width2df(what = "collapsed",   gb = gb_col),
-    width2df(what = "collapsed minW1000", gb = gb_colW1000)
+    width2df(what = "collapsed",   gb = gb_col)
   )
   ggplot(df) +
     aes(width) +
@@ -348,7 +341,6 @@ df <- rbind(
   # do.call allows a list to replace "..." in a function call
   do.call(rbind, lapply(names(gbs), width2df, "aligned", gbs)),
   do.call(rbind, lapply(names(coa), width2df, "collapsed", coa)),
-  do.call(rbind, lapply(names(coaW1000), width2df, "collapsedW1000", coaW1000))
 )
 
   ggplot(df) +
@@ -356,6 +348,19 @@ df <- rbind(
     geom_histogram() +
     scale_x_log10() +
     facet_wrap(~what + where, nrow = 3, scales = "free_y")
+
+DF <- DataFrame(width = width(gbs$Oki_Osa), Type = gbs$Oki_Osa$Type, chr = seqnames(gbs$Oki_Osa))
+
+gg_freq_poly <- function(DF) {
+    ggplot(DF |> as("data.frame")) +
+    aes(width) +
+    geom_freqpoly() +
+    scale_x_log10()
+}
+
+gg_freq_poly(DF) +
+  aes(col=Type) +
+  facet_wrap(~chr, scales = "free_y")
 ```
 
 ## Genome plots with genoPlotR
@@ -541,7 +546,6 @@ where `+ - +` was `+ - - +` before collapsing.
 ```{r detect_trivial_invertions}
 sapply(gbs, function(gb) sum(flagInversions(gb)$inv))
 sapply(coa, function(gb) sum(flagInversions(gb)$inv))
-sapply(coaW1000, function(gb) sum(flagInversions(gb)$inv))
 ```
 
 ### Isolate the left-side gaps in inversions
@@ -940,7 +944,6 @@ coalescing:
 library(heatmaps)
 hm_GC1 <- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "GC", direction = "left") |> SimpleList()
 hm_GC2 <- sapply(coa, bp_heatmap, basep_range = 1000, pat = "GC", direction = "left") |> SimpleList()
-hm_GC3 <- sapply(coaW1000, bp_heatmap, basep_range = 1000, pat = "GC", direction = "left") |> SimpleList()
 
 maxHeight <- 2000
 sm_GC1 <- sapply(hm_GC1, smoothHeatmap, output.size = c(maxHeight,     500), algorithm = "kernel") |> SimpleList()
@@ -963,7 +966,6 @@ Now looking at TATA content:
 ```{r TATA}
 hm_GC1_TATA <- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "TATA", direction = "left") |> SimpleList()
 hm_GC2_TATA <- sapply(coa, bp_heatmap, basep_range = 1000, pat = "TATA", direction = "left") |> SimpleList()
-hm_GC3_TATA <- sapply(coaW1000, bp_heatmap, basep_range = 1000, pat = "TATA", direction = "left") |> SimpleList()
 
 maxHeight <- 2000
 sm_GC1_TATA <- sapply(hm_GC1_TATA, smoothHeatmap, output.size = c(maxHeight,     500), algorithm = "kernel") |> SimpleList()
@@ -989,7 +991,6 @@ directly after promoter regions.
 ```{r AAGCsGCwwmkCGrCTTyn}
 hm_GC1_mot <- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "AGCNGC", direction = "left") |> SimpleList()
 hm_GC2_mot <- sapply(coa, bp_heatmap, basep_range = 1000, pat = "AGCNGC", direction = "left") |> SimpleList()
-hm_GC3_mot <- sapply(coaW1000, bp_heatmap, basep_range = 1000, pat = "AGCNGC", direction = "left") |> SimpleList()
 
 maxHeight <- 2000
 sm_GC1_mot <- sapply(hm_GC1_mot, smoothHeatmap, output.size = c(maxHeight,     500), algorithm = "kernel") |> SimpleList()
