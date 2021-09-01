@@ -132,11 +132,16 @@ are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
 gbs <- SimpleList()
-gbs$Oki_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
-gbs$Oki_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__Bar2_p4.gff.gz",      OKI2018_I69,  Bar2_p4)
-gbs$Oki_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3)
-gbs$Oki_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__AOM-5-5f.gff.gz",     OKI2018_I69,  AOM_5)
-gbs$Oki_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3)
+load_genomic_breaks_ <- function(file, genomeT, genomeQ, longShort) {
+  gb <- load_genomic_breaks("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9)
+  gb$Type <- mcols(longShort)[findOverlaps(gb, longShort) |> subjectHits(), "Type"]
+  gb
+}
+gbs$Oki_Osa <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9, OKI_longShort)
+gbs$Oki_Bar <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__Bar2_p4.gff.gz",      OKI2018_I69,  Bar2_p4,      OKI_longShort)
+gbs$Oki_Kum <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3,       OKI_longShort)
+gbs$Oki_Aom <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__AOM-5-5f.gff.gz",     OKI2018_I69,  AOM_5,        OKI_longShort)
+gbs$Oki_Nor <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3,         OKI_longShort)
 
 gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
 gbs$Osa_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__Bar2_p4.gff.gz",         OSKA2016v1.9, Bar2_p4)
