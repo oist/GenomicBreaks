@@ -452,14 +452,24 @@ plotApairOfChrs(coa$Oki_Bar, "chr1")
 plotApairOfChrs(coa$Oki_Osa, "chr1")
 plotApairOfChrs(coa$Osa_Oki, "Chr1")
 plotApairOfChrs(coa$Osa_Bar, "Chr1")
-
-compList <- list(
-    roi |> swap() |> gb2comp()
-  )
-plot_gene_map(dsList, compList)
+plotApairOfChrs(coa2$Osa_Bar, "Chr1")
 ```
 
-## Extract ranges from the same reference region in two GenomicBreaks objects
+
+## Combine alignments to the same outgroup
+
+Since Okinawa is the outgroup, let's look for regions of it that are aligned
+on both the Osaka and the Norway genomes.
+
+```{r combine_GBs}
+x <- subsetByOverlaps(coa2$Oki_Osa, coa2$Oki_Bar)
+y <- subsetByOverlaps(coa2$Oki_Bar, coa2$Oki_Osa)
+findOverlapPairs(x,y)
+subsetByOverlaps(coa2$Oki_Osa, gaps(coa2$Oki_Bar))
+
+```
+
+## Extract ranges from the same target region in two GenomicBreaks objects
 
 ```{r intersect_GBs}
 #roi <- GRanges("chr1:1222000-1240000")
@@ -470,10 +480,10 @@ roi <- GRanges("chr1:6379932-6505436")
 roi <- GRanges("chr1:7711018-7734330")
 #roi <- GRanges("chr1:7711018-7734330") + 10000
 
-roi_Oki_O <- subsetByOverlaps(doubleReduced_gr_Oki_O, roi)
-roi_Oki_N <- subsetByOverlaps(doubleReduced_gr_Oki_N, roi)
-roi2 <- range(subsetByOverlaps(doubleReduced_gr_Oki_O, roi)$query)
-roi_O_N <- subsetByOverlaps(doubleReduced_gr_O_N, roi2)
+roi_Oki_O <- subsetByOverlaps(coa2$Oki_Osa, roi)
+roi_Oki_N <- subsetByOverlaps(coa2$Oki_Nor, roi)
+roi2 <- range(subsetByOverlaps(coa2$Oki_Osa, roi)$query)
+roi_O_N <- subsetByOverlaps(coa2$Osa_Nor, roi2)
 ```
 
 ### Plot a simple region.
@@ -487,10 +497,10 @@ roiNameOki <- seqlevelsInUse(roi)[1]
 roiNameN <- seqlevelsInUse(roi_Oki_N$query)[1]
 
 dsList <-   list(
-    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gbQuery2dna_seq,
-    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gbRef2dna_seq,
-    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbRef2dna_seq,
-    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbQuery2dna_seq
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbQuery2dna_seq(),
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbRef2dna_seq(),
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbRef2dna_seq(),
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbQuery2dna_seq()
     )
 names(dsList) <- c(roiNameO, roiNameOki, roiNameOki, roiNameN)
 
@@ -498,9 +508,9 @@ tmpgb <- roi_Oki_O
 tmpgb$query <- granges(roi_Oki_N)
 
 compList <- list(
-    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% swap %>% gb2comp,
-    tmpgb %>% gb2comp,
-    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gb2comp
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> swap() |> gb2comp(),
+    tmpgb |> gb2comp(),
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gb2comp()
   )
 
 plot_gene_map(dsList, compList, dna_seg_scale=TRUE)
@@ -508,18 +518,18 @@ plot_gene_map(dsList, compList, dna_seg_scale=TRUE)
 
 ```{r plot_intersect_GBs_with_tree}
 dsList <-   list(
-    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbRef2dna_seq,
-    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gbQuery2dna_seq,
-    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] %>% gbQuery2dna_seq
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbRef2dna_seq(),
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbQuery2dna_seq(),
+    roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbQuery2dna_seq()
     )
 names(dsList) <- c(roiNameOki, roiNameO, roiNameN)
 
 compList <- list(
-    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] %>% gb2comp,
-    roi_O_N[seqnames(roi_O_N$query) == roiNameN] %>% gb2comp
+    roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gb2comp(),
+    roi_O_N[seqnames(roi_O_N$query) == roiNameN] |> gb2comp()
   )
 
-plot_gene_map(dsList, compList, dna_seg_scale=TRUE, tree=mkTree(roiNameOki, roiNameO, roiNameN))
+plot_gene_map(dsList, compList, dna_seg_scale=TRUE, tree=ade4::newick2phylog(addRoot(treeNode(roiNameOki, treeNode(roiNameO, roiNameN)))))
 ```
 
 ## Trivial inversions
