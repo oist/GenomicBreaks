@@ -314,23 +314,6 @@ reason, it would be unwise to filter by width on some operations such as
 coalescing.
 
 ```{r width_after_coalescing}
-widthPlot <- function(gb_parts, gb_col) {
-  # Need to wrap in a function to handle empty GRanges objects...
-  width2df <- function(what, gb) {
-    if (length(gb) == 0) return (NULL)
-    data.frame(what = what, width = width(gb))
-  }
-  df <- rbind(
-    width2df(what = "aligned",     gb = gb_parts),
-    width2df(what = "collapsed",   gb = gb_col)
-  )
-  ggplot(df) +
-    aes(width) +
-    geom_histogram() +
-    scale_x_log10() +
-    facet_wrap(~what, ncol = 1, scales = "free_y")
-}
-
 width2df <- function(where, what, gbl) {
   gb <- gbl[[where]]
   if (length(gb) == 0) return (NULL)
@@ -340,16 +323,14 @@ width2df <- function(where, what, gbl) {
 df <- rbind(
   # do.call allows a list to replace "..." in a function call
   do.call(rbind, lapply(names(gbs), width2df, "aligned", gbs)),
-  do.call(rbind, lapply(names(coa), width2df, "collapsed", coa)),
+  do.call(rbind, lapply(names(coa), width2df, "collapsed", coa))
 )
 
-  ggplot(df) +
-    aes(width) +
-    geom_histogram() +
-    scale_x_log10() +
-    facet_wrap(~what + where, nrow = 3, scales = "free_y")
-
-DF <- DataFrame(width = width(gbs$Oki_Osa), Type = gbs$Oki_Osa$Type, chr = seqnames(gbs$Oki_Osa))
+ggplot(df) +
+  aes(width, col = what) +
+  geom_freqpoly() +
+  scale_x_log10() +
+  facet_wrap(~where, scales = "free_y")
 
 gg_freq_poly <- function(DF) {
     ggplot(DF |> as("data.frame")) +
@@ -357,6 +338,42 @@ gg_freq_poly <- function(DF) {
     geom_freqpoly() +
     scale_x_log10()
 }
+
+DF <- DataFrame(width = width(gbs$Oki_Osa), Type = gbs$Oki_Osa$Type, chr = seqnames(gbs$Oki_Osa))
+
+gg_freq_poly(DF) +
+  aes(col=Type) +
+  facet_wrap(~chr, scales = "free_y")
+```
+
+After coalescing, width distribution becomes more clearly bimodal, with a small
+peak under 500 bp, found on all arms except YSR.  The second peak shows two
+different distributions for long and short arms.
+
+Therefore, if the first peak represents events that we do not want to consider
+breaking synteny (either alignment artefacts or insertion/transpositions of
+short mobile elements), we can re-coalesce once after removing the shortest
+intervals.
+
+```{r width_of_coalesced_regions}
+DF <- DataFrame(
+  width = width(coa$Oki_Osa),
+  Type = mcols(OKI_longShort)[findOverlaps(coa$Oki_Osa, OKI_longShort) |> subjectHits(), "Type"],
+  chr = seqnames(coa$Oki_Osa))
+
+gg_freq_poly(DF) +
+  aes(col=Type) +
+  facet_wrap(~chr, scales = "free_y")
+```
+
+```{r re_coalesce}
+coa2 <- sapply(coa, coalesce_contigs, minwidth = 500) |> SimpleList()
+sapply(coa2, length)
+
+DF <- DataFrame(
+  width = width(coa2$Oki_Osa),
+  Type = mcols(OKI_longShort)[findOverlaps(coa2$Oki_Osa, OKI_longShort) |> subjectHits(), "Type"],
+  chr = seqnames(coa2$Oki_Osa))
 
 gg_freq_poly(DF) +
   aes(col=Type) +
