@@ -26,9 +26,6 @@ Imports:
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
-  BSgenome.Odioica.local.OKI2018.I69,
-  BSgenome.Odioica.local.OSKA2016,
-  BSgenome.Odioica.local.Odioica.reference.v3.0,
   genoPlotR,
   ggplot2,
   gridExtra,
