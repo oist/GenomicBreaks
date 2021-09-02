@@ -1,5 +1,5 @@
-GenomiBreaks
-============
+GenomicBreaks
+=============
 
 Purpose
 -------
