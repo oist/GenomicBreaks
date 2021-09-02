@@ -1,12 +1,14 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.1.0
-Author: Charlotte West
-Maintainer: Charlotte West <charwest1@hotmail.co.uk>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Version: 0.2.0
+Authors@R: c(
+  person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
+  person("Charles", "Plessy", email = "charles.plessy@oist.jp",  role = c("aut", "cre")))
+Description: Load pairwise genome alignments into objects, coalesce colinear
+    alignments to discover syntenic regions, flag inversions, and much more.
 License: BSD_3_clause + file LICENSE
+URL: https://github.com/oist/GenomicBreaks
 Encoding: UTF-8
 Depends: R (>= 3.6.0),
   GenomicRanges
