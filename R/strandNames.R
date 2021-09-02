@@ -2,8 +2,11 @@
 #'
 #' Extract sequence names and pastes strand information to it.
 #'
-#' @param gb A `GenomicBreaks` object of a `GRangesList` of `GenomicBreaks`
-#' objects
+#' @param gb A `GenomicBreaks` object or a `GRangesList` of `GenomicBreaks`
+#'           objects.
+#' @param flip Flip the strand names.
+#' @param query Work on the query genome.
+#'
 #'
 #' @return Returns a character vector, or a list of character vectors if the
 #' input was a `GRangesList`.
@@ -51,17 +54,19 @@ flipStrandNames <- function (x, ...) {
 #'
 #' @return Returns the same class as its input.
 #'
+#' @param x A vector of strand names.
+#'
 #' @export
 
-flipStrandNames.default <- function (sn) {
-  sn <- rev(sn)
-  sn <- sub("-", "*", sn)
-  sn <- sub("\\+", "-", sn)
-  sn <- sub("\\*", "+", sn)
-  sn
+flipStrandNames.default <- function (x) {
+  x <- rev(x)
+  x <- sub("-", "*", x)
+  x <- sub("\\+", "-", x)
+  x <- sub("\\*", "+", x)
+  x
 }
 #' @export
 
-flipStrandNames.list <- function (l) {
-  lapply(l, flipStrandNames)
+flipStrandNames.list <- function (x) {
+  lapply(x, flipStrandNames)
 }

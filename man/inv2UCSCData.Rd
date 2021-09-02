@@ -7,13 +7,13 @@
 inv2UCSCData(gb)
 }
 \arguments{
-\item{gb}{A \code{GenomicBreaks} object.}
+\item{gb}{A \code{GBreaks} object.}
 }
 \value{
 Returns a \code{UCSCData} object.
 }
 \description{
-Scan a \code{\link{GenomicBreaks}} object for inversions and return UCSC track object
+Scan a \code{\link{GBreaks}} object for inversions and return UCSC track object
 in \code{\link[rtracklayer:UCSCData-class]{rtracklayer::UCSCData}} format for export in BED12 format with
 a command such as \code{rtracklayer::export(x, "test.bed", "BED")}.
 }

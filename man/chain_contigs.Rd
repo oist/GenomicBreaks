@@ -11,6 +11,8 @@ chain_contigs(gb, tol = Inf, drop.within = FALSE)
 
 \item{tol}{Unaligned region of width lesser than or equal to \code{tol} in both
 the reference and query case will be bridged in coalescing.}
+
+\item{drop.within}{Discard the chains that are included in other chains.}
 }
 \value{
 TBW

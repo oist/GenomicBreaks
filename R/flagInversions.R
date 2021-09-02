@@ -77,11 +77,11 @@ showInversions <- function(gb, rename = TRUE) {
 
 #' Extract central blocks in inversions
 #'
-#' @param gb A [`GenomicBreaks`] object processed with [`flagInversions`].
+#' @param gb A [`GBreaks`] object processed with [`flagInversions`].
 #'
 #' @param rename Replace range names by their numeric order before subsetting.
 #'
-#' @returns Returns the `GenomicBreaks` object in which all ranges that are not
+#' @returns Returns the `GBreaks` object in which all ranges that are not
 #' the central part of an inversion triplet have been discarded.  If the object
 #' was missing the `inv` metadata column, return the object after discarding all
 #' of its ranges.

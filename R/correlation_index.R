@@ -7,6 +7,8 @@
 #' averaged as a mean weighted by is the total number of aligned bases of each
 #' feature.  Thus, a number close to 1 is expected for closely related genomes.
 #'
+#' @param gb A [`GBreaks`] object.
+#'
 #' @note Here, the definition of \sQuote{synteny} is _sequences on the same
 #' DNA strands_, or in technical terms: sequences that are on the same feature,
 #' regardless of strand orientation.

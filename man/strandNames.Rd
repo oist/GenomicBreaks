@@ -7,8 +7,12 @@
 strandNames(gb, flip = FALSE, query = FALSE)
 }
 \arguments{
-\item{gb}{A \code{GenomicBreaks} object of a \code{GRangesList} of \code{GenomicBreaks}
-objects}
+\item{gb}{A \code{GenomicBreaks} object or a \code{GRangesList} of \code{GenomicBreaks}
+objects.}
+
+\item{flip}{Flip the strand names.}
+
+\item{query}{Work on the query genome.}
 }
 \value{
 Returns a character vector, or a list of character vectors if the

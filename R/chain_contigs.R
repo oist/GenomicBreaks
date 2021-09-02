@@ -5,6 +5,7 @@
 #' @param gb [`GBreaks`] object of the pairwise alignment.
 #' @param tol Unaligned region of width lesser than or equal to `tol` in both
 #'        the reference and query case will be bridged in coalescing.
+#' @param drop.within Discard the chains that are included in other chains.
 #'
 #' @return TBW
 #'

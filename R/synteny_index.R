@@ -17,6 +17,8 @@
 #' DNA strands_, or in technical terms: sequences that are on the same feature,
 #' regardless of strand orientation.
 #'
+#' @param gb A [`GBreaks`] object.
+#'
 #' @family Similarity indexes
 #'
 #' @returns Returns a numeric value between 0 and 1.

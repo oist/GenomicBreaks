@@ -4,7 +4,10 @@
 \alias{flipStrandNames.default}
 \title{Reverse order and flip strand}
 \usage{
-\method{flipStrandNames}{default}(sn)
+\method{flipStrandNames}{default}(x)
+}
+\arguments{
+\item{x}{A vector of strand names.}
 }
 \value{
 Returns the same class as its input.

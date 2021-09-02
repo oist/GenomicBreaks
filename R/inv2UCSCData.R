@@ -1,10 +1,10 @@
 #' Represent inversions as UCSCData objects
 #'
-#' Scan a [`GenomicBreaks`] object for inversions and return UCSC track object
+#' Scan a [`GBreaks`] object for inversions and return UCSC track object
 #' in [`rtracklayer::UCSCData-class`] format for export in BED12 format with
 #' a command such as `rtracklayer::export(x, "test.bed", "BED")`.
 #'
-#' @param gb A `GenomicBreaks` object.
+#' @param gb A `GBreaks` object.
 #'
 #' @returns Returns a `UCSCData` object.
 #'

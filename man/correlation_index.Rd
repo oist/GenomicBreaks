@@ -6,6 +6,9 @@
 \usage{
 correlation_index(gb)
 }
+\arguments{
+\item{gb}{A \code{\link{GBreaks}} object.}
+}
 \value{
 Returns a numeric value between 0 and 1.
 }
