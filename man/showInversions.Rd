@@ -7,12 +7,12 @@
 showInversions(gb, rename = TRUE)
 }
 \arguments{
-\item{gb}{A \code{\link{GenomicBreaks}} object processed with \code{\link{flagInversions}}.}
+\item{gb}{A \code{\link{GBreaks}} object processed with \code{\link{flagInversions}}.}
 
 \item{rename}{Replace range names by their numeric order before subsetting.}
 }
 \value{
-Returns the \code{GenomicBreaks} object in which all ranges that are not
+Returns the \code{GBreaks} object in which all ranges that are not
 part of an inversion triplet have been discarded.  If the object was missing
 the \code{inv} metadata column, return the object after discarding all of its
 ranges.

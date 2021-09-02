@@ -21,7 +21,7 @@
 #' sequence on the query genome.
 #'
 #' @details For a more compact version of the results, the output of this
-#' function can be passed to the `queryStrandNames` function.
+#' function can be piped to `strandNames(query = TRUE)`.
 #'
 #' @examples
 #' \dontrun{
@@ -32,6 +32,8 @@
 #'   target = OSKA2016,
 #'   query = OKI2018_I69)
 #' }
+#'
+#' @importFrom S4Vectors endoapply
 #'
 #' @export
 

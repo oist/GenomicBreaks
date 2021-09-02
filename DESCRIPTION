@@ -19,6 +19,7 @@ Imports:
   heatmaps,
   IRanges,
   GenomeInfoDb,
+  GenomicFeatures,
   stats,
   graphics,
   Biostrings,

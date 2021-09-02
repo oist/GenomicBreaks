@@ -7,6 +7,8 @@
 #' are represented as a `GRanges` object sored in the the metadata column
 #' `query`.
 #'
+#' @importFrom methods new setClass
+#'
 #' @export
 
 GBreaks <- setClass("GBreaks", contains = "GRanges")
@@ -23,6 +25,7 @@ GBreaks <- setClass("GBreaks", contains = "GRanges")
 #' In order to do so, there is a [`CNEr::fixCoordinates`] function.
 #'
 #' @importFrom CNEr first second
+#' @importFrom methods as setAs
 #' @name as
 #' @export
 

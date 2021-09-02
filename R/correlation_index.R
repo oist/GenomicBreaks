@@ -22,7 +22,8 @@
 #' gb$query <- GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que:1500-1600:+"))
 #' correlation_index(gb)
 #'
-#' @importFrom  weights wtd.cor
+#' @importFrom stats weighted.mean
+#' @importFrom weights wtd.cor
 #'
 #' @export
 

@@ -20,6 +20,7 @@
 #' chain_contigs(gb4)
 #'
 #' @importFrom BiocParallel bplapply
+#' @importFrom S4Vectors subjectHits
 #' @export
 
 chain_contigs <- function(gb, tol = Inf, drop.within = FALSE) {

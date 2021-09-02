@@ -33,7 +33,7 @@ colinear sequences in the query genome.
 }
 \details{
 For a more compact version of the results, the output of this
-function can be passed to the \code{queryStrandNames} function.
+function can be piped to \code{strandNames(query = TRUE)}.
 }
 \examples{
 \dontrun{

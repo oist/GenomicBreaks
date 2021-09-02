@@ -10,6 +10,9 @@
 #' gr3 <- GRanges(c("chr1:1-1000000:+", "chr1:1000000-2000000:+"))
 #' gr4 <- GRanges(c("chr1:1-1000000:+", "chr1:1000000-2000000:-"))
 #' gr5 <- GRanges(c("chr1:1-1000000:-"))
+#'
+#' @importFrom stats runif
+#' @export
 
 
 makeInversion.chr <- function(gr, dist=runif) {

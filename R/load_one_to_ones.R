@@ -17,6 +17,8 @@
 #' @returns Returns a [`DataFrame`] with one column per species, containing
 #' protein identifiers, and the columns `HOG`, `OG` and `Gene.Tree.Parent.Clade`.
 #'
+#' @importFrom utils read.delim
+#'
 #' @export
 
 load_one_to_ones <- function(file, species = NULL) {

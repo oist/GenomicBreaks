@@ -15,7 +15,7 @@
 #' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
 #' gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
 #' strandNames(gb1)
-#' queryStrandNames(gb1)
+#' strandNames(gb1, query = TRUE)
 #'
 #' @export
 
@@ -35,18 +35,6 @@ strandNames <- function(gb, flip = FALSE, query = FALSE) {
   sn
 }
 
-#' @export
-
-queryStrandNames <- function(gb, flip = FALSE) {
-  strandNames(gb = gb, flip = flip, query = TRUE)
-}
-
-#' @export
-
-flipStrandNames <- function (x, ...) {
-  UseMethod("flipStrandNames", x)
-}
-
 #' Reverse order and flip strand
 #'
 #' Takes a character vector of "strand names", reverses the order of its
@@ -58,6 +46,12 @@ flipStrandNames <- function (x, ...) {
 #'
 #' @export
 
+flipStrandNames <- function (x) {
+  UseMethod("flipStrandNames", x)
+}
+
+#' @export
+
 flipStrandNames.default <- function (x) {
   x <- rev(x)
   x <- sub("-", "*", x)
@@ -65,6 +59,7 @@ flipStrandNames.default <- function (x) {
   x <- sub("\\*", "+", x)
   x
 }
+
 #' @export
 
 flipStrandNames.list <- function (x) {
