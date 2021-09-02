@@ -10,7 +10,7 @@ Description: Load pairwise genome alignments into objects, coalesce colinear
 License: BSD_3_clause + file LICENSE
 URL: https://github.com/oist/GenomicBreaks
 Encoding: UTF-8
-Depends: R (>= 3.6.0),
+Depends: R (>= 4.1),
   GenomicRanges
 Imports:
   BiocParallel,
