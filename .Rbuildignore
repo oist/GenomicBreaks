@@ -5,3 +5,4 @@ Singularity.def
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\.github$
