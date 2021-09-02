@@ -32,18 +32,18 @@ Note that THIS FUNCTION RETURNS \code{FALSE} for \emph{inversions} and
 }
 \examples{
 # On the plus strand
-int       <- GenomicRanges::GRanges(c("XSR:101-200:+", "Chr1:201-300:-",  "XSR:301-400:+"))
-int$query <- GenomicRanges::GRanges(c( "S1:101-200",   "S2:201-300",      "S1:301-400"))
+int       <- GRanges(c("XSR:101-200:+", "Chr1:201-300:-",  "XSR:301-400:+"))
+int$query <- GRanges(c( "S1:101-200",   "S2:201-300",      "S1:301-400"))
 flagInterruptions(int)
 
 # On the minus strand
-int2       <- GenomicRanges::GRanges(c("XSR:301-400:-", "Chr1:201-300:+",  "XSR:101-200:-"))
-int2$query <- GenomicRanges::GRanges(c( "S1:301-400",   "S2:201-300",      "S1:101-200"))
+int2       <- GRanges(c("XSR:301-400:-", "Chr1:201-300:+",  "XSR:101-200:-"))
+int2$query <- GRanges(c( "S1:301-400",   "S2:201-300",      "S1:101-200"))
 flagInterruptions(int2)
 
 # No interruption
-int3       <- GenomicRanges::GRanges(c("XSR:101-200:+", "XSR:201-300:+",  "XSR:301-400:+"))
-int3$query <- GenomicRanges::GRanges(c( "S1:101-200",   "S1:201-300",      "S1:301-400"))
+int3       <- GRanges(c("XSR:101-200:+", "XSR:201-300:+",  "XSR:301-400:+"))
+int3$query <- GRanges(c( "S1:101-200",   "S1:201-300",      "S1:301-400"))
 flagInterruptions(int3)
 
 }

@@ -8,7 +8,7 @@
 #' @param sorted Sorts the object before returning it.
 #' @return GRanges object of the breakpoints
 #' @examples
-#' gr <- GenomicRanges::GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges::IRanges(1:4, width=4:1))
+#' gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges::IRanges(1:4, width=4:1))
 #' get_bps(gr)
 #' get_bps(gr, direction = "left")
 #' get_bps(gr, stranded = TRUE)

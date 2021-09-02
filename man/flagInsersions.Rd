@@ -30,8 +30,8 @@ Here is a trivial example of an insersion.\preformatted{┌───────
 }
 }
 \examples{
-ins       <- GenomicRanges::GRanges(c("XSR:101-200:+", "XSR:201-300:+",  "XSR:301-400:+"))
-ins$query <- GenomicRanges::GRanges(c( "S1:101-200",   "S2:801-900",     "S1:201-300"   ))
+ins       <- GRanges(c("XSR:101-200:+", "XSR:201-300:+",  "XSR:301-400:+"))
+ins$query <- GRanges(c( "S1:101-200",   "S2:801-900",     "S1:201-300"   ))
 flagInsersions(ins)
 
 }

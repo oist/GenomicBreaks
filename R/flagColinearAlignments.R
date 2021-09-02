@@ -6,8 +6,8 @@
 #' alignment on the _query_ genome, with strand information being taken into
 #' account.
 #'
-#' Internally, `flagColinearAlignments()` uses the [`GenomicRanges::precede`]
-#' and [`GenomicRanges::follow`] functions functions to determine what is the
+#' Internally, `flagColinearAlignments()` uses the [`precede`]
+#' and [`follow`] functions functions to determine what is the
 #' _next_.  For a given range, these functions return the index position of the
 #' range it precedes or follows, or `NA` as the first range follows nothing and
 #' the last range precedes nothing.  See the examples for details.
@@ -35,43 +35,43 @@
 #'
 #' @examples
 #' # Ranges on the plus strand that should coalesce
-#' gb1       <- GenomicRanges::GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-#' gb1$query <- GenomicRanges::GRanges(c(A="Que:100-200",   B="Que:400-500"))
+#' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
+#' gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
 #' gb1
 #' flagColinearAlignments(gb1)
 #'
 #' # Reference range [1] precedes reference range [2]
-#' GenomicRanges::precede(gb1)
+#' precede(gb1)
 #' # Query range [1] precedes query range [2]
-#' GenomicRanges::precede(gb1$query)
+#' precede(gb1$query)
 #'
 #' # Ranges on the minus strand that should coalesce
-#' gb2       <- GenomicRanges::GRanges(c(B="Ref:100-200:-", A="Ref:400-500:-"))
-#' gb2$query <- GenomicRanges::GRanges(c(B="Que:400-500",   A="Que:100-200"))
+#' gb2       <- GRanges(c(B="Ref:100-200:-", A="Ref:400-500:-"))
+#' gb2$query <- GRanges(c(B="Que:400-500",   A="Que:100-200"))
 #' gb2$qname <- names(gb2$query)
 #' gb2
 #' # Reference range [1] follows reference range [2]
-#' GenomicRanges::follow(gb2)
+#' follow(gb2)
 #' # Or, ignoring strand, reference range [1] precedes reference range [2]
-#' GenomicRanges::precede(gb2, ignore.strand = TRUE)
+#' precede(gb2, ignore.strand = TRUE)
 #' # Query range [1] follows query range [2]
-#' GenomicRanges::follow(gb2$query)
+#' follow(gb2$query)
 #' flagColinearAlignments(gb2)
 #'
 #' # Ranges on the minus strand that should not coalesce because they are not
 #' # ordered properly
-#' gb3       <- GenomicRanges::GRanges(c("Ref:100-200:-", "Ref:400-500:-"))
-#' gb3$query <- GenomicRanges::GRanges(c("Que:100-200",   "Que:400-500"))
+#' gb3       <- GRanges(c("Ref:100-200:-", "Ref:400-500:-"))
+#' gb3$query <- GRanges(c("Que:100-200",   "Que:400-500"))
 #' # Reference range [1] follows reference range [2]
-#' GenomicRanges::follow(gb3)
+#' follow(gb3)
 #' # Query range [1] follows query range [2]
-#' GenomicRanges::precede(gb3$query)
+#' precede(gb3$query)
 #' flagColinearAlignments(gb3)
 #'
 #' # Ranges on the plus strand that should not coalesce because they are not
 #' # ordered properly
-#' gb4       <- GenomicRanges::GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
-#' gb4$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
+#' gb4       <- GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
+#' gb4$query <- GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
 #' flagColinearAlignments(gb4)
 #'
 #' @family Flagging functions

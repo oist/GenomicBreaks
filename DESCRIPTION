@@ -9,7 +9,8 @@ Description: More about what it does (maybe more than one line)
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.6.0)
+Depends: R (>= 3.6.0),
+  GenomicRanges
 Imports:
   BiocParallel,
   CNEr,
@@ -17,7 +18,6 @@ Imports:
   rtracklayer,
   S4Vectors,
   heatmaps,
-  GenomicRanges,
   IRanges,
   GenomeInfoDb,
   stats,

@@ -14,12 +14,12 @@
 #' genomes respectively.
 #'
 #' @examples
-#' gb1       <- GenomicRanges::GRanges(c("chr1:100-200:+",
+#' gb1       <- GRanges(c("chr1:100-200:+",
 #'                                       "chr1:201-300:+",
 #'                                       "chr1:400-500:+",
 #'                                       "chr1:700-800:-"))
 #'
-#' gb1$query <- GenomicRanges::GRanges(c("chr1:100-200:+",
+#' gb1$query <- GRanges(c("chr1:100-200:+",
 #'                                       "chr1:201-300:+",
 #'                                       "chr1:400-500:+",
 #'                                       "chr1:700-800:-"))

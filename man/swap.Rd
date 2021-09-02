@@ -20,7 +20,7 @@ Produce a new object in which the information about the reference and
 query genomes have been inversed.
 }
 \examples{
-gr       <- GenomicRanges::GRanges(c("chr1:100-200:+", "chr1:300-400:+", "chr1:500-600:-"))
-gr$query <- GenomicRanges::GRanges(c("chr5:300-400",   "chr6:100-200",   "chr7:200-300"))
+gr       <- GRanges(c("chr1:100-200:+", "chr1:300-400:+", "chr1:500-600:-"))
+gr$query <- GRanges(c("chr5:300-400",   "chr6:100-200",   "chr7:200-300"))
 
 }

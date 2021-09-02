@@ -33,8 +33,8 @@ DNA strands}, or in technical terms: sequences that are on the same feature,
 regardless of strand orientation.
 }
 \examples{
-gb       <- GenomicRanges::GRanges(c("Ref:100-200:+",   "Ref:400-500:+",    "Ref:600-700:+"))
-gb$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que:1500-1600:+"))
+gb       <- GRanges(c("Ref:100-200:+",   "Ref:400-500:+",    "Ref:600-700:+"))
+gb$query <- GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que:1500-1600:+"))
 synteny_index(gb)
 
 }

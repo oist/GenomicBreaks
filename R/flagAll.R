@@ -11,8 +11,8 @@
 #' @family Flagging functions
 #'
 #' @examples
-#' inv       <- GenomicRanges::GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
-#' inv$query <- GenomicRanges::GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+#' inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
+#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 #' flagAll(inv)
 #'
 #' @include flagColinearAlignments.R flagInsersions.R flagInversions.R flagInterruptions.R

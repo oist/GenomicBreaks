@@ -22,8 +22,8 @@ input was a \code{GRangesList}.
 Extract sequence names and pastes strand information to it.
 }
 \examples{
-gb1       <- GenomicRanges::GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-gb1$query <- GenomicRanges::GRanges(c(A="Que:100-200",   B="Que:400-500"))
+gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
+gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
 strandNames(gb1)
 queryStrandNames(gb1)
 

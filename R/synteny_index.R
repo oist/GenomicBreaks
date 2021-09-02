@@ -24,8 +24,8 @@
 #' @returns Returns a numeric value between 0 and 1.
 #'
 #' @examples
-#' gb       <- GenomicRanges::GRanges(c("Ref:100-200:+",   "Ref:400-500:+",    "Ref:600-700:+"))
-#' gb$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que:1500-1600:+"))
+#' gb       <- GRanges(c("Ref:100-200:+",   "Ref:400-500:+",    "Ref:600-700:+"))
+#' gb$query <- GRanges(c("Que:1100-1200:+", "Que2:1700-1800:+", "Que:1500-1600:+"))
 #' synteny_index(gb)
 #'
 #' @export
