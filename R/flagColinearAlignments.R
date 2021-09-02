@@ -68,8 +68,8 @@
 #' GenomicRanges::precede(gb3$query)
 #' flagColinearAlignments(gb3)
 #'
-#' Ranges on the plus strand that should not coalesce because they are not
-#' ordered properly
+#' # Ranges on the plus strand that should not coalesce because they are not
+#' # ordered properly
 #' gb4       <- GenomicRanges::GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
 #' gb4$query <- GenomicRanges::GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
 #' flagColinearAlignments(gb4)

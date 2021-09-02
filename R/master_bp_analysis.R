@@ -27,7 +27,7 @@ master_bp_analysis <- function(pair_gr, co_tol, ref_tan, ref_tan_tol, q_tan, q_t
   #### Coalescing algorithm
   # run algorithm (only if coalescing tolerance is specified, therefore default is input gr_ob)
   if (!missing(co_tol)){
-  red_gr <- coalesce_contigs(gr_ob = pair_gr, tol = co_tol)
+  red_gr <- coalesce_contigs(pair_gr, tol = co_tol)
   } else {
     red_gr <- pair_gr
   }
