@@ -20,3 +20,10 @@ of its ranges.
 \description{
 Extract central blocks in inversions
 }
+\seealso{
+Other Inversion functions: 
+\code{\link{flagInversions}()},
+\code{\link{leftInversionGaps}()},
+\code{\link{showInversions}()}
+}
+\concept{Inversion functions}

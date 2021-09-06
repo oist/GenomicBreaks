@@ -20,3 +20,10 @@ ranges.
 \description{
 Show inversions and their flanking blocks.
 }
+\seealso{
+Other Inversion functions: 
+\code{\link{filterInversions}()},
+\code{\link{flagInversions}()},
+\code{\link{leftInversionGaps}()}
+}
+\concept{Inversion functions}

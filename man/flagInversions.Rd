@@ -40,5 +40,11 @@ Other Flagging functions:
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagInsersions}()},
 \code{\link{flagInterruptions}()}
+
+Other Inversion functions: 
+\code{\link{filterInversions}()},
+\code{\link{leftInversionGaps}()},
+\code{\link{showInversions}()}
 }
 \concept{Flagging functions}
+\concept{Inversion functions}

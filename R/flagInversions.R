@@ -21,6 +21,7 @@
 #' column.
 #'
 #' @family Flagging functions
+#' @family Inversion functions
 #'
 #' @examples
 #' inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
@@ -59,6 +60,8 @@ flagInversions <- function (gr_ob, tol = Inf) {
 #'
 #' @param rename Replace range names by their numeric order before subsetting.
 #'
+#' @family Inversion functions
+#'
 #' @returns Returns the `GBreaks` object in which all ranges that are not
 #' part of an inversion triplet have been discarded.  If the object was missing
 #' the `inv` metadata column, return the object after discarding all of its
@@ -81,6 +84,8 @@ showInversions <- function(gb, rename = TRUE) {
 #'
 #' @param rename Replace range names by their numeric order before subsetting.
 #'
+#' @family Inversion functions
+#'
 #' @returns Returns the `GBreaks` object in which all ranges that are not
 #' the central part of an inversion triplet have been discarded.  If the object
 #' was missing the `inv` metadata column, return the object after discarding all
@@ -95,4 +100,44 @@ filterInversions <- function(gb, rename = TRUE) {
   invPos <- which(gb$inv) + 1
   invContext <- c(invPos) |> unique() |> sort()
   gb[invContext]
+}
+
+#' Isolate the left-side gaps in inversions
+#'
+#' @param gb A [`GBreaks`] object.
+#'
+#' @return Returns a [`GRanges`] object representing the left-side gaps in the
+#' `GBreaks` object.
+#'
+#' @family Inversion functions
+#'
+#' @examples
+#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
+#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+#' inv <- flagInversions(inv)
+#' leftInversionGaps(inv)
+#'
+#' inv2       <- GRanges(c("XSR:101-180:-", "XSR:201-300:+",  "XSR:320-400:-"))
+#' inv2$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+#' inv2 <- flagInversions(inv2)
+#' leftInversionGaps(inv2)
+#'
+#' @export
+
+leftInversionGaps <- function(gb) {
+  # Flag inversions.
+  #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE
+  lgaps <- flagInversions(gb)
+  # Extract inversions
+  invs <- lgaps[lgaps$inv]
+  # Extend inversion of 1 bp so that they overlap with their neighbor gap
+  invs <- shift(invs, 1)
+  # Remove strand information
+  strand(lgaps) <- "*"
+  # Then extract gap positions ignoring strand
+  lgaps <- gaps(lgaps, start=min(start(lgaps)), end=max(end(lgaps)))
+  # Remove bogus gaps on + and - strands
+  lgaps <- lgaps[strand(lgaps) == "*"]
+  # Return the gaps overlapping with the flagged inversions
+  subsetByOverlaps(lgaps, invs)
 }
