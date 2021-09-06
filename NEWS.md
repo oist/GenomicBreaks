@@ -1,3 +1,7 @@
+# GenomicBreaks 0.3.0
+
+* Added the `leftInversionGaps()` function.
+
 # GenomicBreaks 0.2.0
 
-* Added a `NEWS.md` file to track changes to the package.
+* Document the package with [`pkgdown`](https://pkgdown.r-lib.org/).
