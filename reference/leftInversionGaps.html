@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reverse order and flip strand — flipStrandNames • GenomicBreaks</title>
+<title>Isolate the left-side gaps in inversions — leftInversionGaps • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Reverse order and flip strand — flipStrandNames" />
-<meta property="og:description" content="Takes a character vector of &quot;strand names&quot;, reverses the order of its
-elements and flips the strand." />
+<meta property="og:title" content="Isolate the left-side gaps in inversions — leftInversionGaps" />
+<meta property="og:description" content="Isolate the left-side gaps in inversions" />
 
 
 
@@ -124,31 +123,59 @@ elements and flips the strand." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Reverse order and flip strand</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/strandNames.R'><code>R/strandNames.R</code></a></small>
-    <div class="hidden name"><code>flipStrandNames.Rd</code></div>
+    <h1>Isolate the left-side gaps in inversions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagInversions.R'><code>R/flagInversions.R</code></a></small>
+    <div class="hidden name"><code>leftInversionGaps.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Takes a character vector of "strand names", reverses the order of its
-elements and flips the strand.</p>
+    <p>Isolate the left-side gaps in inversions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flipStrandNames</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>leftInversionGaps</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A vector of strand names.</p></td>
+      <th>gb</th>
+      <td><p>A <code><a href='GBreaks-class.html'>GBreaks</a></code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the same class as its input.</p>
+    <p>Returns a <code>GRanges</code> object representing the left-side gaps in the
+<code>GBreaks</code> object.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other Inversion functions: 
+<code><a href='filterInversions.html'>filterInversions</a>()</code>,
+<code><a href='flagInversions.html'>flagInversions</a>()</code>,
+<code><a href='showInversions.html'>showInversions</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>inv</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-180:+"</span>, <span class='st'>"XSR:201-300:-"</span>,  <span class='st'>"XSR:320-400:+"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>inv</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='st'>"S1:101-200"</span>,    <span class='st'>"S1:201-300"</span>,     <span class='st'>"S1:301-400"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>inv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='flagInversions.html'>flagInversions</a></span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
+<span class='fu'>leftInversionGaps</span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]      XSR   181-200      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='va'>inv2</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-180:-"</span>, <span class='st'>"XSR:201-300:+"</span>,  <span class='st'>"XSR:320-400:-"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>inv2</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='st'>"S1:101-200"</span>,    <span class='st'>"S1:201-300"</span>,     <span class='st'>"S1:301-400"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>inv2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='flagInversions.html'>flagInversions</a></span><span class='op'>(</span><span class='va'>inv2</span><span class='op'>)</span>
+<span class='fu'>leftInversionGaps</span><span class='op'>(</span><span class='va'>inv2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]      XSR   181-200      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
