@@ -40,51 +40,9 @@ suppressPackageStartupMessages({
 
 ### BSgenome packages
 
-The Oikopleura BSgenome packages are distributed in a drat directory hosted on GitHub
-((oist/plessy_oikgenomes_drat)[https://oist.github.io/plessy_oikgenomes_drat/]).
-
-To install them:
-
-```{r install_drat_BSgenome_packages, eval=FALSE}
-# # Chromosome assemblies
-# install.packages("BSgenome.Odioica.local.OKI2018.I69", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-# install.packages("BSgenome.Odioica.local.OSKA2016v1.9", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-# install.packages("BSgenome.Odioica.local.Bar2.p4", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-# 
-# # Less contiguous genomes
-# install.packages("BSgenome.Odioica.local.Odioica.reference.v3.0", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-# install.packages("BSgenome.Odioica.local.AOM.5", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-# install.packages("BSgenome.Odioica.local.KUM.M3", repos="https://oist.github.io/plessy_oikgenomes_drat/")
-```
-
-Other BSgenome packages are distributed by Bioconductor
-
-```{r install_Bioc_BSgenome_pacakges, eval=FALSE}
-# BiocManager::install("BSgenome.Hsapiens.UCSC.hg38")
-# BiocManager::install("BSgenome.Ptroglodytes.UCSC.panTro6")
-```
 
 ```{r load_BSgenome_packages}
-# # These will need to be installed by the user
-# library("BSgenome.Odioica.local.OKI2018.I69")
-# library("BSgenome.Odioica.local.OSKA2016v1.9")
-# library("BSgenome.Odioica.local.Bar2.p4")
-# library("BSgenome.Odioica.local.KUM.M3")
-# library("BSgenome.Odioica.local.AOM.5")
-# library("BSgenome.Odioica.local.Odioica.reference.v3.0")
-# 
-# genomes <- SimpleList(
-#   # Chromosome assemblies
-#   Oki = OKI2018_I69, Osa = OSKA2016v1.9, Bar = Bar2_p4,
-#   # Less contiguous assemblies
-#   Kum = KUM_M3, Aom = AOM_5, Nor = OdB3)
-# 
-# ## Genome lengths
-# (genome.lengths <- sapply(genomes, \(g) sum(seqlengths(seqinfo(g)))))
-# 
-# ## Genome average AT content
-# (genomes.AT <- sapply(genomes, \(g)
-#   weighted.mean(letterFrequency(getSeq(g), "AT", as.prob = TRUE), seqlengths(g))))
+library("BSgenome.Scerevisiae.UCSC.sacCer3")
 ```
 
 ## Load data
@@ -92,26 +50,11 @@ Other BSgenome packages are distributed by Bioconductor
 ### Genome annotations.
 
 ```{r load_genomic_features}
-# annots <- SimpleList()
-# 
-# gff2txdb <- function(file, genome) {
-#   tx <- rtracklayer::import.gff3(file)
-#   tx <- GRanges(tx, seqinfo = seqinfo(genome))
-#   tx <- GenomicFeatures::makeTxDbFromGRanges(tx)
-# }
-# 
-# annots$Oki <- gff2txdb("Annotations/OKI2018_I69.v2/OKI2018_I69.v2.gm.gff", OKI2018_I69)
-# annots$Kum <- gff2txdb("Annotations/KUM-M3-7f/KUM-M3-7f.gm.gff", KUM_M3)
-# annots$Osa <- gff2txdb("Annotations/OSKA2016v1.9/OSKA2016v1.9.gm.gff",     OSKA2016v1.9)
-# annots$Bar <- gff2txdb("Annotations/Bar2_p4.Flye/Bar2_p4.Flye.gm.gff", Bar2_p4)
-# annots$Aom <- gff2txdb("Annotations/AOM-5-5f/AOM-5-5f.gm.gff", AOM_5)
 ```
 
 ### Long and short arms.
 
 ```{r long_and_short_arms}
-# OKI_longShort <- rtracklayer::import.gff3(system.file("extdata/OKI2018_I69.arms.gff3", package = "GenomicBreaks"))
-# OKI_longShort <- GRanges(OKI_longShort, seqinfo = seqinfo(OKI2018_I69), strand = "*")
 ```
 
 ### GenomicBreaks object
@@ -131,32 +74,7 @@ of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
-# gbs <- SimpleList()
-# load_genomic_breaks_ <- function(file, genomeT, genomeQ, longShort) {
-#   gb <- load_genomic_breaks(file, genomeT,  genomeQ)
-#   gb$Type <- mcols(longShort)[findOverlaps(gb, longShort) |> subjectHits(), "Type"]
-#   gb
-# }
-# gbs$Oki_Osa <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__OSKA2016v1.9.gff.gz", OKI2018_I69,  OSKA2016v1.9, OKI_longShort)
-# gbs$Oki_Bar <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__Bar2_p4.gff.gz",      OKI2018_I69,  Bar2_p4,      OKI_longShort)
-# gbs$Oki_Kum <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__KUM-M3-7f.gff.gz",    OKI2018_I69,  KUM_M3,       OKI_longShort)
-# gbs$Oki_Aom <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__AOM-5-5f.gff.gz",     OKI2018_I69,  AOM_5,        OKI_longShort)
-# gbs$Oki_Nor <- load_genomic_breaks_("Oidioi_pairwise_v3/OKI2018_I69_1.0__OdB3.gff.gz",         OKI2018_I69,  OdB3,         OKI_longShort)
-# 
-# gbs$Osa_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OKI2018_I69_1.0.gff.gz", OSKA2016v1.9, OKI2018_I69)
-# gbs$Osa_Bar <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__Bar2_p4.gff.gz",         OSKA2016v1.9, Bar2_p4)
-# gbs$Osa_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__KUM-M3-7f.gff.gz",       OSKA2016v1.9, KUM_M3)
-# gbs$Osa_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__AOM-5-5f.gff.gz",        OSKA2016v1.9, AOM_5)
-# gbs$Osa_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/OSKA2016v1.9__OdB3.gff.gz",            OSKA2016v1.9, OdB3)
-# 
-# gbs$Bar_Oki <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OKI2018_I69_1.0.gff.gz",      Bar2_p4,     OKI2018_I69)
-# gbs$Bar_Osa <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OSKA2016v1.9.gff.gz",         Bar2_p4,     OSKA2016v1.9)
-# gbs$Bar_Kum <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__KUM-M3-7f.gff.gz",            Bar2_p4,     KUM_M3)
-# gbs$Bar_Aom <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__AOM-5-5f.gff.gz",             Bar2_p4,     AOM_5)
-# gbs$Bar_Nor <- load_genomic_breaks("Oidioi_pairwise_v3/Bar2_p4__OdB3.gff.gz",                 Bar2_p4,     OdB3)
-# 
-# gbs$Osa_Oki
-# gbs$Osa_Oki$query
+gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
 ```
 
 In the example displayed above, the object contains the pairwise alignment
@@ -176,13 +94,13 @@ The function `get_bps` takes in a `GBreaks` pairwise alignment, and produces a
 `GRanges` object of it's associated alignment stops. 
 
 ```{r get bps}
-# get_bps(gbs$Osa_Oki)
-# get_bps(gbs$Osa_Oki, direction = "left")
-# get_bps(gbs$Osa_Oki,                      stranded = TRUE)
-# get_bps(gbs$Osa_Oki,                      stranded = TRUE, sorted = FALSE)
-# get_bps(gbs$Osa_Oki, direction = "right", stranded = TRUE)
-# get_bps(gbs$Osa_Oki$query, sorted = FALSE)
-# get_bps(gbs$Osa_Oki$query)
+get_bps(gb)
+get_bps(gb, direction = "left")
+get_bps(gb,                      stranded = TRUE)
+get_bps(gb,                      stranded = TRUE, sorted = FALSE)
+get_bps(gb, direction = "right", stranded = TRUE)
+get_bps(gb$query, sorted = FALSE)
+get_bps(gb$query)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a
@@ -205,8 +123,8 @@ index is that it requires that at least the _query_ genome is a complete
 chromosome assembly.
 
 ```{r}
-# sapply(gbs, synteny_index)
-# sapply(gbs, \(g) swap(g) |> synteny_index())
+synteny_index(gb)
+synteny_index(swap(gb))
 ```
 
 ### Correlation
@@ -218,50 +136,8 @@ index is more robust to the presence of uncollapsed haplotypes in the _query_
 genome.
 
 ```{r}
-# sapply(gbs, correlation_index)
-# sapply(gbs, \(g) swap(g) |> correlation_index())
-```
-
-## Phylogenetic cladogram
-
-We assume that the _North Pacific_ and the _Atlantic_ species are more related
-to each other than to the _Okinawan_ species.
-
-```{r phylogenetic_tree, fig.height=4, fig.width=6, dev="svg"}
-# requireNamespace("ade4")
-# treeLeaf <- function(name, length=NULL) {
-#   if(!is.null(length)) length <- paste0(':', length)
-#   paste0(name, length)
-# }
-# 
-# treeNode <- function(branch1, branch2, length = NULL) {
-#   if(!is.null(length)) length <- paste0(':', length)
-#   paste0('(', branch1, ',', branch2, ')', length)
-# }
-# 
-# addRoot <- function(branch)  paste0(branch, ";")
-# 
-# tree <-
-#   addRoot(
-#     treeNode(
-#       treeNode( length = 2,
-#         treeLeaf("Okinawa", 1),
-#         treeLeaf("Kume", 1)
-#       ),
-#       treeNode( length = 1,
-#         treeNode( length = 1,
-#           treeLeaf("Osaka", 1),
-#           treeLeaf("Aomori", 1)
-#         ),
-#         treeNode( length =1,
-#           treeLeaf("Norway", 1),
-#           treeLeaf("Barcelona", 1)
-#         )
-#       )
-#     )
-#   )
-# 
-# plot(ade4::newick2phylog(tree))
+correlation_index(gb)
+correlation_index(swap(gb))
 ```
 
 ## Visualising alignments
@@ -270,8 +146,7 @@ We can use the function `scaf_align_plot` to see the alignment of query
 scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.
 
 ```{r echo=T, message=F, warning=F}
-# scaf_align_plot(gbs$Osa_Oki, scaf = "Chr1")
-# scaf_align_plot(gbs$Oki_Osa, scaf = "chr1")
+scaf_align_plot(gb, scaf = "chrI")
 ```
 
 Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top. 
@@ -279,7 +154,7 @@ Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osak
 We can plot alignments for two of the target scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
 
 ```{r echo=T, message=F, warning=F}
-# align_scaf_plot_2(gbs$Osa_Oki, scaf = c("Chr1","Chr2"))
+align_scaf_plot_2(gb, scaf = c("chrI","chrII"))
 ```
 
 As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
@@ -294,12 +169,12 @@ alignment breaks by coalescing alignments separated by short (user specified)
 distances.  This distance need be agreeable in both the target and query genome
 in order for the coalscion to happen. 
 
-For example, coalescing gaps of less than 500 basepairs in the `gbs$Osa_Oki` alignment:
+For example, coalescing gaps of less than 500 basepairs in the `gb` alignment:
 
 ```{r coalescing algorithm}
-# coa <- sapply(gbs, coalesce_contigs) |> SimpleList()
-# sapply(gbs, length)
-# sapply(coa, length)
+coa <- coalesce_contigs(gb)
+length(gb)
+length(coa)
 ```
 
 The resulting GRanges object has far fewer alignments and therefore far fewer
@@ -456,35 +331,6 @@ intervals.
 ```
 
 
-## Combine alignments to the same outgroup
-
-Since Okinawa is the outgroup, let's look for regions of it that are aligned
-on both the Osaka and the Norway genomes.
-
-```{r combine_GBs}
-# x <- subsetByOverlaps(coa2$Oki_Osa, coa2$Oki_Bar)
-# y <- subsetByOverlaps(coa2$Oki_Bar, coa2$Oki_Osa)
-# findOverlapPairs(x,y)
-# subsetByOverlaps(coa2$Oki_Osa, gaps(coa2$Oki_Bar))
-
-```
-
-## Extract ranges from the same target region in two GenomicBreaks objects
-
-```{r intersect_GBs}
-# #roi <- GRanges("chr1:1222000-1240000")
-# #roi <- GRanges("chr1:1023578-1032430")
-# #roi <- GRanges("chr1:2668866-2692347")
-# roi <- GRanges("chr1:6379932-6505436")
-# #roi <- GRanges("chr1:6683567-6744168")
-# roi <- GRanges("chr1:7711018-7734330")
-# #roi <- GRanges("chr1:7711018-7734330") + 10000
-# 
-# roi_Oki_O <- subsetByOverlaps(coa2$Oki_Osa, roi)
-# roi_Oki_N <- subsetByOverlaps(coa2$Oki_Nor, roi)
-# roi2 <- range(subsetByOverlaps(coa2$Oki_Osa, roi)$query)
-# roi_O_N <- subsetByOverlaps(coa2$Osa_Nor, roi2)
-```
 
 ### Plot a simple region.
 
@@ -555,13 +401,13 @@ Let's call "gaps" the unaligned regions between the blocks.
 It is represented as:
 
 ```{r ideal_breakpoints}
-# example("flagInversions")
-# 
-# library("Gviz")
-# options(ucscChromosomeNames=FALSE)
-# gen <- GenomeAxisTrack(name = "genome")
-# trk <- AnnotationTrack(inv, name = "inv")
-# plotTracks(list(gen, trk))
+example("flagInversions")
+
+library("Gviz")
+options(ucscChromosomeNames=FALSE)
+gen <- GenomeAxisTrack(name = "genome")
+trk <- AnnotationTrack(inv, name = "inv")
+plotTracks(list(gen, trk))
 ```
 
 
@@ -571,9 +417,8 @@ More inversions are found after coalescing colinear blocks because of situations
 where `+ - +` was `+ - - +` before collapsing. 
 
 ```{r detect_trivial_invertions}
-# sapply(gbs, function(gb) sum(flagInversions(gb)$inv))
-# sapply(coa, function(gb) sum(flagInversions(gb)$inv))
-# sapply(coa2, function(gb) sum(flagInversions(gb)$inv))
+flagInversions(gb)
+showInversions(flagInversions(gb))
 ```
 
 ### Isolate the left-side gaps in inversions
@@ -693,117 +538,6 @@ sequences that I have tried.
 # # consensus(gadem)
 # # [1] "nAAAAwwnwnnAAAAwn" "nTTTTCTTyn"       
 # # Also found motifs like TTTmAAAA
-```
-
-A palindromic (rAAGCsGCwwmkCGrCTTyn) motif is found in the left gaps.
-
-Or could it be `GCCGCnnnGCGGC` ?  Its frequency in genomes is something like:
-```
-  Oki   Osa   Bar   Kum   Aom   Nor 
-10827  2273  1967 10880  2210  2247 
-```
-
-On the other hand, a motif containing GCGAAGCGAA identified in Osa_Oki shows:
-
-```
-  Oki   Osa   Bar   Kum   Aom   Nor 
-  483 21360 23340   501 21594 16413 
-```
-  
-```{r screenJaspar}
-# checkJaspar <- function (pwm) {
-#   #---- see https://compgenomr.github.io/book/motif-discovery.html
-#   pwmLib <- getMatrixSet(
-#     JASPAR2018::JASPAR2018,
-#     opts = list(
-#       collection = 'CORE',
-#    #   species    = 'Homo sapiens',
-#       matrixtype = 'PWM'))
-#   
-#   pwm_sim <- PWMSimilarity( pwmLib, PWMat,  method = 'Pearson')
-# 
-#   pwmLibDf <- data.frame(
-#     ID        = sapply(pwmLib, ID),
-#     name      = sapply(pwmLib, name),
-#     row.names = seq_along(pwmLib)
-#   )
-#   pwmLibDf$similarity <- pwm_sim[pwmLibDf$ID]
-#   pwmLibDf[order(-pwmLibDf$similarity),]
-# }
-# 
-# PWMat <- PWMatrix(ID="rAAGCsGCwwmkCGrCTTyn", profileMatrix = pwm)
-# pwm_res <- checkJaspar(PWMat)
-# head(pwm_res)
-# 
-# pwmhalf <- pwm[,2:8]
-# pwmhalf_res <- checkJaspar(PWMatrix(ID="AAGCnGC", profileMatrix = pwmhalf))
-# head(pwmhalf_res)
-```
-
-But a search in Jaspar with either the full motif or its halof did not reveal
-strong hits.  Visual inspection of PRDM9 sequence logos via Google did not show
-similarity either.
-
-### Export rAAGCsGCwwmkCGrCTTyn alignments to a file
-
-```{r pwmHitSequenceExportForGLAM2}
-# gademHitsToBS <- function(gadem, n) {
-#   alignList <- gadem[[n]]@alignList
-#   pwmSeqs <- sapply(alignList, function(align) align@seq)
-#   Biostrings::DNAStringSet(pwmSeqs)
-# }
-# 
-# pwmSeqs <- gademHitsToBS(gadem, 1)
-# writeXStringSet(pwmBS, file="firstGapsGADEMpwm.fasta")
-# 
-# # writeXStringSet(lgapsSeq_Oki_O, file="firstGaps.fasta")
-# # I used this FASTA export to search for motifs with GLAM2, and it also
-# # returned A/T polymers.
-```
-
-The GLAM2 motif finder was run on this file, and then to screen the genome.
-Hits coordinates were encoded in a BED file uploaded to the ZENBU genome browser.
-Visual inspection gave me the impression that the motif might be related to
-repeats.
-
-GLAM2 search of the gap sequences did not return a motif similar to "AAGCsGCwwmkCGrCTTyn".
-
-### Whole-genome search of the motif
-
-Disappointingly, the motif is found equally in gaps and inversions when searched
-with its PWM.
-
-```{r }
-# No exact match
-# vmatchPattern("AAGCsGCwwmkCGrCTTyn", OKI2018_I69)
-# 
-# pwmHits <- sapply(genomes, matchPWM, pwm = pwm)
-# sapply(pwmHits, length)
-# hist(pwmHits$Oki$score)
-# hist(pwmHits$Osa$score)
-# 
-# 
-# # Less hits, with lower scores, in the mm10 genome.
-# pwmHitsmm10 <- matchPWM(pwm, BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10)
-# 
-# length(subsetByOverlaps(pwmHits$Oki, lgaps_Oki_O))
-# length(subsetByOverlaps(pwmHits$Oki, invs))
-# 
-# hist(score(subsetByOverlaps(pwmHits$Oki, lgaps_Oki_O)))
-# hist(score(subsetByOverlaps(pwmHits$Oki, invs)))
-# 
-# # Scores in gaps are higher than average.
-# t.test(score(pwmHits$Oki), score(subsetByOverlaps(pwmHits$Oki, lgaps_Oki_O)))
-# 
-# # Scores in gaps and inversions are not different 
-# t.test(score(subsetByOverlaps(pwmHits$Oki, invs)), score(subsetByOverlaps(pwmHits$Oki, lgaps_Oki_O)))
-# 
-# rtracklayer::export.bed(pwmHits, "AAGCsGCwwmkCGrCTTyn.bed")
-# 
-# # PWM hits seem to be more abundant on short arms.
-# OKI_longShort$pwmHitsPerMb <- countOverlaps(OKI_longShort, pwmHits$Oki) / width(OKI_longShort) * 1e6
-# # But with a naive approach the difference is not statistically significant.
-# t.test(c(159, 185, 188), c(77, 142, 160))
 ```
 
 ### Representation of some inversions
@@ -935,6 +669,7 @@ We can use another script to plot the density of tandem repeats around alignment
 #   smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T>%
 #   plotHeatmapList
 ```
+
 ## Coverage
 
 Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for target or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function `bp_coverage` returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns. 
@@ -945,20 +680,6 @@ Another characteristic of alignment stops that we can examine is the coverage de
 # cov_gr_O_Oki
 
 ```
-
-
-## Breakpoint classification - master script
-
-The function `master_bp_analysis` brings together the information about tandem repeats and coverage, as well as coalescing the alignment. It can perform the analyses for both the target and the query genome, depending on the available input data. The output is split into two GRanges objects; one for the target genome and one for the query, with associated information in the metadata columns. 
-
-```{r echo=T, message=F, warning=F}
-
-# fin_gr_O_Oki <- master_bp_analysis(pair_gr = gr_O_Oki, co_tol = 500, ref_tan = tan_O, ref_tan_tol = 50, q_tan = tan_Oki,
-#                                    q_tan_tol = 50, q_cov = Oki_cov_pb, q_cov_tol = 50)
-# fin_gr_O_Oki
-
-```
-
 
 # Examples
 
@@ -1214,22 +935,3 @@ They are enriched in introns...
 # plotHeatmapMeta(list(hm_a))
 # plotHeatmapMeta(list(hm_b))
 ```
-
-
-## Okinawa genome coverage
-
-As previously discussed, low coverage over an alignment stop could lower the likelihood of it being considered as a breakpoint. We have per-base coverage depth information for the Okinawan genome (`Oki_cov_pb`). However, the coverage of this particular assembly is quite good. In fact, we can investigate the coverge over alignment stops from the information obtained using `master_bp_analysis`. 
-
-```{r echo=T, message=F, warning=F}
-# fin_Oki <- fin_gr_O_Oki[[2]]
-# min_cov <- min(min(fin_Oki$left_cov_pb), min(fin_Oki$right_cov_pb)) # minimum coverage over an alignment stop
-# min_cov
-# length(fin_Oki[fin_Oki$left_cov_pb == min_cov]) + length(fin_Oki[fin_Oki$right_cov_pb == min_cov]) # how many of the minimum coverage is observed
-# length(fin_Oki[fin_Oki$left_cov_pb <= 50]) + length(fin_Oki[fin_Oki$right_cov_pb <= 50]) # how many alignment stops have a coverage of less than or euqal to 50
-
-```
-
-We may choose to kick out the one alignment stop for which there is no coverage. However, only 15 out of 34572 alignment stops have a coverage of less than or equal to 50, meaning that it would be hard to exclude more than just a few alignment stops using coverage information for breakpoint analysis. 
-
-
-

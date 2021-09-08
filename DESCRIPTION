@@ -30,6 +30,7 @@ Imports:
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests:
+  BSgenome.Scerevisiae.UCSC.sacCer3,
   genoPlotR,
   ggplot2,
   gridExtra,
