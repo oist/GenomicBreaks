@@ -39,6 +39,7 @@ Suggests:
   rmarkdown
 VignetteBuilder: knitr
 Collate: 
+    'GOC.R'
     'GenomicBreaks.R'
     'align_scaf_plot_2.R'
     'bp_coverage.R'

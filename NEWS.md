@@ -1,6 +1,7 @@
-# GenomicBreaks development version
+# GenomicBreaks 0.4.0
 
 * Use alignments of _Saccharomyces paradoxus_ to _S. cerevisiae_ as example data.
+* Addition of a `GOC()` function to calculate Gene Order Conservation.
 
 # GenomicBreaks 0.3.0
 

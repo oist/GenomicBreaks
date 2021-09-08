@@ -61,7 +61,7 @@ rtracklayer::import(exdata)
 
 # GBreaks objects
 
-Pairwise genome alignments are loaded in [`GBreaks`] objects that wrap the
+Pairwise genome alignments are loaded in `GBreaks()` objects that wrap the
 `GRanges` class.  By convention, we write that the _query_ genome (the one that
 was provided as a FASTA file) is aligned to the _target_ genome (the one that
 was indexed by the aligner).  The _target_ genome (on the left) is the main part
@@ -86,7 +86,7 @@ _target_ would be defined as alignment stops.  Correspondingly, we have
 positions 8723 and 12176 in `NC_047487.1` of the _query_ genome as alignment
 stops. 
 
-The function [`get_bps`] takes in a `GBreaks` pairwise alignment or a simple
+The function `get_bps()` takes in a `GBreaks` pairwise alignment or a simple
 `GRanges` object, and produces a `GRanges` object of it's associated alignment
 stops.  It has `direction`, `stranded` and `sorted` options to refind its
 output. 
@@ -116,7 +116,7 @@ stops that are a result of bioinformatic errors.
 
 Ad-hoc index measuring to what extent a scaffold of the _target_ genome is
 mostly aligned to a single scaffold in the _query_ genome.   See
-`?GenomicBreaks::synteny_index` for details.  One limitation to the use of this
+`?synteny_index` for details.  One limitation to the use of this
 index is that it requires that at least the _query_ genome is a complete
 chromosome assembly.
 
@@ -136,6 +136,19 @@ genome.
 ```{r}
 correlation_index(gb)
 correlation_index(swap(gb))
+```
+
+### Gene Order Conservation
+
+The `GOC()` function calcluates the Gene Order Conservation number defined by
+Rocha (2003, <https://doi.org/10.1016/j.tig.2003.09.011>) as “_the average
+number of orthologues for which the consecutive orthologue co-occurs close by in
+the other genome. It varies between 0 (no co-occurrence) and 1 (complete gene
+order conservation)_”.
+
+```{r}
+GOC(gb)
+GOC(swap(gb))
 ```
 
 ## Visualising alignments

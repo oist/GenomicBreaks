@@ -33,6 +33,7 @@ correlation_index(gb)
 }
 \seealso{
 Other Similarity indexes: 
+\code{\link{GOC}()},
 \code{\link{synteny_index}()}
 }
 \concept{Similarity indexes}

@@ -29,6 +29,7 @@ chain_contigs(gb4)
 }
 \seealso{
 Other Colinearity functions: 
+\code{\link{GOC}()},
 \code{\link{coalesce_contigs}()},
 \code{\link{flagColinearAlignments}()}
 }
