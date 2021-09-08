@@ -158,6 +158,11 @@ orthologue co-occurs close by in the other genome. It varies between 0
     <p>Returns a numeric value between 0 and 1.  If <code>debug = TRUE</code>,
 returns a copy of the <code>gb</code> object with additional columns showing details of
 the computation.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Note that calculating GOC on whole-genome alignments is not expected
+to produce meaningful results.  This function is more useful when comparing
+the position of orthologues, represented in a <code>GBreaks</code> object.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Rocha, Eduardo P C. &#8220;DNA repeats lead to the accelerated

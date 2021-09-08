@@ -317,6 +317,7 @@
 <h3 class="hasAnchor">
 <a href="#gene-order-conservation" class="anchor"></a>Gene Order Conservation</h3>
 <p>The <code><a href="../reference/GOC.html">GOC()</a></code> function calcluates the Gene Order Conservation number defined by Rocha (2003, <a href="https://doi.org/10.1016/j.tig.2003.09.011" class="uri">https://doi.org/10.1016/j.tig.2003.09.011</a>) as “<em>the average number of orthologues for which the consecutive orthologue co-occurs close by in the other genome. It varies between 0 (no co-occurrence) and 1 (complete gene order conservation)</em>”.</p>
+<p><em>Note that calculating GOC on whole-genome alignments is not expected to produce meaningful results, and the example below is just to show that the computation is possible. This function is more useful when comparing the position of orthologues, represented in a <code>GBreaks</code> object.</em></p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0.9227557</code></pre>
