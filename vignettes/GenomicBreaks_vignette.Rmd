@@ -1,14 +1,13 @@
 ---
-title: "GenomicBreaks Vignette"
+title: "Introduction to GenomicBreaks"
 author: 
  - "Charlotte West"
  - "Charles Plessy"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEncoding[utf8]{inputenc}
   %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{GenomicBreaks}
+  %\VignetteIndexEntry{ntroduction to GenomicBreaks}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
@@ -29,8 +28,8 @@ characteristics associated with _breakpoints_ between pairs of _genomes_.
 Core packages that provide functions we use a lot.
 
 ```{r loadlib, echo=T, results='hide'}
-library('GenomicBreaks')
 suppressPackageStartupMessages({
+  library('GenomicBreaks')
   library('BSgenome')
   library('GenomicFeatures')
   library('GenomicRanges')
@@ -38,69 +37,68 @@ suppressPackageStartupMessages({
 })
 ```
 
-### BSgenome packages
-
+We will use yeast data as an example, so let's load the `Scerevisiae` BSgenome
+package.
 
 ```{r load_BSgenome_packages}
 library("BSgenome.Scerevisiae.UCSC.sacCer3")
 ```
 
-## Load data
+## Example data
 
-### Genome annotations.
+This package contains an example data file representing the alignment of the
+_Saccharomyces paradoxus_ genome to the `SacCer3` reference genome of
+_S. cerevisiae_.  An alignment file was produced with a Nextflow
+[pairwise alignment pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison)
+and converted to [GFF3](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
+format with the `maf-convert gff -J 1000000` command of the
+[LAST](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst) package.
 
-```{r load_genomic_features}
+```{r locate_example_data}
+exdata <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
+rtracklayer::import(exdata)
 ```
 
-### Long and short arms.
+# GBreaks objects
 
-```{r long_and_short_arms}
-```
-
-### GenomicBreaks object
-
-Let's load data from genome alignments, copied in the `Oidioi_pairwise_v3`
-directory.
-
-Pairwise genome alignments are loaded in `GBreaks` objects that wrap the
+Pairwise genome alignments are loaded in [`GBreaks`] objects that wrap the
 `GRanges` class.  By convention, we write that the _query_ genome (the one that
 was provided as a FASTA file) is aligned to the _target_ genome (the one that
 was indexed by the aligner).  The _target_ genome (on the left) is the main part
 of the object, and the _query_ genome information (right) is contained in the
 metadata columns (`mcols`) of the structure.  Information on contig or scaffold
-length is loaded from `BSgenome` objects, from which `seqinfo` data
+length is optionaly loaded from `BSgenome` objects, from which `seqinfo` data
 is extracted and passed to the `GRanges`.  By convention, strand information
 of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
 gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
+gb
 ```
-
-In the example displayed above, the object contains the pairwise alignment
-between genomes of two dioceous _Oikopleura_ individuals; one from the Osaka
-assembly `OSKA2016` (_target_) and one from the Okinawa assembly `OKI2018_I69`
-(_query_).
 
 ## Breakpoints and alignment stops
 
 Let us define an **alignment stop** to be a position defined in either the
 _target_ or _query_ genome, where an alignment begins or ends.  Looking at the
-first line in the `Osa_Oki` object above, `Chr1` positions 1535 and 1751 of the
+first line in the `gb` object above, `ChrI` positions 5860 and 10010 of the
 _target_ would be defined as alignment stops.  Correspondingly, we have
-positions 955913 and 956109 in `chr1` of the _query_ genome as alignment stops. 
+positions 8723 and 12176 in `NC_047487.1` of the _query_ genome as alignment
+stops. 
 
-The function `get_bps` takes in a `GBreaks` pairwise alignment, and produces a
-`GRanges` object of it's associated alignment stops. 
+The function [`get_bps`] takes in a `GBreaks` pairwise alignment or a simple
+`GRanges` object, and produces a `GRanges` object of it's associated alignment
+stops.  It has `direction`, `stranded` and `sorted` options to refind its
+output. 
 
 ```{r get bps}
-get_bps(gb)
-get_bps(gb, direction = "left")
-get_bps(gb,                      stranded = TRUE)
-get_bps(gb,                      stranded = TRUE, sorted = FALSE)
-get_bps(gb, direction = "right", stranded = TRUE)
-get_bps(gb$query, sorted = FALSE)
-get_bps(gb$query)
+get_bps(gb) |> head(3)
+get_bps(gb, direction = "left") |> head(3)
+get_bps(gb,                      stranded = TRUE) |> head(3)
+get_bps(gb,                      stranded = TRUE, sorted = FALSE) |> head(3)
+get_bps(gb, direction = "right", stranded = TRUE) |> head(3)
+get_bps(gb$query, sorted = FALSE) |> head(3)
+get_bps(gb$query) |> head(3)
 ```
 
 Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a
