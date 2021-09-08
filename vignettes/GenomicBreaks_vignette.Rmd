@@ -73,7 +73,7 @@ of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
-gb <- load_genomic_breaks(exdata)
+gb <- load_genomic_breaks(exdata, Scerevisiae)
 gb
 gb$query
 ```
