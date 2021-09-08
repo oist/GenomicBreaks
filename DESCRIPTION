@@ -36,7 +36,6 @@ Suggests:
   gridExtra,
   Gviz,
   knitr,
-  magrittr,
   rmarkdown
 VignetteBuilder: knitr
 Collate: 
