@@ -47,7 +47,7 @@ library("BSgenome.Scerevisiae.UCSC.sacCer3")
 ## Example data
 
 This package contains an example data file representing the alignment of the
-_Saccharomyces paradoxus_ genome to the `SacCer3` reference genome of
+_Saccharomyces paradoxus_ genome version `ASM207905v1` to the `SacCer3` reference genome of
 _S. cerevisiae_.  An alignment file was produced with a Nextflow
 [pairwise alignment pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison)
 and converted to [GFF3](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
