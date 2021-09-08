@@ -14,3 +14,9 @@ ranges of the \code{GRanges} object, and their counterparts in the \emph{query} 
 are represented as a \code{GRanges} object sored in the the metadata column
 \code{query}.
 }
+\examples{
+gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
+gb
+gb$query
+
+}

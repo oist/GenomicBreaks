@@ -7,6 +7,11 @@
 #' are represented as a `GRanges` object sored in the the metadata column
 #' `query`.
 #'
+#' @examples
+#' gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
+#' gb
+#' gb$query
+#'
 #' @importFrom methods new setClass
 #'
 #' @export

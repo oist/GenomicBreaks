@@ -18,7 +18,7 @@
 #'
 #' @references Rocha, Eduardo P C. \dQuote{DNA repeats lead to the accelerated
 #' loss of gene order in bacteria.} _Trends in genetics : TIG_ vol. 19,11
-#' (2003): 600-3. doi:10.1016/j.tig.2003.09.011
+#' (2003): 600-3. [doi:10.1016/j.tig.2003.09.011](https://doi.org/10.1016/j.tig.2003.09.011)
 #'
 #' @examples
 #' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))

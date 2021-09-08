@@ -43,7 +43,7 @@ GOC(inv, vicinity = 1)
 \references{
 Rocha, Eduardo P C. \dQuote{DNA repeats lead to the accelerated
 loss of gene order in bacteria.} \emph{Trends in genetics : TIG} vol. 19,11
-(2003): 600-3. doi:10.1016/j.tig.2003.09.011
+(2003): 600-3. \href{https://doi.org/10.1016/j.tig.2003.09.011}{doi:10.1016/j.tig.2003.09.011}
 }
 \seealso{
 Other Colinearity functions: 

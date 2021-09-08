@@ -73,8 +73,9 @@ of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
-gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
+gb <- load_genomic_breaks(exdata)
 gb
+gb$query
 ```
 
 ## Breakpoints and alignment stops
@@ -129,7 +130,7 @@ synteny_index(swap(gb))
 
 Ad-hoc index measuring the correlation of the coordinates of the syntenic
 alignments in scaffolds of a _target_ genome and their best match in the
-_query_ genome.  See `?GenomicBreaks::correlation_index` for details.  This
+_query_ genome.  See `?correlation_index` for details.  This
 index is more robust to the presence of uncollapsed haplotypes in the _query_
 genome.
 
