@@ -1,3 +1,7 @@
+# GenomicBreaks development version
+
+* Use alignments of _Saccharomyces paradoxus_ to _S. cerevisiae_ as example data.
+
 # GenomicBreaks 0.3.0
 
 * Added the `leftInversionGaps()` function.
