@@ -5,6 +5,10 @@
 #' orthologue co-occurs close by in the other genome. It varies between 0
 #' (no co-occurrence) and 1 (complete gene order conservation)}}.
 #'
+#' @note Note that calculating GOC on whole-genome alignments is not expected
+#' to produce meaningful results.  This function is more useful when comparing
+#' the position of orthologues, represented in a `GBreaks` object.
+#'
 #' @param gb A [`GBreaks`] object.
 #'
 #' @param vicinity How far to search for the neighbour orthologue.

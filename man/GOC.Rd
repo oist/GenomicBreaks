@@ -22,6 +22,11 @@ The Gene Order Conservation (GOC) number defined by Rocha (2003) is:
 orthologue co-occurs close by in the other genome. It varies between 0
 (no co-occurrence) and 1 (complete gene order conservation)}}.
 }
+\note{
+Note that calculating GOC on whole-genome alignments is not expected
+to produce meaningful results.  This function is more useful when comparing
+the position of orthologues, represented in a \code{GBreaks} object.
+}
 \examples{
 gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
 gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
