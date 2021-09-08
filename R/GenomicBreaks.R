@@ -8,7 +8,7 @@
 #' `query`.
 #'
 #' @examples
-#' gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"), Scerevisiae)
+#' gb <- load_genomic_breaks(system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"))
 #' gb
 #' gb$query
 #'
