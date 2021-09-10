@@ -1,3 +1,7 @@
+# GenomicBreaks devel
+
+* Export the `GBreaks()` constructor.
+
 # GenomicBreaks 0.5.0
 
 * Add a `flagLongShort()` function to transfer annotations about chromosome arms.

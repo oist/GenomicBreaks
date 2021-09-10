@@ -14,7 +14,8 @@
 #'
 #' @importFrom methods new setClass
 #'
-#' @export
+#' @export GBreaks
+#' @exportClass GBreaks
 
 GBreaks <- setClass("GBreaks", contains = "GRanges")
 
