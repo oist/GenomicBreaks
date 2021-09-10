@@ -14,13 +14,7 @@ Installation
 The following should work:
 
 ```
-devtools::install_github('oist/GenomicBreaks')
-```
-
-You may need to install Bioconductor packages directly with commands such as:
-
-```
-BiocManager::install('GenomicBreaks')
+Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'
 ```
 
 In brief:
