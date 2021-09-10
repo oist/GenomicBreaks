@@ -152,8 +152,8 @@ nature (such as <code>long</code>, <code>short</code>, <code>XSR</code> or <code
 <em>metadata column</em>.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>One method name among <code>ignore</code>, <code>remove</code> and <code>split</code> to decide
+      <th>select</th>
+      <td><p>One method among <code>first</code>, <code>last</code> and <code>arbitrary</code>, to decide
 on how to handle the regions that match both arms.</p></td>
     </tr>
     </table>
@@ -162,9 +162,9 @@ on how to handle the regions that match both arms.</p></td>
 
     <p>Returns a modified version of the object with an extra <em>metadata
 column</em>, <code>Arm</code> in which the information from the annotation file's <code>Type</code>
-column was transferred.  With <code>method = "ignore"</code>, ranges matching two arms
-get <code>NA</code> as a value.  With <code>"remove"</code> they are deleted and with <code>"split"</code>
-they are split arbitrarily.</p>
+column was transferred.  See the examples below and in the manual of
+<code><a href='https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html'>IRanges::findOverlaps</a></code> for details. on how regions that match both arms
+are handled.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Flagging functions: 
@@ -205,30 +205,30 @@ they are split arbitrarily.</p>
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query         Arm
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
-#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
-#&gt;   [2]     chr1   201-300      + | chrI:201-300       short
-#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
-#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;       seqnames    ranges strand |        query      Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200    short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300    short
+#&gt;   [3]     chr1   320-400      + | chrI:301-400    long 
+#&gt;   [4]     chr1   501-550      + | chrI:501-550    NA   
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"last"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query         Arm
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
-#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
-#&gt;   [2]     chr1   201-300      + | chrI:201-300        long
-#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
-#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;       seqnames    ranges strand |        query      Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200    short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300    long 
+#&gt;   [3]     chr1   320-400      + | chrI:301-400    long 
+#&gt;   [4]     chr1   501-550      + | chrI:501-550    NA   
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"arbitrary"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query         Arm
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
-#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
-#&gt;   [2]     chr1   201-300      + | chrI:201-300       short
-#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
-#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;       seqnames    ranges strand |        query      Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200    short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300    short
+#&gt;   [3]     chr1   320-400      + | chrI:301-400    long 
+#&gt;   [4]     chr1   501-550      + | chrI:501-550    NA   
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 
