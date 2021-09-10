@@ -28,6 +28,7 @@ Other Flagging functions:
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagInsersions}()},
 \code{\link{flagInterruptions}()},
-\code{\link{flagInversions}()}
+\code{\link{flagInversions}()},
+\code{\link{flagLongShort}()}
 }
 \concept{Flagging functions}

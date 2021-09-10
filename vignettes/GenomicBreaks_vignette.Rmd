@@ -111,6 +111,19 @@ This package seeks to determine, of the group of alignment stops, which are
 likely genomic breakpoints and analyse them.  Thus, filtering out alignment
 stops that are a result of bioinformatic errors.
 
+## Arms
+
+If the positions of the centromeres are known, an annotation file can be
+crafted to indicate the coordinates of the short and long arms, and the
+function `flagLongShort()` can be used to transfer this annotation to the
+`GBreaks` object.
+
+```{r}
+annot <- GRanges(c("chrI:1-151465", "chrI:151582-230218"))
+annot$Type <- c("short", "long")
+flagLongShort(gb, annot)
+```
+
 ## Measures of distance
 
 ### Synteny index

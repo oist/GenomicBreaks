@@ -94,7 +94,8 @@ Other Flagging functions:
 \code{\link{flagAll}()},
 \code{\link{flagInsersions}()},
 \code{\link{flagInterruptions}()},
-\code{\link{flagInversions}()}
+\code{\link{flagInversions}()},
+\code{\link{flagLongShort}()}
 
 Other Colinearity functions: 
 \code{\link{GOC}()},

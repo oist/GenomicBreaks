@@ -39,7 +39,8 @@ Other Flagging functions:
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagInsersions}()},
-\code{\link{flagInterruptions}()}
+\code{\link{flagInterruptions}()},
+\code{\link{flagLongShort}()}
 
 Other Inversion functions: 
 \code{\link{filterInversions}()},

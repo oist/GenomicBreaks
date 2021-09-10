@@ -1,3 +1,7 @@
+# GenomicBreaks 0.5.0
+
+* Add a `flagLongShort()` function to transfer annotations about chromosome arms.
+
 # GenomicBreaks 0.4.0
 
 * Use alignments of _Saccharomyces paradoxus_ to _S. cerevisiae_ as example data.
