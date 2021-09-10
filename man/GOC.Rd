@@ -10,6 +10,8 @@ GOC(gb, vicinity = 4, debug = FALSE)
 \item{gb}{A \code{\link{GBreaks}} object.}
 
 \item{vicinity}{How far to search for the neighbour orthologue.}
+
+\item{debug}{See below.}
 }
 \value{
 Returns a numeric value between 0 and 1.  If \code{debug = TRUE},

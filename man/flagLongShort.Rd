@@ -13,15 +13,15 @@ flagLongShort(gr, annot, select = c("first", "last", "arbitrary"))
 nature (such as \code{long}, \code{short}, \code{XSR} or \code{YSR}) in a \code{Type}
 \emph{metadata column}.}
 
-\item{method}{One method name among \code{ignore}, \code{remove} and \code{split} to decide
+\item{select}{One method among \code{first}, \code{last} and \code{arbitrary}, to decide
 on how to handle the regions that match both arms.}
 }
 \value{
 Returns a modified version of the object with an extra \emph{metadata
 column}, \code{Arm} in which the information from the annotation file's \code{Type}
-column was transferred.  With \code{method = "ignore"}, ranges matching two arms
-get \code{NA} as a value.  With \code{"remove"} they are deleted and with \code{"split"}
-they are split arbitrarily.
+column was transferred.  See the examples below and in the manual of
+\code{\link[IRanges:findOverlaps-methods]{IRanges::findOverlaps}} for details. on how regions that match both arms
+are handled.
 }
 \description{
 \emph{Oikopleura} genomes are special as the long and short arms of their

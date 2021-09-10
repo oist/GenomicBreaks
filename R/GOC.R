@@ -13,6 +13,8 @@
 #'
 #' @param vicinity How far to search for the neighbour orthologue.
 #'
+#' @param debug See below.
+#'
 #' @returns Returns a numeric value between 0 and 1.  If `debug = TRUE`,
 #' returns a copy of the `gb` object with additional columns showing details of
 #' the computation.

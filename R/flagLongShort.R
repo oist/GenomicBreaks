@@ -10,14 +10,14 @@
 #'        nature (such as `long`, `short`, `XSR` or `YSR`) in a `Type`
 #'        _metadata column_.
 #'
-#' @param method One method name among `ignore`, `remove` and `split` to decide
+#' @param select One method among `first`, `last` and `arbitrary`, to decide
 #'        on how to handle the regions that match both arms.
 #'
 #' @return Returns a modified version of the object with an extra _metadata
 #' column_, `Arm` in which the information from the annotation file's `Type`
-#' column was transferred.  With `method = "ignore"`, ranges matching two arms
-#' get `NA` as a value.  With `"remove"` they are deleted and with `"split"`
-#' they are split arbitrarily.
+#' column was transferred.  See the examples below and in the manual of
+#' [`IRanges::findOverlaps`] for details. on how regions that match both arms
+#' are handled.
 #'
 #' @family Flagging functions
 #'
