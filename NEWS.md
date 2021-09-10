@@ -1,5 +1,6 @@
-# GenomicBreaks devel
+# GenomicBreaks 0.5.1
 
+* Correct a variable name bug in `flagLongShort()`.
 * Export the `GBreaks()` constructor.
 
 # GenomicBreaks 0.5.0

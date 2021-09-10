@@ -44,7 +44,7 @@
 
 flagLongShort <- function(gr, annot, select=c("first", "last", "arbitrary")) {
   select <- match.arg(select)
-  overlapHits <- findOverlaps(gb, annot, select = select)
-  gb$Arm <- sapply(overlapHits, \(i) ifelse(is.na(i), NA, annot[i]$Type))
-  gb
+  overlapHits <- findOverlaps(gr, annot, select = select)
+  gr$Arm <- sapply(overlapHits, \(i) ifelse(is.na(i), NA, annot[i]$Type))
+  gr
 }
