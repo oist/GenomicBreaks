@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -94,9 +94,7 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The following should work:</p>
-<pre><code>devtools::install_github('oist/GenomicBreaks')</code></pre>
-<p>You may need to install Bioconductor packages directly with commands such as:</p>
-<pre><code>BiocManager::install('GenomicBreaks')</code></pre>
+<pre><code>Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'</code></pre>
 </div>
 <div id="in-brief" class="section level2">
 <h2 class="hasAnchor">
