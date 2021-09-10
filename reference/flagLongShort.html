@@ -74,7 +74,7 @@ can be useful to know if genomic region belongs to long or a short arm." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -204,9 +204,33 @@ they are split arbitrarily.</p>
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'query' in selecting a method for function 'findOverlaps': object 'gb' not found</span></div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"last"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'query' in selecting a method for function 'findOverlaps': object 'gb' not found</span></div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"arbitrary"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'query' in selecting a method for function 'findOverlaps': object 'gb' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
+#&gt;       seqnames    ranges strand |        query         Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300       short
+#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
+#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"last"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
+#&gt;       seqnames    ranges strand |        query         Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300        long
+#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
+#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flagLongShort</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>annot</span>, select <span class='op'>=</span> <span class='st'>"arbitrary"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GBreaks object with 4 ranges and 2 metadata columns:
+#&gt;       seqnames    ranges strand |        query         Arm
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;character&gt;
+#&gt;   [1]     chr1   101-180      + | chrI:101-200       short
+#&gt;   [2]     chr1   201-300      + | chrI:201-300       short
+#&gt;   [3]     chr1   320-400      + | chrI:301-400        long
+#&gt;   [4]     chr1   501-550      + | chrI:501-550        &lt;NA&gt;
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 
 </div></pre>
   </div>
