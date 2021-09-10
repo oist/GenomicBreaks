@@ -1,3 +1,7 @@
+# GenomicBreaks 0.5.2
+
+* Greatly speed up `flagLongShort()`.
+
 # GenomicBreaks 0.5.1
 
 * Correct a variable name bug in `flagLongShort()`.
