@@ -25,7 +25,7 @@ On a Debian/Ubuntu system, try this:
 
 ```
 sudo apt install r-base
-sudo apt install pandoc libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev texlive libtiff-dev
+sudo apt install pandoc libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev texlive libtiff-dev libfontconfig1-dev
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
 wget https://s3.amazonaws.com/rstudio-ide-build/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
