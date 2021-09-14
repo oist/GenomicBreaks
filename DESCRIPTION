@@ -1,14 +1,14 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",  role = c("aut", "cre")))
 Description: Load pairwise genome alignments into objects, coalesce colinear
     alignments to discover syntenic regions, flag inversions, and much more.
 License: BSD_3_clause + file LICENSE
-URL: https://github.com/oist/GenomicBreaks
+URL: https://oist.github.io/GenomicBreaks/, https://github.com/oist/GenomicBreaks
 Encoding: UTF-8
 Depends: R (>= 4.1),
   GenomicRanges

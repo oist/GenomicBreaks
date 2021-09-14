@@ -1,3 +1,7 @@
+# GenomicBreaks 0.5.3
+
+* _pkgdown_ update.
+
 # GenomicBreaks 0.5.2
 
 * Greatly speed up `flagLongShort()`.
