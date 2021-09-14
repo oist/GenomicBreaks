@@ -3,5 +3,8 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   GenomicBreaks_vignette: GenomicBreaks_vignette.html
-last_built: 2021-09-10T03:09Z
+last_built: 2021-09-14T07:29Z
+urls:
+  reference: https://oist.github.io/GenomicBreaks//reference
+  article: https://oist.github.io/GenomicBreaks//articles
 
