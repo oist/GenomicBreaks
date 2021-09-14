@@ -8,7 +8,7 @@ Authors@R: c(
 Description: Load pairwise genome alignments into objects, coalesce colinear
     alignments to discover syntenic regions, flag inversions, and much more.
 License: BSD_3_clause + file LICENSE
-URL: https://oist.github.io/GenomicBreaks/, https://github.com/oist/GenomicBreaks
+URL: https://oist.github.io/GenomicBreaks, https://github.com/oist/GenomicBreaks
 Encoding: UTF-8
 Depends: R (>= 4.1),
   GenomicRanges
