@@ -79,6 +79,8 @@ gb2dna_seg <- function(gb, ...) {
 #' object also conforms to this assumption.
 #'
 #' @param gb A [`GBreaks`] object.
+#' @param color (optional) A vector of colors, of same length as `gb`.
+#' @param ignore.strand Ignore strand information?
 #'
 #' @author Charles Plessy
 #'
@@ -95,7 +97,7 @@ gb2dna_seg <- function(gb, ...) {
 #'
 #' @export
 
-gb2comp <- function(gb) {
+gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
   dna_segs <- gb2dna_seg(gb)
   df <- data.frame(
     start1 = dna_segs$target$start,
@@ -103,7 +105,22 @@ gb2comp <- function(gb) {
     start2 = dna_segs$query$start,
     end2   = dna_segs$query$end
   )
-  genoPlotR::as.comparison(df)
+  cmp <- genoPlotR::as.comparison(df)
+  cmp$direction <- 1L
+  # If color information is absent, the genoPlotR::plot_gene_map function will
+  # bug and fail to plot comparisons on direction `-1`.
+  cmp$color <- "darksalmon"
+  if(isFALSE(ignore.strand)) {
+    onMinus <- decode(strand(gb) == "-")
+    cmp$direction[onMinus] <- -1
+    cmp$start2[onMinus]    <- dna_segs$query$end  [onMinus]
+    cmp$end2  [onMinus]    <- dna_segs$query$start[onMinus]
+    cmp$col   [onMinus]    <- "cornflowerblue"
+  }
+  if(!is.null(color)) {
+    cmp$col <- color
+  }
+  cmp
 }
 
 #' Plots a pair of chromosomes from a `GBreaks` object.
