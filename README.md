@@ -25,7 +25,8 @@ On a Debian/Ubuntu system, try this:
 
 ```
 sudo apt install r-base
-sudo apt install pandoc libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev texlive libtiff-dev libgsl-dev
+sudo apt install pandoc qpdf texlive # For vignette builds and package checks
+sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev
 sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
