@@ -36,6 +36,14 @@ inv <- GBreaks(inv)
 plotApairOfChrs(inv, "XSR")
 
 }
+\seealso{
+Other genoPlotR functions: 
+\code{\link{gb2comp}()},
+\code{\link{gb2dna_seg}()},
+\code{\link{gr2dna_seg}()}
+}
 \author{
 Charles Plessy
 }
+\concept{genoPlotR functions}
+\concept{plot functions}

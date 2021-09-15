@@ -27,6 +27,18 @@ inv <- GBreaks(inv)
 gb2comp(inv)
 
 }
+\seealso{
+Other genoPlotR functions: 
+\code{\link{gb2dna_seg}()},
+\code{\link{gr2dna_seg}()},
+\code{\link{plotApairOfChrs}()}
+
+Other converter functions: 
+\code{\link{gb2dna_seg}()},
+\code{\link{gr2dna_seg}()}
+}
 \author{
 Charles Plessy
 }
+\concept{converter functions}
+\concept{genoPlotR functions}

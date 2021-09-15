@@ -22,6 +22,18 @@ gr2dna_seg(inv)
 gr2dna_seg(inv$query)
 
 }
+\seealso{
+Other genoPlotR functions: 
+\code{\link{gb2comp}()},
+\code{\link{gb2dna_seg}()},
+\code{\link{plotApairOfChrs}()}
+
+Other converter functions: 
+\code{\link{gb2comp}()},
+\code{\link{gb2dna_seg}()}
+}
 \author{
 Charles Plessy
 }
+\concept{converter functions}
+\concept{genoPlotR functions}

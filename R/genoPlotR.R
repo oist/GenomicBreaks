@@ -17,6 +17,9 @@
 #' gr2dna_seg(inv)
 #' gr2dna_seg(inv$query)
 #'
+#' @family genoPlotR functions
+#' @family converter functions
+#'
 #' @export
 
 gr2dna_seg <- function (gr, ...) {
@@ -52,6 +55,9 @@ gr2dna_seg <- function (gr, ...) {
 #' inv <- GBreaks(inv)
 #' gb2dna_seg(inv)
 #'
+#' @family genoPlotR functions
+#' @family converter functions
+#'
 #' @export
 
 gb2dna_seg <- function(gb, ...) {
@@ -83,6 +89,9 @@ gb2dna_seg <- function(gb, ...) {
 #' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 #' inv <- GBreaks(inv)
 #' gb2comp(inv)
+#'
+#' @family genoPlotR functions
+#' @family converter functions
 #'
 #' @export
 
@@ -125,6 +134,9 @@ gb2comp <- function(gb) {
 #' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 #' inv <- GBreaks(inv)
 #' plotApairOfChrs(inv, "XSR")
+#'
+#' @family genoPlotR functions
+#' @family plot functions
 #'
 #' @export
 
