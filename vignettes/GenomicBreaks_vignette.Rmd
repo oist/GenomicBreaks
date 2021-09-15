@@ -288,76 +288,8 @@ intervals.
 ## Genome plots with genoPlotR
 
 ```{r test_genoPlotR}
-# library("genoPlotR")
-# 
-# example("dna_seg")
-# 
-# gr2dna_seg <- function (gr) {
-#   if (is.null(names(gr))) names(gr) <- as.character(gr)
-#   strand(gr[strand(gr) == "*"]) <- "+"
-#   df <- data.frame(
-#     name   = names(gr),
-#     start  = start(gr),
-#     end    = end(gr),
-#     strand = strand(gr),
-#     col    = "grey"
-#   )
-#   dna_seg(df)
-# }
-# 
-# gbRef2dna_seq <- function (gb) {
-#   if (is.null(names(gb))) names(gb) <- as.character(gb)
-#   strand(gb) <- "+"
-#   gr2dna_seg(gb)
-# }
-# 
-# gbQuery2dna_seq <- function (gb) {
-#   if (is.null(names(gb$query))) names(gb$query) <- as.character(gb)
-#   strand(gb$query) <- strand(gb)
-#   gr2dna_seg(gb$query)
-# }
-# 
-# # Plot whole chromosome 1
-# ds <- gr2dna_seg(coa$Oki_Osa[seqnames(coa$Oki_Osa) == "chr1"])
-# head(ds) ; tail(ds)
-# plot_gene_map(list(ds))
-# 
-# gb2comp <- function(gb) {
-#   ref <- gr2dna_seg(gb)
-#   strand(gb$query) <- "+"
-#   que <- gr2dna_seg(gb$query)
-#   df <- data.frame(
-#     start1 = ref$start,
-#     end1   = ref$end,
-#     start2 = que$start,
-#     end2   = que$end
-#   )
-#   as.comparison(df)
-# }
-# 
-# plotApairOfChrs <- function(gb, chr) {
-#   gb <- gb[seqnames(gb) == chr]
-#     keepMainMatch <- function(gb) {
-#     bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
-#     gb[seqnames(gb$query) == bestMatch]
-#   }
-#   roi <- keepMainMatch(gb)
-#   dsList <-   list(
-#       roi |> gbQuery2dna_seq(),
-#       roi |> gbRef2dna_seq()
-#       )
-#   
-#   compList <- list(
-#       roi |> swap() |> gb2comp()
-#     )
-#   plot_gene_map(dsList, compList)
-# }
-# 
-# plotApairOfChrs(coa$Oki_Bar, "chr1")
-# plotApairOfChrs(coa$Oki_Osa, "chr1")
-# plotApairOfChrs(coa$Osa_Oki, "Chr1")
-# plotApairOfChrs(coa$Osa_Bar, "Chr1")
-# plotApairOfChrs(coa2$Osa_Bar, "Chr1")
+plotApairOfChrs(gb, "chrI")
+plotApairOfChrs(coa, "chrI")
 ```
 
 

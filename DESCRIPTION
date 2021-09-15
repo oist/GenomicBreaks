@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.5.3
+Version: 0.6.0
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",
@@ -16,6 +16,7 @@ Depends: R (>= 4.1),
 Imports:
   BiocParallel,
   CNEr,
+  genoPlotR,
   methods,
   rtracklayer,
   S4Vectors,
@@ -28,11 +29,10 @@ Imports:
   Biostrings,
   BSgenome,
   weights
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
-  genoPlotR,
   ggplot2,
   gridExtra,
   Gviz,
@@ -57,6 +57,7 @@ Collate:
     'flagColinearAlignments.R'
     'flagAll.R'
     'flagLongShort.R'
+    'genoPlotR.R'
     'getRefGenome.R'
     'get_bps.R'
     'int_frag.R'

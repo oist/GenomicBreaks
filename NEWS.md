@@ -1,3 +1,7 @@
+# GenomicBreaks 0.6.0
+
+* Add pairwise chromosome plot functions using `genoPlotR`.
+
 # GenomicBreaks 0.5.3
 
 * _pkgdown_ update.
