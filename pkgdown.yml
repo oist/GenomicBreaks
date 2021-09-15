@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  GenomicBreaks_vignette: GenomicBreaks_vignette.html
-last_built: 2021-09-15T06:16Z
+  GenomicBreaks: GenomicBreaks.html
+last_built: 2021-09-15T06:32Z
 urls:
   reference: https://oist.github.io/GenomicBreaks/reference
   article: https://oist.github.io/GenomicBreaks/articles
