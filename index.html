@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -104,7 +104,9 @@
 <a href="#how-to-install-r-41-rstudio-and-bioconductor" class="anchor"></a>How to install R 4.1, Rstudio and Bioconductor.</h3>
 <p>On a Debian/Ubuntu system, try this:</p>
 <pre><code>sudo apt install r-base
-sudo apt install pandoc libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev texlive libtiff-dev libfontconfig1-dev
+sudo apt install pandoc qpdf texlive # For vignette builds and package checks
+sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev
+sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
 wget https://s3.amazonaws.com/rstudio-ide-build/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb

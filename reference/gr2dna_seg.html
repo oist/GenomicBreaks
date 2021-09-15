@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute all flags — flagAll • GenomicBreaks</title>
+<title>Convert GRanges object to dna_seg format — gr2dna_seg • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Compute all flags — flagAll" />
-<meta property="og:description" content="Flag ranges that are at the beginning of a colinear duplet, or an inversion,
-insertion or interruption triplet." />
+<meta property="og:title" content="Convert GRanges object to dna_seg format — gr2dna_seg" />
+<meta property="og:description" content="The genoPlotR::dna_seg class represents DNA segments using
+a data.frame format." />
 
 
 
@@ -124,52 +124,47 @@ insertion or interruption triplet." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute all flags</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagAll.R'><code>R/flagAll.R</code></a></small>
-    <div class="hidden name"><code>flagAll.Rd</code></div>
+    <h1>Convert <code>GRanges</code> object to <code>dna_seg</code> format</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/genoPlotR.R'><code>R/genoPlotR.R</code></a></small>
+    <div class="hidden name"><code>gr2dna_seg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Flag ranges that are at the beginning of a colinear duplet, or an inversion,
-insertion or interruption triplet.</p>
+    <p>The <code><a href='https://rdrr.io/pkg/genoPlotR/man/dna_seg.html'>genoPlotR::dna_seg</a></code> class represents <em>DNA segments</em> using
+a <code>data.frame</code> format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flagAll</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gr2dna_seg</span><span class='op'>(</span><span class='va'>gr</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gb</th>
-      <td><p>A <code>GenomicBreaks</code> object.</p></td>
+      <th>gr</th>
+      <td><p>A <code>GRanges</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Extra arguments passed to <code>dna_seg()</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Returns the <code>GenomicBreaks</code> object with an extra <code>flag</code> metadata
-column.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Flagging functions: 
-<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code>,
-<code><a href='flagInsersions.html'>flagInsersions</a>()</code>,
-<code><a href='flagInterruptions.html'>flagInterruptions</a>()</code>,
-<code><a href='flagInversions.html'>flagInversions</a>()</code>,
-<code><a href='flagLongShort.html'>flagLongShort</a>()</code></p></div>
+    <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>inv</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-200:+"</span>, <span class='st'>"XSR:201-300:-"</span>,  <span class='st'>"XSR:301-400:+"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>inv</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-180:+"</span>, <span class='st'>"XSR:201-300:-"</span>,  <span class='st'>"XSR:320-400:+"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>inv</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='st'>"S1:101-200"</span>,    <span class='st'>"S1:201-300"</span>,     <span class='st'>"S1:301-400"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>flagAll</span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 3 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |      query        flag
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;GRanges&gt; &lt;character&gt;
-#&gt;   [1]      XSR   101-200      + | S1:101-200         Inv
-#&gt;   [2]      XSR   201-300      - | S1:201-300        &lt;NA&gt;
-#&gt;   [3]      XSR   301-400      + | S1:301-400        &lt;NA&gt;
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='fu'>gr2dna_seg</span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            name start end strand  col fill lty lwd pch cex gene_type
+#&gt; 1 XSR:101-180:+   101 180      1 blue blue   1   1   8   1    arrows
+#&gt; 2 XSR:201-300:-   201 300     -1 blue blue   1   1   8   1    arrows
+#&gt; 3 XSR:320-400:+   320 400      1 blue blue   1   1   8   1    arrows</div><div class='input'><span class='fu'>gr2dna_seg</span><span class='op'>(</span><span class='va'>inv</span><span class='op'>$</span><span class='va'>query</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         name start end strand  col fill lty lwd pch cex gene_type
+#&gt; 1 S1:101-200   101 200      1 blue blue   1   1   8   1    arrows
+#&gt; 2 S1:201-300   201 300      1 blue blue   1   1   8   1    arrows
+#&gt; 3 S1:301-400   301 400      1 blue blue   1   1   8   1    arrows</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

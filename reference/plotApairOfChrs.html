@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute all flags — flagAll • GenomicBreaks</title>
+<title>Plots a pair of chromosomes from a GBreaks object. — plotApairOfChrs • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="Compute all flags — flagAll" />
-<meta property="og:description" content="Flag ranges that are at the beginning of a colinear duplet, or an inversion,
-insertion or interruption triplet." />
+<meta property="og:title" content="Plots a pair of chromosomes from a GBreaks object. — plotApairOfChrs" />
+<meta property="og:description" content="Plots the mapping between a pair of chromosomes using the
+genoPlotR::plot_gene_map function.  One sequence feature (usually a
+chromosome) is selected from the target genome.  The corresponding sequence
+feature on the query genome is either chosen automatically (being the one
+with the largest fraction of the mappings) or given as a parameter." />
 
 
 
@@ -124,52 +127,57 @@ insertion or interruption triplet." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute all flags</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagAll.R'><code>R/flagAll.R</code></a></small>
-    <div class="hidden name"><code>flagAll.Rd</code></div>
+    <h1>Plots a pair of chromosomes from a <code>GBreaks</code> object.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/genoPlotR.R'><code>R/genoPlotR.R</code></a></small>
+    <div class="hidden name"><code>plotApairOfChrs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Flag ranges that are at the beginning of a colinear duplet, or an inversion,
-insertion or interruption triplet.</p>
+    <p>Plots the mapping between a pair of chromosomes using the
+<code><a href='https://rdrr.io/pkg/genoPlotR/man/plot_gene_map.html'>genoPlotR::plot_gene_map</a></code> function.  One sequence feature (usually a
+chromosome) is selected from the <em>target</em> genome.  The corresponding sequence
+feature on the <em>query</em> genome is either chosen automatically (being the one
+with the largest fraction of the mappings) or given as a parameter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flagAll</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>plotApairOfChrs</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>chrT</span>, chrQ <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gb</th>
-      <td><p>A <code>GenomicBreaks</code> object.</p></td>
+      <td><p>A <code><a href='GBreaks-class.html'>GBreaks</a></code> object.</p></td>
+    </tr>
+    <tr>
+      <th>chrT</th>
+      <td><p>A sequence name on the <em>target</em> genome.</p></td>
+    </tr>
+    <tr>
+      <th>chrQ</th>
+      <td><p>(Optional) A sequence name on the <em>query</em> genome.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the <code>GenomicBreaks</code> object with an extra <code>flag</code> metadata
-column.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>Plots to the active device and returns and <code>oma::oma_layout</code> object
+like the <code><a href='https://rdrr.io/pkg/genoPlotR/man/plot_gene_map.html'>genoPlotR::plot_gene_map</a></code> function.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <div class='dont-index'><p>Other Flagging functions: 
-<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code>,
-<code><a href='flagInsersions.html'>flagInsersions</a>()</code>,
-<code><a href='flagInterruptions.html'>flagInterruptions</a>()</code>,
-<code><a href='flagInversions.html'>flagInversions</a>()</code>,
-<code><a href='flagLongShort.html'>flagLongShort</a>()</code></p></div>
+    <p>In this kind of plot, the ranges from the selected sequence on the
+<em>target</em> genome that are not mapped to the <em>query</em> sequence are not
+displayed.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>inv</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-200:+"</span>, <span class='st'>"XSR:201-300:-"</span>,  <span class='st'>"XSR:301-400:+"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>inv</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XSR:101-180:+"</span>, <span class='st'>"XSR:201-300:-"</span>,  <span class='st'>"XSR:320-400:+"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>inv</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='st'>"S1:101-200"</span>,    <span class='st'>"S1:201-300"</span>,     <span class='st'>"S1:301-400"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>flagAll</span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 3 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |      query        flag
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;GRanges&gt; &lt;character&gt;
-#&gt;   [1]      XSR   101-200      + | S1:101-200         Inv
-#&gt;   [2]      XSR   201-300      - | S1:201-300        &lt;NA&gt;
-#&gt;   [3]      XSR   301-400      + | S1:301-400        &lt;NA&gt;
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='va'>inv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GBreaks-class.html'>GBreaks</a></span><span class='op'>(</span><span class='va'>inv</span><span class='op'>)</span>
+<span class='fu'>plotApairOfChrs</span><span class='op'>(</span><span class='va'>inv</span>, <span class='st'>"XSR"</span><span class='op'>)</span>
+</div><div class='img'><img src='plotApairOfChrs-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

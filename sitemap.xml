@@ -64,10 +64,19 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/gb2comp.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/getRefGenome.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/get_bps.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc>
@@ -92,6 +101,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/master_bp_analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc>
