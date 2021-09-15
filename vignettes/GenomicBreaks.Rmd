@@ -287,8 +287,10 @@ intervals.
 
 ## Genome plots with genoPlotR
 
+To visualise synteny it is clearer to plot from the coalseced objects.
+
 ```{r test_genoPlotR}
-plotApairOfChrs(gb, "chrI")
+plotApairOfChrs(gb,  "chrI")
 plotApairOfChrs(coa, "chrI")
 ```
 
