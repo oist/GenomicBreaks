@@ -56,18 +56,18 @@ reverse_GRanges <- function(x, ...) {
 
 reverse_GBreaks <- function(x, query = FALSE, ...) {
   if (isFALSE(query)) {
-    gr <- reverse(granges(gb))
-    mcols(gr) <- mcols(gb)
-    gb <- GBreaks(gr)
+    gr <- reverse(granges(x))
+    mcols(gr) <- mcols(x)
+    x <- GBreaks(gr)
   } else {
-    gr <- gb$query
-    strand(gr) <- strand(gb)
+    gr <- x$query
+    strand(gr) <- strand(x)
     gr <- reverse(gr)
-    strand(gb) <- strand(gr)
+    strand(x) <- strand(gr)
     strand(gr) <- "*"
-    gb$query <- gr
+    x$query <- gr
   }
-  gb
+  x
 }
 
 #' @rdname reverse
