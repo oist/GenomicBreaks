@@ -4,10 +4,14 @@
 \alias{gb2comp}
 \title{Convert \code{GBreaks} object to a \code{comparison} object}
 \usage{
-gb2comp(gb)
+gb2comp(gb, color = NULL, ignore.strand = FALSE)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{color}{(optional) A vector of colors, of same length as \code{gb}.}
+
+\item{ignore.strand}{Ignore strand information?}
 }
 \value{
 Returns a \code{\link[genoPlotR:comparison]{genoPlotR::comparison}} object.
