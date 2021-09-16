@@ -1,3 +1,7 @@
+# GenomicBreaks 0.7.1
+
+* Fix namespace and variable bugs that were preventing `reverse()` to run.
+
 # GenomicBreaks 0.7.0
 
 * New `mergeSeqLevels()` function to concatenate sequence features, for instance
