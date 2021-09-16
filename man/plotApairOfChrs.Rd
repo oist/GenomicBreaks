@@ -4,7 +4,7 @@
 \alias{plotApairOfChrs}
 \title{Plots a pair of chromosomes from a \code{GBreaks} object.}
 \usage{
-plotApairOfChrs(gb, chrT, chrQ = NULL)
+plotApairOfChrs(gb, chrT, chrQ = NULL, ...)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
@@ -12,6 +12,8 @@ plotApairOfChrs(gb, chrT, chrQ = NULL)
 \item{chrT}{A sequence name on the \emph{target} genome.}
 
 \item{chrQ}{(Optional) A sequence name on the \emph{query} genome.}
+
+\item{...}{Futher arguments are passed to \code{plot_gene_map}.}
 }
 \value{
 Plots to the active device and returns and \code{oma::oma_layout} object
