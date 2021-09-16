@@ -40,7 +40,7 @@ examples for details.
 # Ranges on the plus strand that should coalesce
 gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
 gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-gb1
+(gb1 <- GBreaks(gb1))
 coalesce_contigs(gb1)
 
 # Reference range [1] precedes reference range [2]
@@ -83,6 +83,10 @@ Other Colinearity functions:
 \code{\link{GOC}()},
 \code{\link{chain_contigs}()},
 \code{\link{flagColinearAlignments}()}
+
+Other modifier functions: 
+\code{\link{mergeSeqLevels}()},
+\code{\link{reverse}()}
 }
 \author{
 Charlotte West
@@ -90,3 +94,4 @@ Charlotte West
 Charles Plessy
 }
 \concept{Colinearity functions}
+\concept{modifier functions}

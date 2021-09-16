@@ -25,6 +25,7 @@
 #' the ranges on the _target_ genome.
 #'
 #' @family Colinearity functions
+#' @family modifier functions
 #'
 #' @author Charlotte West
 #' @author Charles Plessy
@@ -33,7 +34,7 @@
 #' # Ranges on the plus strand that should coalesce
 #' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
 #' gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-#' gb1
+#' (gb1 <- GBreaks(gb1))
 #' coalesce_contigs(gb1)
 #'
 #' # Reference range [1] precedes reference range [2]
@@ -155,5 +156,5 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
 
   score(gr_red) <- width(gr_red)
 
-  sort(gr_red, ignore.strand = TRUE)
+  GBreaks(sort(gr_red, ignore.strand = TRUE))
 }
