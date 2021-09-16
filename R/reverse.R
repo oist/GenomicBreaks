@@ -26,6 +26,9 @@
 #'
 #' @family modifier functions
 #' @seealso See also the [`IRanges::reverse`] function.
+#'
+#' @importFrom IRanges reverse
+#' @importMethodsFrom IRanges reverse
 
 setGeneric("reverse", function(x, ...) standardGeneric("reverse"))
 
