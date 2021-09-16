@@ -68,6 +68,7 @@ Collate:
     'makeInversions.R'
     'master_bp_analysis.R'
     'mergeSeqLevels.R'
+    'reverse.R'
     'scaf_align_plot.R'
     'serviceFunctions.R'
     'strandNames.R'

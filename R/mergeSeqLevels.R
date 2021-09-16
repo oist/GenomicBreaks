@@ -4,7 +4,8 @@
 #' sequences into larger ones.
 #'
 #' @note Be careful that in some cases it is needed to "flip" the sequence
-#' feature before merging, if it maps colinearly with its reverse strand.
+#' feature [`reverse`]' before merging, for instance when colinearity is with
+#' its reverse strand.
 #'
 #' @param gr A `GRanges` object.
 #' @param seqs A character vector of [`seqlevels`] from `gr`
