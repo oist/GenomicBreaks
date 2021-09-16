@@ -1,6 +1,16 @@
+# GenomicBreaks 0.7.0
+
+* New `mergeSeqLevels()` function to concatenate sequence features, for instance
+  before plotting.
+* New `reverse()` method for `GBreaks` and `GRanges` objects.
+* Really return a `GBreaks` object in `coalesce_contigs()`.
+* Pass extra arguments from `plotApairOfChrs()` to `genoPlotR::plot_gene_map`.
+
 # GenomicBreaks 0.6.0
 
-* Add pairwise chromosome plot functions using `genoPlotR`.
+* Add pairwise chromosome plot functions using the
+  [`genoPlotR`](http://genoplotr.r-forge.r-project.org) package,
+  see in particular `plotApairOfChrs()`.
 
 # GenomicBreaks 0.5.3
 
