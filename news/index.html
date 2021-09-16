@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -117,11 +117,21 @@
       <small>Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="genomicbreaks-070" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#genomicbreaks-070" class="anchor"></a>GenomicBreaks 0.7.0</h1>
+<ul>
+<li>New <code><a href="../reference/mergeSeqLevels.html">mergeSeqLevels()</a></code> function to concatenate sequence features, for instance before plotting.</li>
+<li>New <code><a href="../reference/reverse.html">reverse()</a></code> method for <code>GBreaks</code> and <code>GRanges</code> objects.</li>
+<li>Really return a <code>GBreaks</code> object in <code><a href="../reference/coalesce_contigs.html">coalesce_contigs()</a></code>.</li>
+<li>Pass extra arguments from <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> to <code><a href="https://rdrr.io/pkg/genoPlotR/man/plot_gene_map.html">genoPlotR::plot_gene_map</a></code>.</li>
+</ul>
+</div>
     <div id="genomicbreaks-060" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#genomicbreaks-060" class="anchor"></a>GenomicBreaks 0.6.0</h1>
 <ul>
-<li>Add pairwise chromosome plot functions using <code>genoPlotR</code>.</li>
+<li>Add pairwise chromosome plot functions using the <a href="http://genoplotr.r-forge.r-project.org"><code>genoPlotR</code></a> package, see in particular <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code>.</li>
 </ul>
 </div>
     <div id="genomicbreaks-053" class="section level1">

@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   GenomicBreaks: GenomicBreaks.html
-last_built: 2021-09-15T08:15Z
+last_built: 2021-09-16T05:52Z
 urls:
   reference: https://oist.github.io/GenomicBreaks/reference
   article: https://oist.github.io/GenomicBreaks/articles

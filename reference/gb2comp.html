@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
     <p>Convert <code>GBreaks</code> object to a <code>comparison</code> object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gb2comp</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gb2comp</span><span class='op'>(</span><span class='va'>gb</span>, color <span class='op'>=</span> <span class='cn'>NULL</span>, ignore.strand <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +131,14 @@
     <tr>
       <th>gb</th>
       <td><p>A <code><a href='GBreaks-class.html'>GBreaks</a></code> object.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>(optional) A vector of colors, of same length as <code>gb</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.strand</th>
+      <td><p>Ignore strand information?</p></td>
     </tr>
     </table>
 

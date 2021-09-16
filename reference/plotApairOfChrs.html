@@ -76,7 +76,7 @@ with the largest fraction of the mappings) or given as a parameter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ feature on the <em>query</em> genome is either chosen automatically (being the o
 with the largest fraction of the mappings) or given as a parameter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotApairOfChrs</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>chrT</span>, chrQ <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>plotApairOfChrs</span><span class='op'>(</span><span class='va'>gb</span>, <span class='va'>chrT</span>, chrQ <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +147,10 @@ with the largest fraction of the mappings) or given as a parameter.</p>
     <tr>
       <th>chrQ</th>
       <td><p>(Optional) A sequence name on the <em>query</em> genome.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Futher arguments are passed to <code>plot_gene_map</code>.</p></td>
     </tr>
     </table>
 

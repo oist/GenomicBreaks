@@ -103,7 +103,13 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/master_bp_analysis.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/reverse.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc>

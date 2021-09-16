@@ -75,7 +75,7 @@ within close proximity on the same strand (user determined)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -169,7 +169,10 @@ examples for details.</p>
     <div class='dont-index'><p>Other Colinearity functions: 
 <code><a href='GOC.html'>GOC</a>()</code>,
 <code><a href='chain_contigs.html'>chain_contigs</a>()</code>,
-<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code></p></div>
+<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code></p>
+<p>Other modifier functions: 
+<code><a href='mergeSeqLevels.html'>mergeSeqLevels</a>()</code>,
+<code><a href='reverse.html'>reverse</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Charlotte West</p>
@@ -179,15 +182,15 @@ examples for details.</p>
     <pre class="examples"><div class='input'><span class='co'># Ranges on the plus strand that should coalesce</span>
 <span class='va'>gb1</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A<span class='op'>=</span><span class='st'>"Ref:100-200:+"</span>, B<span class='op'>=</span><span class='st'>"Ref:400-500:+"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>gb1</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A<span class='op'>=</span><span class='st'>"Que:100-200"</span>,   B<span class='op'>=</span><span class='st'>"Que:400-500"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>gb1</span>
-</div><div class='output co'>#&gt; GRanges object with 2 ranges and 1 metadata column:
+<span class='op'>(</span><span class='va'>gb1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GBreaks-class.html'>GBreaks</a></span><span class='op'>(</span><span class='va'>gb1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 1 metadata column:
 #&gt;     seqnames    ranges strand |       query
 #&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;GRanges&gt;
 #&gt;   A      Ref   100-200      + | Que:100-200
 #&gt;   B      Ref   400-500      + | Que:400-500
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 1 range and 2 metadata columns:
+</div><div class='output co'>#&gt; GBreaks object with 1 range and 2 metadata columns:
 #&gt;       seqnames    ranges strand |       query     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;GRanges&gt; &lt;integer&gt;
 #&gt;   [1]      Ref   100-500      + | Que:100-500       401
@@ -216,7 +219,7 @@ examples for details.</p>
 </div><div class='output co'>#&gt; [1]  2 NA</div><div class='input'><span class='co'># Query range [1] follows query range [2]</span>
 <span class='fu'>follow</span><span class='op'>(</span><span class='va'>gb2</span><span class='op'>$</span><span class='va'>query</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1]  2 NA</div><div class='input'><span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 1 range and 2 metadata columns:
+</div><div class='output co'>#&gt; GBreaks object with 1 range and 2 metadata columns:
 #&gt;       seqnames    ranges strand |       query     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;GRanges&gt; &lt;integer&gt;
 #&gt;   [1]      Ref   100-500      - | Que:100-500       401
@@ -231,7 +234,7 @@ examples for details.</p>
 </div><div class='output co'>#&gt; [1]  2 NA</div><div class='input'><span class='co'># Query range [1] follows query range [2]</span>
 <span class='fu'>precede</span><span class='op'>(</span><span class='va'>gb3</span><span class='op'>$</span><span class='va'>query</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1]  2 NA</div><div class='input'><span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
+</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 2 metadata columns:
 #&gt;       seqnames    ranges strand |       query     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;GRanges&gt; &lt;integer&gt;
 #&gt;   [1]      Ref   100-200      - | Que:100-200       101
@@ -243,7 +246,7 @@ examples for details.</p>
 <span class='va'>gb4</span>       <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ref:100-200:+"</span>, <span class='st'>"Ref:400-500:+"</span>, <span class='st'>"Ref:600-700:+"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>gb4</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Que:1100-1200:+"</span>, <span class='st'>"Que:1700-1800:+"</span>, <span class='st'>"Que:1500-1600:+"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 3 ranges and 2 metadata columns:
+</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 2 metadata columns:
 #&gt;       seqnames    ranges strand |         query     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;GRanges&gt; &lt;integer&gt;
 #&gt;   [1]      Ref   100-200      + | Que:1100-1200       101
