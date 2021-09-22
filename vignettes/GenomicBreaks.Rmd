@@ -78,6 +78,27 @@ gb
 gb$query
 ```
 
+## Maniuplation of GBreaks objects with plyranges
+
+With the _plyranges_ package it is easy to manipulate `GBreaks` objects, in
+particular when filtering on features of the _query_ genome.
+
+```{r plyranges_example}
+# Subset for chrI on the target genome.
+gb |> plyranges::filter(seqnames == "chrI")
+
+# Subset for NC_047487.1 on the query genome
+gb |> plyranges::filter(seqnames(query) == "NC_047487.1")
+
+# Add or modify columns on the fly
+gb |> plyranges::mutate("Width" = width) |> head(3)
+gb |> plyranges::mutate("score" = width) |> head(3)
+
+# Etc…
+```
+
+See the [vignette of _plyranges_](https://bioconductor.org/packages/release/bioc/vignettes/plyranges/inst/doc/an-introduction.html) for more details.
+
 ## Breakpoints and alignment stops
 
 Let us define an **alignment stop** to be a position defined in either the
