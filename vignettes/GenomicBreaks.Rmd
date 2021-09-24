@@ -315,54 +315,6 @@ plotApairOfChrs(gb,  "chrI")
 plotApairOfChrs(coa, "chrI")
 ```
 
-
-
-### Plot a simple region.
-
-This region can be plotted because there is a one-to-one correspondence
-between alignments to Osaka and alignments to Norway.
-
-```{r plot_intersect_GBs}
-# roiNameO <- seqlevelsInUse(roi_Oki_O$query)[1]
-# roiNameOki <- seqlevelsInUse(roi)[1]
-# roiNameN <- seqlevelsInUse(roi_Oki_N$query)[1]
-# 
-# dsList <-   list(
-#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbQuery2dna_seq(),
-#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbRef2dna_seq(),
-#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbRef2dna_seq(),
-#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbQuery2dna_seq()
-#     )
-# names(dsList) <- c(roiNameO, roiNameOki, roiNameOki, roiNameN)
-# 
-# tmpgb <- roi_Oki_O
-# tmpgb$query <- granges(roi_Oki_N)
-# 
-# compList <- list(
-#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> swap() |> gb2comp(),
-#     tmpgb |> gb2comp(),
-#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gb2comp()
-#   )
-# 
-# plot_gene_map(dsList, compList, dna_seg_scale=TRUE)
-```
-
-```{r plot_intersect_GBs_with_tree}
-# dsList <-   list(
-#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbRef2dna_seq(),
-#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gbQuery2dna_seq(),
-#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |> gbQuery2dna_seq()
-#     )
-# names(dsList) <- c(roiNameOki, roiNameO, roiNameN)
-# 
-# compList <- list(
-#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |> gb2comp(),
-#     roi_O_N[seqnames(roi_O_N$query) == roiNameN] |> gb2comp()
-#   )
-# 
-# plot_gene_map(dsList, compList, dna_seg_scale=TRUE, tree=ade4::newick2phylog(addRoot(treeNode(roiNameOki, treeNode(roiNameO, roiNameN)))))
-```
-
 ## Trivial inversions
 
 ### Representation
