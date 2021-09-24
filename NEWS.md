@@ -1,3 +1,7 @@
+# GenomicBreaks devel
+
+* New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
+
 # GenomicBreaks 0.7.1
 
 * Fix namespace and variable bugs that were preventing `reverse()` to run.

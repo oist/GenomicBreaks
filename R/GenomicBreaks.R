@@ -47,3 +47,26 @@ setAs("Axt", "GBreaks", function(from) {
 
   GBreaks(gb)
 })
+
+#' Test if a `GBreaks` object is sorted
+#'
+#' The only proper way to sort a [`GBreaks`] object is by ignoring strand, so
+#' that inversions and deletions are easily detected and visualised.
+#'
+#' @returns Returns `TRUE` or `FALSE`.
+#'
+#' @examples
+#' isSorted(exampleInversion)
+#'
+#' @importFrom S4Vectors isSorted
+#' @importMethodsFrom S4Vectors isSorted
+
+setGeneric("isSorted", function(x) standardGeneric("isSorted"))
+
+isSorted_GBreaks <- function(x)
+  identical(x, sort(x, ignore.strand = TRUE))
+
+#' @rdname isSorted
+#' @export
+
+setMethod("isSorted", "GBreaks", isSorted_GBreaks)
