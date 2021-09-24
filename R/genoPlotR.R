@@ -139,8 +139,10 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' like the [`genoPlotR::plot_gene_map`] function.
 #'
 #' @param gb A [`GBreaks`] object.
-#' @param chrT A sequence name on the _target_ genome.
-#' @param chrQ (Optional) A sequence name on the _query_ genome.
+#' @param chrT A sequence name on the _target_ genome.  Defaults to the first
+#'        _sequence level_ of the `gb` object.
+#' @param chrQ (Optional) A sequence name on the _query_ genome.  Defaults to
+#'        the longest cumulative match on `chrT`.
 #' @param ... Futher arguments are passed to `plot_gene_map`.
 #'
 #' @author Charles Plessy
@@ -151,14 +153,15 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
 #' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 #' inv <- GBreaks(inv)
-#' plotApairOfChrs(inv, "XSR")
+#' plotApairOfChrs(inv)
 #'
 #' @family genoPlotR functions
 #' @family plot functions
 #'
 #' @export
 
-plotApairOfChrs <- function(gb, chrT, chrQ=NULL, ...) {
+plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, ...) {
+  if(is.null(chrT)) chrT <- seqlevels(gb)[1]
   gb <- gb[seqnames(gb) == chrT]
   keepMainMatch <- function(gb) {
     bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
