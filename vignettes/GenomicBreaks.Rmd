@@ -375,24 +375,19 @@ target or query genome the break happened.*
 Let's call "gaps" the unaligned regions between the blocks.
 
 ```
-┌───────────────┬───────────────┬───────────────┐
-│ XSR:101-200:+ │ XSR:201-300:- │ XSR:301-400:+ │  (OKI2018_I69)
-└───────────────┴───────────────┴───────────────┘
-┌───────────────┬───────────────┬───────────────┐
-│  S1:101-200:+ │  S1:201-300:+ │  S1:301-400:+ │  (OSKA2016)
-└───────────────┴───────────────┴───────────────┘
+ ┌──────────────┬──────────────┬──────────────┐
+ │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
+ └──────────────┴──────────────┴──────────────┘
+        +               -             +         (Alignment direction)
+ ┌──────────────┬──────────────┬──────────────┐
+ │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
+ └──────────────┴──────────────┴──────────────┘
 ```
 
 It is represented as:
 
 ```{r ideal_breakpoints}
-example("flagInversions")
-
-library("Gviz")
-options(ucscChromosomeNames=FALSE)
-gen <- GenomeAxisTrack(name = "genome")
-trk <- AnnotationTrack(inv, name = "inv")
-plotTracks(list(gen, trk))
+plotApairOfChrs(exampleInversion)
 ```
 
 
