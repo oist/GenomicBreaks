@@ -15,7 +15,7 @@
 #' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 #' flagAll(inv)
 #'
-#' @include flagColinearAlignments.R flagInsersions.R flagInversions.R flagInterruptions.R
+#' @include flagColinearAlignments.R flagInsersions.R flagInversions.R
 #' @importFrom S4Vectors decode
 #' @export
 
@@ -24,6 +24,5 @@ flagAll <- function (gb) {
   gb$flag[flagColinearAlignments(gb)$colinear |> decode()] <- "Col"
   gb$flag[flagInversions(gb)$inv              |> decode()] <- "Inv"
   gb$flag[flagInsersions(gb)$ins              |> decode()] <- "Ins"
-  gb$flag[flagInterruptions(gb)$int           |> decode()] <- "InT"
   gb
 }

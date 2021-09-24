@@ -1,6 +1,7 @@
 # GenomicBreaks devel
 
 * New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
+* Remove `flatInterruptions`, which was nonsense.
 
 # GenomicBreaks 0.7.1
 
