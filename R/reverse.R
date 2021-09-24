@@ -33,6 +33,8 @@
 setGeneric("reverse", function(x, ...) standardGeneric("reverse"))
 
 reverse_GRanges <- function(x, ...) {
+  if (any(is.na(seqlengths(x))))
+    stop("Can not reverse objets where `seqlengths` are not defined.")
   # Flip strand
   levels(strand(x)) <- c("-", "+", "*")
 
