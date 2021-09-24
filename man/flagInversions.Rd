@@ -4,34 +4,46 @@
 \alias{flagInversions}
 \title{Flag inversions}
 \usage{
-flagInversions(gr_ob, tol = Inf)
+flagInversions(gb, tol = Inf)
 }
 \arguments{
-\item{gr_ob}{A \code{GenomicBreaks} object.}
+\item{gb}{A \code{GBreaks()} object.}
 
 \item{tol}{Tolerance window for the distance between two ranges.}
 }
 \value{
-Returns the \code{GenomicBreaks} object with an extra \code{inv} metadata
-column.
+Returns the \code{GBreaks} object with an extra \code{inv} metadata column.
 }
 \description{
 Flag ranges that start a triplet that would be colinear if the central pair
 were aligned to the opposite strand.
 }
 \details{
-Here is a trivial example of an inversion.\preformatted{┌───────────────┬───────────────┬───────────────┐
-│ XSR:101-200:+ │ XSR:201-300:- │ XSR:301-400:+ │  (OKI2018_I69)
-└───────────────┴───────────────┴───────────────┘
-┌───────────────┬───────────────┬───────────────┐
-│  S1:101-200:+ │  S1:201-300:+ │  S1:301-400:+ │  (OSKA2016)
-└───────────────┴───────────────┴───────────────┘
+Here is a trivial example of an inversion.\preformatted{┌──────────────┬──────────────┬──────────────┐
+│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
+└──────────────┴──────────────┴──────────────┘
+       +               -             +         (Alignment direction)
+┌──────────────┬──────────────┬──────────────┐
+│ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
+└──────────────┴──────────────┴──────────────┘
 }
 }
 \examples{
-inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-flagInversions(inv)
+flagInversions(exampleInversion)
+plotApairOfChrs(exampleInversion)
+
+# Not an inversion
+flagInversions(exampleTranslocation)
+inv3       <- GRanges(c("XSR:101-180:-", "chr1:201-300:+",  "XSR:320-400:-"))
+inv3$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+any(flagInversions(inv3)$inv) == FALSE
+
+# Also not an inversion
+inv4       <- GRanges(c("XSR:101-180:-", "XSR:1201-1300:+", "XSR:320-400:-"))
+inv4$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
+flagInversions(inv4)
+any(flagInversions(inv4)$inv) == FALSE
+
 
 }
 \seealso{
@@ -45,6 +57,11 @@ Other Inversion functions:
 \code{\link{filterInversions}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{showInversions}()}
+
+Other Structural variants: 
+\code{\link{StructuralVariants}},
+\code{\link{plotApairOfChrs}()}
 }
 \concept{Flagging functions}
 \concept{Inversion functions}
+\concept{Structural variants}
