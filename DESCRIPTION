@@ -11,6 +11,7 @@ Description: Load pairwise genome alignments into objects, coalesce colinear
 License: BSD_3_clause + file LICENSE
 URL: https://oist.github.io/GenomicBreaks, https://github.com/oist/GenomicBreaks
 Encoding: UTF-8
+LazyData: true
 Depends: R (>= 4.1),
   GenomicRanges
 Imports:
@@ -43,6 +44,7 @@ VignetteBuilder: knitr
 Collate: 
     'GOC.R'
     'GenomicBreaks.R'
+    'StructuralVariants.R'
     'align_scaf_plot_2.R'
     'bp_coverage.R'
     'bp_heatmap.R'

@@ -3,6 +3,7 @@
 * New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
 * Remove `flagInterruptions`, which was nonsense.
 * Default `plotApairOfChrs()` to the first _sequence level_ of the `GBreaks` object.
+* Added example data, see ?StructuralVariants for details.
 
 # GenomicBreaks 0.7.1
 

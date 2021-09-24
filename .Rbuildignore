@@ -6,3 +6,4 @@ Singularity.def
 ^docs$
 ^pkgdown$
 ^\.github$
+^data-raw$
