@@ -29,9 +29,9 @@ isSorted(exampleColinear3)
 
 # Inversions
 
-exampleInversion                          <- GRanges(c("chrA:100-200", "chrA:201-300", "chrA:301-400"))
+exampleInversion                          <- GRanges(c("chrA:100-190", "chrA:210-291", "chrA:301-400"))
 strand(exampleInversion)                  <- c(              "+",            "-",            "+")
-exampleInversion$query                    <- GRanges(c("chrB:100-200", "chrB:201-300", "chrB:301-400"))
+exampleInversion$query                    <- GRanges(c("chrB:100-190", "chrB:210-291", "chrB:301-400"))
 exampleInversion                          <- GBreaks(exampleInversion)
 seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) <- 500
 isSorted(exampleInversion)
