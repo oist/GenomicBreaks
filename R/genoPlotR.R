@@ -143,20 +143,18 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #'        _sequence level_ of the `gb` object.
 #' @param chrQ (Optional) A sequence name on the _query_ genome.  Defaults to
 #'        the longest cumulative match on `chrT`.
-#' @param ... Futher arguments are passed to `plot_gene_map`.
+#' @param ... Further arguments are passed to `plot_gene_map`.
 #'
 #' @author Charles Plessy
 #'
 #' @importFrom genoPlotR plot_gene_map
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' inv <- GBreaks(inv)
-#' plotApairOfChrs(inv)
+#' plotApairOfChrs(exampleInversion)
 #'
 #' @family genoPlotR functions
 #' @family plot functions
+#' @family Structural variants
 #'
 #' @export
 

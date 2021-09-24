@@ -4,16 +4,18 @@
 \alias{plotApairOfChrs}
 \title{Plots a pair of chromosomes from a \code{GBreaks} object.}
 \usage{
-plotApairOfChrs(gb, chrT, chrQ = NULL, ...)
+plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, ...)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
 
-\item{chrT}{A sequence name on the \emph{target} genome.}
+\item{chrT}{A sequence name on the \emph{target} genome.  Defaults to the first
+\emph{sequence level} of the \code{gb} object.}
 
-\item{chrQ}{(Optional) A sequence name on the \emph{query} genome.}
+\item{chrQ}{(Optional) A sequence name on the \emph{query} genome.  Defaults to
+the longest cumulative match on \code{chrT}.}
 
-\item{...}{Futher arguments are passed to \code{plot_gene_map}.}
+\item{...}{Further arguments are passed to \code{plot_gene_map}.}
 }
 \value{
 Plots to the active device and returns and \code{oma::oma_layout} object
@@ -32,10 +34,7 @@ In this kind of plot, the ranges from the selected sequence on the
 displayed.
 }
 \examples{
-inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-inv <- GBreaks(inv)
-plotApairOfChrs(inv, "XSR")
+plotApairOfChrs(exampleInversion)
 
 }
 \seealso{
@@ -43,9 +42,14 @@ Other genoPlotR functions:
 \code{\link{gb2comp}()},
 \code{\link{gb2dna_seg}()},
 \code{\link{gr2dna_seg}()}
+
+Other Structural variants: 
+\code{\link{StructuralVariants}},
+\code{\link{flagInversions}()}
 }
 \author{
 Charles Plessy
 }
+\concept{Structural variants}
 \concept{genoPlotR functions}
 \concept{plot functions}
