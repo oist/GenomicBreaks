@@ -159,7 +159,7 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' @export
 
 plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, ...) {
-  if(is.null(chrT)) chrT <- seqlevels(gb)[1]
+  if(is.null(chrT)) chrT <- seqlevelsInUse(gb)[1]
   gb <- gb[seqnames(gb) == chrT]
   keepMainMatch <- function(gb) {
     bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
