@@ -349,8 +349,9 @@ More inversions are found after coalescing colinear blocks because of situations
 where `+ - +` was `+ - - +` before collapsing. 
 
 ```{r detect_trivial_invertions}
-flagInversions(gb)
-showInversions(flagInversions(gb))
+flagInversions(coa)
+showInversions(flagInversions(coa))
+showInversions(flagInversions(coa)) |> tail(-3) |> plotApairOfChrs()
 ```
 
 ### Isolate the left-side gaps in inversions
