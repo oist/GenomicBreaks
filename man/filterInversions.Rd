@@ -20,6 +20,10 @@ of its ranges.
 \description{
 Extract central blocks in inversions
 }
+\examples{
+filterInversions(flagInversions(exampleInversion))
+
+}
 \seealso{
 Other Inversion functions: 
 \code{\link{flagInversions}()},

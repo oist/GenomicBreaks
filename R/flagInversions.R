@@ -68,6 +68,9 @@ flagInversions <- function (gb, tol = Inf) {
 #' the `inv` metadata column, return the object after discarding all of its
 #' ranges.
 #'
+#' @examples
+#' showInversions(flagInversions(exampleInversion))
+#'
 #' @export
 
 showInversions <- function(gb, rename = TRUE) {
@@ -92,6 +95,9 @@ showInversions <- function(gb, rename = TRUE) {
 #' was missing the `inv` metadata column, return the object after discarding all
 #' of its ranges.
 #'
+#' @examples
+#' filterInversions(flagInversions(exampleInversion))
+#'
 #' @export
 
 filterInversions <- function(gb, rename = TRUE) {
@@ -113,15 +119,7 @@ filterInversions <- function(gb, rename = TRUE) {
 #' @family Inversion functions
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' (inv <- flagInversions(inv))
-#' leftInversionGaps(inv)
-#'
-#' inv2       <- GRanges(c("XSR:101-180:-", "XSR:201-300:+",  "XSR:320-400:-"))
-#' inv2$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' (inv2 <- flagInversions(inv2))
-#' leftInversionGaps(inv2)
+#' leftInversionGaps(flagInversions(exampleInversion))
 #'
 #' @export
 

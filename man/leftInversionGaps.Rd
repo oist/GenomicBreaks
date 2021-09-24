@@ -17,15 +17,7 @@ Returns a \code{\link{GRanges}} object representing the left-side gaps in the
 Isolate the left-side gaps in inversions
 }
 \examples{
-inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-inv <- flagInversions(inv)
-leftInversionGaps(inv)
-
-inv2       <- GRanges(c("XSR:101-180:-", "XSR:201-300:+",  "XSR:320-400:-"))
-inv2$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-inv2 <- flagInversions(inv2)
-leftInversionGaps(inv2)
+leftInversionGaps(flagInversions(exampleInversion))
 
 }
 \seealso{

@@ -53,6 +53,8 @@ setAs("Axt", "GBreaks", function(from) {
 #' The only proper way to sort a [`GBreaks`] object is by ignoring strand, so
 #' that inversions and deletions are easily detected and visualised.
 #'
+#' @param x A `GBreaks` object.
+#'
 #' @returns Returns `TRUE` or `FALSE`.
 #'
 #' @examples

@@ -9,6 +9,9 @@ isSorted(x)
 
 \S4method{isSorted}{GBreaks}(x)
 }
+\arguments{
+\item{x}{A \code{GBreaks} object.}
+}
 \value{
 Returns \code{TRUE} or \code{FALSE}.
 }

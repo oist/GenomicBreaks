@@ -20,6 +20,10 @@ ranges.
 \description{
 Show inversions and their flanking blocks.
 }
+\examples{
+showInversions(flagInversions(exampleInversion))
+
+}
 \seealso{
 Other Inversion functions: 
 \code{\link{filterInversions}()},
