@@ -34,7 +34,8 @@ exampleTranslocation
 }
 \seealso{
 Other Structural variants: 
-\code{\link{flagInversions}()}
+\code{\link{flagInversions}()},
+\code{\link{plotApairOfChrs}()}
 }
 \author{
 Charles Plessy
