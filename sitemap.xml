@@ -10,6 +10,9 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/GOC.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/StructuralVariants.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.html</loc>
   </url>
   <url>
@@ -52,9 +55,6 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/flagInsersions.html</loc>
   </url>
   <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagInterruptions.html</loc>
-  </url>
-  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flagInversions.html</loc>
   </url>
   <url>
@@ -83,6 +83,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.html</loc>
@@ -131,5 +134,8 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/articles/StructuralVariants.html</loc>
   </url>
 </urlset>
