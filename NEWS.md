@@ -8,6 +8,8 @@
 
 * New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
 * Default `plotApairOfChrs()` to the first _sequence level_ of the `GBreaks` object.
+* `plotApairOfChrs()` now renders regions as blocks and not arrows as the strand
+  information is encoded in the color and shape of the comparison bands.
 * Added example data, see ?StructuralVariants for details.
 
 ## Bug fixes

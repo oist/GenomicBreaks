@@ -33,7 +33,7 @@ gr2dna_seg <- function (gr, ...) {
     end    = end(gr),
     strand = strand(gr)
   )
-  genoPlotR::dna_seg(df, ...)
+  genoPlotR::dna_seg(df, gene_type = "blocks", ...)
 }
 
 #' Convert `GBreaks` object to a list of `dna_seg` objects
