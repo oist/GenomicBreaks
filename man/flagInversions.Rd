@@ -42,6 +42,7 @@ any(flagInversions(inv3)$inv) == FALSE
 inv4       <- GRanges(c("XSR:101-180:-", "XSR:1201-1300:+", "XSR:320-400:-"))
 inv4$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
 flagInversions(inv4)
+
 any(flagInversions(inv4)$inv) == FALSE
 
 

@@ -1,9 +1,18 @@
 # GenomicBreaks devel
 
-* New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
+## Backwards-incompatible changes
+
 * Remove `flagInterruptions`, which was nonsense.
+
+## New functionalities
+
+* New `isSorted()` method to properly test with `ignore.strand` set to `TRUE`.
 * Default `plotApairOfChrs()` to the first _sequence level_ of the `GBreaks` object.
 * Added example data, see ?StructuralVariants for details.
+
+## Bug fixes
+
+* In `flagInversions()`, check if input was sorted.  Closes Issue #2.
 
 # GenomicBreaks 0.7.1
 

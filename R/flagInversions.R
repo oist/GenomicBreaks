@@ -28,24 +28,12 @@
 #' flagInversions(exampleInversion)
 #' plotApairOfChrs(exampleInversion)
 #'
-#' # Not an inversion
-#' flagInversions(exampleTranslocation)
-#' inv3       <- GRanges(c("XSR:101-180:-", "chr1:201-300:+",  "XSR:320-400:-"))
-#' inv3$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' any(flagInversions(inv3)$inv) == FALSE
-#'
-#' # Also not an inversion
-#' inv4       <- GRanges(c("XSR:101-180:-", "XSR:1201-1300:+", "XSR:320-400:-"))
-#' inv4$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' flagInversions(inv4)
-#' any(flagInversions(inv4)$inv) == FALSE
-#'
-#'
 #' @include dist2next.R
 #' @importFrom GenomicRanges precede
 #' @export
 
 flagInversions <- function (gb, tol = Inf) {
+  if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
   gb <- dist2next(gb, ignore.strand = TRUE)
   gb$tdist2 <- c(gb$tdist[-1], Inf)
