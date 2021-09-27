@@ -317,31 +317,7 @@ plotApairOfChrs(coa, "chrI")
 
 ## Trivial inversions
 
-### Representation
-
-In the triplet of alignments below below, the middle block is on a different
-strand than its neighbors, and they would be colinear otherwise.  This represents
-an inversion.  *Without an outgroup it is not possible to know in which of the
-target or query genome the break happened.*
-
-Let's call "gaps" the unaligned regions between the blocks.
-
-```
- ┌──────────────┬──────────────┬──────────────┐
- │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
- └──────────────┴──────────────┴──────────────┘
-        +               -             +         (Alignment direction)
- ┌──────────────┬──────────────┬──────────────┐
- │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
- └──────────────┴──────────────┴──────────────┘
-```
-
-It is represented as:
-
-```{r ideal_breakpoints}
-plotApairOfChrs(exampleInversion)
-```
-
+See `vignette("Structural Variants", pakcage = "GenomicBreaks") for definitions.
 
 ### Number of trivial inversions
 
@@ -351,7 +327,9 @@ where `+ - +` was `+ - - +` before collapsing.
 ```{r detect_trivial_invertions}
 flagInversions(coa)
 showInversions(flagInversions(coa))
-showInversions(flagInversions(coa)) |> tail(-3) |> plotApairOfChrs()
+showInversions(flagInversions(coa)) |> plyranges::slice(1:3)   |> plotApairOfChrs()
+showInversions(flagInversions(coa)) |> plyranges::slice(4:9)   |> plotApairOfChrs()
+showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChrs()
 ```
 
 ### Isolate the left-side gaps in inversions
