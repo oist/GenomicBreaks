@@ -4,7 +4,7 @@
 #' chromosomes have different properties such as `GC` or repeat content.  It
 #' can be useful to know if genomic region belongs to long or a short arm.
 #'
-#' @param gr A `GBreaks` or a simple `GRanges` object
+#' @param gr A [`GBreaks`] or a simple [`GRanges`] object
 #'
 #' @param annot A `GRanges` file containing the coordinate of arms and their
 #'        nature (such as `long`, `short`, `XSR` or `YSR`) in a `Type`
@@ -24,21 +24,11 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#' gb       <- GRanges(c("chr1:101-180:+", "chr1:201-300:+",
-#'                       "chr1:320-400:+", "chr1:501-550:+"))
-#' gb$query <- GRanges(c("chrI:101-200",   "chrI:201-300",
-#'                       "chrI:301-400",   "chrI:501-550"))
-#' gb <- GBreaks(gb)
-#' gb
+#' annot <- GRanges(c("chrA:1-140", "chrA:150-500"), Type = c("short", "long"))
 #'
-#' annot <- GRanges(c("chr1:1-250", "chr1:260-500"))
-#' annot$Type <- c("short", "long")
-#' annot
-#'
-#' flagLongShort(gb, annot)
-#' flagLongShort(gb, annot, select = "last")
-#' flagLongShort(gb, annot, select = "arbitrary")
-#'
+#' flagLongShort(exampleColinear, annot)
+#' flagLongShort(exampleColinear, annot, select = "last")
+#' flagLongShort(exampleColinear, annot, select = "arbitrary")
 #'
 #' @export
 

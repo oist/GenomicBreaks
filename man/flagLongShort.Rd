@@ -7,7 +7,7 @@
 flagLongShort(gr, annot, select = c("first", "last", "arbitrary"))
 }
 \arguments{
-\item{gr}{A \code{GBreaks} or a simple \code{GRanges} object}
+\item{gr}{A \code{\link{GBreaks}} or a simple \code{\link{GRanges}} object}
 
 \item{annot}{A \code{GRanges} file containing the coordinate of arms and their
 nature (such as \code{long}, \code{short}, \code{XSR} or \code{YSR}) in a \code{Type}
@@ -29,21 +29,11 @@ chromosomes have different properties such as \code{GC} or repeat content.  It
 can be useful to know if genomic region belongs to long or a short arm.
 }
 \examples{
-gb       <- GRanges(c("chr1:101-180:+", "chr1:201-300:+",
-                      "chr1:320-400:+", "chr1:501-550:+"))
-gb$query <- GRanges(c("chrI:101-200",   "chrI:201-300",
-                      "chrI:301-400",   "chrI:501-550"))
-gb <- GBreaks(gb)
-gb
+annot <- GRanges(c("chrA:1-140", "chrA:150-500"), Type = c("short", "long"))
 
-annot <- GRanges(c("chr1:1-250", "chr1:260-500"))
-annot$Type <- c("short", "long")
-annot
-
-flagLongShort(gb, annot)
-flagLongShort(gb, annot, select = "last")
-flagLongShort(gb, annot, select = "arbitrary")
-
+flagLongShort(exampleColinear, annot)
+flagLongShort(exampleColinear, annot, select = "last")
+flagLongShort(exampleColinear, annot, select = "arbitrary")
 
 }
 \seealso{
