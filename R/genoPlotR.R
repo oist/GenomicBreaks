@@ -164,14 +164,33 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' @export
 
 plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, ...) {
-  if(is.null(chrT)) chrT <- seqlevelsInUse(gb)[1]
-  gb <- gb[seqnames(gb) == chrT]
-  keepMainMatch <- function(gb) {
-    bestMatch <- tapply(width(gb$query), seqnames(gb$query), sum) |> sort() |> tail(1) |> names()
-    gb[seqnames(gb$query) == bestMatch]
-  }
-  roi <- keepMainMatch(gb)
-  dsList <-  gb2dna_seg(roi)
+  # If needed, guess name of target seqlevel
+  if(is.null(chrT))
+    chrT <- seqlevelsInUse(gb)[1]
+
+  # Object restricted to the target seqlevel
+  gb.chrT <- gb[seqnames(gb) == chrT]
+
+  # If needed, guess name of query seqlevel
+  if(is.null(chrQ))
+    chrQ <- tapply(width(gb.chrT$query), seqnames(gb.chrT$query), sum) |> sort() |> tail(1) |> names()
+
+  # Object restricted to the query seqlevel
+  gb.chrQ <- gb[seqnames(gb$query) == chrQ]
+
+  # Object restricted to both seqlevels
+  roi <- gb.chrT[seqnames(gb.chrT$query) == chrQ]
+
+  # Ranges of gb.chrT not in the roi
+  extraT <- granges(gb.chrT[! gb.chrT %in% roi])
+
+  # Ranges of gb.chrQ not in the roi
+  extraQ <- gb.chrQ$query[! gb.chrQ$query %in% roi$query]
+
+  dsList        <- gb2dna_seg(roi)
+  # Append extra blocks with `rbind` to handle `NULL` objects.
+  dsList$target <- rbind(dsList$target, gr2dna_seg(extraT, col = "lightblue", fill = "lightblue"))
+  dsList$query  <- rbind(dsList$query,  gr2dna_seg(extraQ, col = "lightblue", fill = "lightblue"))
 
   compList <- list(gb2comp(roi))
 
