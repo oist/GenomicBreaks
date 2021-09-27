@@ -148,6 +148,7 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #'
 #' @examples
 #' plotApairOfChrs(exampleInversion)
+#' plotApairOfChrs(exampleDeletion)
 #'
 #' @family genoPlotR functions
 #' @family plot functions
