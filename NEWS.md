@@ -1,4 +1,4 @@
-# GenomicBreaks 0.7.99
+# GenomicBreaks 0.8.0
 
 ## Backwards-incompatible changes
 
@@ -12,11 +12,13 @@
   information is encoded in the color and shape of the comparison bands. It
   also plots in light blue the blocks that are not matched.  Closes issues #3
   and #5.
-* Added example data, see ?StructuralVariants for details.
+* Added example data, see ?StructuralVariants and `vignette("Structural Variants",
+  package = "GenomicBreaks") for details.
 
 ## Bug fixes
 
 * In `flagInversions()`, check if input was sorted.  Closes Issue #2.
+* `flagLongShort()` now handles the case where some annotations do not match.
 
 # GenomicBreaks 0.7.1
 
