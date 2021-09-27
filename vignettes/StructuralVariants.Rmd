@@ -88,6 +88,7 @@ flag is put on the first mapping of the triplet.
 ```{r inversions}
 exampleInversion |> flagColinearAlignments() |> flagInversions()
 plotApairOfChrs(exampleInversion, main = "An inverted region flanked by colinear regions")
+plotApairOfChrs(reverse(exampleInversion), main = "An inverted region flanked by colinear regions (opposite strands)")
 
 # Removing the inversion restores colinearity
 exampleInversion[-2] |> flagColinearAlignments()
@@ -96,8 +97,7 @@ exampleInversion[-2] |> flagColinearAlignments()
 exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
 
 # Note the tolerance window
-flagInversions(flagInversions(exampleInversion - 40, tol = 10))
-plotApairOfChrs(exampleInversion - 40)
+flagInversions(exampleInversion, tol = 10)
 ```
 
 ## Insertions / Deletions (indels)
