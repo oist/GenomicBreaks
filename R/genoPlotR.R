@@ -148,6 +148,7 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' @author Charles Plessy
 #'
 #' @importFrom genoPlotR plot_gene_map
+#' @importFrom BiocGenerics `%in%`
 #'
 #' @examples
 #' plotApairOfChrs(exampleInversion)

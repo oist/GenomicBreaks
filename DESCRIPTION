@@ -15,6 +15,7 @@ LazyData: true
 Depends: R (>= 4.1),
   GenomicRanges
 Imports:
+  BiocGenerics,
   BiocParallel,
   CNEr,
   genoPlotR,
