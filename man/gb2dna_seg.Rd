@@ -19,10 +19,7 @@ for the \emph{target} ranges the \emph{query} ranges.
 Convert \code{GBreaks} object to a list of \code{dna_seg} objects
 }
 \examples{
-inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-inv <- GBreaks(inv)
-gb2dna_seg(inv)
+gb2dna_seg(exampleInversion)
 
 }
 \seealso{

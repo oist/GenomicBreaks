@@ -15,10 +15,8 @@
 #' @importFrom genoPlotR dna_seg
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' gr2dna_seg(inv)
-#' gr2dna_seg(inv$query)
+#' gr2dna_seg(exampleInversion)
+#' gr2dna_seg(exampleInversion$query)
 #'
 #' @family genoPlotR functions
 #' @family converter functions
@@ -54,10 +52,7 @@ gr2dna_seg <- function (gr, ...) {
 #' @importFrom genoPlotR dna_seg
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' inv <- GBreaks(inv)
-#' gb2dna_seg(inv)
+#' gb2dna_seg(exampleInversion)
 #'
 #' @family genoPlotR functions
 #' @family converter functions
@@ -91,10 +86,7 @@ gb2dna_seg <- function(gb, ...) {
 #' @importFrom genoPlotR as.comparison
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' inv <- GBreaks(inv)
-#' gb2comp(inv)
+#' gb2comp(exampleInversion)
 #'
 #' @family genoPlotR functions
 #' @family converter functions

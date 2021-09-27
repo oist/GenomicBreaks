@@ -25,10 +25,7 @@ same sequence feature.  It is your responsibility that the input \code{GBreaks}
 object also conforms to this assumption.
 }
 \examples{
-inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-inv <- GBreaks(inv)
-gb2comp(inv)
+gb2comp(exampleInversion)
 
 }
 \seealso{

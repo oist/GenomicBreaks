@@ -11,15 +11,17 @@ gr2dna_seg(gr, ...)
 
 \item{...}{Extra arguments passed to \code{dna_seg()}.}
 }
+\value{
+Returns a \code{genoPlotR::dna_seq} or \code{NULL} if the input object has a
+length of zero.
+}
 \description{
 The \code{\link[genoPlotR:dna_seg]{genoPlotR::dna_seg}} class represents \emph{DNA segments} using
 a \code{data.frame} format.
 }
 \examples{
-inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-gr2dna_seg(inv)
-gr2dna_seg(inv$query)
+gr2dna_seg(exampleInversion)
+gr2dna_seg(exampleInversion$query)
 
 }
 \seealso{
