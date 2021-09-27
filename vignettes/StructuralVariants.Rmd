@@ -87,13 +87,13 @@ flag is put on the first mapping of the triplet.
 
 ```{r inversions}
 exampleInversion |> flagColinearAlignments() |> flagInversions()
-plotApairOfChrs(exampleInversion)
-exampleInversion[-2] |> flagColinearAlignments()
-exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
+plotApairOfChrs(exampleInversion, main = "An inverted region flanked by colinear regions")
 
-# Now let's flip the strand...
-exampleInversion |> plyranges::mutate(strand = c("+", "+", "+")) |>
-  flagColinearAlignments() |> flagInversions()
+# Removing the inversion restores colinearity
+exampleInversion[-2] |> flagColinearAlignments()
+
+# Flipping the inversion restores colinearity
+exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
 
 # Note the tolerance window
 flagInversions(flagInversions(exampleInversion - 40, tol = 10))
