@@ -1,4 +1,4 @@
-# GenomicBreaks devel
+# GenomicBreaks 0.7.99
 
 ## Backwards-incompatible changes
 
