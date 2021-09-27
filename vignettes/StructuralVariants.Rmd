@@ -61,6 +61,10 @@ member of the pair, ordered by the sequence on the _target_ genome.
 ```{r colinearRegions_flags}
 flagColinearAlignments(exampleColinear)
 flagColinearAlignments(reverse(exampleColinear))
+
+# Note the tolerance window
+flagColinearAlignments(exampleColinear, tol = 100)
+
 # Strandless mappings can also be colinear
 exampleColinear |> plyranges::mutate(strand = "*") |> flagColinearAlignments()
 flagColinearAlignments(exampleNotColinear)
