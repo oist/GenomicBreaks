@@ -2,18 +2,18 @@ library("GenomicBreaks")
 
 # First, let's define colinear regions
 
-exampleColinear                           <- GRanges(c("chrA:100-200", "chrA:201-300"))
+exampleColinear                           <- GRanges(c("chrA:100-150", "chrA:251-300"))
 strand(exampleColinear)                   <- c(              "+",            "+")
-exampleColinear$query                     <- GRanges(c("chrB:100-200", "chrB:201-300"))
+exampleColinear$query                     <- GRanges(c("chrB:100-150", "chrB:251-300"))
 exampleColinear                           <- GBreaks(exampleColinear)
 seqlengths(exampleColinear)               <- seqlengths(exampleColinear$query) <- 300
 isSorted(exampleColinear)
 
 # And a counter-example
 
-exampleNotColinear                        <- GRanges(c("chrA:100-200", "chrA:201-300"))
+exampleNotColinear                        <- GRanges(c("chrA:100-150", "chrA:251-300"))
 strand(exampleNotColinear)                <- c(              "+",            "+")
-exampleNotColinear$query                  <- GRanges(c("chrB:201-300", "chrB:100-200"))
+exampleNotColinear$query                  <- GRanges(c("chrB:201-251",  "chrB:50-100"))
 exampleNotColinear                        <- GBreaks(exampleNotColinear)
 seqlengths(exampleNotColinear)            <- seqlengths(exampleNotColinear$query) <- 300
 isSorted(exampleNotColinear)
