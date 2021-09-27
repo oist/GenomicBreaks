@@ -7,6 +7,9 @@
 #'
 #' @param ... Extra arguments passed to `dna_seg()`.
 #'
+#' @returns Returns a `genoPlotR::dna_seq` or `NULL` if the input object has a
+#' length of zero.
+#'
 #' @author Charles Plessy
 #'
 #' @importFrom genoPlotR dna_seg
@@ -24,6 +27,7 @@
 
 gr2dna_seg <- function (gr, ...) {
   # DNA segments need unique names
+  if (length(gr) == 0) return(NULL)
   if (is.null(names(gr))) names(gr) <- as.character(gr)
   # Unstranded ranges are not recognised
   strand(gr[strand(gr) == "*"]) <- "+"
