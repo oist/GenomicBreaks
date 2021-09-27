@@ -26,6 +26,7 @@
 #'
 #' @examples
 #' flagInversions(exampleInversion)
+#' flagInversions(exampleInversion, tol = 19)
 #' plotApairOfChrs(exampleInversion)
 #'
 #' @include dist2next.R

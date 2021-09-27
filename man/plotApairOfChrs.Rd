@@ -35,6 +35,7 @@ displayed.
 }
 \examples{
 plotApairOfChrs(exampleInversion)
+plotApairOfChrs(exampleDeletion)
 
 }
 \seealso{

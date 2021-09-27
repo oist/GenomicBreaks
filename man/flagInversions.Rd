@@ -30,6 +30,7 @@ Here is a trivial example of an inversion.\preformatted{┌───────
 }
 \examples{
 flagInversions(exampleInversion)
+flagInversions(exampleInversion, tol = 19)
 plotApairOfChrs(exampleInversion)
 
 }
