@@ -25,30 +25,45 @@ their name always start with `example`.
 
 ## Colinearity
 
+### Definition
+
 We define _structural variants_ as patterns of interruption of the colinearity
 between genomes.
 
-At the moment we can not study the structural variants that are entirely
-contained in an aligned region, for instance an indel represented as an
-alignment gap.
+Colinearity is a property of pairs of mapped regions.  
 
-Colinearity is a property of pairs of mapped regions.  Remember that the
-`flagColinearAlignments()` function puts the flag on the first member of the
-pair, ordered by the sequence on the _target_ genome.
+```{r colinearRegions_pair}
+plotApairOfChrs(exampleColinear, main = "Two colinear regions")
+```
+
+Regions that mapped on reverse strands **and** in reverse order are also colinear.
+
+```{r colinearRegions_pair_minus_strand}
+plotApairOfChrs(reverse(exampleColinear), main = "Two colinear regions on different strands")
+```
+
+Regions that are only in reverse order, or only mapped on opposite strands
+**are not colinear**.
+
+```{r notColinearRegions_pair}
+plotApairOfChrs(exampleNotColinear, main = "Same strand but not colinear")
+plotApairOfChrs(reverse(exampleNotColinear), main = "Both on opposite strand but not colinear")
+```
 
 In this example, the syntenic chromosomes are called `chrA` and `chrB`, but the
 names do not matter.
 
-```{r colinearRegions_pair}
-flagColinearAlignments(exampleColinear)
-plotApairOfChrs(exampleColinear)
-flagColinearAlignments(reverse(exampleColinear))
+### Technical details
 
+Remember that the `flagColinearAlignments()` function puts the flag on the first
+member of the pair, ordered by the sequence on the _target_ genome.
+
+```{r colinearRegions_flags}
+flagColinearAlignments(exampleColinear)
+flagColinearAlignments(reverse(exampleColinear))
 # Strandless mappings can also be colinear
 exampleColinear |> plyranges::mutate(strand = "*") |> flagColinearAlignments()
-
 flagColinearAlignments(exampleNotColinear)
-plotApairOfChrs(exampleNotColinear)
 ```
 
 To make some sanity checks against the other flagging functions there is also
@@ -56,8 +71,13 @@ an object containing three colinear mappings.
 
 ```{r colinearRegions_triple}
 flagColinearAlignments(exampleColinear3)
-plotApairOfChrs(exampleColinear3)
 ```
+
+### Limitation
+
+At the moment we can not study the structural variants that are entirely
+contained in an aligned region, for instance an indel represented as an
+alignment gap.
 
 ## Inversions
 
