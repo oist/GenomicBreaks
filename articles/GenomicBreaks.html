@@ -89,7 +89,7 @@
                         <h4 class="author">Charlotte West</h4>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">24 September, 2021</h4>
+            <h4 class="date">27 September, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/GenomicBreaks.Rmd"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="hidden name"><code>GenomicBreaks.Rmd</code></div>
@@ -531,48 +531,6 @@
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, <span class="st">"chrI"</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/test_genoPlotR-2.png" width="700"></p>
-<div id="plot-a-simple-region-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plot-a-simple-region-" class="anchor"></a>Plot a simple region.</h3>
-<p>This region can be plotted because there is a one-to-one correspondence between alignments to Osaka and alignments to Norway.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># roiNameO &lt;- seqlevelsInUse(roi_Oki_O$query)[1]</span>
-<span class="co"># roiNameOki &lt;- seqlevelsInUse(roi)[1]</span>
-<span class="co"># roiNameN &lt;- seqlevelsInUse(roi_Oki_N$query)[1]</span>
-<span class="co"># </span>
-<span class="co"># dsList &lt;-   list(</span>
-<span class="co">#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |&gt; gbQuery2dna_seq(),</span>
-<span class="co">#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |&gt; gbRef2dna_seq(),</span>
-<span class="co">#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |&gt; gbRef2dna_seq(),</span>
-<span class="co">#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |&gt; gbQuery2dna_seq()</span>
-<span class="co">#     )</span>
-<span class="co"># names(dsList) &lt;- c(roiNameO, roiNameOki, roiNameOki, roiNameN)</span>
-<span class="co"># </span>
-<span class="co"># tmpgb &lt;- roi_Oki_O</span>
-<span class="co"># tmpgb$query &lt;- granges(roi_Oki_N)</span>
-<span class="co"># </span>
-<span class="co"># compList &lt;- list(</span>
-<span class="co">#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |&gt; swap() |&gt; gb2comp(),</span>
-<span class="co">#     tmpgb |&gt; gb2comp(),</span>
-<span class="co">#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |&gt; gb2comp()</span>
-<span class="co">#   )</span>
-<span class="co"># </span>
-<span class="co"># plot_gene_map(dsList, compList, dna_seg_scale=TRUE)</span></code></pre></div>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># dsList &lt;-   list(</span>
-<span class="co">#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |&gt; gbRef2dna_seq(),</span>
-<span class="co">#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |&gt; gbQuery2dna_seq(),</span>
-<span class="co">#     roi_Oki_N[seqnames(roi_Oki_N$query) == roiNameN] |&gt; gbQuery2dna_seq()</span>
-<span class="co">#     )</span>
-<span class="co"># names(dsList) &lt;- c(roiNameOki, roiNameO, roiNameN)</span>
-<span class="co"># </span>
-<span class="co"># compList &lt;- list(</span>
-<span class="co">#     roi_Oki_O[seqnames(roi_Oki_O$query) == roiNameO] |&gt; gb2comp(),</span>
-<span class="co">#     roi_O_N[seqnames(roi_O_N$query) == roiNameN] |&gt; gb2comp()</span>
-<span class="co">#   )</span>
-<span class="co"># </span>
-<span class="co"># plot_gene_map(dsList, compList, dna_seg_scale=TRUE, tree=ade4::newick2phylog(addRoot(treeNode(roiNameOki, treeNode(roiNameO, roiNameN)))))</span></code></pre></div>
-</div>
 </div>
 <div id="trivial-inversions" class="section level2">
 <h2 class="hasAnchor">
@@ -590,7 +548,7 @@
  │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
  └──────────────┴──────────────┴──────────────┘</code></pre>
 <p>It is represented as:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/ideal_breakpoints-1.png" width="700"></p>
 </div>
@@ -598,42 +556,76 @@
 <h3 class="hasAnchor">
 <a href="#number-of-trivial-inversions" class="anchor"></a>Number of trivial inversions</h3>
 <p>More inversions are found after coalescing colinear blocks because of situations where <code>+ - +</code> was <code>+ - - +</code> before collapsing.</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 88 ranges and 3 metadata columns:
+##        seqnames        ranges strand |                     query     score
+##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt;
+##    [1]     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664
+##    [2]     chrI 184533-184781      + | NC_047487.1:176430-176696       249
+##    [3]     chrI 185343-187499      + | NC_047487.1:170368-174401      2157
+##    [4]     chrI 187502-189195      + | NC_047487.1:177293-179769      1694
+##    [5]     chrI 189813-204211      + | NC_047487.1:180061-198812     14399
+##    ...      ...           ...    ... .                       ...       ...
+##   [84]     chrM     6313-9737      - |   NC_018044.1:62854-65728      3425
+##   [85]     chrM   12828-50712      + |   NC_018044.1:22453-53190     37885
+##   [86]     chrM   56625-57960      + |   NC_018044.1:70280-71345      1336
+##   [87]     chrM   58008-76168      + |       NC_018044.1:1-16261     18161
+##   [88]     chrM   77356-85779      + |   NC_018044.1:53206-61592      8424
+##          inv
+##        &lt;Rle&gt;
+##    [1] FALSE
+##    [2] FALSE
+##    [3] FALSE
+##    [4] FALSE
+##    [5] FALSE
+##    ...   ...
+##   [84] FALSE
+##   [85] FALSE
+##   [86] FALSE
+##   [87] FALSE
+##   [88] FALSE
+##   -------
+##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 505 ranges and 3 metadata columns:
-##         seqnames      ranges strand |     score                   query   inv
-##            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt; &lt;Rle&gt;
-##     [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716 FALSE
-##     [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680 FALSE
-##     [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537 FALSE
-##     [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175 FALSE
-##     [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866 FALSE
-##     ...      ...         ...    ... .       ...                     ...   ...
-##   [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439 FALSE
-##   [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180 FALSE
-##   [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261 FALSE
-##   [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865 FALSE
-##   [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592 FALSE
+<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 12 ranges and 3 metadata columns:
+##      seqnames         ranges strand |                      query     score
+##         &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt; |                  &lt;GRanges&gt; &lt;integer&gt;
+##   10   chrIII   11513-149405      + |   NC_047489.1:41910-177147    137893
+##   11   chrIII  149866-151360      - |  NC_047489.1:178201-178974      1495
+##   12   chrIII  151968-168384      + |  NC_047489.1:179584-195977     16417
+##   34   chrVII   10270-110708      + |   NC_047493.1:11332-110230    100439
+##   35   chrVII  112352-121552      - |  NC_047493.1:111748-121071      9201
+##   ..      ...            ...    ... .                        ...       ...
+##   39   chrVII  823466-828795      - |  NC_047493.1:792155-797486      5330
+##   40   chrVII 828909-1076119      + | NC_047493.1:799044-1046538    247211
+##   52     chrX   19114-354004      + |   NC_047496.1:12159-351096    334891
+##   53     chrX  355632-374591      - |  NC_047496.1:353062-371883     18960
+##   54     chrX  374938-727499      + |  NC_047496.1:373079-722743    352562
+##        inv
+##      &lt;Rle&gt;
+##   10  TRUE
+##   11 FALSE
+##   12 FALSE
+##   34  TRUE
+##   35 FALSE
+##   ..   ...
+##   39 FALSE
+##   40 FALSE
+##   52  TRUE
+##   53 FALSE
+##   54 FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 6 ranges and 3 metadata columns:
-##       seqnames        ranges strand |     score                     query   inv
-##          &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt; &lt;Rle&gt;
-##   213   chrVII 794407-811237      + |     66296 NC_047493.1:774599-791335  TRUE
-##   214   chrVII 823466-828795      - |     22822 NC_047493.1:792155-797486 FALSE
-##   215   chrVII 828909-845164      + |     66264 NC_047493.1:799044-815349 FALSE
-##   276     chrX 204622-354004      + |    606899 NC_047496.1:201590-351096  TRUE
-##   277     chrX 355632-374591      - |     77414 NC_047496.1:353062-371883 FALSE
-##   278     chrX 374938-377431      + |      8310 NC_047496.1:373079-375567 FALSE
-##   -------
-##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
+<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" width="700"></p>
 </div>
 <div id="isolate-the-left-side-gaps-in-inversions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#isolate-the-left-side-gaps-in-inversions" class="anchor"></a>Isolate the left-side gaps in inversions</h3>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># lgaps &lt;- function(reduced_gr) {</span>
 <span class="co">#   # Flag inversions.</span>
 <span class="co">#   #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE</span>
@@ -670,7 +662,7 @@
 <div id="at-richness" class="section level3">
 <h3 class="hasAnchor">
 <a href="#at-richness" class="anchor"></a>AT richness</h3>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ## Inverted regions are AT-rich as usual.</span>
 <span class="co"># invSeq &lt;- SimpleList()</span>
 <span class="co"># invSeq$Oki_Osa &lt;- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Osa)))</span>
@@ -697,7 +689,7 @@
 <span class="co"># t.test(letterFrequency(invSeq$Oki_Bar, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Bar, "AT", as.prob = TRUE))</span>
 <span class="co"># t.test(letterFrequency(invSeq$Oki_Kum, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Kum, "AT", as.prob = TRUE))</span></code></pre></div>
 <p>I was tempted to explain this difference with A/T homopolymer stetches. But de novo motif prediction with rGADEM finds AT-rich motifs in any set of Oik sequences that I have tried.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># library("rGADEM")</span>
 <span class="co"># # Slow !</span>
 <span class="co"># # Note that GADEM crashes on sequences longer than 50 kbp.</span>
@@ -747,7 +739,7 @@
 <div id="representation-of-some-inversions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#representation-of-some-inversions" class="anchor"></a>Representation of some inversions</h3>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># x &lt;- coa$Oki_Osa |&gt; flagInversions() |&gt; dist2next(ignore.strand = TRUE)</span>
 <span class="co"># </span>
 <span class="co"># pmpcoord &lt;- showInversions(x)</span>
@@ -793,7 +785,7 @@
 │  S1:101-200:+ │  S2:801-900:+ │  S1:201-300:+ │  (OSKA2016)
 └───────────────┴───────────────┴───────────────┘</code></pre>
 <p>Is represented as:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># example("flagInsersions")</span>
 <span class="co"># </span>
 <span class="co"># library("Gviz")</span>
@@ -806,7 +798,7 @@
 <div id="detection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#detection" class="anchor"></a>Detection</h3>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># sapply(gbs, function(gb) sum(flagInsersions(coalesce_contigs(gb))$ins))</span>
 <span class="co"># </span>
 <span class="co"># y &lt;- flagInsersions(reduced_gr_Oki_O)</span>
@@ -838,7 +830,7 @@
 <h2 class="hasAnchor">
 <a href="#tandem-repeats" class="anchor"></a>Tandem repeats</h2>
 <p>Repeated regions of genomes are notoriously difficult to assemble and align. Thus, information about an alignment stop’s proximity to a tandem repeat is useful information in breakpoint classification. Given a user-defined tolerance, the function <code>tan_bp</code> will classify alignment stops as either far from, close to, or within tandem repeats (elements 1,2 and 3 of the produced list, respectively). The function requires the tandem repeat coverage of one of the genomes. By default, the function will expect the target genome tandem coverage. Setting <code>query_tf = TRUE</code> will switch the outcome to be query genome oriented.</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># </span>
 <span class="co"># tan_O &lt;- rtracklayer::import.gff3(system.file("extdata/OSKA2016.tantanf4w100.gff3.gz",  package="GenomicBreaks"))</span>
 <span class="co"># tan_O &lt;- GRanges(tan_O, seqinfo = seqinfo(OSKA2016))</span>
@@ -850,7 +842,7 @@
 <span class="co"># tan_gr_Oki &lt;- tan_bp(gr_ob = gr_O_Oki, tan = tan_Oki, tol = 50, query_tf = TRUE)</span>
 <span class="co"># tan_gr_Oki</span></code></pre></div>
 <p>We can use another script to plot the density of tandem repeats around alignment stops (and breakpoints). In the following plots, breakpoints are aligned at the centre of the plots. Intuitively, this function can be generalised to see the density of any binary coverage characteristic around breakpoints, given a GRanges object with per-base coverage of a given characteristic. Here we stick with tandem repeat info:</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># hm_tan_O &lt;- gr_O_Oki %&gt;%</span>
 <span class="co">#   feature_coverage(tan_O, win = 1000, lab = "Osaka ~ Okinawa", direction = "left") %&gt;%</span>
 <span class="co">#   smoothHeatmap(output.size = c(2000,500), algorithm = "kernel") %T&gt;%</span>
@@ -870,7 +862,7 @@
 <h2 class="hasAnchor">
 <a href="#coverage" class="anchor"></a>Coverage</h2>
 <p>Another characteristic of alignment stops that we can examine is the coverage depth over said alignment stops. By aligning raw reads to assembled genomes, we can obtain per-base coverage depth for target or query genome. Low coverage directly on and surrounding an alignment stop may suggest unreliability in it being a true breakpoint. The function <code>bp_coverage</code> returns a GRanges object of the bps, with associated averaged and point converage in the metadatacolumns.</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># cov_gr_O_Oki &lt;- bp_coverage(gr_ob = q_Oki, cov_gr = Oki_cov_pb, win = 50)</span>
 <span class="co"># cov_gr_O_Oki</span></code></pre></div>
 </div>
@@ -882,7 +874,7 @@
 <h2 class="hasAnchor">
 <a href="#nucleaic-acid-content-heatmaps" class="anchor"></a>Nucleaic acid content heatmaps</h2>
 <p>The <em>GenomicBreaks</em> function <code>bp_heatmap</code> plots nucleic acid content in windows centrered on alignment stops. Lets look at <code>GC</code> content before and after coalescing:</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># library(heatmaps)</span>
 <span class="co"># hm_GC1 &lt;- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "GC", direction = "left") |&gt; SimpleList()</span>
 <span class="co"># hm_GC2 &lt;- sapply(coa, bp_heatmap, basep_range = 1000, pat = "GC", direction = "left") |&gt; SimpleList()</span>
@@ -897,7 +889,7 @@
 <span class="co"># plotHeatmapList(sm_GC3)</span></code></pre></div>
 <p>The alignment stops are ordered in such a way that start (or left breaks) are centred on the top half of the plot, and end alignment stops are centred on the bottom. This is why we see different directionality in the plots. At the alignment stops, the GC content seems to be lower, but higher once within the aligned region.</p>
 <p>Now looking at TATA content:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># hm_GC1_TATA &lt;- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "TATA", direction = "left") |&gt; SimpleList()</span>
 <span class="co"># hm_GC2_TATA &lt;- sapply(coa, bp_heatmap, basep_range = 1000, pat = "TATA", direction = "left") |&gt; SimpleList()</span>
 <span class="co"># </span>
@@ -910,7 +902,7 @@
 <span class="co"># plotHeatmapList(sm_GC2_TATA)</span>
 <span class="co"># plotHeatmapList(sm_GC3_TATA)</span></code></pre></div>
 <p>The directionaility here is consistent with the <code>GC</code> content analysis. Furthermore; “TATA box sequence can act as a basal promoter element not only for RNA polymerase II (RNAP II) transcription, but also for transcription by RNA polymerase III (RNAP III)” - Wang Y, Jensen RC, Stumph WE. Role of TATA box sequence and orientation in determining RNA polymerase II/III transcription specificity. Nucleic Acids Res. 1996;24(15):3100–3106. <a href="doi:10.1093/nar/24.15.3100" class="uri">doi:10.1093/nar/24.15.3100</a>. However, the areas are not particularly enriched for TATA boxes, so it does not necessarily show that breakpoints are occurring directly after promoter regions.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># hm_GC1_mot &lt;- sapply(gbs, bp_heatmap, basep_range = 1000, pat = "AGCNGC", direction = "left") |&gt; SimpleList()</span>
 <span class="co"># hm_GC2_mot &lt;- sapply(coa, bp_heatmap, basep_range = 1000, pat = "AGCNGC", direction = "left") |&gt; SimpleList()</span>
 <span class="co"># </span>
@@ -926,7 +918,7 @@
 <div id="cluster-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cluster-analysis" class="anchor"></a>Cluster analysis</h2>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># # Accessory functions</span>
 <span class="co"># clusterHeatmap &lt;- function(hm, k = 2) kmeans(image(hm), k)</span>
 <span class="co"># </span>
@@ -995,14 +987,14 @@
 <h2 class="hasAnchor">
 <a href="#evidence-for-breakpoint-hotspots" class="anchor"></a>Evidence for breakpoint hotspots</h2>
 <p>The function <code>bp_pair_analysis</code> takes two pairwise alignments with the same target genome, and plots the alignment stops on to the centred alignment stops of the other. In the plot below, Osaka is there consistent target genome, and as such acts as a coordinate system to relate alignment stops across genomes. Lets produce two of these 3-way analyses; one between Osaka-Okinawa-Norway, and one between Osaka-Okinawa-Aomori</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># hm1 &lt;- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_N, win = 1000, lab = "Oki~Nor")</span>
 <span class="co"># plotHeatmapMeta(hm1)</span>
 <span class="co"># </span>
 <span class="co"># hm2 &lt;- bp_pair_analysis(gr_ref_q1 = gr_O_Oki, gr_ref_q2 = gr_O_A, win = 1000, lab = "Oki~Aom")</span>
 <span class="co"># plotHeatmapMeta(hm2)</span></code></pre></div>
 <p>The accumulation of alignment breaks of one pairwise alignment onto another suggests the existence of breakpoint hotspots; regions where breaks are far more likely to occur. Intuitively, this would lead to the presumption of synteny blocks, also. The pattern is consistent after coalescing, too;</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># reduced_gr_O_N &lt;- coalesce_contigs(gr_ob = gr_O_N, tol = 500)</span>
 <span class="co"># </span>
 <span class="co"># hm3 &lt;- bp_pair_analysis(gr_ref_q1 = reduced_gr_O_Oki, gr_ref_q2 = reduced_gr_O_N, win = 1000, lab = "Oki~Nor")</span>
@@ -1012,7 +1004,7 @@
 <h2 class="hasAnchor">
 <a href="#tandem-repeat-coverage-around-alignment-stops-breakpoints" class="anchor"></a>Tandem repeat coverage around alignment stops (breakpoints)</h2>
 <p>The function <code>feature_coverage</code> will plot the coverage of tandem repeats around centred alignment stops.</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># </span>
 <span class="co"># hm_tan1 &lt;- feature_coverage(gr_ob = gr_O_Oki, feat = tan_O, win = 4000, lab = "Osk ~ Oki", direction = "left")</span>
 <span class="co"># plotHeatmapMeta(hm_tan1)</span>
@@ -1027,7 +1019,7 @@
 <h2 class="hasAnchor">
 <a href="#gene-feature-coverage-around-alignment-stops-breakpoints" class="anchor"></a>Gene feature coverage around alignment stops (breakpoints)</h2>
 <p>The function <code>feature_coverage</code> will plot the coverage of tandem repeats around centred alignment stops.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># #current_GB &lt;- gr_Oki_O # To ease recomputing with another object</span>
 <span class="co"># current_GB &lt;- reduced_gr_Oki_O</span>
 <span class="co"># hmList_OKI &lt;- list()</span>
@@ -1053,7 +1045,7 @@
 <h2 class="hasAnchor">
 <a href="#gene-feature-coverage-around-pwm-hits" class="anchor"></a>Gene feature coverage around PWM hits</h2>
 <p>Let’s look at coverage around PWM hits of the AAGCsGCwwmkCGrCTTyn motif</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># current_GB &lt;- pwmHits</span>
 <span class="co"># </span>
 <span class="co"># hmList_PWM_OKI &lt;- list()</span>
@@ -1070,7 +1062,7 @@
 <span class="co"># plotHeatmapMeta(hmList_PWM_OKI[c("exons", "utrs5", "utrs3")])</span>
 <span class="co"># plotHeatmapMeta(hmList_PWM_OKI[c("utrs5", "utrs3")])</span></code></pre></div>
 <p>They are enriched in introns…</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># </span>
 <span class="co"># # Sandbox to make sanity checks.</span>
 <span class="co"># </span>

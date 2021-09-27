@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Structural Variants</h1>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">24 September, 2021</h4>
+            <h4 class="date">27 September, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/StructuralVariants.Rmd"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
@@ -175,8 +175,8 @@
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |        query colinear   inv
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt; &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200    FALSE  TRUE
-##   [2]     chrA   201-300      - | chrB:201-300    FALSE FALSE
+##   [1]     chrA   100-190      + | chrB:100-190    FALSE  TRUE
+##   [2]     chrA   210-291      - | chrB:210-291    FALSE FALSE
 ##   [3]     chrA   301-400      + | chrB:301-400    FALSE FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
@@ -188,7 +188,7 @@
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |        query colinear
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     TRUE
+##   [1]     chrA   100-190      + | chrB:100-190     TRUE
 ##   [2]     chrA   301-400      + | chrB:301-400    FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
@@ -197,8 +197,8 @@
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |        query colinear
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     TRUE
-##   [2]     chrA   201-300      + | chrB:201-300     TRUE
+##   [1]     chrA   100-190      + | chrB:100-190     TRUE
+##   [2]     chrA   210-291      + | chrB:210-291     TRUE
 ##   [3]     chrA   301-400      + | chrB:301-400    FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
@@ -209,8 +209,8 @@
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |        query colinear   inv
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt; &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     TRUE FALSE
-##   [2]     chrA   201-300      + | chrB:201-300     TRUE FALSE
+##   [1]     chrA   100-190      + | chrB:100-190     TRUE FALSE
+##   [2]     chrA   210-291      + | chrB:210-291     TRUE FALSE
 ##   [3]     chrA   301-400      + | chrB:301-400    FALSE FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
@@ -220,8 +220,8 @@
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |        query   inv
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
-##   [1]     chrA   140-160      + | chrB:100-200  TRUE
-##   [2]     chrA   241-260      - | chrB:201-300 FALSE
+##   [1]     chrA   140-150      + | chrB:100-190  TRUE
+##   [2]     chrA   250-251      - | chrB:210-291 FALSE
 ##   [3]     chrA   341-360      + | chrB:301-400 FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
