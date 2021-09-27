@@ -129,6 +129,35 @@
       <small>Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="genomicbreaks-0799" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.99">
+<a href="#genomicbreaks-0799" class="anchor"></a>GenomicBreaks 0.7.99</h1>
+<div id="backwards-incompatible-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#backwards-incompatible-changes" class="anchor"></a>Backwards-incompatible changes</h2>
+<ul>
+<li>Remove <code>flagInterruptions</code>, which was nonsense.</li>
+</ul>
+</div>
+<div id="new-functionalities" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functionalities" class="anchor"></a>New functionalities</h2>
+<ul>
+<li>New <code><a href="../reference/isSorted.html">isSorted()</a></code> method to properly test with <code>ignore.strand</code> set to <code>TRUE</code>.</li>
+<li>Default <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> to the first <em>sequence level</em> of the <code>GBreaks</code> object.</li>
+<li>
+<code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> now renders regions as blocks and not arrows as the strand information is encoded in the color and shape of the comparison bands. It also plots in light blue the blocks that are not matched. Closes issues <a href='https://github.com/oist/GenomicBreaks/issues/3'>#3</a> and <a href='https://github.com/oist/GenomicBreaks/issues/5'>#5</a>.</li>
+<li>Added example data, see ?StructuralVariants for details.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>In <code><a href="../reference/flagInversions.html">flagInversions()</a></code>, check if input was sorted. Closes Issue <a href='https://github.com/oist/GenomicBreaks/issues/2'>#2</a>.</li>
+</ul>
+</div>
+</div>
     <div id="genomicbreaks-071" class="section level1">
 <h1 class="page-header" data-toc-text="0.7.1">
 <a href="#genomicbreaks-071" class="anchor"></a>GenomicBreaks 0.7.1</h1>

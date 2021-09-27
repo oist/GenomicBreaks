@@ -535,28 +535,12 @@
 <div id="trivial-inversions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#trivial-inversions" class="anchor"></a>Trivial inversions</h2>
-<div id="representation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#representation" class="anchor"></a>Representation</h3>
-<p>In the triplet of alignments below below, the middle block is on a different strand than its neighbors, and they would be colinear otherwise. This represents an inversion. <em>Without an outgroup it is not possible to know in which of the target or query genome the break happened.</em></p>
-<p>Let’s call “gaps” the unaligned regions between the blocks.</p>
-<pre><code> ┌──────────────┬──────────────┬──────────────┐
- │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
- └──────────────┴──────────────┴──────────────┘
-        +               -             +         (Alignment direction)
- ┌──────────────┬──────────────┬──────────────┐
- │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
- └──────────────┴──────────────┴──────────────┘</code></pre>
-<p>It is represented as:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/ideal_breakpoints-1.png" width="700"></p>
-</div>
+<p>See `vignette(“Structural Variants”, pakcage = “GenomicBreaks”) for definitions.</p>
 <div id="number-of-trivial-inversions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#number-of-trivial-inversions" class="anchor"></a>Number of trivial inversions</h3>
 <p>More inversions are found after coalescing colinear blocks because of situations where <code>+ - +</code> was <code>+ - - +</code> before collapsing.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 88 ranges and 3 metadata columns:
 ##        seqnames        ranges strand |                     query     score
@@ -587,7 +571,7 @@
 ##   [88] FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 12 ranges and 3 metadata columns:
 ##      seqnames         ranges strand |                      query     score
@@ -618,9 +602,15 @@
 ##   54 FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" width="700"></p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png" width="700"></p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png" width="700"></p>
 </div>
 <div id="isolate-the-left-side-gaps-in-inversions" class="section level3">
 <h3 class="hasAnchor">
@@ -774,9 +764,9 @@
 <div id="trivial-insersions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#trivial-insersions" class="anchor"></a>Trivial insersions</h2>
-<div id="representation-1" class="section level3">
+<div id="representation" class="section level3">
 <h3 class="hasAnchor">
-<a href="#representation-1" class="anchor"></a>Representation</h3>
+<a href="#representation" class="anchor"></a>Representation</h3>
 <p>The in<b>s</b>ersion below:</p>
 <pre><code>┌───────────────┬───────────────┬───────────────┐
 │ XSR:101-200:+ │ XSR:201-300:+ │ XSR:301-400:+ │  (OKI2018_I69)
