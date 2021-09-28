@@ -21,7 +21,7 @@ demonstration purpose
 }
 \details{
 The variants represented here are the ones that can be represented
-in a \code{\link{GenomicBreaks}} object.  Short ones that are entirely contained in an
+in a \code{\link{GBreaks}} object.  Short ones that are entirely contained in an
 aligned region, for instance as a gap, are not covered
 }
 \examples{

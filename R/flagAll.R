@@ -1,19 +1,16 @@
 #' Compute all flags
 #'
-#' Flag ranges that are at the beginning of a colinear duplet, or an inversion,
+#' Flag ranges that are at the beginning of a colinear duple, or an inversion,
 #' insertion or interruption triplet.
 #'
-#' @param gb A `GenomicBreaks` object.
+#' @param gb A `GBreaks` object.
 #'
-#' @return Returns the `GenomicBreaks` object with an extra `flag` metadata
-#' column.
+#' @return Returns the `GBreaks` object with an extra `flag` metadata column.
 #'
 #' @family Flagging functions
 #'
 #' @examples
-#' inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' flagAll(inv)
+#' flagAll(exampleInversion)
 #'
 #' @include flagColinearAlignments.R flagInsersions.R flagInversions.R
 #' @importFrom S4Vectors decode

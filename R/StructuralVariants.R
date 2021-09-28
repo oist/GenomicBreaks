@@ -6,7 +6,7 @@
 #' demonstration purpose
 #'
 #' @details The variants represented here are the ones that can be represented
-#' in a [`GenomicBreaks`] object.  Short ones that are entirely contained in an
+#' in a [`GBreaks`] object.  Short ones that are entirely contained in an
 #' aligned region, for instance as a gap, are not covered
 #'
 #' @format [`GBreaks`] objects described in more details in the

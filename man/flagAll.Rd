@@ -7,20 +7,17 @@
 flagAll(gb)
 }
 \arguments{
-\item{gb}{A \code{GenomicBreaks} object.}
+\item{gb}{A \code{GBreaks} object.}
 }
 \value{
-Returns the \code{GenomicBreaks} object with an extra \code{flag} metadata
-column.
+Returns the \code{GBreaks} object with an extra \code{flag} metadata column.
 }
 \description{
-Flag ranges that are at the beginning of a colinear duplet, or an inversion,
+Flag ranges that are at the beginning of a colinear duple, or an inversion,
 insertion or interruption triplet.
 }
 \examples{
-inv       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+"))
-inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-flagAll(inv)
+flagAll(exampleInversion)
 
 }
 \seealso{
