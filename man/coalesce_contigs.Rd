@@ -30,52 +30,38 @@ within close proximity on the same strand (user determined).
 Fragmented alignments arising from incorrect basecalls, misassembly or
 misalignments can cause us to infer artificial breakpoints
 
-Internally, the \code{coalesce_contigs} function uses the \code{precede} and \code{follow}
+Internally, \code{coalesce_contigs} uses the \code{\link[=precede]{precede()}} and \code{\link[=follow]{follow()}}
 functions of the \code{GenomicRanges} package.  For a given range, these functions
 return the index position of the range it precedes or follows, or \code{NA} as the
 first range follows nothing and the last range precedes nothing.  See the
 examples for details.
 }
 \examples{
-# Ranges on the plus strand that should coalesce
-gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-(gb1 <- GBreaks(gb1))
-coalesce_contigs(gb1)
+flagColinearAlignments(exampleColinear3)
+coalesce_contigs(exampleColinear3)
 
-# Reference range [1] precedes reference range [2]
-precede(gb1)
+# Target range [1] precedes target range [2]
+precede(exampleColinear3)
 # Query range [1] precedes query range [2]
-precede(gb1$query)
+precede(exampleColinear3$query)
 
-# Ranges on the minus strand that should coalesce
-gb2       <- GRanges(c(B="Ref:100-200:-", A="Ref:400-500:-"))
-gb2$query <- GRanges(c(B="Que:400-500",   A="Que:100-200"))
-gb2$qname <- names(gb2$query)
-gb2
-# Reference range [1] follows reference range [2]
+# Ranges on the minus strand
+gb2 <- exampleColinear3 |> reverse() |> sort(ignore.strand = TRUE)
+flagColinearAlignments(gb2)
+coalesce_contigs(gb2)
+
+# Target range [1] follows target range [2]
 follow(gb2)
-# Or, ignoring strand, reference range [1] precedes reference range [2]
+# Or, ignoring strand, target range [1] precedes target range [2]
 precede(gb2, ignore.strand = TRUE)
 # Query range [1] follows query range [2]
 follow(gb2$query)
 coalesce_contigs(gb2)
 
-# Ranges on the minus strand that should not coalesce because they are not
+# Ranges that should not coalesce because they are not
 # ordered properly
-gb3       <- GRanges(c("Ref:100-200:-", "Ref:400-500:-"))
-gb3$query <- GRanges(c("Que:100-200",   "Que:400-500"))
-# Reference range [1] follows reference range [2]
-follow(gb3)
-# Query range [1] follows query range [2]
-precede(gb3$query)
-coalesce_contigs(gb3)
-
-# Ranges on the plus strand that should not coalesce because they are not
-# ordered properly
-gb4       <- GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
-gb4$query <- GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
-coalesce_contigs(gb4)
+flagColinearAlignments(exampleNotColinear)
+coalesce_contigs(exampleNotColinear)
 
 }
 \seealso{
