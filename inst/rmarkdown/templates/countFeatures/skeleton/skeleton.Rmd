@@ -117,14 +117,6 @@ and the first/last block.  The `cleanGaps` function below removes them before
 returning the object.
    
 ```{r clean_gaps}
-cleanGaps <- function(gb) {
-  # Drop all seq info, otherwise gaps() adds artificial results on unused strands
-  gb <- GRanges(seqnames = seqnames(gb), ranges = ranges(gb), strand = "*")
-  gps <- gaps(gb)
-  gpsList <- split(gps, seqnames(gps), drop = TRUE)
-  cleanList <- endoapply(gpsList, \(x) x[-1])
-  unlist(cleanList)
-}
 gb_parts_unal <- cleanGaps(gb_parts)
 gb_col_unal   <- cleanGaps(gb_col)
 ```

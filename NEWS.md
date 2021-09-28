@@ -1,5 +1,10 @@
 # GenomicBreaks 0.8.0.99
 
+## New functionalities
+
+* New `cleanGaps()` function that is guaranteed to return only the intervals
+  between the input ranges.
+
 ## Bug fixes
 
 * `flagColinearAlignments()` now handles properly strandless ranges. (Issue #1)
