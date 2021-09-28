@@ -104,12 +104,24 @@ exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
 flagInversions(exampleInversion, tol = 10)
 ```
 
+## Transolocations
+
+If a region has moved, but is not an inversion, then it is a translocation.
+
+```{r translocation}
+exampleTranslocation |> flagColinearAlignments() |> flagInversions()
+plotApairOfChrs(exampleTranslocation)
+```
+
 ## Insertions / Deletions (indels)
 
 NOTE that searching for insertion/deletions make little sense in one-to-one
 alignment unless the maximal distance for colinearity is set to a meaningful
 value.
 
-```{r interruptions}
-exampleInsertion |> flagInsersions()
+```{r indels}
+exampleDeletion
+plotApairOfChrs(exampleDeletion)
+exampleInsertion
+plotApairOfChrs(exampleInsertion)
 ```
