@@ -8,10 +8,7 @@
 #' @note Fragmented alignments arising from incorrect basecalls, misassembly or
 #' misalignments can cause us to infer artificial breakpoints
 #'
-#' Internally, `coalesce_contigs` uses the [`precede()`] and [`follow()`]
-#' functions of the `GenomicRanges` package.  For a given range, these functions
-#' return the index position of the range it precedes or follows, or `NA` as the
-#' first range follows nothing and the last range precedes nothing.  See the
+#' Internally, `coalesce_contigs` uses `[flagColinearAlignments()]`  See the
 #' examples for details.
 #'
 #' @param gb [`GBreaks`] object of the pairwise alignment.
@@ -31,7 +28,7 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#' flagColinearAlignments(exampleColinear3)
+#' flagColinearAlignments(exampleColinear3, details = TRUE)
 #' coalesce_contigs(exampleColinear3)
 #'
 #' # Target range [1] precedes target range [2]
@@ -41,7 +38,7 @@
 #'
 #' # Ranges on the minus strand
 #' gb2 <- exampleColinear3 |> reverse() |> sort(ignore.strand = TRUE)
-#' flagColinearAlignments(gb2)
+#' flagColinearAlignments(gb2, details = TRUE)
 #' coalesce_contigs(gb2)
 #'
 #' # Target range [1] follows target range [2]
@@ -54,8 +51,14 @@
 #'
 #' # Ranges that should not coalesce because they are not
 #' # ordered properly
-#' flagColinearAlignments(exampleNotColinear)
+#' flagColinearAlignments(exampleNotColinear, details = TRUE)
 #' coalesce_contigs(exampleNotColinear)
+#'
+#' # Coalescing strandless objects
+#' gb3 <- exampleColinear3
+#' strand(gb3) <- "*"
+#' flagColinearAlignments(gb3, details = TRUE)
+#' coalesce_contigs(gb3)
 #'
 #' @export
 #' @importFrom GenomicRanges GRanges
@@ -78,36 +81,11 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gb <- sort(gb, ignore.strand = TRUE)
 
   # Check colinearity of query ranges
-
-  # The names of the precede() and follow() functions are a bit confusing;
-  # check the help page if needed.
-
-  # Position of the next block minus position of the current block equals
-  # to 1 when they are colinear.
-  gb$qnext <- precede(gb$query) - seq_along(gb$query)
-
-  # Position of the previous block minus position of the current block equals
-  # to 1 when they are anti-colinear.
-  gb$qprev <- follow( gb$query) - seq_along(gb$query)
-
-  # When the reference strand is "+", we want the query blocks to be colinear
-  # and when the reference is "-" we want them to be anti-colinear.
-  gb$q_col_with_next <- ( decode(strand(gb)) %in% c("+", "*") & gb$qnext == 1 ) |
-                           ( strand(gb) == "-" & gb$qprev == 1 )
-
-  gb <- dist2next(gb)
-
-  #######################################################################
-
-  # find intersection
-  gb$con_met_total <- gb$tdist < tol + 1 &
-                         gb$qdist < tol + 1 &
-                         gb$q_col_with_next
-  gb$con_met_total[is.na(gb$con_met_total)] <- FALSE
+  gb <- flagColinearAlignments(gb, tol = tol, minwidth = minwidth, details = TRUE)
 
   # apply extension to intersected zone (applying just to end points) (ref only)
   gb$r_add <- gb$tdist
-  gb[gb$con_met_total != TRUE]$r_add <- 0
+  gb[gb$colinear != TRUE]$r_add <- 0
 
   #######################################################################
 
@@ -130,7 +108,7 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
 
   # apply extension to intersected zone (applying just to end points) (query only)
   gb$q_add <- gb$qdist
-  gb[gb$con_met_total != TRUE]$q_add <- 0
+  gb[gb$colinear != TRUE]$q_add <- 0
 
   end(  q_ext[strand(gb) == "+"]) <- end(  q_ext[strand(gb) == "+"]) + gb[strand(gb) == "+"]$q_add
   end(  q_ext[strand(gb) == "*"]) <- end(  q_ext[strand(gb) == "*"]) + gb[strand(gb) == "*"]$q_add

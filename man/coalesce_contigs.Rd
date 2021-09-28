@@ -30,14 +30,11 @@ within close proximity on the same strand (user determined).
 Fragmented alignments arising from incorrect basecalls, misassembly or
 misalignments can cause us to infer artificial breakpoints
 
-Internally, \code{coalesce_contigs} uses the \code{\link[=precede]{precede()}} and \code{\link[=follow]{follow()}}
-functions of the \code{GenomicRanges} package.  For a given range, these functions
-return the index position of the range it precedes or follows, or \code{NA} as the
-first range follows nothing and the last range precedes nothing.  See the
+Internally, \code{coalesce_contigs} uses \verb{[flagColinearAlignments()]}  See the
 examples for details.
 }
 \examples{
-flagColinearAlignments(exampleColinear3)
+flagColinearAlignments(exampleColinear3, details = TRUE)
 coalesce_contigs(exampleColinear3)
 
 # Target range [1] precedes target range [2]
@@ -47,7 +44,7 @@ precede(exampleColinear3$query)
 
 # Ranges on the minus strand
 gb2 <- exampleColinear3 |> reverse() |> sort(ignore.strand = TRUE)
-flagColinearAlignments(gb2)
+flagColinearAlignments(gb2, details = TRUE)
 coalesce_contigs(gb2)
 
 # Target range [1] follows target range [2]
@@ -60,8 +57,14 @@ coalesce_contigs(gb2)
 
 # Ranges that should not coalesce because they are not
 # ordered properly
-flagColinearAlignments(exampleNotColinear)
+flagColinearAlignments(exampleNotColinear, details = TRUE)
 coalesce_contigs(exampleNotColinear)
+
+# Coalescing strandless objects
+gb3 <- exampleColinear3
+strand(gb3) <- "*"
+flagColinearAlignments(gb3, details = TRUE)
+coalesce_contigs(gb3)
 
 }
 \seealso{
