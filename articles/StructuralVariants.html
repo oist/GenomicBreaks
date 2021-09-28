@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Structural Variants</h1>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">27 September, 2021</h4>
+            <h4 class="date">28 September, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/StructuralVariants.Rmd"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
@@ -132,59 +132,59 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-150      + | chrB:100-150     TRUE
-##   [2]     chrA   251-300      + | chrB:251-300    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-150      + | chrB:100-150      TRUE
+##   [2]     chrA   251-300      + | chrB:251-300     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="fu"><a href="../reference/reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA      1-50      - | chrB:251-300     TRUE
-##   [2]     chrA   151-201      - | chrB:100-150    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA      1-50      - | chrB:251-300      TRUE
+##   [2]     chrA   151-201      - | chrB:100-150     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Note the tolerance window</span>
 <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span>, tol <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-150      + | chrB:100-150    FALSE
-##   [2]     chrA   251-300      + | chrB:251-300    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-150      + | chrB:100-150     FALSE
+##   [2]     chrA   251-300      + | chrB:251-300     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Strandless mappings can also be colinear</span>
 <span class="va">exampleColinear</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-150      * | chrB:100-150    FALSE
-##   [2]     chrA   251-300      * | chrB:251-300    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-150      * | chrB:100-150      TRUE
+##   [2]     chrA   251-300      * | chrB:251-300     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleNotColinear</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-150      + | chrB:201-251    FALSE
-##   [2]     chrA   251-300      + |  chrB:50-100    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-150      + | chrB:201-251     FALSE
+##   [2]     chrA   251-300      + |  chrB:50-100     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <p>To make some sanity checks against the other flagging functions there is also an object containing three colinear mappings.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     TRUE
-##   [2]     chrA   201-300      + | chrB:201-300     TRUE
-##   [3]     chrA   301-400      + | chrB:301-400    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-200      + | chrB:100-200      TRUE
+##   [2]     chrA   201-300      + | chrB:201-300      TRUE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 </div>
@@ -201,11 +201,11 @@
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInversion</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
-##       seqnames    ranges strand |        query colinear   inv
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt; &lt;Rle&gt;
-##   [1]     chrA   100-190      + | chrB:100-190    FALSE  TRUE
-##   [2]     chrA   210-291      - | chrB:210-291    FALSE FALSE
-##   [3]     chrA   301-400      + | chrB:301-400    FALSE FALSE
+##       seqnames    ranges strand |        query  colinear   inv
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
+##   [1]     chrA   100-190      + | chrB:100-190     FALSE  TRUE
+##   [2]     chrA   210-291      - | chrB:210-291     FALSE FALSE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -218,21 +218,21 @@
 <code class="sourceCode R"><span class="co"># Removing the inversion restores colinearity</span>
 <span class="va">exampleInversion</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-190      + | chrB:100-190     TRUE
-##   [2]     chrA   301-400      + | chrB:301-400    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-190      + | chrB:100-190      TRUE
+##   [2]     chrA   301-400      + | chrB:301-400     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Flipping the inversion restores colinearity</span>
 <span class="va">exampleInversion</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;    &lt;Rle&gt;
-##   [1]     chrA   100-190      + | chrB:100-190     TRUE
-##   [2]     chrA   210-291      + | chrB:210-291     TRUE
-##   [3]     chrA   301-400      + | chrB:301-400    FALSE
+##       seqnames    ranges strand |        query  colinear
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-190      + | chrB:100-190      TRUE
+##   [2]     chrA   210-291      + | chrB:210-291      TRUE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
