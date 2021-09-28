@@ -247,20 +247,54 @@
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 </div>
+<div id="transolocations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#transolocations" class="anchor"></a>Transolocations</h2>
+<p>If a region has moved, but is not an inversion, then it is a translocation.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exampleTranslocation</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
+##       seqnames    ranges strand |        query  colinear   inv
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
+##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
+##   [2]     chrA   201-300      + | chrC:201-300     FALSE FALSE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/translocation-1.png" width="700"></p>
+</div>
 <div id="insertions-deletions-indels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#insertions-deletions-indels" class="anchor"></a>Insertions / Deletions (indels)</h2>
 <p>NOTE that searching for insertion/deletions make little sense in one-to-one alignment unless the maximal distance for colinearity is set to a meaningful value.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">exampleInsertion</span> |&gt; <span class="fu"><a href="../reference/flagInsersions.html">flagInsersions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query       ins
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     FALSE
-##   [2]     chrA   201-300      + | chrB:301-400     FALSE
-##   [3]     chrC   401-500      + | chrB:201-300     FALSE
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exampleDeletion</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 1 metadata column:
+##       seqnames    ranges strand |        query
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
+##   [1]     chrA   100-200      + | chrB:100-200
+##   [2]     chrA   201-300      + | chrC:401-500
+##   [3]     chrA   301-400      + | chrB:201-300
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/indels-1.png" width="700"></p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exampleInsertion</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 1 metadata column:
+##       seqnames    ranges strand |        query
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
+##   [1]     chrA   100-200      + | chrB:100-200
+##   [2]     chrA   201-300      + | chrB:301-400
+##   [3]     chrC   401-500      + | chrB:201-300
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/indels-2.png" width="700"></p>
 </div>
 </div>
   </div>
