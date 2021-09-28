@@ -1,3 +1,9 @@
+# GenomicBreaks 0.8.0.99
+
+## Bug fixes
+
+* `flagColinearAlignments()` now handles properly strandless ranges. (Issue #1)
+
 # GenomicBreaks 0.8.0
 
 ## Backwards-incompatible changes

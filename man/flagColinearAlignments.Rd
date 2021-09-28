@@ -67,6 +67,11 @@ precede(gb2, ignore.strand = TRUE)
 # Query range [1] follows query range [2]
 follow(gb2$query)
 
+# Colinearity check on strandless objects
+gb3 <- exampleColinear3
+strand(gb3) <- "*"
+flagColinearAlignments(gb3)
+
 # Ranges that should not coalesce because they are not
 # ordered properly
 flagColinearAlignments(exampleNotColinear)
