@@ -248,44 +248,10 @@ examples for details.</p>
 #&gt;   [1]     chrA   101-401      - | chrB:100-400       301
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
-<span class='co'># Ranges that should not coalesce because they are not</span>
-<span class='co'># ordered properly</span>
-<span class='fu'><a href='flagColinearAlignments.html'>flagColinearAlignments</a></span><span class='op'>(</span><span class='va'>exampleNotColinear</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 10 metadata columns:
-#&gt;       seqnames    ranges strand |        query     tfoll     qfoll     tprev
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:201-251         1      &lt;NA&gt;      &lt;NA&gt;
-#&gt;   [2]     chrA   251-300      + |  chrB:50-100      &lt;NA&gt;        -1        -1
-#&gt;           qprev     t_col     q_col     tdist     qdist  colinear
-#&gt;       &lt;integer&gt; &lt;logical&gt; &lt;logical&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;logical&gt;
-#&gt;   [1]         1      TRUE      &lt;NA&gt;       101       101     FALSE
-#&gt;   [2]      &lt;NA&gt;      &lt;NA&gt;     FALSE       Inf       Inf     FALSE
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>exampleNotColinear</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query     score
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:201-251        51
-#&gt;   [2]     chrA   251-300      + |  chrB:50-100        50
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
 <span class='co'># Coalescing strandless objects</span>
 <span class='va'>gb3</span> <span class='op'>&lt;-</span> <span class='va'>exampleColinear3</span>
 <span class='fu'>strand</span><span class='op'>(</span><span class='va'>gb3</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"*"</span>
-<span class='fu'><a href='flagColinearAlignments.html'>flagColinearAlignments</a></span><span class='op'>(</span><span class='va'>gb3</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 10 metadata columns:
-#&gt;       seqnames    ranges strand |        query     tfoll     qfoll     tprev
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]     chrA   100-200      * | chrB:100-200         1         1      &lt;NA&gt;
-#&gt;   [2]     chrA   201-300      * | chrB:201-300         1         1        -1
-#&gt;   [3]     chrA   301-400      * | chrB:301-400      &lt;NA&gt;      &lt;NA&gt;        -1
-#&gt;           qprev     t_col     q_col     tdist     qdist  colinear
-#&gt;       &lt;integer&gt; &lt;logical&gt; &lt;logical&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;logical&gt;
-#&gt;   [1]      &lt;NA&gt;      TRUE      TRUE         1         1      TRUE
-#&gt;   [2]        -1      TRUE      TRUE         1         1      TRUE
-#&gt;   [3]        -1      &lt;NA&gt;      &lt;NA&gt;       Inf       Inf     FALSE
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb3</span><span class='op'>)</span>
+<span class='fu'>coalesce_contigs</span><span class='op'>(</span><span class='va'>gb3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 1 range and 2 metadata columns:
 #&gt;       seqnames    ranges strand |        query     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Structural Variants — StructuralVariants • GenomicBreaks</title>
+<title>Range method for GBreaks objects — range_GBreaks • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Structural Variants — StructuralVariants" />
-<meta property="og:description" content="Concept examples of structural variants for test and
-demonstration purpose" />
+<meta property="og:title" content="Range method for GBreaks objects — range_GBreaks" />
+<meta property="og:description" content="This is a range method for GBreaks objects, that will run
+GenomicRanges::range on its target and query ranges and will return
+a new GBreaks object." />
 
 
 
@@ -127,78 +128,75 @@ demonstration purpose" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Structural Variants</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/StructuralVariants.R'><code>R/StructuralVariants.R</code></a></small>
-    <div class="hidden name"><code>StructuralVariants.Rd</code></div>
+    <h1>Range method for <code>GBreaks</code> objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/GenomicBreaks.R'><code>R/GenomicBreaks.R</code></a></small>
+    <div class="hidden name"><code>range.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Concept examples of structural variants for test and
-demonstration purpose</p>
+    <p>This is a <code>range</code> method for <code><a href='GBreaks-class.html'>GBreaks</a></code> objects, that will run
+<code><a href='https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html'>GenomicRanges::range</a></code> on its <em>target</em> and <em>query</em> ranges and will return
+a new <code>GBreaks</code> object.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>range_GBreaks</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  with.revmap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ignore.strand <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
+<span class='co'># S4 method for GBreaks</span>
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, with.revmap <span class='op'>=</span> <span class='cn'>FALSE</span>, ignore.strand <span class='op'>=</span> <span class='cn'>FALSE</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A <code>GBreaks</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>etc</p></td>
+    </tr>
+    <tr>
+      <th>with.revmap</th>
+      <td><p>FALSE</p></td>
+    </tr>
+    <tr>
+      <th>ignore.strand</th>
+      <td><p>FALSE</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>FALSE)</p></td>
+    </tr>
+    </table>
 
-    <p><code><a href='GBreaks-class.html'>GBreaks</a></code> objects described in more details in the
-<em>Structural Variants</em> vignette, available with the command
-<code><a href='../articles/StructuralVariants.html'>vignette("StructuralVariants", package = "GenomicBreaks")</a></code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The variants represented here are the ones that can be represented
-in a <code><a href='GBreaks-class.html'>GBreaks</a></code> object.  Short ones that are entirely contained in an
-aligned region, for instance as a gap, are not covered</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>tbd</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <div class='dont-index'><p>Other Structural variants: 
-<code><a href='flagInversions.html'>flagInversions</a>()</code>,
-<code><a href='plotApairOfChrs.html'>plotApairOfChrs</a>()</code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Charles Plessy</p>
+    <p><code>range</code> unconditionally ignores strand in <code>GBreaks</code> objects.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>exampleColinear</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>exampleColinear3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GBreaks object with 1 range and 1 metadata column:
+#&gt;       seqnames    ranges strand |        query
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
+#&gt;   [1]     chrA   100-400      * | chrB:100-400
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>exampleDeletion</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 2 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        query
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:100-150
-#&gt;   [2]     chrA   251-300      + | chrB:251-300
+#&gt;   [1]     chrA   100-400      * | chrB:100-300
+#&gt;   [2]     chrA   201-300      * | chrC:401-500
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleNotColinear</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:201-251
-#&gt;   [2]     chrA   251-300      + |  chrB:50-100
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleColinear3</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-200      + | chrB:100-200
-#&gt;   [2]     chrA   201-300      + | chrB:201-300
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleInversion</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-190      + | chrB:100-190
-#&gt;   [2]     chrA   210-291      - | chrB:210-291
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleTranslocation</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-200      + | chrB:100-200
-#&gt;   [2]     chrA   201-300      + | chrC:201-300
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
-</div></pre>
+#&gt;   seqinfo: 1 sequence from an unspecified genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

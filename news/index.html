@@ -137,6 +137,8 @@
 <a href="#new-functionalities" class="anchor"></a>New functionalities</h2>
 <ul>
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
+<li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
+<li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>sequenames</em>, ignoring strand information.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
