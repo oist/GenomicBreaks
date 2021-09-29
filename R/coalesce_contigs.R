@@ -49,15 +49,9 @@
 #' follow(gb2$query)
 #' coalesce_contigs(gb2)
 #'
-#' # Ranges that should not coalesce because they are not
-#' # ordered properly
-#' flagColinearAlignments(exampleNotColinear, details = TRUE)
-#' coalesce_contigs(exampleNotColinear)
-#'
 #' # Coalescing strandless objects
 #' gb3 <- exampleColinear3
 #' strand(gb3) <- "*"
-#' flagColinearAlignments(gb3, details = TRUE)
 #' coalesce_contigs(gb3)
 #'
 #' @export
