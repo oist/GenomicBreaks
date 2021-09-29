@@ -317,7 +317,7 @@ plotApairOfChrs(coa, "chrI")
 
 ## Trivial inversions
 
-See `vignette("Structural Variants", package = "GenomicBreaks")` for definitions.
+See `vignette("StructuralVariants", package = "GenomicBreaks")` for definitions.
 
 ### Number of trivial inversions
 

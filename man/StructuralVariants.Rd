@@ -13,7 +13,7 @@
 \format{
 \code{\link{GBreaks}} objects described in more details in the
 \emph{Structural Variants} vignette, available with the command
-\code{vignette("Structural Variants", package = "GenomicBreaks")}.
+\code{vignette("StructuralVariants", package = "GenomicBreaks")}.
 }
 \description{
 Concept examples of structural variants for test and

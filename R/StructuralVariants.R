@@ -11,7 +11,7 @@
 #'
 #' @format [`GBreaks`] objects described in more details in the
 #' _Structural Variants_ vignette, available with the command
-#' `vignette("Structural Variants", package = "GenomicBreaks")`.
+#' `vignette("StructuralVariants", package = "GenomicBreaks")`.
 #'
 #' @author Charles Plessy
 #'
