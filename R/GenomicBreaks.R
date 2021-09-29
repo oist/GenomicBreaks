@@ -122,3 +122,37 @@ range_GBreaks <- function(x, ..., with.revmap=FALSE, ignore.strand=FALSE, na.rm=
 
 setMethod("range", "GBreaks", range_GBreaks)
 
+#' subsetByOverlaps method for `GBreaks` objects
+#'
+#' This is a `subsetByOverlaps` method for [`GBreaks`] objects, that will run
+#' [`GenomicRanges::subsetByOverlaps`] on its _target_ and _query_ ranges and
+#' will return a new `GBreaks` object.
+#'
+#' @note `range` unconditionally ignores strand in `GBreaks` objects.
+#'
+#' @param x A `GBreaks` object.
+#' @param ranges Another `GBreaks` object.
+#' @param maxgap tbd
+#' @param minoverlap tbd
+#' @param type tbd
+#' @param invert tbd
+#' @param ... etc
+#'
+#' @returns tbd
+#'
+#' @rdname subsetByOverlaps
+#' @examples
+#' subsetByOverlaps(exampleColinear3, exampleColinear3)
+
+subsetByOverlaps_GBreaks <- function(x, ranges, maxgap=-1L, minoverlap=0L,
+  type=c("any", "start", "end", "within", "equal"), invert=FALSE,  ...) {
+  gb1 <- subsetByOverlaps(x, granges(ranges), maxgap = maxgap, minoverlap = minoverlap, type = type, invert = invert, ...)
+  gb2 <- x[overlapsAny(x$query, ranges$query, minoverlap = minoverlap, type = type, ...)]
+  sort(unique(c(gb1, gb2)))
+}
+
+#' @rdname subsetByOverlaps
+#' @export
+#'
+setMethod("subsetByOverlaps", c("GBreaks", "GBreaks"), subsetByOverlaps_GBreaks)
+

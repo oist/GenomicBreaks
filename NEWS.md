@@ -9,6 +9,8 @@
   objects.
 * New `range()` methods for `GBreaks` objects, that runs `GRanges::range` on
   each pair of target/query _sequenames_, ignoring strand information.
+* New a `subsetByOverlaps()` range that combines regions overlapping by their
+  _target_ or by their  _query_ ranges.
 
 ## Bug fixes
 
