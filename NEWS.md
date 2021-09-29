@@ -4,6 +4,11 @@
 
 * New `cleanGaps()` function that is guaranteed to return only the intervals
   between the input ranges.
+* The `GBreaks()` constructor now accepts three new parameters, `target`,
+  `query` and `strand`, to construct `GBreaks` objects directly from `GRanges`
+  objects.
+* New `range()` methods for `GBreaks` objects, that runs `GRanges::range` on
+  each pair of target/query _sequenames_, ignoring strand information.
 
 ## Bug fixes
 

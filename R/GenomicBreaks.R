@@ -82,3 +82,43 @@ isSorted_GBreaks <- function(x)
 #' @export
 
 setMethod("isSorted", "GBreaks", isSorted_GBreaks)
+
+#' Range method for `GBreaks` objects
+#'
+#' This is a `range` method for [`GBreaks`] objects, that will run
+#' [`GenomicRanges::range`] on its _target_ and _query_ ranges and will return
+#' a new `GBreaks` object.
+#'
+#' @note `range` unconditionally ignores strand in `GBreaks` objects.
+#'
+#' @param x A `GBreaks` object.
+#' @param with.revmap FALSE
+#' @param ignore.strand FALSE
+#' @param na.rm FALSE)
+#' @param ... etc
+#'
+#' @returns tbd
+#'
+#' @rdname range
+#' @examples
+#' range(exampleColinear3)
+#' range(exampleDeletion)
+
+range_GBreaks <- function(x, ..., with.revmap=FALSE, ignore.strand=FALSE, na.rm=FALSE) {
+  gbl <- split(x, paste(seqnames(x), seqnames(x$query)), drop = TRUE)
+  gb <- endoapply(gbl, \(gb) {
+    rangeT <- range(granges(gb), ignore.strand = TRUE)
+    rangeQ <- range(gb$query, ignore.strand = TRUE)
+    GBreaks(target = rangeT, query = rangeQ)
+  }) |> unlist()
+  names(gb) <- NULL
+  seqinfo(gb) <- seqinfo(x)
+  seqinfo(gb$query) <- seqinfo(x$query)
+  gb
+}
+
+#' @rdname range
+#' @export
+
+setMethod("range", "GBreaks", range_GBreaks)
+
