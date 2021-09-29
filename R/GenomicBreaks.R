@@ -12,13 +12,23 @@
 #' gb
 #' gb$query
 #'
-#' @importFrom methods new setClass
+#' @importFrom methods callNextMethod new setClass
 #'
 #' @export GBreaks
 #' @exportClass GBreaks
 
 GBreaks <- setClass("GBreaks", contains = "GRanges")
 
+setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query = NULL, strand = NULL) {
+  if (! (is.null(target) | is.null(query))) {
+    gb <- target
+    gb$query <- query
+    if (! is.null(strand)) strand(gb) <- strand
+    gb <- GBreaks(gb)
+    return(gb)
+  }
+  callNextMethod(.Object, ...)
+})
 
 #' Conversion from [`CNEr::Axt`] objects
 #'
