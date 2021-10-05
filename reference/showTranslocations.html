@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag inversions — flagInversions • GenomicBreaks</title>
+<title>Show translocations and their flanking blocks. — showTranslocations • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Flag inversions — flagInversions" />
-<meta property="og:description" content="Flag ranges that start a triplet that would be colinear if the central pair
-were aligned to the opposite strand." />
+<meta property="og:title" content="Show translocations and their flanking blocks. — showTranslocations" />
+<meta property="og:description" content="Show translocations and their flanking blocks." />
 
 
 
@@ -127,81 +126,52 @@ were aligned to the opposite strand." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag inversions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagInversions.R'><code>R/flagInversions.R</code></a></small>
-    <div class="hidden name"><code>flagInversions.Rd</code></div>
+    <h1>Show translocations and their flanking blocks.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/Translocations.R'><code>R/Translocations.R</code></a></small>
+    <div class="hidden name"><code>showTranslocations.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Flag ranges that start a triplet that would be colinear if the central pair
-were aligned to the opposite strand.</p>
+    <p>Show translocations and their flanking blocks.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>gb</span>, tol <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>showTranslocations</span><span class='op'>(</span><span class='va'>gb</span>, rename <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gb</th>
-      <td><p>A <code><a href='GBreaks-class.html'>GBreaks()</a></code> object.</p></td>
+      <td><p>A <code><a href='GBreaks-class.html'>GBreaks</a></code> object processed with <code><a href='flagTranslocations.html'>flagTranslocations</a></code>.</p></td>
     </tr>
     <tr>
-      <th>tol</th>
-      <td><p>Tolerance window for the distance between two ranges.</p></td>
+      <th>rename</th>
+      <td><p>Replace range names by their numeric order before subsetting.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the <code>GBreaks</code> object with an extra <code>inv</code> metadata column.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Here is a trivial example of an inversion.</p><pre>┌──────────────┬──────────────┬──────────────┐
-│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
-└──────────────┴──────────────┴──────────────┘
-       +               -             +         (Alignment direction)
-┌──────────────┬──────────────┬──────────────┐
-│ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
-└──────────────┴──────────────┴──────────────┘
-</pre>
-
+    <p>Returns the <code>GBreaks</code> object in which all ranges that are not
+part of a translocation triplet have been discarded.  If the object was missing
+the <code>tra</code> metadata column, return the object after discarding all of its
+ranges.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Flagging functions: 
-<code><a href='flagAll.html'>flagAll</a>()</code>,
-<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code>,
-<code><a href='flagInsersions.html'>flagInsersions</a>()</code>,
-<code><a href='flagLongShort.html'>flagLongShort</a>()</code>,
-<code><a href='flagTranslocations.html'>flagTranslocations</a>()</code></p>
-<p>Other Inversion functions: 
-<code><a href='filterInversions.html'>filterInversions</a>()</code>,
-<code><a href='leftInversionGaps.html'>leftInversionGaps</a>()</code>,
-<code><a href='showInversions.html'>showInversions</a>()</code></p>
-<p>Other Structural variants: 
-<code><a href='StructuralVariants.html'>StructuralVariants</a></code>,
-<code><a href='flagTranslocations.html'>flagTranslocations</a>()</code>,
-<code><a href='plotApairOfChrs.html'>plotApairOfChrs</a>()</code></p></div>
+    <div class='dont-index'><p>Other Translocation functions: 
+<code><a href='filterTranslocations.html'>filterTranslocations</a>()</code>,
+<code><a href='flagTranslocations.html'>flagTranslocations</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>showTranslocations</span><span class='op'>(</span><span class='fu'><a href='flagTranslocations.html'>flagTranslocations</a></span><span class='op'>(</span><span class='va'>exampleTranslocation</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 3 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query   inv
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
-#&gt;   [1]     chrA   100-190      + | chrB:100-190  TRUE
-#&gt;   [2]     chrA   210-291      - | chrB:210-291 FALSE
-#&gt;   [3]     chrA   301-400      + | chrB:301-400 FALSE
+#&gt;     seqnames    ranges strand |        query       tra
+#&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+#&gt;   1     chrA   100-200      + | chrB:100-200      TRUE
+#&gt;   2     chrA   201-300      + | chrC:201-300     FALSE
+#&gt;   3     chrA   301-400      + | chrB:301-400     FALSE
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>exampleInversion</span>, tol <span class='op'>=</span> <span class='fl'>19</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 2 metadata columns:
-#&gt;       seqnames    ranges strand |        query   inv
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
-#&gt;   [1]     chrA   100-190      + | chrB:100-190 FALSE
-#&gt;   [2]     chrA   210-291      - | chrB:210-291 FALSE
-#&gt;   [3]     chrA   301-400      + | chrB:301-400 FALSE
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'><a href='plotApairOfChrs.html'>plotApairOfChrs</a></span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span>
-</div><div class='img'><img src='flagInversions-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

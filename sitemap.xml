@@ -49,6 +49,9 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/filterInversions.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/filterTranslocations.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flagAll.html</loc>
   </url>
   <url>
@@ -62,6 +65,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flagLongShort.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/flagTranslocations.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc>
@@ -125,6 +131,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/showInversions.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/showTranslocations.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/strandNames.html</loc>
