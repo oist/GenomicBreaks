@@ -46,7 +46,8 @@ Other genoPlotR functions:
 
 Other Structural variants: 
 \code{\link{StructuralVariants}},
-\code{\link{flagInversions}()}
+\code{\link{flagInversions}()},
+\code{\link{flagTranslocations}()}
 }
 \author{
 Charles Plessy

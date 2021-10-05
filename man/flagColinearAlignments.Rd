@@ -82,7 +82,8 @@ Other Flagging functions:
 \code{\link{flagAll}()},
 \code{\link{flagInsersions}()},
 \code{\link{flagInversions}()},
-\code{\link{flagLongShort}()}
+\code{\link{flagLongShort}()},
+\code{\link{flagTranslocations}()}
 
 Other Colinearity functions: 
 \code{\link{GOC}()},

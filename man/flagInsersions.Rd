@@ -40,6 +40,7 @@ Other Flagging functions:
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagInversions}()},
-\code{\link{flagLongShort}()}
+\code{\link{flagLongShort}()},
+\code{\link{flagTranslocations}()}
 }
 \concept{Flagging functions}

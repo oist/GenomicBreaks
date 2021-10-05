@@ -1,0 +1,115 @@
+#' Flag translocations
+#'
+#' Flag ranges that start a triplet that would be colinear if the central pair
+#' were colinear, and that are an inversion.
+#'
+#' Here is a trivial example of a translocation
+#'
+#' ```
+#' ┌──────────────┬──────────────┬──────────────┐
+#' │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
+#' └──────────────┴──────────────┴──────────────┘
+#'        +               +             +         (Alignment direction)
+#' ┌──────────────┬──────────────┬──────────────┐
+#' │ chrB:101-200 │ chrC:201-300 │ chrB:301-400 │ (Query genome)
+#' └──────────────┴──────────────┴──────────────┘
+#' ```
+#'
+#' @param gb A `GBreaks()` object.
+#' @param tol Tolerance window for the distance between two ranges.
+#'
+#' @return Returns the `GBreaks` object with an extra `tra` metadata column.
+#'
+#' @family Flagging functions
+#' @family Translocation functions
+#' @family Structural variants
+#'
+#' @examples
+#' flagTranslocations(exampleTranslocation)
+#' plotApairOfChrs(exampleTranslocation)
+#' flagTranslocations(exampleDeletion)
+#' flagTranslocations(exampleInsertion)
+#' flagTranslocations(sort(reverse(exampleDeletion)))
+#' flagTranslocations(exampleInversion)
+#' flagTranslocations(exampleColinear3)
+#'
+#' @include dist2next.R
+#' @importFrom GenomicRanges precede
+#' @export
+
+flagTranslocations <- function (gb, tol = Inf) {
+  # Enforce sorting, to guarantee colinearity on the _target_ranges
+  if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
+  gb.bak <- gb # save the original object
+  # Calculate distance to next and next-next entry
+  # (here, "next" is next in order; do not confuse with preceding/following)
+  gb <- dist2next(gb, step = 2, ignore.strand = TRUE)
+  gb$tdist2 <- gb$tdist
+  gb$qdist2 <- gb$qdist
+  gb <- flagColinearAlignments(gb, details = TRUE)
+
+  gb.bak$tra <-
+    # There is a distance, therefore they are on the same sequence.
+    (! (is.na(gb$tdist) | is.na(gb$tdist2)))  &
+    # Query colinear with the next-next entry.
+    ( decode(strand(gb)) %in% c("+", "*") & gb$qfoll == 2 ) | ( decode(strand(gb)) %in%    c("-") & gb$qprev == 2 )
+
+  if(tol < Inf) stop("Not implemented yet")
+
+  gb.bak$tra[is.na(gb.bak$tra)] <- FALSE
+  gb.bak
+}
+
+#' Show translocations and their flanking blocks.
+#'
+#' @param gb A [`GBreaks`] object processed with [`flagTranslocations`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @family Translocation functions
+#'
+#' @returns Returns the `GBreaks` object in which all ranges that are not
+#' part of a translocation triplet have been discarded.  If the object was missing
+#' the `tra` metadata column, return the object after discarding all of its
+#' ranges.
+#'
+#' @examples
+#' showTranslocations(flagTranslocations(exampleTranslocation))
+#'
+#' @export
+
+showTranslocations <- function(gb, rename = TRUE) {
+  if (is.null(gb$tra)) return(gb[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  flagPos <- which(gb$tra) + 1
+  flagContext <- c(flagPos -1 , flagPos, flagPos + 1) |> unique() |> sort()
+  gb[flagContext]
+}
+
+#' Extract central blocks in translocations
+#'
+#' @param gb A [`GBreaks`] object processed with [`flagTranslocations`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @family Translocation functions
+#'
+#' @returns Returns the `GBreaks` object in which all ranges that are not
+#' the central part of an inversion triplet have been discarded.  If the object
+#' was missing the `tra` metadata column, return the object after discarding all
+#' of its ranges.
+#'
+#' @examples
+#' filterTranslocations(flagTranslocations(exampleTranslocation))
+#'
+#' @export
+
+filterTranslocations <- function(gb, rename = TRUE) {
+  if (is.null(gb$tra)) return(gb[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  flagPos <- which(gb$tra) + 1
+  flagContext <- c(flagPos) |> unique() |> sort()
+  gb[flagContext]
+}

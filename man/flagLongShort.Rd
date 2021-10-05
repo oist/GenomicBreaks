@@ -41,7 +41,8 @@ Other Flagging functions:
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagInsersions}()},
-\code{\link{flagInversions}()}
+\code{\link{flagInversions}()},
+\code{\link{flagTranslocations}()}
 }
 \author{
 Charles Plessy
