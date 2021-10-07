@@ -126,3 +126,30 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
 
   gb
 }
+
+#' Filter colinear regions
+#'
+#' @param gb A [`GBreaks`] object processed with [`flagColinearAlignments`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @family Colinearity functions
+#'
+#' @returns Returns the `GBreaks` object in which all ranges that are not
+#' the central part of an inversion triplet have been discarded.  If the object
+#' was missing the `colinear` metadata column, return the object after
+#' discarding all of its ranges.
+#'
+#' @examples
+#' filterColinearRegions(flagColinearAlignments(exampleColinear))
+#'
+#' @export
+
+filterColinearRegions <- function(gb, rename = TRUE) {
+  if (is.null(gb$colinear)) return(gb[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  flagPos <- which(gb$colinear)
+  flagContext <- c(flagPos, flagPos + 1) |> unique() |> sort()
+  gb[flagContext]
+}

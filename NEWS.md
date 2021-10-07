@@ -4,6 +4,7 @@
 
 * New functions `flagTranslocations()`, `showTranslocations()` and
   `filterTranslocations()`.
+* New `filterColinearRegions()` function.
 * New `cleanGaps()` function that is guaranteed to return only the intervals
   between the input ranges.
 * The `GBreaks()` constructor now accepts three new parameters, `target`,

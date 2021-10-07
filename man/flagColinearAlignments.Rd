@@ -88,7 +88,8 @@ Other Flagging functions:
 Other Colinearity functions: 
 \code{\link{GOC}()},
 \code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()}
+\code{\link{coalesce_contigs}()},
+\code{\link{filterColinearRegions}()}
 }
 \author{
 Charlotte West
