@@ -8,7 +8,7 @@
 #' @returns Returns a strandless [`GRanges`] object representing the gaps
 #' between the ranges of the input.
 #'
-#' @param gb A [`GBreaks`] object.
+#' @param gb A [`GBreaks`] or a [`GRanges`] object.
 #'
 #' @note If you find replacement provided by a package that we already import,
 #' please let me know in a GitHub issue or pull request.
@@ -22,11 +22,14 @@
 #'
 #' @export
 
-cleanGaps <- function(gb) {
+cleanGaps <- function(gr) {
   # Drop all seq info, otherwise gaps() adds artificial results on unused strands
-  gb <- GRanges(seqnames = seqnames(gb), ranges = ranges(gb), strand = "*")
-  gps <- gaps(gb)
+  gr.strandless <- GRanges(seqnames = seqnames(gr), ranges = ranges(gr), strand = "*")
+  gps <- gaps(gr.strandless)
   gpsList <- split(gps, seqnames(gps), drop = TRUE)
   cleanList <- endoapply(gpsList, \(x) x[-1])
-  unlist(cleanList)
+  cleanGaps <- unlist(cleanList)
+  seqinfo(cleanGaps) <- seqinfo(gr)
+  names(cleanGaps) <- NULL
+  cleanGaps
 }

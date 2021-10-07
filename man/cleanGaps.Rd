@@ -7,7 +7,7 @@
 cleanGaps(gb)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} object.}
+\item{gb}{A \code{\link{GBreaks}} or a \code{\link{GRanges}} object.}
 }
 \value{
 Returns a strandless \code{\link{GRanges}} object representing the gaps
