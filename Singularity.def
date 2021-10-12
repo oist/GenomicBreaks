@@ -7,7 +7,7 @@ From: debian:sid
 %post
     apt update
     apt upgrade -y
-    apt install -y wget locales last-align
+    apt install -y wget locales last-align htop
     apt install -y pandoc qpdf texlive # For vignette builds and package checks
     apt install -y libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev
     apt install -y libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
