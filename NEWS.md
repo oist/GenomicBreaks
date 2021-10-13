@@ -1,3 +1,9 @@
+# GenomicBreaks 0.9.1
+
+## New functionalities
+
+* `flagAll()` now ensures that flags do not collide, and reports translocations.
+
 # GenomicBreaks 0.9.0
 
 ## New functionalities

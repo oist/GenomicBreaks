@@ -18,8 +18,22 @@
 
 flagAll <- function (gb) {
   gb$flag <- NA
-  gb$flag[flagColinearAlignments(gb)$colinear |> decode()] <- "Col"
-  gb$flag[flagInversions(gb)$inv              |> decode()] <- "Inv"
-  gb$flag[flagInsersions(gb)$ins              |> decode()] <- "Ins"
+
+  Col <- flagColinearAlignments(gb)$colinear |> decode()
+  stopifnot(all(is.na(gb$flag[Col])))
+  gb$flag[Col] <- "Col"
+
+  Inv <- flagInversions(gb)$inv |> decode()
+  stopifnot(all(is.na(gb$flag[Inv])))
+  gb$flag[] <- "Inv"
+
+  Ins <- flagInsersions(gb)$ins |> decode()
+  stopifnot(all(is.na(gb$flag[Ins])))
+  gb$flag[] <- "Ins"
+
+  Tra <- flagTranslocations(gb)$tra |> decode()
+  stopifnot(all(is.na(gb$flag[Tra])))
+  gb$flag[] <- "Tra"
+
   gb
 }
