@@ -16,7 +16,7 @@
 #' @author Charles Plessy
 #'
 #' @aliases exampleColinear exampleNotColinear exampleColinear3
-#' @aliases exampleInversion exampleTranslocation
+#' @aliases exampleInversion exampleTranslocation exampleTranslocation2
 #' @aliases exampleInsertion exampleDeletion
 #'
 #' @family Structural variants
@@ -27,5 +27,6 @@
 #' exampleColinear3
 #' exampleInversion
 #' exampleTranslocation
+#' exampleTranslocation2
 #'
 NULL

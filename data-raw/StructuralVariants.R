@@ -46,6 +46,16 @@ seqlengths(exampleTranslocation)          <- 500
 seqlengths(exampleTranslocation$query)    <- c(500,500)
 isSorted(exampleTranslocation)
 
+# Translocation with minus strand
+
+exampleTranslocation2                     <- GRanges(c("chrA:100-200", "chrA:201-300", "chrA:301-400"))
+strand(exampleTranslocation2)             <- c(              "+",            "-",            "+")
+exampleTranslocation2$query               <- GRanges(c("chrB:100-200", "chrC:201-300", "chrB:301-400"))
+exampleTranslocation2                     <- GBreaks(exampleTranslocation2)
+seqlengths(exampleTranslocation2)         <- 500
+seqlengths(exampleTranslocation2$query)   <- c(500,500)
+isSorted(exampleTranslocation2)
+
 # Insertion on the target
 
 exampleInsertion                          <- GRanges(c("chrA:100-200", "chrC:401-500", "chrA:201-300"))
@@ -74,6 +84,7 @@ usethis::use_data(
   exampleColinear3,
   exampleInversion,
   exampleTranslocation,
+  exampleTranslocation2,
   exampleInsertion,
   exampleDeletion,
   overwrite = TRUE)

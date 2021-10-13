@@ -26,9 +26,11 @@
 #'
 #' @examples
 #' flagTranslocations(exampleTranslocation)
+#' flagTranslocations(exampleTranslocation2)
 #' plotApairOfChrs(exampleTranslocation)
 #' flagTranslocations(exampleDeletion)
 #' flagTranslocations(exampleInsertion)
+#' flagTranslocations(exampleInsertion |> swap() |> sort(ignore.strand = TRUE))
 #' flagTranslocations(sort(reverse(exampleDeletion)))
 #' flagTranslocations(exampleInversion)
 #' flagTranslocations(exampleColinear3)
@@ -43,10 +45,11 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb.bak <- gb # save the original object
   # Calculate distance to next and next-next entry
   # (here, "next" is next in order; do not confuse with preceding/following)
+  gb <- flagColinearAlignments(gb, details = TRUE) # Provides qfoll and qprev for later
   gb <- dist2next(gb, step = 2, ignore.strand = TRUE)
   gb$tdist2 <- gb$tdist
   gb$qdist2 <- gb$qdist
-  gb <- flagColinearAlignments(gb, details = TRUE)
+  gb <- dist2next(gb, step = 1, ignore.strand = TRUE) # Overrides strand-aware values from flagColinearAlignments
 
   gb.bak$tra <-
     # There is a distance, therefore they are on the same sequence.

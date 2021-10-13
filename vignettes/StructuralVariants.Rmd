@@ -113,6 +113,12 @@ exampleTranslocation |> flagColinearAlignments() |> flagInversions()
 plotApairOfChrs(exampleTranslocation)
 ```
 
+It does not matter if the region moved on the minus strand
+```{r translocation}
+exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
+plotApairOfChrs(exampleTranslocation2)
+```
+
 ## Insertions / Deletions (indels)
 
 NOTE that searching for insertion/deletions make little sense in one-to-one
