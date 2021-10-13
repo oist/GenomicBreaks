@@ -114,7 +114,7 @@ plotApairOfChrs(exampleTranslocation)
 ```
 
 It does not matter if the region moved on the minus strand
-```{r translocation}
+```{r translocationOnMinus}
 exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
 plotApairOfChrs(exampleTranslocation2)
 ```
