@@ -1,4 +1,4 @@
-# GenomicBreaks 0.8.0.99
+# GenomicBreaks 0.9.0
 
 ## New functionalities
 
@@ -12,7 +12,7 @@
   objects.
 * New `range()` methods for `GBreaks` objects, that runs `GRanges::range` on
   each pair of target/query _seqnames_, ignoring strand information.
-* New a `subsetByOverlaps()` range that combines regions overlapping by their
+* New `subsetByOverlaps()` range that combines regions overlapping by their
   _target_ or by their  _query_ ranges.
 
 ## Bug fixes
