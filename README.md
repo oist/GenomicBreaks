@@ -19,6 +19,8 @@ The following should work:
 Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'
 ```
 
+Add `dependencies=TRUE` if you would like to install the packages needed to build the vignettes.
+
 ### How to install R 4.1, Rstudio and Bioconductor.
 
 On a Debian/Ubuntu system, try this:
@@ -30,13 +32,14 @@ sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtif
 sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
-wget https://s3.amazonaws.com/rstudio-ide-build/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
-sudo apt --fix-broken install ./rstudio-1.4.1717-amd64.deb
+wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-351-amd64.deb
+sudo apt --fix-broken -y install ./rstudio-2021.09.0-351-amd64.deb
 Rscript -e 'install.packages("BiocManager")'
-Rscript -e 'BiocManager::install("GenomicRanges")'
 Rscript -e 'install.packages("tidyverse")'
 Rscript -e 'install.packages("devtools")' 
 Rscript -e 'install.packages("remotes")'
+Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
+
 ```
 
 GenomicBreaks in brief:
