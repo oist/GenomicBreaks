@@ -30,9 +30,11 @@ Here is a trivial example of a translocation\preformatted{┌──────�
 }
 \examples{
 flagTranslocations(exampleTranslocation)
+flagTranslocations(exampleTranslocation2)
 plotApairOfChrs(exampleTranslocation)
 flagTranslocations(exampleDeletion)
 flagTranslocations(exampleInsertion)
+flagTranslocations(exampleInsertion |> swap() |> sort(ignore.strand = TRUE))
 flagTranslocations(sort(reverse(exampleDeletion)))
 flagTranslocations(exampleInversion)
 flagTranslocations(exampleColinear3)

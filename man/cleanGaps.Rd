@@ -4,10 +4,10 @@
 \alias{cleanGaps}
 \title{Gaps between ranges}
 \usage{
-cleanGaps(gb)
+cleanGaps(gr)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} or a \code{\link{GRanges}} object.}
+\item{gr}{A \code{\link{GBreaks}} or a \code{\link{GRanges}} object.}
 }
 \value{
 Returns a strandless \code{\link{GRanges}} object representing the gaps

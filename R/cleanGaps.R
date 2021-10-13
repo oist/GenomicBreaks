@@ -8,7 +8,7 @@
 #' @returns Returns a strandless [`GRanges`] object representing the gaps
 #' between the ranges of the input.
 #'
-#' @param gb A [`GBreaks`] or a [`GRanges`] object.
+#' @param gr A [`GBreaks`] or a [`GRanges`] object.
 #'
 #' @note If you find replacement provided by a package that we already import,
 #' please let me know in a GitHub issue or pull request.

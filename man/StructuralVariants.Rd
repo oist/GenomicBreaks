@@ -7,6 +7,7 @@
 \alias{exampleColinear3}
 \alias{exampleInversion}
 \alias{exampleTranslocation}
+\alias{exampleTranslocation2}
 \alias{exampleInsertion}
 \alias{exampleDeletion}
 \title{Structural Variants}
@@ -30,6 +31,7 @@ exampleNotColinear
 exampleColinear3
 exampleInversion
 exampleTranslocation
+exampleTranslocation2
 
 }
 \seealso{
