@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -129,9 +129,9 @@
       <small>Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="genomicbreaks-08099" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.0.99">
-<a href="#genomicbreaks-08099" class="anchor"></a>GenomicBreaks 0.8.0.99</h1>
+    <div id="genomicbreaks-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#genomicbreaks-090" class="anchor"></a>GenomicBreaks 0.9.0</h1>
 <div id="new-functionalities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functionalities" class="anchor"></a>New functionalities</h2>
@@ -141,7 +141,7 @@
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
 <li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
 <li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>seqnames</em>, ignoring strand information.</li>
-<li>New a <code><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
+<li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -150,6 +150,8 @@
 <ul>
 <li>
 <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> now handles properly strandless ranges. (Issue <a href='https://github.com/oist/GenomicBreaks/issues/1'>#1</a>)</li>
+<li>
+<code><a href="../reference/swap.html">swap()</a></code> now returns proper <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> objects.</li>
 </ul>
 </div>
 </div>

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Structural Variants</h1>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">07 October, 2021</h4>
+            <h4 class="date">13 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/StructuralVariants.Rmd"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
@@ -264,12 +264,26 @@
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocation-1.png" width="700"></p>
+<p>It does not matter if the region moved on the minus strand</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exampleTranslocation2</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
+##       seqnames    ranges strand |        query  colinear   inv
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
+##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
+##   [2]     chrA   201-300      - | chrC:201-300     FALSE FALSE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/translocationOnMinus-1.png" width="700"></p>
 </div>
 <div id="insertions-deletions-indels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#insertions-deletions-indels" class="anchor"></a>Insertions / Deletions (indels)</h2>
 <p>NOTE that searching for insertion/deletions make little sense in one-to-one alignment unless the maximal distance for colinearity is set to a meaningful value.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleDeletion</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 1 metadata column:
 ##       seqnames    ranges strand |        query
@@ -279,10 +293,10 @@
 ##   [3]     chrA   301-400      + | chrB:201-300
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-1.png" width="700"></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInsertion</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 1 metadata column:
 ##       seqnames    ranges strand |        query
@@ -292,7 +306,7 @@
 ##   [3]     chrC   401-500      + | chrB:201-300
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-2.png" width="700"></p>
 </div>

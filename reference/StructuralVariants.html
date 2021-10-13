@@ -73,7 +73,7 @@ demonstration purpose" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -196,6 +196,14 @@ aligned region, for instance as a gap, are not covered</p>
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
 #&gt;   [1]     chrA   100-200      + | chrB:100-200
 #&gt;   [2]     chrA   201-300      + | chrC:201-300
+#&gt;   [3]     chrA   301-400      + | chrB:301-400
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleTranslocation2</span>
+</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |        query
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
+#&gt;   [1]     chrA   100-200      + | chrB:100-200
+#&gt;   [2]     chrA   201-300      - | chrC:201-300
 #&gt;   [3]     chrA   301-400      + | chrB:301-400
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
