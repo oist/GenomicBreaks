@@ -70,7 +70,8 @@ Other Colinearity functions:
 
 Other modifier functions: 
 \code{\link{mergeSeqLevels}()},
-\code{\link{reverse}()}
+\code{\link{reverse}()},
+\code{\link{swap}()}
 }
 \author{
 Charlotte West

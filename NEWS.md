@@ -18,6 +18,7 @@
 ## Bug fixes
 
 * `flagColinearAlignments()` now handles properly strandless ranges. (Issue #1)
+* `swap()` now returns proper `GBreaks()` objects.
 
 # GenomicBreaks 0.8.0
 

@@ -2,25 +2,30 @@
 % Please edit documentation in R/swap.R
 \name{swap}
 \alias{swap}
-\title{Swap reference and query genomes}
+\title{Swap target and query genomes}
 \usage{
-swap(gr_ob)
+swap(gb)
 }
 \arguments{
-\item{gr_ob}{Genomic ranges representing a pairwise genome alignment.}
+\item{gb}{A \code{\link{GBreaks}} object}
 }
 \value{
-Returns a new GRanges object representing the input's query ranges
-with the input's reference ranges in the query slot.  The strand information
-is transferred so that the query ranges are strandless and the reference
-are stranded.
+A new \code{GBreaks} object representing the input's \emph{query} ranges,
+with the input's \emph{target} ranges in the \emph{query} slot.  The strand information
+is unchanged.
 }
 \description{
-Produce a new object in which the information about the reference and
-query genomes have been inversed.
+Produce a new object in which the information about the \emph{target} and
+\emph{query} genomes have been inverted.
 }
 \examples{
-gr       <- GRanges(c("chr1:100-200:+", "chr1:300-400:+", "chr1:500-600:-"))
-gr$query <- GRanges(c("chr5:300-400",   "chr6:100-200",   "chr7:200-300"))
+swap(exampleColinear3)
 
 }
+\seealso{
+Other modifier functions: 
+\code{\link{coalesce_contigs}()},
+\code{\link{mergeSeqLevels}()},
+\code{\link{reverse}()}
+}
+\concept{modifier functions}

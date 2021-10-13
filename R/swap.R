@@ -1,25 +1,25 @@
-#' Swap reference and query genomes
+#' Swap target and query genomes
 #'
-#' Produce a new object in which the information about the reference and
-#' query genomes have been inversed.
+#' Produce a new object in which the information about the _target_ and
+#' _query_ genomes have been inverted.
 #'
-#' @param gr_ob Genomic ranges representing a pairwise genome alignment.
+#' @param gb A [`GBreaks`] object
 #'
-#' @return Returns a new GRanges object representing the input's query ranges
-#' with the input's reference ranges in the query slot.  The strand information
-#' is transferred so that the query ranges are strandless and the reference
-#' are stranded.
+#' @return A new `GBreaks` object representing the input's _query_ ranges,
+#' with the input's _target_ ranges in the _query_ slot.  The strand information
+#' is unchanged.
+#'
+#' @family modifier functions
 #'
 #' @examples
-#' gr       <- GRanges(c("chr1:100-200:+", "chr1:300-400:+", "chr1:500-600:-"))
-#' gr$query <- GRanges(c("chr5:300-400",   "chr6:100-200",   "chr7:200-300"))
+#' swap(exampleColinear3)
 #'
 #' @export
 
-swap <- function(gr_ob) {
-  gr               <- gr_ob$query
-  gr$query         <- granges(gr_ob)
-  strand(gr)       <- strand(gr_ob)
-  strand(gr$query) <- "*"
-  gr
+swap <- function(gb) {
+  gb2               <- gb$query
+  gb2$query         <- granges(gb)
+  strand(gb2)       <- strand(gb)
+  strand(gb2$query) <- "*"
+  GBreaks(gb2)
 }

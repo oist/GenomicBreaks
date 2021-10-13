@@ -45,7 +45,8 @@ mergeSeqLevels(gb, seqlevelsInUse(gb), "AllMerged")
 \seealso{
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
-\code{\link{reverse}()}
+\code{\link{reverse}()},
+\code{\link{swap}()}
 }
 \author{
 Charles Plessy
