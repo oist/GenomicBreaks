@@ -25,15 +25,15 @@ flagAll <- function (gb) {
 
   Inv <- flagInversions(gb)$inv |> decode()
   stopifnot(all(is.na(gb$flag[Inv])))
-  gb$flag[] <- "Inv"
+  gb$flag[Inv] <- "Inv"
 
   Ins <- flagInsersions(gb)$ins |> decode()
   stopifnot(all(is.na(gb$flag[Ins])))
-  gb$flag[] <- "Ins"
+  gb$flag[Ins] <- "Ins"
 
   Tra <- flagTranslocations(gb)$tra |> decode()
   stopifnot(all(is.na(gb$flag[Tra])))
-  gb$flag[] <- "Tra"
+  gb$flag[Tra] <- "Tra"
 
   gb
 }
