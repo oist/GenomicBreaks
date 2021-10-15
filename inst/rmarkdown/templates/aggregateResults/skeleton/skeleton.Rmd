@@ -439,8 +439,8 @@ alignments ?
 flagColinearAlignments(C_int_P__C_rob_HT, details = TRUE) |> head(11)
 C_int_P__C_rob_HT_col <- coalesce_contigs(C_int_P__C_rob_HT)
 flagColinearAlignments(C_int_P__C_rob_HT_col, details = TRUE) |> flagAll() |> head(30) |> as.data.frame()
-coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e4) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> flagAll() |> as.data.frame()
-coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> flagAll() |> as.data.frame()
+coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e4) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> flagAll() |> as.data.frame()
+coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> flagAll() |> as.data.frame()
 ```
 
 ```{r comparisons_of_seeding_schemes}
@@ -453,27 +453,27 @@ coalesce_contigs(C_int_P__C_rob_HT_col, minwidth = 1e5) |> flagColinearAlignment
 # flagColinearAlignments(NEAR__C_int_P__C_int_R, details = TRUE) |> head(11)
 # NEAR__C_int_P__C_int_R_col <- coalesce_contigs(NEAR__C_int_P__C_int_R)
 # flagColinearAlignments(NEAR__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-# coalesce_contigs(NEAR__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# coalesce_contigs(NEAR__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> as.data.frame()
 # 
 # flagColinearAlignments(YASS__C_int_P__C_int_R, details = TRUE) |> head(11)
 # YASS__C_int_P__C_int_R_col <- coalesce_contigs(YASS__C_int_P__C_int_R)
 # flagColinearAlignments(YASS__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-# coalesce_contigs(YASS__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# coalesce_contigs(YASS__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> as.data.frame()
 # 
 # flagColinearAlignments(YASSW__C_int_P__C_int_R, details = TRUE) |> head(11)
 # YASSW__C_int_P__C_int_R_col <- coalesce_contigs(YASSW__C_int_P__C_int_R)
 # flagColinearAlignments(YASSW__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-# coalesce_contigs(YASSW__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# coalesce_contigs(YASSW__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> as.data.frame()
 # 
 # flagColinearAlignments(RY32__C_int_P__C_int_R, details = TRUE) |> head(11)
 # RY32__C_int_P__C_int_R_col <- coalesce_contigs(RY32__C_int_P__C_int_R)
 # flagColinearAlignments(RY32__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-# coalesce_contigs(RY32__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# coalesce_contigs(RY32__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> as.data.frame()
 # 
 # flagColinearAlignments(RY32W__C_int_P__C_int_R, details = TRUE) |> head(11)
 # RY32W__C_int_P__C_int_R_col <- coalesce_contigs(RY32W__C_int_P__C_int_R)
 # flagColinearAlignments(RY32W__C_int_P__C_int_R_col, details = TRUE) |> head(11)
-# coalesce_contigs(RY32W__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagInsersions() |> as.data.frame()
+# coalesce_contigs(RY32W__C_int_P__C_int_R_col, minwidth = 1e5) |> flagColinearAlignments() |> flagInversions() |> flagTranslocations() |> as.data.frame()
 ```
 
 Colinearity seem to be interrupted by short-width alignments to non-homologous

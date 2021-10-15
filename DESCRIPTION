@@ -58,7 +58,6 @@ Collate:
     'correlation_index.R'
     'feature_coverage.R'
     'flagInversions.R'
-    'flagInsersions.R'
     'flagColinearAlignments.R'
     'flagAll.R'
     'flagLongShort.R'

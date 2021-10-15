@@ -88,7 +88,7 @@ gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_b
 ```{r flag_genomic_breaks}
 # gb_parts <- gb_parts |>
 #   flagColinearAlignments() |>
-#   flagInsersions() |>
+#   flagTranslocations() |>
 #   flagInversions()
 # sapply(mcols(gb_parts)[,c("colinear", "ins", "inv")], sum)
 ```
@@ -96,7 +96,7 @@ gb_parts <- load_genomic_breaks(params$gffFile, type = "match_part") #, target_b
 ```{r coalesce_contigs}
 gb_col <- coalesce_contigs(gb_parts)
 gb_col$minw <- pmin(width(gb_col), width(gb_col$query))
-gb_col <- gb_col |> flagInsersions() |>  flagInversions()
+gb_col <- gb_col |> flagTranslocations() |>  flagInversions()
 gb_col$col_1e3 <- NA
 # mcols(gb_col)[gb_col$minw >= 1e3, "col_1e3"] <- flagColinearAlignments(gb_col, minwidth = 1e3)$colinear
 # mcols(gb_col)[gb_col$minw >= 1e4, "col_1e4"] <- flagColinearAlignments(gb_col, minwidth = 1e4)$colinear
@@ -172,13 +172,13 @@ if (sum(gb_col$inv) > 10) {
 }
 ```
 
-Insertions / deletions
-----------------------
+Translocations
+--------------
 
-Patterns that can be described as insertions in the target genome.
+Patterns that can be described as translocations in the target genome.
 
-```{r study_insersions}
-gb_col <- flagInsersions(gb_col)
+```{r study_translocations}
+gb_col <- flagTranslocations(gb_col)
 sum(gb_col$ins)
 insPos <- NULL
 if (sum(gb_col$ins) > 10) {

@@ -1,3 +1,10 @@
+# GenomicBreaks 0.10.1
+
+## Backwards-incompatible changes
+
+* Removed `flagInsersions`, redundant with `flagTranslocations()` and buggy
+  on minus strands.
+
 # GenomicBreaks 0.9.1
 
 ## New functionalities

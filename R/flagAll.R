@@ -1,7 +1,7 @@
 #' Compute all flags
 #'
-#' Flag ranges that are at the beginning of a colinear duple, or an inversion,
-#' insertion or interruption triplet.
+#' Flag ranges that are at the beginning of a colinear duplet, or an inversion
+#' or a translocation triplet.
 #'
 #' @param gb A `GBreaks` object.
 #'
@@ -12,7 +12,7 @@
 #' @examples
 #' flagAll(exampleInversion)
 #'
-#' @include flagColinearAlignments.R flagInsersions.R flagInversions.R
+#' @include flagColinearAlignments.R Translocations.R flagInversions.R
 #' @importFrom S4Vectors decode
 #' @export
 
@@ -26,10 +26,6 @@ flagAll <- function (gb) {
   Inv <- flagInversions(gb)$inv |> decode()
   stopifnot(all(is.na(gb$flag[Inv])))
   gb$flag[Inv] <- "Inv"
-
-  Ins <- flagInsersions(gb)$ins |> decode()
-  stopifnot(all(is.na(gb$flag[Ins])))
-  gb$flag[Ins] <- "Ins"
 
   Tra <- flagTranslocations(gb)$tra |> decode()
   stopifnot(all(is.na(gb$flag[Tra])))

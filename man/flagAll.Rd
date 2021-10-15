@@ -13,8 +13,8 @@ flagAll(gb)
 Returns the \code{GBreaks} object with an extra \code{flag} metadata column.
 }
 \description{
-Flag ranges that are at the beginning of a colinear duple, or an inversion,
-insertion or interruption triplet.
+Flag ranges that are at the beginning of a colinear duplet, or an inversion
+or a translocation triplet.
 }
 \examples{
 flagAll(exampleInversion)
@@ -23,7 +23,6 @@ flagAll(exampleInversion)
 \seealso{
 Other Flagging functions: 
 \code{\link{flagColinearAlignments}()},
-\code{\link{flagInsersions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
 \code{\link{flagTranslocations}()}
