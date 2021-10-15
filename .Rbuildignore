@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 Dockerfile
 Singularity.def
+^.*\.sif$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
