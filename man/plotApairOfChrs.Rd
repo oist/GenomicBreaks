@@ -4,7 +4,7 @@
 \alias{plotApairOfChrs}
 \title{Plots a pair of chromosomes from a \code{GBreaks} object.}
 \usage{
-plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, ...)
+plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, dna_seg_scale = TRUE, ...)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
@@ -14,6 +14,8 @@ plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, ...)
 
 \item{chrQ}{(Optional) A sequence name on the \emph{query} genome.  Defaults to
 the longest cumulative match on \code{chrT}.}
+
+\item{dna_seg_scale}{Plot coordinats and a scale bar (defaults to \code{TRUE}).}
 
 \item{...}{Further arguments are passed to \code{plot_gene_map}.}
 }

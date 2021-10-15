@@ -4,6 +4,7 @@
 
 * Removed `flagInsersions`, redundant with `flagTranslocations()` and buggy
   on minus strands.
+* `plotApairOfChrs()` now plots coordinates and a scale bar by default.
 
 # GenomicBreaks 0.9.1
 
@@ -15,7 +16,7 @@
 
 ## New functionalities
 
-* New functions `flagTranslocations()`, `showTranslocations()` and
+* New functions `flagTranslocations()`, `showTranslocations()` a
   `filterTranslocations()`.
 * New `filterColinearRegions()` function.
 * New `cleanGaps()` function that is guaranteed to return only the intervals

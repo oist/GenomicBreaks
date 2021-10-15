@@ -139,6 +139,7 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #'        _sequence level_ of the `gb` object.
 #' @param chrQ (Optional) A sequence name on the _query_ genome.  Defaults to
 #'        the longest cumulative match on `chrT`.
+#' @param dna_seg_scale Plot coordinats and a scale bar (defaults to `TRUE`).
 #' @param ... Further arguments are passed to `plot_gene_map`.
 #'
 #' @author Charles Plessy
@@ -156,7 +157,7 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #'
 #' @export
 
-plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, ...) {
+plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, dna_seg_scale=TRUE, ...) {
   # If needed, guess name of target seqlevel
   if(is.null(chrT))
     chrT <- seqlevelsInUse(gb)[1]
@@ -187,5 +188,5 @@ plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, ...) {
 
   compList <- list(gb2comp(roi))
 
-  genoPlotR::plot_gene_map(dsList, compList, ...)
+  genoPlotR::plot_gene_map(dsList, compList, dna_seg_scale=dna_seg_scale, ...)
 }
