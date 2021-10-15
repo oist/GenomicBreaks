@@ -228,83 +228,10 @@ length(gb)
 length(coa)
 ```
 
-The resulting GRanges object has far fewer alignments and therefore far fewer
+The resulting `GBreaks` object has far fewer alignments and therefore far fewer
 alignment stops. The algorithm is an initial step in alignment stop filtering,
 with the goal of a reduced number of alignment stops that have a high
 probability of being breakpoints.
-
-### Width summary plots
-
-The distribution of widths is not the same on long and short arms.  For this
-reason, it would be unwise to filter by width on some operations such as
-coalescing.
-
-```{r width_after_coalescing}
-# width2df <- function(where, what, gbl) {
-#   gb <- gbl[[where]]
-#   if (length(gb) == 0) return (NULL)
-#   data.frame(where = where, what = what, width = width(gb))
-# }
-# 
-# df <- rbind(
-#   # do.call allows a list to replace "..." in a function call
-#   do.call(rbind, lapply(names(gbs), width2df, "aligned", gbs)),
-#   do.call(rbind, lapply(names(coa), width2df, "collapsed", coa))
-# )
-# 
-# ggplot(df) +
-#   aes(width, col = what) +
-#   geom_freqpoly() +
-#   scale_x_log10() +
-#   facet_wrap(~where, scales = "free_y")
-# 
-# gg_freq_poly <- function(DF) {
-#     ggplot(DF |> as("data.frame")) +
-#     aes(width) +
-#     geom_freqpoly() +
-#     scale_x_log10()
-# }
-# 
-# DF <- DataFrame(width = width(gbs$Oki_Osa), Type = gbs$Oki_Osa$Type, chr = seqnames(gbs$Oki_Osa))
-# 
-# gg_freq_poly(DF) +
-#   aes(col=Type) +
-#   facet_wrap(~chr, scales = "free_y")
-```
-
-After coalescing, width distribution becomes more clearly bimodal, with a small
-peak under 500 bp, found on all arms except YSR.  The second peak shows two
-different distributions for long and short arms.
-
-Therefore, if the first peak represents events that we do not want to consider
-breaking synteny (either alignment artefacts or insertion/transpositions of
-short mobile elements), we can re-coalesce once after removing the shortest
-intervals.
-
-```{r width_of_coalesced_regions}
-# DF <- DataFrame(
-#   width = width(coa$Oki_Osa),
-#   Type = mcols(OKI_longShort)[findOverlaps(coa$Oki_Osa, OKI_longShort) |> subjectHits(), "Type"],
-#   chr = seqnames(coa$Oki_Osa))
-# 
-# gg_freq_poly(DF) +
-#   aes(col=Type) +
-#   facet_wrap(~chr, scales = "free_y")
-```
-
-```{r re_coalesce}
-# coa2 <- sapply(coa, coalesce_contigs, minwidth = 500) |> SimpleList()
-# sapply(coa2, length)
-# 
-# DF <- DataFrame(
-#   width = width(coa2$Oki_Osa),
-#   Type = mcols(OKI_longShort)[findOverlaps(coa2$Oki_Osa, OKI_longShort) |> subjectHits(), "Type"],
-#   chr = seqnames(coa2$Oki_Osa))
-# 
-# gg_freq_poly(DF) +
-#   aes(col=Type) +
-#   facet_wrap(~chr, scales = "free_y")
-```
 
 ## Genome plots with genoPlotR
 
@@ -313,6 +240,51 @@ To visualise synteny it is clearer to plot from the coalseced objects.
 ```{r test_genoPlotR}
 plotApairOfChrs(gb,  "chrI")
 plotApairOfChrs(coa, "chrI")
+```
+
+## Trivial translocations
+
+### Definitions
+
+Remember that we are working with one-to-one alignments.  Therefore deletions,
+insertions and as a consequence copy number variations, are not in the aligned
+regions.  Nevertheless, we can detect translocations from one chromosomal
+region to another.  We define them by alignment pairs that interrupt the
+colinearity between two other pairs, and that are not inversions.
+
+### Representation
+
+The translocation below:
+
+```
+┌──────────────┬──────────────┬──────────────┐
+│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
+└──────────────┴──────────────┴──────────────┘
+      +               +             +         (Alignment direction)
+┌──────────────┬──────────────┬──────────────┐
+│ chrB:101-200 │ chrC:201-300 │ chrB:301-400 │ (Query genome)
+└──────────────┴──────────────┴──────────────┘
+```
+
+Is represented as:
+
+```{r ideal_insertions}
+exampleTranslocation
+plotApairOfChrs(exampleTranslocation)
+```
+
+See `vignette("StructuralVariants", package = "GenomicBreaks")` for other
+examples of translocations.
+
+Note also that *without an outgroup it is not possible to know in which genome
+the move happened*.
+
+### Detection
+
+```{r detect_trivial_insertions}
+flagTranslocations(exampleTranslocation)
+showTranslocations(flagTranslocations(coa))
+plotApairOfChrs(coa, chrT = "chrI", xlim = gb2xlim(coa[2:4]))
 ```
 
 ## Trivial inversions
@@ -369,154 +341,6 @@ showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChr
 # inv.lgaps.Seq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      inv.lgaps$Bar_Oki)
 ```
 
-### AT richness
-
-```{r at_richness}
-# ## Inverted regions are AT-rich as usual.
-# invSeq <- SimpleList()
-# invSeq$Oki_Osa <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Osa)))
-# invSeq$Oki_Bar <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Bar)))
-# invSeq$Oki_Kum <- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Kum)))
-# invSeq$Kum_Oki <- BSgenome::getSeq(KUM_M3,  swap(filterInversions(flagInversions(coa$Oki_Kum))))
-# invSeq$Osa_Oki <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Oki)))
-# invSeq$Osa_Bar <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Bar)))
-# invSeq$Osa_Kum <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Kum)))
-# invSeq$Osa_Aom <- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Aom)))
-# invSeq$Bar_Osa <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Osa)))
-# invSeq$Bar_Oki <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Oki)))
-# invSeq$Bar_Kum <- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Kum)))
-# 
-# sapply(invSeq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summary())
-# genomes.AT
-# 
-# ## But gaps are a bit more AT-rich.
-# sapply(inv.lgaps.Seq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |> summary())
-# 
-# ## This difference is significant.
-# t.test(letterFrequency(invSeq$Oki_Osa, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Osa, "AT", as.prob = TRUE))
-# t.test(letterFrequency(invSeq$Osa_Oki, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Osa_Oki, "AT", as.prob = TRUE))
-# t.test(letterFrequency(invSeq$Oki_Bar, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Bar, "AT", as.prob = TRUE))
-# t.test(letterFrequency(invSeq$Oki_Kum, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Kum, "AT", as.prob = TRUE))
-```
-
-I was tempted to explain this difference with A/T homopolymer stetches.  But
-de novo motif prediction with rGADEM finds AT-rich motifs in any set of Oik
-sequences that I have tried.
-
-```{r search_for_motifs_in_inversions}
-# library("rGADEM")
-# # Slow !
-# # Note that GADEM crashes on sequences longer than 50 kbp.
-# gadems <- SimpleList()
-# gadems$Oki_Osa <- GADEM(inv.lgaps.Seq$Oki_Osa[width(inv.lgaps.Seq$Oki_Osa) < 50000], verbose=1, genome=OKI2018_I69)
-# gadems$Oki_Kum <- GADEM(inv.lgaps.Seq$Oki_Kum[width(inv.lgaps.Seq$Oki_Kum) < 50000], verbose=1, genome=OKI2018_I69)
-# 
-# gadems$Osa_Oki <- GADEM(inv.lgaps.Seq$Osa_Oki[width(inv.lgaps.Seq$Osa_Oki) < 50000], verbose=1, genome=OSKA2016v1.9)
-# gadems$Osa_Aom <- GADEM(inv.lgaps.Seq$Osa_Aom[width(inv.lgaps.Seq$Osa_Aom) < 50000], verbose=1, genome=OSKA2016v1.9)
-# 
-# 
-# gadems$Kum_Oki <- GADEM(invSeq$Kum_Oki[width(invSeq$Kum_Oki) < 50000], verbose=1, genome=KUM_M3)
-# gadems$Osa_Oki <- GADEM(invSeq$Osa_Oki[width(invSeq$Osa_Oki) < 50000], verbose=1, genome=OSKA2016v1.9)
-# # gadem <- GADEM(invSeq_Oki_O[width(invSeq_Oki_O) < 50000], verbose=1, genome=OKI2018_I69)
-# # consensus(gadem)
-# # [1] "nAAAAwwnnnrAAAAn"
-# 
-# # gadem <- GADEM(lgapsSeq_Oki_O, verbose=1, genome=OKI2018_I69)
-# # consensus(gadem)
-# # [1] "rAAGCsGCwwmkCGrCTTyn" "nAAAAwwnnwnAAAAAn"    "nTTTsAAAAw"           "nCCTGAsTCAGGkTTTn"    "nTTTTTnnnnrAAAn"      "wTAAGGGTrTCm"
-# 
-# #saveRDS(gadem, file = "lgapsSeq_Oki_O_gadem.rds")
-# gadem <- readRDS("lgapsSeq_Oki_O_gadem.rds")
-# 
-# for (n in seq_along(gadem@motifList)) seqLogo::seqLogo(rGADEM::getPWM(gadem)[[n]])
-# pwm <- rGADEM::getPWM(gadem)[[1]]
-# 
-# #RGadem positive control: check introns ?
-# # set.seed(1664)
-# # intr <- sample(intronicParts(tx_OKI), 1000)
-# # intr <- BSgenome::getSeq(OKI2018_I69, intr)
-# # gadem <- GADEM(intr, verbose=1, genome=OKI2018_I69)
-# # > consensus(gadem)
-# # [1] "nAAAAwnnwnAAAwn"
-# # Also found motifs like rryCAATTbwTkCGmAkyT
-# 
-# 
-# #RGadem positive control: check promoters ?
-# # set.seed(1664)
-# # prom <- sample(promoters(tx_OKI), 1000)
-# # prom <- BSgenome::getSeq(OKI2018_I69, prom)
-# # gadem <- GADEM(prom, verbose=1, genome=OKI2018_I69)
-# # consensus(gadem)
-# # [1] "nAAAAwwnwnnAAAAwn" "nTTTTCTTyn"       
-# # Also found motifs like TTTmAAAA
-```
-
-### Representation of some inversions
-
-```{r}
-# x <- coa$Oki_Osa |> flagInversions() |> dist2next(ignore.strand = TRUE)
-# 
-# pmpcoord <- showInversions(x)
-# 
-# seqinfo2gieStain <- function(si) {
-#   data.frame(
-#     chrom      = seqlevels(si),
-#     chromStart = 0,
-#     chromEnd   = seqlengths(si),
-#     name       = seqlevels(si),
-#     gieStain   = "gneg"
-#   )
-# }
-# 
-# #r <- 63:70
-# r <- 94:98
-# #r <- 316:319
-# options(ucscChromosomeNames=FALSE)
-# gen <- GenomeAxisTrack(name="OKI2018_I69")
-# ide <- IdeogramTrack(chromosome = seqlevelsInUse(x[r]), genome = "OKI2018_I69", bands = seqinfo2gieStain(OKI2018_I69))
-# trk <- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])
-# p1 <- grid::grid.grabExpr(plotTracks(list(ide, gen, trk), featureAnnotation = "id"))
-# 
-# gen2 <- GenomeAxisTrack(name="OSKA2016v1.9")
-# ide2 <- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r]), genome = "OSKA2016v1.9", bands = seqinfo2gieStain(OSKA2016v1.9))
-# trk2 <- AnnotationTrack(x[r]$query, name = "OSKA2016v1.9", id=LETTERS[seq_along(r)])
-# p2 <- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "id"))
-# 
-# gridExtra::grid.arrange(p1, p2, nrow=2)
-```
-
-## Trivial translocations
-
-See `vignette("StructuralVariants", package = "GenomicBreaks")` for definitions.
-
-### Representation
-
-The translocation below:
-
-```
-┌──────────────┬──────────────┬──────────────┐
-│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
-└──────────────┴──────────────┴──────────────┘
-      +               +             +         (Alignment direction)
-┌──────────────┬──────────────┬──────────────┐
-│ chrB:101-200 │ chrC:201-300 │ chrB:301-400 │ (Query genome)
-└──────────────┴──────────────┴──────────────┘
-```
-
-Is represented as:
-
-```{r ideal_insertions}
-exampleTranslocation
-plotApairOfChrs(exampleTranslocation)
-```
-
-*Without an outgroup it is not possible to know in which genome the move happened.*
-
-### Detection
-
-```{r detect_trivial_insertions}
-flagTranslocations(exampleTranslocation)
-```
 
 ## Tandem repeats
 
