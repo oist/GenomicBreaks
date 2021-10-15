@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -101,6 +101,7 @@
 <a href="#install-the-package" class="anchor"></a>Install the package.</h3>
 <p>The following should work:</p>
 <pre><code>Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'</code></pre>
+<p>Add <code>dependencies=TRUE</code> if you would like to install the packages needed to build the vignettes.</p>
 </div>
 <div id="how-to-install-r-41-rstudio-and-bioconductor" class="section level3">
 <h3 class="hasAnchor">
@@ -112,33 +113,32 @@ sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtif
 sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
-wget https://s3.amazonaws.com/rstudio-ide-build/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
-sudo apt --fix-broken install ./rstudio-1.4.1717-amd64.deb
+wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-351-amd64.deb
+sudo apt --fix-broken -y install ./rstudio-2021.09.0-351-amd64.deb
 Rscript -e 'install.packages("BiocManager")'
-Rscript -e 'BiocManager::install("GenomicRanges")'
 Rscript -e 'install.packages("tidyverse")'
 Rscript -e 'install.packages("devtools")' 
-Rscript -e 'install.packages("remotes")'</code></pre>
+Rscript -e 'install.packages("remotes")'
+Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
+</code></pre>
 </div>
 </div>
 <div id="genomicbreaks-in-brief" class="section level2">
 <h2 class="hasAnchor">
 <a href="#genomicbreaks-in-brief" class="anchor"></a>GenomicBreaks in brief:</h2>
 <p>A pairwise alignment of two genomes is loaded in <code>GBreaks</code> objects wrapping the <code>GRanges</code> class. Here is an example:</p>
-<pre><code>GRanges object with 11 ranges and 2 metadata columns:
+<pre><code>GBreaks object with 11 ranges and 2 metadata columns:
        seqnames            ranges strand |                  query     score
           &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;GRanges&gt; &lt;integer&gt;
-   [1]     chr1 11234702-11242676      + |   Chr1:7691083-7699807      7975
-   [2]     chr1 11242764-11256464      - |   Chr1:7714830-7733148     13701
-   [3]     chr1 11256821-11271214      - |   Chr1:7699877-7713142     14394
-   [4]     chr1 11271261-11272159      - |   Chr1:7975442-7976321       899
-   [5]     chr1 11272246-11274272      + |   Chr1:7686802-7688942      2027
-   [6]     chr1 11275227-11276200      - |   Chr1:7491169-7492136       974
-   [7]     chr1 11276902-11281111      - |   Chr1:7850371-7855204      4210
-   [8]     chr1 11281154-11281731      + |  PAR:10891068-10891635       578
-   [9]     chr1 11281946-11288799      + |   Chr2:9359434-9367027      6854
-  [10]     chr1 11288839-11299743      - | Chr1:10912857-10921537     10905
-  [11]     chr1 11300902-11301564      - |   Chr1:9597979-9599493       663
+   [1]     chr1 11256821-11271214      - |   Chr1:7699877-7713142     14394
+   [2]     chr1 11271261-11272159      - |   Chr1:7975442-7976321       899
+   [3]     chr1 11272246-11274272      + |   Chr1:7686802-7688942      2027
+   [4]     chr1 11275227-11276200      - |   Chr1:7491169-7492136       974
+   [5]     chr1 11276902-11281111      - |   Chr1:7850371-7855204      4210
+   [6]     chr1 11281154-11281731      + |  PAR:10891068-10891635       578
+   [7]     chr1 11281946-11288799      + |   Chr2:9359434-9367027      6854
+   [8]     chr1 11288839-11299743      - | Chr1:10912857-10921537     10905
+   [9]     chr1 11300902-11301564      - |   Chr1:9597979-9599493       663
   -------
   seqinfo: 19 sequences from OKI2018_I69 genome</code></pre>
 <p>See <a href="https://oist.github.io/GenomicBreaks" class="uri">https://oist.github.io/GenomicBreaks</a> for further details.</p>

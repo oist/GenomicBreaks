@@ -61,9 +61,6 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.html</loc>
   </url>
   <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagInsersions.html</loc>
-  </url>
-  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flagInversions.html</loc>
   </url>
   <url>
@@ -80,6 +77,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/gb2xlim.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/getRefGenome.html</loc>

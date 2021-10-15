@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter colinear regions — filterColinearRegions • GenomicBreaks</title>
+<title>GBreaks to xlim — gb2xlim • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Filter colinear regions — filterColinearRegions" />
-<meta property="og:description" content="Filter colinear regions" />
+<meta property="og:title" content="GBreaks to xlim — gb2xlim" />
+<meta property="og:description" content="Converts a GBreaks object to a list that can be passed as xlim argument
+to plotApairOfChrs." />
 
 
 
@@ -126,53 +127,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter colinear regions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagColinearAlignments.R'><code>R/flagColinearAlignments.R</code></a></small>
-    <div class="hidden name"><code>filterColinearRegions.Rd</code></div>
+    <h1>GBreaks to xlim</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/genoPlotR.R'><code>R/genoPlotR.R</code></a></small>
+    <div class="hidden name"><code>gb2xlim.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Filter colinear regions</p>
+    <p>Converts a <code>GBreaks</code> object to a <code>list</code> that can be passed as <code>xlim</code> argument
+to <code><a href='plotApairOfChrs.html'>plotApairOfChrs</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterColinearRegions</span><span class='op'>(</span><span class='va'>gb</span>, rename <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gb2xlim</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gb</th>
-      <td><p>A <code><a href='GBreaks-class.html'>GBreaks</a></code> object processed with <code><a href='flagColinearAlignments.html'>flagColinearAlignments</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>rename</th>
-      <td><p>Replace range names by their numeric order before subsetting.</p></td>
+      <td><p>A <code>GBreaks</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the <code>GBreaks</code> object in which all ranges that are not
-the central part of an inversion triplet have been discarded.  If the object
-was missing the <code>colinear</code> metadata column, return the object after
-discarding all of its ranges.</p>
+    <p>A <code>list</code> of two pairs of numbers, where the first pair is the <em>start</em>
+and <em>end</em> positions of the first <code><a href='https://rdrr.io/r/base/range.html'>range</a></code> of the <code>GBreaks</code> object on the
+<em>target</em> genome and the second pair is the <em>start</em> and <em>end</em> positions of the
+same first range, on the <em>query</em> genome.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This function is intended to be run on <code>GBreaks</code> objects that have been
+filtered to contain only one <em>seqname</em> on each genome.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Colinearity functions: 
-<code><a href='GOC.html'>GOC</a>()</code>,
-<code><a href='chain_contigs.html'>chain_contigs</a>()</code>,
-<code><a href='coalesce_contigs.html'>coalesce_contigs</a>()</code>,
-<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code></p></div>
+    <div class='dont-index'><p>Other converter functions: 
+<code><a href='gb2comp.html'>gb2comp</a>()</code>,
+<code><a href='gb2dna_seg.html'>gb2dna_seg</a>()</code>,
+<code><a href='gr2dna_seg.html'>gr2dna_seg</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>filterColinearRegions</span><span class='op'>(</span><span class='fu'><a href='flagColinearAlignments.html'>flagColinearAlignments</a></span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 2 metadata columns:
-#&gt;     seqnames    ranges strand |        query  colinear
-#&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-#&gt;   1     chrA   100-150      + | chrB:100-150      TRUE
-#&gt;   2     chrA   251-300      + | chrB:251-300     FALSE
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>gb2xlim</span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 100 300
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 100 300
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

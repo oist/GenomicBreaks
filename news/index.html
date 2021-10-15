@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -129,14 +129,46 @@
       <small>Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="genomicbreaks-090" class="section level1">
-<h1 class="page-header" data-toc-text="0.9.0">
-<a href="#genomicbreaks-090" class="anchor"></a>GenomicBreaks 0.9.0</h1>
+    <div id="genomicbreaks-0101" class="section level1">
+<h1 class="page-header" data-toc-text="0.10.1">
+<a href="#genomicbreaks-0101" class="anchor"></a>GenomicBreaks 0.10.1</h1>
+<div id="backwards-incompatible-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#backwards-incompatible-changes" class="anchor"></a>Backwards-incompatible changes</h2>
+<ul>
+<li>Removed <code>flagInsersions</code>, redundant with <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code> and buggy on minus strands.</li>
+<li>
+<code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> now plots coordinates and a scale bar by default.</li>
+</ul>
+</div>
 <div id="new-functionalities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functionalities" class="anchor"></a>New functionalities</h2>
 <ul>
-<li>New functions <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code>, <code><a href="../reference/showTranslocations.html">showTranslocations()</a></code> and <code><a href="../reference/filterTranslocations.html">filterTranslocations()</a></code>.</li>
+<li>New <code><a href="../reference/gb2xlim.html">gb2xlim()</a></code> function to narrow focus on plots made with <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code>.</li>
+</ul>
+</div>
+</div>
+    <div id="genomicbreaks-091" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.1">
+<a href="#genomicbreaks-091" class="anchor"></a>GenomicBreaks 0.9.1</h1>
+<div id="new-functionalities-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functionalities-1" class="anchor"></a>New functionalities</h2>
+<ul>
+<li>
+<code><a href="../reference/flagAll.html">flagAll()</a></code> now ensures that flags do not collide, and reports translocations.</li>
+</ul>
+</div>
+</div>
+    <div id="genomicbreaks-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#genomicbreaks-090" class="anchor"></a>GenomicBreaks 0.9.0</h1>
+<div id="new-functionalities-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functionalities-2" class="anchor"></a>New functionalities</h2>
+<ul>
+<li>New functions <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code>, <code><a href="../reference/showTranslocations.html">showTranslocations()</a></code> a <code><a href="../reference/filterTranslocations.html">filterTranslocations()</a></code>.</li>
 <li>New <code><a href="../reference/filterColinearRegions.html">filterColinearRegions()</a></code> function.</li>
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
 <li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
@@ -158,16 +190,16 @@
     <div id="genomicbreaks-080" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#genomicbreaks-080" class="anchor"></a>GenomicBreaks 0.8.0</h1>
-<div id="backwards-incompatible-changes" class="section level2">
+<div id="backwards-incompatible-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#backwards-incompatible-changes" class="anchor"></a>Backwards-incompatible changes</h2>
+<a href="#backwards-incompatible-changes-1" class="anchor"></a>Backwards-incompatible changes</h2>
 <ul>
 <li>Remove <code>flagInterruptions</code>, which was nonsense.</li>
 </ul>
 </div>
-<div id="new-functionalities-1" class="section level2">
+<div id="new-functionalities-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functionalities-1" class="anchor"></a>New functionalities</h2>
+<a href="#new-functionalities-3" class="anchor"></a>New functionalities</h2>
 <ul>
 <li>New <code><a href="../reference/isSorted.html">isSorted()</a></code> method to properly test with <code>ignore.strand</code> set to <code>TRUE</code>.</li>
 <li>Default <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> to the first <em>sequence level</em> of the <code>GBreaks</code> object.</li>

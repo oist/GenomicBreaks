@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
                         <h4 class="author">Charlotte West</h4>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">13 October, 2021</h4>
+            <h4 class="date">15 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/GenomicBreaks.Rmd"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="hidden name"><code>GenomicBreaks.Rmd</code></div>
@@ -460,77 +460,103 @@
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 88</code></pre>
-<p>The resulting GRanges object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.</p>
-<div id="width-summary-plots" class="section level3">
-<h3 class="hasAnchor">
-<a href="#width-summary-plots" class="anchor"></a>Width summary plots</h3>
-<p>The distribution of widths is not the same on long and short arms. For this reason, it would be unwise to filter by width on some operations such as coalescing.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># width2df &lt;- function(where, what, gbl) {</span>
-<span class="co">#   gb &lt;- gbl[[where]]</span>
-<span class="co">#   if (length(gb) == 0) return (NULL)</span>
-<span class="co">#   data.frame(where = where, what = what, width = width(gb))</span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># df &lt;- rbind(</span>
-<span class="co">#   # do.call allows a list to replace "..." in a function call</span>
-<span class="co">#   do.call(rbind, lapply(names(gbs), width2df, "aligned", gbs)),</span>
-<span class="co">#   do.call(rbind, lapply(names(coa), width2df, "collapsed", coa))</span>
-<span class="co"># )</span>
-<span class="co"># </span>
-<span class="co"># ggplot(df) +</span>
-<span class="co">#   aes(width, col = what) +</span>
-<span class="co">#   geom_freqpoly() +</span>
-<span class="co">#   scale_x_log10() +</span>
-<span class="co">#   facet_wrap(~where, scales = "free_y")</span>
-<span class="co"># </span>
-<span class="co"># gg_freq_poly &lt;- function(DF) {</span>
-<span class="co">#     ggplot(DF |&gt; as("data.frame")) +</span>
-<span class="co">#     aes(width) +</span>
-<span class="co">#     geom_freqpoly() +</span>
-<span class="co">#     scale_x_log10()</span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># DF &lt;- DataFrame(width = width(gbs$Oki_Osa), Type = gbs$Oki_Osa$Type, chr = seqnames(gbs$Oki_Osa))</span>
-<span class="co"># </span>
-<span class="co"># gg_freq_poly(DF) +</span>
-<span class="co">#   aes(col=Type) +</span>
-<span class="co">#   facet_wrap(~chr, scales = "free_y")</span></code></pre></div>
-<p>After coalescing, width distribution becomes more clearly bimodal, with a small peak under 500 bp, found on all arms except YSR. The second peak shows two different distributions for long and short arms.</p>
-<p>Therefore, if the first peak represents events that we do not want to consider breaking synteny (either alignment artefacts or insertion/transpositions of short mobile elements), we can re-coalesce once after removing the shortest intervals.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># DF &lt;- DataFrame(</span>
-<span class="co">#   width = width(coa$Oki_Osa),</span>
-<span class="co">#   Type = mcols(OKI_longShort)[findOverlaps(coa$Oki_Osa, OKI_longShort) |&gt; subjectHits(), "Type"],</span>
-<span class="co">#   chr = seqnames(coa$Oki_Osa))</span>
-<span class="co"># </span>
-<span class="co"># gg_freq_poly(DF) +</span>
-<span class="co">#   aes(col=Type) +</span>
-<span class="co">#   facet_wrap(~chr, scales = "free_y")</span></code></pre></div>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># coa2 &lt;- sapply(coa, coalesce_contigs, minwidth = 500) |&gt; SimpleList()</span>
-<span class="co"># sapply(coa2, length)</span>
-<span class="co"># </span>
-<span class="co"># DF &lt;- DataFrame(</span>
-<span class="co">#   width = width(coa2$Oki_Osa),</span>
-<span class="co">#   Type = mcols(OKI_longShort)[findOverlaps(coa2$Oki_Osa, OKI_longShort) |&gt; subjectHits(), "Type"],</span>
-<span class="co">#   chr = seqnames(coa2$Oki_Osa))</span>
-<span class="co"># </span>
-<span class="co"># gg_freq_poly(DF) +</span>
-<span class="co">#   aes(col=Type) +</span>
-<span class="co">#   facet_wrap(~chr, scales = "free_y")</span></code></pre></div>
-</div>
+<p>The resulting <code>GBreaks</code> object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.</p>
 </div>
 <div id="genome-plots-with-genoplotr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#genome-plots-with-genoplotr" class="anchor"></a>Genome plots with genoPlotR</h2>
 <p>To visualise synteny it is clearer to plot from the coalseced objects.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb</span>,  <span class="st">"chrI"</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/test_genoPlotR-1.png" width="700"></p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, <span class="st">"chrI"</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/test_genoPlotR-2.png" width="700"></p>
+</div>
+<div id="trivial-translocations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#trivial-translocations" class="anchor"></a>Trivial translocations</h2>
+<div id="definitions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#definitions" class="anchor"></a>Definitions</h3>
+<p>Remember that we are working with one-to-one alignments. Therefore deletions, insertions and as a consequence copy number variations, are not in the aligned regions. Nevertheless, we can detect translocations from one chromosomal region to another. We define them by alignment pairs that interrupt the colinearity between two other pairs, and that are not inversions.</p>
+</div>
+<div id="representation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#representation" class="anchor"></a>Representation</h3>
+<p>The translocation below:</p>
+<pre><code>┌──────────────┬──────────────┬──────────────┐
+│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
+└──────────────┴──────────────┴──────────────┘
+      +               +             +         (Alignment direction)
+┌──────────────┬──────────────┬──────────────┐
+│ chrB:101-200 │ chrC:201-300 │ chrB:301-400 │ (Query genome)
+└──────────────┴──────────────┴──────────────┘</code></pre>
+<p>Is represented as:</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exampleTranslocation</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 1 metadata column:
+##       seqnames    ranges strand |        query
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
+##   [1]     chrA   100-200      + | chrB:100-200
+##   [2]     chrA   201-300      + | chrC:201-300
+##   [3]     chrA   301-400      + | chrB:301-400
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
+<p><img src="GenomicBreaks_files/figure-html/ideal_insertions-1.png" width="700"></p>
+<p>See <code><a href="../articles/StructuralVariants.html">vignette("StructuralVariants", package = "GenomicBreaks")</a></code> for other examples of translocations.</p>
+<p>Note also that <em>without an outgroup it is not possible to know in which genome the move happened</em>.</p>
+</div>
+<div id="detection" class="section level3">
+<h3 class="hasAnchor">
+<a href="#detection" class="anchor"></a>Detection</h3>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
+##       seqnames    ranges strand |        query       tra
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
+##   [1]     chrA   100-200      + | chrB:100-200      TRUE
+##   [2]     chrA   201-300      + | chrC:201-300     FALSE
+##   [3]     chrA   301-400      + | chrB:301-400     FALSE
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/showTranslocations.html">showTranslocations</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## GBreaks object with 32 ranges and 3 metadata columns:
+##      seqnames        ranges strand |                     query     score
+##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt;
+##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664
+##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249
+##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157
+##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694
+##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417
+##   ..      ...           ...    ... .                       ...       ...
+##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467
+##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072
+##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789
+##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835
+##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450
+##            tra
+##      &lt;logical&gt;
+##    1      TRUE
+##    2      TRUE
+##    3     FALSE
+##    4     FALSE
+##   12      TRUE
+##   ..       ...
+##   64     FALSE
+##   65     FALSE
+##   72      TRUE
+##   73     FALSE
+##   74     FALSE
+##   -------
+##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, chrT <span class="op">=</span> <span class="st">"chrI"</span>, xlim <span class="op">=</span> <span class="fu"><a href="../reference/gb2xlim.html">gb2xlim</a></span><span class="op">(</span><span class="va">coa</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_insertions-1.png" width="700"></p>
+</div>
 </div>
 <div id="trivial-inversions" class="section level2">
 <h2 class="hasAnchor">
@@ -540,7 +566,7 @@
 <h3 class="hasAnchor">
 <a href="#number-of-trivial-inversions" class="anchor"></a>Number of trivial inversions</h3>
 <p>More inversions are found after coalescing colinear blocks because of situations where <code>+ - +</code> was <code>+ - - +</code> before collapsing.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 88 ranges and 3 metadata columns:
 ##        seqnames        ranges strand |                     query     score
@@ -571,7 +597,7 @@
 ##   [88] FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 12 ranges and 3 metadata columns:
 ##      seqnames         ranges strand |                      query     score
@@ -602,20 +628,20 @@
 ##   54 FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" width="700"></p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png" width="700"></p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png" width="700"></p>
 </div>
 <div id="isolate-the-left-side-gaps-in-inversions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#isolate-the-left-side-gaps-in-inversions" class="anchor"></a>Isolate the left-side gaps in inversions</h3>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># lgaps &lt;- function(reduced_gr) {</span>
 <span class="co">#   # Flag inversions.</span>
 <span class="co">#   #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE</span>
@@ -648,172 +674,6 @@
 <span class="co"># inv.lgaps.Seq$Osa_Aom &lt;- BSgenome::getSeq(OSKA2016v1.9, inv.lgaps$Osa_Aom)</span>
 <span class="co"># inv.lgaps.Seq$Oki_Bar &lt;- BSgenome::getSeq(OKI2018_I69,  inv.lgaps$Oki_Bar)</span>
 <span class="co"># inv.lgaps.Seq$Bar_Oki &lt;- BSgenome::getSeq(Bar2_p4,      inv.lgaps$Bar_Oki)</span></code></pre></div>
-</div>
-<div id="at-richness" class="section level3">
-<h3 class="hasAnchor">
-<a href="#at-richness" class="anchor"></a>AT richness</h3>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># ## Inverted regions are AT-rich as usual.</span>
-<span class="co"># invSeq &lt;- SimpleList()</span>
-<span class="co"># invSeq$Oki_Osa &lt;- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Osa)))</span>
-<span class="co"># invSeq$Oki_Bar &lt;- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Bar)))</span>
-<span class="co"># invSeq$Oki_Kum &lt;- BSgenome::getSeq(OKI2018_I69,  filterInversions(flagInversions(coa$Oki_Kum)))</span>
-<span class="co"># invSeq$Kum_Oki &lt;- BSgenome::getSeq(KUM_M3,  swap(filterInversions(flagInversions(coa$Oki_Kum))))</span>
-<span class="co"># invSeq$Osa_Oki &lt;- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Oki)))</span>
-<span class="co"># invSeq$Osa_Bar &lt;- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Bar)))</span>
-<span class="co"># invSeq$Osa_Kum &lt;- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Kum)))</span>
-<span class="co"># invSeq$Osa_Aom &lt;- BSgenome::getSeq(OSKA2016v1.9, filterInversions(flagInversions(coa$Osa_Aom)))</span>
-<span class="co"># invSeq$Bar_Osa &lt;- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Osa)))</span>
-<span class="co"># invSeq$Bar_Oki &lt;- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Oki)))</span>
-<span class="co"># invSeq$Bar_Kum &lt;- BSgenome::getSeq(Bar2_p4,      filterInversions(flagInversions(coa$Bar_Kum)))</span>
-<span class="co"># </span>
-<span class="co"># sapply(invSeq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |&gt; summary())</span>
-<span class="co"># genomes.AT</span>
-<span class="co"># </span>
-<span class="co"># ## But gaps are a bit more AT-rich.</span>
-<span class="co"># sapply(inv.lgaps.Seq, \(seq) letterFrequency(seq, "AT", as.prob = TRUE) |&gt; summary())</span>
-<span class="co"># </span>
-<span class="co"># ## This difference is significant.</span>
-<span class="co"># t.test(letterFrequency(invSeq$Oki_Osa, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Osa, "AT", as.prob = TRUE))</span>
-<span class="co"># t.test(letterFrequency(invSeq$Osa_Oki, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Osa_Oki, "AT", as.prob = TRUE))</span>
-<span class="co"># t.test(letterFrequency(invSeq$Oki_Bar, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Bar, "AT", as.prob = TRUE))</span>
-<span class="co"># t.test(letterFrequency(invSeq$Oki_Kum, "AT", as.prob = TRUE), letterFrequency(inv.lgaps.Seq$Oki_Kum, "AT", as.prob = TRUE))</span></code></pre></div>
-<p>I was tempted to explain this difference with A/T homopolymer stetches. But de novo motif prediction with rGADEM finds AT-rich motifs in any set of Oik sequences that I have tried.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># library("rGADEM")</span>
-<span class="co"># # Slow !</span>
-<span class="co"># # Note that GADEM crashes on sequences longer than 50 kbp.</span>
-<span class="co"># gadems &lt;- SimpleList()</span>
-<span class="co"># gadems$Oki_Osa &lt;- GADEM(inv.lgaps.Seq$Oki_Osa[width(inv.lgaps.Seq$Oki_Osa) &lt; 50000], verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># gadems$Oki_Kum &lt;- GADEM(inv.lgaps.Seq$Oki_Kum[width(inv.lgaps.Seq$Oki_Kum) &lt; 50000], verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># </span>
-<span class="co"># gadems$Osa_Oki &lt;- GADEM(inv.lgaps.Seq$Osa_Oki[width(inv.lgaps.Seq$Osa_Oki) &lt; 50000], verbose=1, genome=OSKA2016v1.9)</span>
-<span class="co"># gadems$Osa_Aom &lt;- GADEM(inv.lgaps.Seq$Osa_Aom[width(inv.lgaps.Seq$Osa_Aom) &lt; 50000], verbose=1, genome=OSKA2016v1.9)</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># gadems$Kum_Oki &lt;- GADEM(invSeq$Kum_Oki[width(invSeq$Kum_Oki) &lt; 50000], verbose=1, genome=KUM_M3)</span>
-<span class="co"># gadems$Osa_Oki &lt;- GADEM(invSeq$Osa_Oki[width(invSeq$Osa_Oki) &lt; 50000], verbose=1, genome=OSKA2016v1.9)</span>
-<span class="co"># # gadem &lt;- GADEM(invSeq_Oki_O[width(invSeq_Oki_O) &lt; 50000], verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># # consensus(gadem)</span>
-<span class="co"># # [1] "nAAAAwwnnnrAAAAn"</span>
-<span class="co"># </span>
-<span class="co"># # gadem &lt;- GADEM(lgapsSeq_Oki_O, verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># # consensus(gadem)</span>
-<span class="co"># # [1] "rAAGCsGCwwmkCGrCTTyn" "nAAAAwwnnwnAAAAAn"    "nTTTsAAAAw"           "nCCTGAsTCAGGkTTTn"    "nTTTTTnnnnrAAAn"      "wTAAGGGTrTCm"</span>
-<span class="co"># </span>
-<span class="co"># #saveRDS(gadem, file = "lgapsSeq_Oki_O_gadem.rds")</span>
-<span class="co"># gadem &lt;- readRDS("lgapsSeq_Oki_O_gadem.rds")</span>
-<span class="co"># </span>
-<span class="co"># for (n in seq_along(gadem@motifList)) seqLogo::seqLogo(rGADEM::getPWM(gadem)[[n]])</span>
-<span class="co"># pwm &lt;- rGADEM::getPWM(gadem)[[1]]</span>
-<span class="co"># </span>
-<span class="co"># #RGadem positive control: check introns ?</span>
-<span class="co"># # set.seed(1664)</span>
-<span class="co"># # intr &lt;- sample(intronicParts(tx_OKI), 1000)</span>
-<span class="co"># # intr &lt;- BSgenome::getSeq(OKI2018_I69, intr)</span>
-<span class="co"># # gadem &lt;- GADEM(intr, verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># # &gt; consensus(gadem)</span>
-<span class="co"># # [1] "nAAAAwnnwnAAAwn"</span>
-<span class="co"># # Also found motifs like rryCAATTbwTkCGmAkyT</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># #RGadem positive control: check promoters ?</span>
-<span class="co"># # set.seed(1664)</span>
-<span class="co"># # prom &lt;- sample(promoters(tx_OKI), 1000)</span>
-<span class="co"># # prom &lt;- BSgenome::getSeq(OKI2018_I69, prom)</span>
-<span class="co"># # gadem &lt;- GADEM(prom, verbose=1, genome=OKI2018_I69)</span>
-<span class="co"># # consensus(gadem)</span>
-<span class="co"># # [1] "nAAAAwwnwnnAAAAwn" "nTTTTCTTyn"       </span>
-<span class="co"># # Also found motifs like TTTmAAAA</span></code></pre></div>
-</div>
-<div id="representation-of-some-inversions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#representation-of-some-inversions" class="anchor"></a>Representation of some inversions</h3>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># x &lt;- coa$Oki_Osa |&gt; flagInversions() |&gt; dist2next(ignore.strand = TRUE)</span>
-<span class="co"># </span>
-<span class="co"># pmpcoord &lt;- showInversions(x)</span>
-<span class="co"># </span>
-<span class="co"># seqinfo2gieStain &lt;- function(si) {</span>
-<span class="co">#   data.frame(</span>
-<span class="co">#     chrom      = seqlevels(si),</span>
-<span class="co">#     chromStart = 0,</span>
-<span class="co">#     chromEnd   = seqlengths(si),</span>
-<span class="co">#     name       = seqlevels(si),</span>
-<span class="co">#     gieStain   = "gneg"</span>
-<span class="co">#   )</span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># #r &lt;- 63:70</span>
-<span class="co"># r &lt;- 94:98</span>
-<span class="co"># #r &lt;- 316:319</span>
-<span class="co"># options(ucscChromosomeNames=FALSE)</span>
-<span class="co"># gen &lt;- GenomeAxisTrack(name="OKI2018_I69")</span>
-<span class="co"># ide &lt;- IdeogramTrack(chromosome = seqlevelsInUse(x[r]), genome = "OKI2018_I69", bands = seqinfo2gieStain(OKI2018_I69))</span>
-<span class="co"># trk &lt;- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])</span>
-<span class="co"># p1 &lt;- grid::grid.grabExpr(plotTracks(list(ide, gen, trk), featureAnnotation = "id"))</span>
-<span class="co"># </span>
-<span class="co"># gen2 &lt;- GenomeAxisTrack(name="OSKA2016v1.9")</span>
-<span class="co"># ide2 &lt;- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r]), genome = "OSKA2016v1.9", bands = seqinfo2gieStain(OSKA2016v1.9))</span>
-<span class="co"># trk2 &lt;- AnnotationTrack(x[r]$query, name = "OSKA2016v1.9", id=LETTERS[seq_along(r)])</span>
-<span class="co"># p2 &lt;- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "id"))</span>
-<span class="co"># </span>
-<span class="co"># gridExtra::grid.arrange(p1, p2, nrow=2)</span></code></pre></div>
-</div>
-</div>
-<div id="trivial-insersions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#trivial-insersions" class="anchor"></a>Trivial insersions</h2>
-<div id="representation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#representation" class="anchor"></a>Representation</h3>
-<p>The in<b>s</b>ersion below:</p>
-<pre><code>┌───────────────┬───────────────┬───────────────┐
-│ XSR:101-200:+ │ XSR:201-300:+ │ XSR:301-400:+ │  (OKI2018_I69)
-└───────────────┴───────────────┴───────────────┘
-┌───────────────┬───────────────┬───────────────┐
-│  S1:101-200:+ │  S2:801-900:+ │  S1:201-300:+ │  (OSKA2016)
-└───────────────┴───────────────┴───────────────┘</code></pre>
-<p>Is represented as:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># example("flagInsersions")</span>
-<span class="co"># </span>
-<span class="co"># library("Gviz")</span>
-<span class="co"># options(ucscChromosomeNames=FALSE)</span>
-<span class="co"># gen &lt;- GenomeAxisTrack(name = "genome")</span>
-<span class="co"># trk &lt;- AnnotationTrack(ins, name = "ins")</span>
-<span class="co"># plotTracks(list(gen, trk))</span></code></pre></div>
-<p><em>Without an outgroup it is not possible to know in which genome the break happened.</em></p>
-</div>
-<div id="detection" class="section level3">
-<h3 class="hasAnchor">
-<a href="#detection" class="anchor"></a>Detection</h3>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># sapply(gbs, function(gb) sum(flagInsersions(coalesce_contigs(gb))$ins))</span>
-<span class="co"># </span>
-<span class="co"># y &lt;- flagInsersions(reduced_gr_Oki_O)</span>
-<span class="co"># </span>
-<span class="co"># #r &lt;- 63:70</span>
-<span class="co"># r &lt;- 23:30</span>
-<span class="co"># #r &lt;- 316:319</span>
-<span class="co"># options(ucscChromosomeNames=FALSE)</span>
-<span class="co"># gen &lt;- GenomeAxisTrack(name="OKI2018_I69")</span>
-<span class="co"># ide &lt;- IdeogramTrack(chromosome = seqlevelsInUse(x[r]), genome = "OKI2018_I69", bands = seqinfo2gieStain(OKI2018_I69))</span>
-<span class="co"># trk &lt;- AnnotationTrack(x[r], name = "OKI2018_I69", id=LETTERS[seq_along(r)])</span>
-<span class="co"># p1 &lt;- grid::grid.grabExpr(plotTracks(list(ide, gen, trk), featureAnnotation = "id"))</span>
-<span class="co"># </span>
-<span class="co"># gen2 &lt;- GenomeAxisTrack(name="OSKA2016")</span>
-<span class="co"># ide2 &lt;- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r])[1], genome = "OSKA2016", bands = seqinfo2gieStain(OSKA2016))</span>
-<span class="co"># trk2 &lt;- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])</span>
-<span class="co"># p2 &lt;- grid::grid.grabExpr(plotTracks(list(ide2,gen2,trk2), featureAnnotation = "id"))</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># gen3 &lt;- GenomeAxisTrack(name="OSKA2016")</span>
-<span class="co"># ide3 &lt;- IdeogramTrack(chromosome = seqlevelsInUse(x$query[r])[2], genome = "OSKA2016", bands = seqinfo2gieStain(OSKA2016))</span>
-<span class="co"># trk3 &lt;- AnnotationTrack(x[r]$query, name = "OSKA2016", id=LETTERS[seq_along(r)])</span>
-<span class="co"># p3 &lt;- grid::grid.grabExpr(plotTracks(list(ide3,gen3,trk3), featureAnnotation = "id"))</span>
-<span class="co"># </span>
-<span class="co"># gridExtra::grid.arrange(p1, p2, p3, nrow=3)</span></code></pre></div>
 </div>
 </div>
 <div id="tandem-repeats" class="section level2">
