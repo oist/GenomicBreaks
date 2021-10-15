@@ -190,3 +190,32 @@ plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, dna_seg_scale=TRUE, ...) {
 
   genoPlotR::plot_gene_map(dsList, compList, dna_seg_scale=dna_seg_scale, ...)
 }
+
+#' GBreaks to xlim
+#'
+#' Converts a `GBreaks` object to a `list` that can be passed as `xlim` argument
+#' to [`plotApairOfChrs`].
+#'
+#' @param gb A `GBreaks` object.
+#'
+#' @returns A `list` of two pairs of numbers, where the first pair is the _start_
+#' and _end_ positions of the first [`range`] of the `GBreaks` object on the
+#' _target_ genome and the second pair is the _start_ and _end_ positions of the
+#' same first range, on the _query_ genome.
+#'
+#' @note This function is intended to be run on `GBreaks` objects that have been
+#' filtered to contain only one _seqname_ on each genome.
+#'
+#' @examples
+#' gb2xlim(exampleColinear)
+#'
+#' @author Charles Plessy
+#'
+#' @family converter functions
+#'
+#' @export
+
+gb2xlim <- function(gb) {
+  df <- range(gb) |> as.data.frame() |> head(1)
+  list(c(df$start, df$end), c(df$query.start, df$query.end))
+}

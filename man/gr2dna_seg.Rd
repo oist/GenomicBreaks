@@ -32,7 +32,8 @@ Other genoPlotR functions:
 
 Other converter functions: 
 \code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()}
+\code{\link{gb2dna_seg}()},
+\code{\link{gb2xlim}()}
 }
 \author{
 Charles Plessy

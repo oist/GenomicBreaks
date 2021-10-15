@@ -6,6 +6,10 @@
   on minus strands.
 * `plotApairOfChrs()` now plots coordinates and a scale bar by default.
 
+## New functionalities
+
+* New `gb2xlim()` function to narrow focus on plots made with `plotApairOfChrs()`.
+
 # GenomicBreaks 0.9.1
 
 ## New functionalities
