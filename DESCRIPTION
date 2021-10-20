@@ -66,6 +66,7 @@ Collate:
     'load_one_to_ones.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
+    'makeOxfordPlots.R'
     'master_bp_analysis.R'
     'scaf_align_plot.R'
     'serviceFunctions.R'
