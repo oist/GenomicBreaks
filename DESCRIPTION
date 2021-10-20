@@ -70,6 +70,7 @@ Collate:
     'load_one_to_ones.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
+    'makeOxfordPlots.R'
     'master_bp_analysis.R'
     'mergeSeqLevels.R'
     'reverse.R'
