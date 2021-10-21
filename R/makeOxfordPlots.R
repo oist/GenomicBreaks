@@ -62,18 +62,30 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
   p <- p + labs(x = sp1Name, y = sp2Name)
 
   ## add breaks
-  if(! is.null(sp1ChrArms)){
+  if (is.null(sp1ChrArms)) {
+    breaks$sp1 <- unname(c(0, cumsum(head(seqlengths(gb), -1))))
+    labels$sp1 <- seqlevels(gb)
+  } else {
     breaks$sp1 <- end(sp1ChrArms)
     labels$sp1 <- as.character(round(breaks$sp1 / 10**6, 1))
-    p <- p +
-      scale_x_continuous(expand = c(0, 0), breaks = breaks$sp1, labels = labels$sp1)
   }
+  p <- p +
+    scale_x_continuous(expand = c(0, 0), breaks = breaks$sp1,
+                       minor_breaks = NULL, labels = labels$sp1)
 
-  if(! is.null(sp2ChrArms)){
+  if (is.null(sp2ChrArms)) {
+    if (all(is.na(seqlengths(gb$query))))
+      seqlengths(gb$query) <- tapply(end(gb$query), seqnames(gb$query), max) |> as.vector()
+    breaks$sp2 <- unname(c(0, cumsum(head(seqlengths(gb$query), -1))))
+    labels$sp2 <- seqlevels(gb$query)
+  }
+  else {
     breaks$sp2 <- end(sp2ChrArms)
     labels$sp2 <- as.character(round(breaks$sp2 / 10**6, 1))
-    p <- p +
-      scale_y_continuous(expand = c(0, 0), breaks = breaks$sp2, labels = labels$sp2)
   }
+  p <- p +
+    scale_y_continuous(expand = c(0, 0), breaks = breaks$sp2,
+                       minor_breaks = NULL, labels = labels$sp2)
+
   p
 }
