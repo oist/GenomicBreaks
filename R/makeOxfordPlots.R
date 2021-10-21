@@ -20,6 +20,7 @@
 #' makeOxfordPlots(exampleTranslocation)
 #' makeOxfordPlots(exampleTranslocation, type = "l")
 #'
+#' @import ggplot2
 #' @export
 
 makeOxfordPlots <- function (gb, selChroms = NULL,

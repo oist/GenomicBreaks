@@ -19,6 +19,7 @@ Imports:
   BiocParallel,
   CNEr,
   genoPlotR,
+  ggplot2,
   methods,
   rtracklayer,
   S4Vectors,
@@ -35,7 +36,6 @@ RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
-  ggplot2,
   gridExtra,
   Gviz,
   knitr,
