@@ -27,6 +27,7 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
                              type = c("point", "line")) {
 
+
   type <- match.arg(type)
 
   # filter chromosomes
@@ -63,8 +64,8 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
 
   ## add breaks
   if (is.null(sp1ChrArms)) {
-    breaks$sp1 <- unname(c(0, cumsum(head(seqlengths(gb), -1))))
-    labels$sp1 <- seqlevels(gb)
+    breaks$sp1 <- unname(c(0, cumsum(head(seqlengths(gb)[seqlevelsInUse(gb)], -1))))
+    labels$sp1 <- seqlevelsInUse(gb)
   } else {
     breaks$sp1 <- end(sp1ChrArms)
     labels$sp1 <- as.character(round(breaks$sp1 / 10**6, 1))
@@ -76,8 +77,8 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
   if (is.null(sp2ChrArms)) {
     if (all(is.na(seqlengths(gb$query))))
       seqlengths(gb$query) <- tapply(end(gb$query), seqnames(gb$query), max) |> as.vector()
-    breaks$sp2 <- unname(c(0, cumsum(head(seqlengths(gb$query), -1))))
-    labels$sp2 <- seqlevels(gb$query)
+    breaks$sp2 <- unname(c(0, cumsum(head(seqlengths(gb$query)[seqlevelsInUse(gb$query)], -1))))
+    labels$sp2 <- seqlevelsInUse(gb$query)
   }
   else {
     breaks$sp2 <- end(sp2ChrArms)
