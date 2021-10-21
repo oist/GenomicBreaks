@@ -39,8 +39,8 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
   targetMerged <- mergeSeqLevels(gb,       seqlevelsInUse(gb), "AllMerged")
   queryMerged  <- mergeSeqLevels(gb$query, seqlevelsInUse(gb$query), "AllMerged")
 
-  breaks <- SimpleList()
-  labels <- SimpleList()
+  breaks <- list()
+  labels <- list()
 
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
