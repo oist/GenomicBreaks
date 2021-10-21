@@ -33,7 +33,7 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
 
   # filter chromosomes
   if(! is.null(selChroms)){
-    gb <- dplyr::filter(gb, seqnames %in% selChroms)
+    gb <- gb[seqnames(gb) %in% selChroms]
   }
 
   targetMerged <- mergeSeqLevels(gb,       seqlevelsInUse(gb), "AllMerged")
