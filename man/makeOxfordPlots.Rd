@@ -36,7 +36,13 @@ TBD
 gb       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+", "chrUn_1:401-500:+"))
 gb$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400", "S1:401-500"))
 makeOxfordPlots(gb)
+
+}
+\seealso{
+Other plot functions: 
+\code{\link{plotApairOfChrs}()}
 }
 \author{
 Aleksandra Bliznina
 }
+\concept{plot functions}

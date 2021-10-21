@@ -10,7 +10,11 @@
 #' @param sp2ChrArms A Genomic Breaks object of chromosome arms in sp2 genome
 #'
 #' @return Returns an Oxford (macrosynteny) plot generated with `ggplot2`
+#'
 #' @author Aleksandra Bliznina
+#'
+#' @family plot functions
+#'
 #' @examples
 #' gb       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+", "chrUn_1:401-500:+"))
 #' gb$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400", "S1:401-500"))

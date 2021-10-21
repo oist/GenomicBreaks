@@ -46,6 +46,9 @@ Other genoPlotR functions:
 \code{\link{gb2dna_seg}()},
 \code{\link{gr2dna_seg}()}
 
+Other plot functions: 
+\code{\link{makeOxfordPlots}()}
+
 Other Structural variants: 
 \code{\link{StructuralVariants}},
 \code{\link{flagInversions}()},
