@@ -16,7 +16,8 @@ mergeSeqLevels(gr, seqs, name)
 \value{
 Returns a modified \code{GRanges} object in which the sequences have been
 merged.  Its \code{\link{seqinfo}} has a new entry for the new level, and the old
-levels are not removed.
+levels are not removed.  If no \code{seqlengths} were present in the original
+object, they are arbitrarily set as the maximal end value for each \code{seqlevel}.
 }
 \description{
 For scaffolding or plotting purposes, it may be useful to merge some

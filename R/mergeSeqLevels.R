@@ -13,7 +13,8 @@
 #'
 #' @returns Returns a modified `GRanges` object in which the sequences have been
 #' merged.  Its [`seqinfo`] has a new entry for the new level, and the old
-#' levels are not removed.
+#' levels are not removed.  If no `seqlengths` were present in the original
+#' object, they are arbitrarily set as the maximal end value for each `seqlevel`.
 #'
 #' @examples
 #' gb       <- GRanges(c("XSR:101-180:+", "XSR:201-300:+",  "XSR:320-400:+"))
@@ -38,6 +39,8 @@
 mergeSeqLevels <- function(gr, seqs, name) {
 
   # Calculate how much to add to the coordinates of each seqlevel before merging
+  if (all(is.na(seqlengths(gr))))
+    seqlengths(gr) <- tapply(end(gr), seqnames(gr), max) |> as.vector()
   lengths <- seqlengths(seqinfo(gr))[seqs]
   addlengths <- c(cumsum(head(lengths, -1)))
   names(addlengths) <- tail(names(lengths), -1)
