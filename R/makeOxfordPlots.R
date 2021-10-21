@@ -43,8 +43,8 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
                                  end =   end(targetMerged),
-                         query.start = start(queryMerged),
-                           query.end =   end(queryMerged),
+                         query.start = ifelse(strand (gb) == "+", start(queryMerged),   end(queryMerged)),
+                           query.end = ifelse(strand (gb) == "+",   end(queryMerged), start(queryMerged)),
                             seqnames = seqnames(gb))) +
     aes(x = start, y = query.start, xend = end, yend = query.end)
 
