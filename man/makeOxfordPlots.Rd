@@ -33,9 +33,7 @@ Returns an Oxford (macrosynteny) plot generated with \code{ggplot2}
 TBD
 }
 \examples{
-gb       <- GRanges(c("XSR:101-200:+", "XSR:201-300:-",  "XSR:301-400:+", "chrUn_1:401-500:+"))
-gb$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400", "S1:401-500"))
-makeOxfordPlots(gb)
+makeOxfordPlots(exampleTranslocation)
 
 }
 \seealso{
