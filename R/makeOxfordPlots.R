@@ -26,19 +26,22 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
                              sp1Name = "sp1", sp2Name = "sp2",
                              sp1ChrArms = NULL, sp2ChrArms = NULL) {
 
-  ## convert GRanges to a DataFrame
-  dfGB <- as.data.frame(gb)
-
   # filter chromosomes
   if(! is.null(selChroms)){
-    dfGB <- dplyr::filter(dfGB, seqnames %in% selChroms)
+    gb <- dplyr::filter(gb, seqnames %in% selChroms)
   }
+
+  targetMerged <- mergeSeqLevels(gb,       seqlevelsInUse(gb), "AllMerged")
+  queryMerged  <- mergeSeqLevels(gb$query, seqlevelsInUse(gb$query), "AllMerged")
 
   breaks <- SimpleList()
   labels <- SimpleList()
 
   ## plot main data
-  p <- ggplot(dfGB, aes(x = start, y = query.start)) +
+  p <- ggplot(data.frame(      start = start(targetMerged),
+                         query.start = start(queryMerged),
+                            seqnames = seqnames(gb))) +
+    aes(x = start, y = query.start) +
     geom_point(aes(colour = seqnames), shape = 20, size = 0.01)
 
   ## add title of the plot
