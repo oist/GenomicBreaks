@@ -160,7 +160,8 @@ sequences into larger ones.</p>
 
     <p>Returns a modified <code>GRanges</code> object in which the sequences have been
 merged.  Its <code>seqinfo</code> has a new entry for the new level, and the old
-levels are not removed.</p>
+levels are not removed.  If no <code>seqlengths</code> were present in the original
+object, they are arbitrarily set as the maximal end value for each <code>seqlevel</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Be careful that in some cases it is needed to "flip" the sequence
@@ -212,7 +213,7 @@ its reverse strand.</p>
 #&gt;   [2] AllMerged   201-300      + |   Scaf1:1-100
 #&gt;   [3] AllMerged   320-400      + | Scaf1:101-200
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
+#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
