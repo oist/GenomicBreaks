@@ -8,6 +8,7 @@
 #' @param sp2Name Name of the second species (default: sp2)
 #' @param sp1ChrArms A GenomicBreaks object of chromosome arms in sp1 genome
 #' @param sp2ChrArms A Genomic Breaks object of chromosome arms in sp2 genome
+#' @param type The type of the plot (`point` or `line`)
 #'
 #' @return Returns an Oxford (macrosynteny) plot generated with `ggplot2`
 #'
@@ -17,12 +18,16 @@
 #'
 #' @examples
 #' makeOxfordPlots(exampleTranslocation)
+#' makeOxfordPlots(exampleTranslocation, type = "l")
 #'
 #' @export
 
 makeOxfordPlots <- function (gb, selChroms = NULL,
                              sp1Name = "sp1", sp2Name = "sp2",
-                             sp1ChrArms = NULL, sp2ChrArms = NULL) {
+                             sp1ChrArms = NULL, sp2ChrArms = NULL,
+                             type = c("point", "line")) {
+
+  type <- match.arg(type)
 
   # filter chromosomes
   if(! is.null(selChroms)){
@@ -37,10 +42,17 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
 
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
+                                 end =   end(targetMerged),
                          query.start = start(queryMerged),
+                           query.end =   end(queryMerged),
                             seqnames = seqnames(gb))) +
-    aes(x = start, y = query.start) +
-    geom_point(aes(colour = seqnames), shape = 20, size = 0.01)
+    aes(x = start, y = query.start, xend = end, yend = query.end)
+
+  if (type == "point")
+    p <- p + geom_point(aes(colour = seqnames), shape = 20, size = 0.01)
+
+  if (type == "line")
+    p <- p + geom_segment(aes(colour = seqnames))
 
   ## add title of the plot
   p <- p + ggtitle(paste(sp1Name, "vs", sp2Name, "macrosynteny plot")) +

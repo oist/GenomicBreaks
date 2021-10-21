@@ -10,7 +10,8 @@ makeOxfordPlots(
   sp1Name = "sp1",
   sp2Name = "sp2",
   sp1ChrArms = NULL,
-  sp2ChrArms = NULL
+  sp2ChrArms = NULL,
+  type = c("point", "line")
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ makeOxfordPlots(
 \item{sp1ChrArms}{A GenomicBreaks object of chromosome arms in sp1 genome}
 
 \item{sp2ChrArms}{A Genomic Breaks object of chromosome arms in sp2 genome}
+
+\item{type}{The type of the plot (\code{point} or \code{line})}
 }
 \value{
 Returns an Oxford (macrosynteny) plot generated with \code{ggplot2}
@@ -34,6 +37,7 @@ TBD
 }
 \examples{
 makeOxfordPlots(exampleTranslocation)
+makeOxfordPlots(exampleTranslocation, type = "l")
 
 }
 \seealso{
