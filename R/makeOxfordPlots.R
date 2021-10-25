@@ -42,6 +42,8 @@ makeOxfordPlots <- function (gb, selChroms = NULL,
   breaks <- list()
   labels <- list()
 
+  ## This is needed to silence "no visible binding for global variable" NOTEs
+  start <- query.start <- end <- query.end <- seqnames <- NULL
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
                                  end =   end(targetMerged),
