@@ -25,7 +25,10 @@
 #' exampleColinear
 #' exampleNotColinear
 #' exampleColinear3
+#' exampleColinear5
 #' exampleInversion
+#' exampleInversion5uncollapsed
+#' exampleDoubleInversion
 #' exampleTranslocation
 #' exampleTranslocation2
 #'

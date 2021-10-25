@@ -9,6 +9,9 @@
 ## New functionalities
 
 * New `gb2xlim()` function to narrow focus on plots made with `plotApairOfChrs()`.
+* New `makeOxfordPlots()` function to create macrosynteny plots.  Thanks to
+  Aleksandra Bliznina.
+* A new set of example 5-uplets, to illustrate double inversions.
 
 # GenomicBreaks 0.9.1
 

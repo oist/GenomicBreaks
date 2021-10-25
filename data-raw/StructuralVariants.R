@@ -27,6 +27,15 @@ exampleColinear3                          <- GBreaks(exampleColinear3)
 seqlengths(exampleColinear3)              <- seqlengths(exampleColinear3$query) <- 500
 isSorted(exampleColinear3)
 
+# A colinear 5-uplet for later example of double inversion
+
+exampleColinear5                          <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleColinear5)                  <- c(              "+",            "+",            "+",            "+",            "+")
+exampleColinear5$query                    <- GRanges(c("chrB:100-190", "chrB:200-290", "chrB:300-390", "chrB:400-490", "chrB:500-590"))
+exampleColinear5                          <- GBreaks(exampleColinear5)
+seqlengths(exampleColinear5)              <- seqlengths(exampleColinear5$query) <- 600
+isSorted(exampleColinear5)
+
 # Inversions
 
 exampleInversion                          <- GRanges(c("chrA:100-190", "chrA:210-291", "chrA:301-400"))
@@ -35,6 +44,25 @@ exampleInversion$query                    <- GRanges(c("chrB:100-190", "chrB:210
 exampleInversion                          <- GBreaks(exampleInversion)
 seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) <- 500
 isSorted(exampleInversion)
+
+# Inversion in a 5-bloc context with non-collapsed regions
+# This is an intermediary step towards `exampleDoubleInversion`
+
+exampleInversion5uncollapsed              <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleInversion5uncollapsed)      <- c(              "+",            "-",            "-",            "+",            "+")
+exampleInversion5uncollapsed$query        <- GRanges(c("chrB:100-190", "chrB:300-390", "chrB:200-290", "chrB:400-490", "chrB:500-590"))
+exampleInversion5uncollapsed              <- GBreaks(exampleInversion5uncollapsed)
+seqlengths(exampleInversion5uncollapsed)  <- seqlengths(exampleInversion5uncollapsed$query) <- 600
+isSorted(exampleInversion5uncollapsed)
+
+# Double inversions
+
+exampleDoubleInversion                    <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion)            <- c(              "+",            "+",            "-",            "-",            "+")
+exampleDoubleInversion$query              <- GRanges(c("chrB:100-190", "chrB:400-490", "chrB:200-290", "chrB:300-390", "chrB:500-590"))
+exampleDoubleInversion                    <- GBreaks(exampleDoubleInversion)
+seqlengths(exampleDoubleInversion)        <- seqlengths(exampleDoubleInversion$query) <- 600
+isSorted(exampleDoubleInversion)
 
 # Translocation
 
@@ -82,7 +110,10 @@ usethis::use_data(
   exampleColinear,
   exampleNotColinear,
   exampleColinear3,
+  exampleColinear5,
   exampleInversion,
+  exampleInversion5uncollapsed,
+  exampleDoubleInversion,
   exampleTranslocation,
   exampleTranslocation2,
   exampleInsertion,

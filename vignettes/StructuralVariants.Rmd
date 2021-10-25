@@ -85,9 +85,11 @@ alignment gap.
 
 ## Inversions
 
-Inversions are triplets of mapped regions that would be colinear if the strand
-of the second one were reversed.  Note that, like for colinear patterns, the
-flag is put on the first mapping of the triplet.
+### Trivial inversions
+
+Trivial inversions are triplets of mapped regions that would be colinear if the
+strand of the second one were reversed.  Note that, like for colinear patterns,
+the flag is put on the first mapping of the triplet.
 
 ```{r inversions}
 exampleInversion |> flagColinearAlignments() |> flagInversions()
@@ -102,6 +104,38 @@ exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
 
 # Note the tolerance window
 flagInversions(exampleInversion, tol = 10)
+```
+
+### Double inversions
+
+Double inversions are the result of two overlapping trivial inversions, and
+must be detected with a different approach.
+
+Here we show a triplet resulting from a double inversion, flanked by two
+regions that did not move.
+
+```{r doubleInversions}
+# Starting point: 5 colinear blocks
+exampleColinear5 |> plotApairOfChrs()
+
+# Then, lets have an inversion that encompasses blocks 1 and 2.
+exampleInversion5uncollapsed |> plotApairOfChrs()
+
+# Finally another inversion takes place around the new blocks 3 and 4
+exampleDoubleInversion |> plotApairOfChrs()
+```
+
+Same story but showing coalesced alignments.
+
+```{r doubleInversions2}
+# Starting point: 5 colinear blocks
+exampleColinear5 |> coalesce_contigs() |> plotApairOfChrs()
+
+# Then, lets have an inversion that encompasses blocks 1 and 2.
+exampleInversion5uncollapsed |> coalesce_contigs() |> plotApairOfChrs()
+
+# Finally another inversion takes place around the new blocks 3 and 4
+exampleDoubleInversion |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
 ## Transolocations
