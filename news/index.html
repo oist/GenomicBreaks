@@ -146,6 +146,15 @@
 <a href="#new-functionalities" class="anchor"></a>New functionalities</h2>
 <ul>
 <li>New <code><a href="../reference/gb2xlim.html">gb2xlim()</a></code> function to narrow focus on plots made with <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code>.</li>
+<li>New <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> function to create macrosynteny plots. Thanks to Aleksandra Bliznina.</li>
+<li>A new set of example 5-uplets, to illustrate double inversions.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Add strand check on <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code> so that it does not return a false positive on <code>exampleDoubleInversion</code>.</li>
 </ul>
 </div>
 </div>
@@ -176,9 +185,9 @@
 <li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> now handles properly strandless ranges. (Issue <a href='https://github.com/oist/GenomicBreaks/issues/1'>#1</a>)</li>
@@ -208,9 +217,9 @@
 <li>Added example data, see ?StructuralVariants and `vignette(“Structural Variants”, package = “GenomicBreaks”) for details.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>In <code><a href="../reference/flagInversions.html">flagInversions()</a></code>, check if input was sorted. Closes Issue <a href='https://github.com/oist/GenomicBreaks/issues/2'>#2</a>.</li>
 <li>

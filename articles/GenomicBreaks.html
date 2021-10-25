@@ -89,7 +89,7 @@
                         <h4 class="author">Charlotte West</h4>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">21 October, 2021</h4>
+            <h4 class="date">25 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/GenomicBreaks.Rmd"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="hidden name"><code>GenomicBreaks.Rmd</code></div>
@@ -515,42 +515,29 @@
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query       tra
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-200      + | chrB:100-200      TRUE
-##   [2]     chrA   201-300      + | chrC:201-300     FALSE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE
+##       seqnames    ranges strand |        query   tra
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
+##   [1]     chrA   100-200      + | chrB:100-200  TRUE
+##   [2]     chrA   201-300      + | chrC:201-300 FALSE
+##   [3]     chrA   301-400      + | chrB:301-400 FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/showTranslocations.html">showTranslocations</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 32 ranges and 3 metadata columns:
-##      seqnames        ranges strand |                     query     score
-##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt;
-##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664
-##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249
-##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157
-##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694
-##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417
-##   ..      ...           ...    ... .                       ...       ...
-##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467
-##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072
-##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789
-##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835
-##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450
-##            tra
-##      &lt;logical&gt;
-##    1      TRUE
-##    2      TRUE
-##    3     FALSE
-##    4     FALSE
-##   12      TRUE
-##   ..       ...
-##   64     FALSE
-##   65     FALSE
-##   72      TRUE
-##   73     FALSE
-##   74     FALSE
+##      seqnames        ranges strand |                     query     score   tra
+##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt; &lt;Rle&gt;
+##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664  TRUE
+##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249  TRUE
+##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157 FALSE
+##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694 FALSE
+##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417  TRUE
+##   ..      ...           ...    ... .                       ...       ...   ...
+##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467 FALSE
+##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072 FALSE
+##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789  TRUE
+##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835 FALSE
+##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450 FALSE
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">

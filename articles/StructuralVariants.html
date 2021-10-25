@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Structural Variants</h1>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">21 October, 2021</h4>
+            <h4 class="date">25 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/StructuralVariants.Rmd"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
@@ -197,7 +197,10 @@
 <div id="inversions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#inversions" class="anchor"></a>Inversions</h2>
-<p>Inversions are triplets of mapped regions that would be colinear if the strand of the second one were reversed. Note that, like for colinear patterns, the flag is put on the first mapping of the triplet.</p>
+<div id="trivial-inversions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#trivial-inversions" class="anchor"></a>Trivial inversions</h3>
+<p>Trivial inversions are triplets of mapped regions that would be colinear if the strand of the second one were reversed. Note that, like for colinear patterns, the flag is put on the first mapping of the triplet.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInversion</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
@@ -247,11 +250,43 @@
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
 </div>
+<div id="double-inversions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#double-inversions" class="anchor"></a>Double inversions</h3>
+<p>Double inversions are the result of two overlapping trivial inversions, and must be detected with a different approach.</p>
+<p>Here we show a triplet resulting from a double inversion, flanked by two regions that did not move.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Starting point: 5 colinear blocks</span>
+<span class="va">exampleColinear5</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions-1.png" width="700"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Then, lets have an inversion that encompasses blocks 1 and 2.</span>
+<span class="va">exampleInversion5uncollapsed</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions-2.png" width="700"></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Finally another inversion takes place around the new blocks 3 and 4</span>
+<span class="va">exampleDoubleInversion</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions-3.png" width="700"></p>
+<p>Same story but showing coalesced alignments.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Starting point: 5 colinear blocks</span>
+<span class="va">exampleColinear5</span> |&gt; <span class="fu"><a href="../reference/coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions2-1.png" width="700"></p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Then, lets have an inversion that encompasses blocks 1 and 2.</span>
+<span class="va">exampleInversion5uncollapsed</span> |&gt; <span class="fu"><a href="../reference/coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions2-2.png" width="700"></p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Finally another inversion takes place around the new blocks 3 and 4</span>
+<span class="va">exampleDoubleInversion</span> |&gt; <span class="fu"><a href="../reference/coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="StructuralVariants_files/figure-html/doubleInversions2-3.png" width="700"></p>
+</div>
+</div>
 <div id="transolocations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#transolocations" class="anchor"></a>Transolocations</h2>
 <p>If a region has moved, but is not an inversion, then it is a translocation.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleTranslocation</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |        query  colinear   inv
@@ -261,11 +296,11 @@
 ##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocation-1.png" width="700"></p>
 <p>It does not matter if the region moved on the minus strand</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleTranslocation2</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |        query  colinear   inv
@@ -275,7 +310,7 @@
 ##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocationOnMinus-1.png" width="700"></p>
 </div>
@@ -283,7 +318,7 @@
 <h2 class="hasAnchor">
 <a href="#insertions-deletions-indels" class="anchor"></a>Insertions / Deletions (indels)</h2>
 <p>NOTE that searching for insertion/deletions make little sense in one-to-one alignment unless the maximal distance for colinearity is set to a meaningful value.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleDeletion</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 1 metadata column:
 ##       seqnames    ranges strand |        query
@@ -293,10 +328,10 @@
 ##   [3]     chrA   301-400      + | chrB:201-300
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-1.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInsertion</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 1 metadata column:
 ##       seqnames    ranges strand |        query
@@ -306,7 +341,7 @@
 ##   [3]     chrC   401-500      + | chrB:201-300
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-2.png" width="700"></p>
 </div>
