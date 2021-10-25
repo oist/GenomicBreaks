@@ -50,12 +50,18 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb$tdist2 <- gb$tdist
   gb$qdist2 <- gb$qdist
   gb <- dist2next(gb, step = 1, ignore.strand = TRUE) # Overrides strand-aware values from flagColinearAlignments
+  gb$twoSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
 
   gb.bak$tra <-
     # There is a distance, therefore they are on the same sequence.
     (! (is.na(gb$tdist) | is.na(gb$tdist2)))  &
-    # Query colinear with the next-next entry.
-    ( decode(strand(gb)) %in% c("+", "*") & gb$qfoll == 2 ) | ( decode(strand(gb)) %in%    c("-") & gb$qprev == 2 )
+    # Query colinear with the next-next entry…
+    (
+      ( decode(strand(gb)) %in% c("+", "*") & gb$qfoll == 2 ) |
+      ( decode(strand(gb)) %in%    c("-") & gb$qprev == 2 )
+    ) &
+    # … colinear if same strand
+    gb$twoSameStrand
 
   if(tol < Inf) stop("Not implemented yet")
 

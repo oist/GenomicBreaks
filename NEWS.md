@@ -13,6 +13,11 @@
   Aleksandra Bliznina.
 * A new set of example 5-uplets, to illustrate double inversions.
 
+## Bug fixes
+
+* Add strand check on `flagTranslocations()` so that it does not return a
+  false positive on `exampleDoubleInversion`.
+
 # GenomicBreaks 0.9.1
 
 ## New functionalities
