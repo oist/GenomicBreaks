@@ -4,13 +4,7 @@
 \alias{flagColinearAlignments}
 \title{Flag colinear alignments}
 \usage{
-flagColinearAlignments(
-  gb,
-  tol = Inf,
-  minwidth = 0,
-  details = FALSE,
-  ignore.strand = FALSE
-)
+flagColinearAlignments(gb, tol = Inf, minwidth = 0, details = FALSE)
 }
 \arguments{
 \item{gb}{\code{\link{GBreaks}} object of the pairwise alignment.}
@@ -21,10 +15,6 @@ interrupt colinearity.}
 \item{minwidth}{Remove the intervals whose width smaller than this value.}
 
 \item{details}{Returns more metadata columns if \code{TRUE}.}
-
-\item{ignore.strand}{A logical indicating if the strand of the input object
-should be ignored.  When \code{TRUE}, strand is temporarily set to \code{*}
-during computation.}
 }
 \value{
 Returns a modified \code{GBreaks} object with a new \code{colinear} metadata
@@ -85,9 +75,6 @@ flagColinearAlignments(gb3)
 # Ranges that should not coalesce because they are not
 # ordered properly
 flagColinearAlignments(exampleNotColinear)
-
-# Ignoring strand, inversions are colinear.
-flagColinearAlignments(exampleInversion, ignore.strand = TRUE)
 
 }
 \seealso{
