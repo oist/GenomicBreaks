@@ -158,7 +158,7 @@ coordinate system to the opposite side.</p>
     </tr>
     <tr>
       <th>query</th>
-      <td><p>On <code>GBreaks</code> objects, operate on othe <em>query</em> or the <em>target</em>.</p></td>
+      <td><p>On <code>GBreaks</code> objects, operate on on the <em>query</em> or the <em>target</em>.</p></td>
     </tr>
     </table>
 
@@ -177,44 +177,29 @@ coordinate system to the opposite side.</p>
     <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>gb</span> <span class='op'>&lt;-</span>       <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chr1:101-180:+"</span>, <span class='st'>"chr1:201-300:-"</span>,  <span class='st'>"chr2:120-400:+"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>gb</span><span class='op'>$</span><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'>GRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chrA:101-180"</span>,   <span class='st'>"chrB:201-300"</span>,    <span class='st'>"chrA:120-400"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>seqlengths</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span>       <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>500</span>, <span class='fl'>1000</span><span class='op'>)</span>
-<span class='fu'>seqlengths</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>$</span><span class='va'>query</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>500</span>, <span class='fl'>1000</span><span class='op'>)</span>
-<span class='va'>gb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GBreaks-class.html'>GBreaks</a></span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span>
-
-<span class='va'>gb</span>
+    <pre class="examples"><div class='input'><span class='va'>exampleInsertion</span>
 </div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        query
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chr1   101-180      + | chrA:101-180
-#&gt;   [2]     chr1   201-300      - | chrB:201-300
-#&gt;   [3]     chr2   120-400      + | chrA:120-400
+#&gt;   [1]     chrA   100-200      + | chrB:100-200
+#&gt;   [2]     chrA   201-300      + | chrB:301-400
+#&gt;   [3]     chrC   401-500      + | chrB:201-300
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'><span class='fu'>reverse</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span>
+#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'><span class='fu'>reverse</span><span class='op'>(</span><span class='va'>exampleInsertion</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        query
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chr1   321-400      - | chrA:101-180
-#&gt;   [2]     chr1   201-300      + | chrB:201-300
-#&gt;   [3]     chr2   601-881      - | chrA:120-400
+#&gt;   [1]     chrA   301-401      - | chrB:100-200
+#&gt;   [2]     chrA   201-300      - | chrB:301-400
+#&gt;   [3]     chrC     1-100      - | chrB:201-300
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'><span class='fu'>reverse</span><span class='op'>(</span><span class='va'>gb</span>, query <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'><span class='fu'>reverse</span><span class='op'>(</span><span class='va'>exampleInsertion</span>, query <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        query
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chr1   101-180      - | chrA:321-400
-#&gt;   [2]     chr1   201-300      + | chrB:701-800
-#&gt;   [3]     chr2   120-400      - | chrA:101-381
-#&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'><span class='co'># Do not run reverse on the query directly as it will miss strand information</span>
-<span class='fu'>reverse</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>$</span><span class='va'>query</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 3 ranges and 0 metadata columns:
-#&gt;       seqnames    ranges strand
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chrA   321-400      *
-#&gt;   [2]     chrB   701-800      *
-#&gt;   [3]     chrA   101-381      *
+#&gt;   [1]     chrA   100-200      - | chrB:301-401
+#&gt;   [2]     chrA   201-300      - | chrB:101-200
+#&gt;   [3]     chrC   401-500      - | chrB:201-300
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'>
 </div></pre>
