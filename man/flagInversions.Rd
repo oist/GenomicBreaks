@@ -33,6 +33,9 @@ flagInversions(exampleInversion)
 flagInversions(exampleInversion, tol = 19)
 plotApairOfChrs(exampleInversion)
 
+flagInversions(exampleInversion |> reverse() |> sort(ignore.strand = TRUE))
+plotApairOfChrs(exampleInversion |> reverse())
+
 }
 \seealso{
 Other Flagging functions: 

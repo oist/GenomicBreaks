@@ -29,8 +29,11 @@
 #' flagInversions(exampleInversion, tol = 19)
 #' plotApairOfChrs(exampleInversion)
 #'
+#' flagInversions(exampleInversion |> reverse() |> sort(ignore.strand = TRUE))
+#' plotApairOfChrs(exampleInversion |> reverse())
+#'
 #' @include dist2next.R
-#' @importFrom GenomicRanges precede
+#' @importFrom GenomicRanges precede follow
 #' @export
 
 flagInversions <- function (gb, tol = Inf) {
@@ -39,14 +42,22 @@ flagInversions <- function (gb, tol = Inf) {
   gb <- dist2next(gb, ignore.strand = TRUE)
   gb$tdist2 <- c(gb$tdist[-1], Inf)
   gb$qdist2 <- c(gb$qdist[-1], Inf)
+  # Check that the next and next-next are colinear, ignoring strand
   gb$oneNext <- precede(gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
   gb$twoNext <- c(gb$oneNext[-1], NA)
-  gb$oneDiffStrand <- strand(gb) != c(strand(tail(gb, -1)), factor("*"))
-  gb$twoSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
-  gb.bak$inv <- gb$oneNext          &
-            gb$twoNext          &
-            gb$oneDiffStrand    &
-            gb$twoSameStrand    &
+  gb$colPlus <- strand(gb) %in% c("+", "*") &  gb$oneNext & gb$twoNext
+  # Check that the next and next-next are anti-colinear, ignoring strand
+  gb$onePrev <- follow(gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
+  gb$twoPrev <- c(gb$onePrev[-1], NA)
+  gb$colMin  <- strand(gb) %in%     "-"     &  gb$onePrev & gb$twoPrev
+  # Is the current strand the same as the next ?
+  gb$nextDiffStrand     <- strand(gb) != c(strand(tail(gb, -1)), factor(    "*"    ))
+  # Is the current strand the same as the next-next ?
+  gb$nextNextSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
+  gb.bak$inv <-
+           (gb$colPlus | gb$colMin)  &
+            gb$nextDiffStrand        &
+            gb$nextNextSameStrand    &
             gb$tdist  < tol + 1 &   # We need `< tol + 1`
             gb$tdist2 < tol + 1 &   # and not `<= tol`
             gb$qdist  < tol + 1 &   # Because of comparisons to
