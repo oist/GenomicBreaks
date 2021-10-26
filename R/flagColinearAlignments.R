@@ -20,6 +20,9 @@
 #'        interrupt colinearity.
 #' @param minwidth Remove the intervals whose width smaller than this value.
 #' @param details Returns more metadata columns if `TRUE`.
+#' @param ignore.strand A logical indicating if the strand of the input object
+#'        should be ignored.  When `TRUE`, strand is temporarily set to `*`
+#'        during computation.
 #'
 #' @note Pay attention that if the `mindwidth` option is passed, some intervals
 #' are discarded from the returned object.  This parameter might be removed in
@@ -62,6 +65,9 @@
 #' # ordered properly
 #' flagColinearAlignments(exampleNotColinear)
 #'
+#' # Ignoring strand, inversions are colinear.
+#' flagColinearAlignments(exampleInversion, ignore.strand = TRUE)
+#'
 #' @family Flagging functions
 #' @family Colinearity functions
 #'
@@ -75,7 +81,12 @@
 #' @importFrom stats na.omit
 #' @include dist2next.R
 
-flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE) {
+flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE,
+                                   ignore.strand = FALSE) {
+  if(isTRUE(ignore.strand)) {
+    strand.backup <- strand(gb)
+    strand(gb) <- '*'
+  }
   # Drop blocks that are narrower than `minwidth`
   gb <- gb[width(gb) >= minwidth]
   gb <- gb[width(gb$query) >= minwidth]
@@ -123,6 +134,9 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
     gb$tfoll <- gb$qfoll <- gb$tprev <- gb$qprev <- NULL
     gb$t_col <- gb$q_col <- gb$tdist <- gb$qdist <- NULL
   }
+
+  if(isTRUE(ignore.strand))
+    strand(gb) <- strand.backup
 
   gb
 }
