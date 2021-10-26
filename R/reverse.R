@@ -6,23 +6,15 @@
 #' @returns Returns the modified `GBreaks` or `GRanges` object.
 #'
 #' @param x A `GBreaks` or a `GRanges` object
-#' @param query On `GBreaks` objects, operate on othe _query_ or the _target_.
+#' @param query On `GBreaks` objects, operate on on the _query_ or the _target_.
 #' @param ... Additional arguments (ignored)
 #'
 #' @author Charles Plessy
 #'
 #' @examples
-#' gb <-       GRanges(c("chr1:101-180:+", "chr1:201-300:-",  "chr2:120-400:+"))
-#' gb$query <- GRanges(c("chrA:101-180",   "chrB:201-300",    "chrA:120-400"))
-#' seqlengths(gb)       <- c(500, 1000)
-#' seqlengths(gb$query) <- c(500, 1000)
-#' gb <- GBreaks(gb)
-#'
-#' gb
-#' reverse(gb)
-#' reverse(gb, query = TRUE)
-#' # Do not run reverse on the query directly as it will miss strand information
-#' reverse(gb$query)
+#' exampleInsertion
+#' reverse(exampleInsertion)
+#' reverse(exampleInsertion, query = TRUE)
 #'
 #' @family modifier functions
 #' @seealso See also the [`IRanges::reverse`] function.

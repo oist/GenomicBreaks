@@ -17,7 +17,7 @@ reverse(x, ...)
 
 \item{...}{Additional arguments (ignored)}
 
-\item{query}{On \code{GBreaks} objects, operate on othe \emph{query} or the \emph{target}.}
+\item{query}{On \code{GBreaks} objects, operate on on the \emph{query} or the \emph{target}.}
 }
 \value{
 Returns the modified \code{GBreaks} or \code{GRanges} object.
@@ -27,17 +27,9 @@ Reverse genomic ranges by flipping the strand and moving the origin of the
 coordinate system to the opposite side.
 }
 \examples{
-gb <-       GRanges(c("chr1:101-180:+", "chr1:201-300:-",  "chr2:120-400:+"))
-gb$query <- GRanges(c("chrA:101-180",   "chrB:201-300",    "chrA:120-400"))
-seqlengths(gb)       <- c(500, 1000)
-seqlengths(gb$query) <- c(500, 1000)
-gb <- GBreaks(gb)
-
-gb
-reverse(gb)
-reverse(gb, query = TRUE)
-# Do not run reverse on the query directly as it will miss strand information
-reverse(gb$query)
+exampleInsertion
+reverse(exampleInsertion)
+reverse(exampleInsertion, query = TRUE)
 
 }
 \seealso{
