@@ -44,6 +44,7 @@ flagTranslocations(exampleColinear3)
 Other Flagging functions: 
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()}
 
@@ -53,6 +54,7 @@ Other Translocation functions:
 
 Other Structural variants: 
 \code{\link{StructuralVariants}},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{plotApairOfChrs}()}
 }

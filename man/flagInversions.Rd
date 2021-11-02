@@ -41,16 +41,19 @@ plotApairOfChrs(exampleInversion |> reverse())
 Other Flagging functions: 
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagLongShort}()},
 \code{\link{flagTranslocations}()}
 
 Other Inversion functions: 
 \code{\link{filterInversions}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{showInversions}()}
 
 Other Structural variants: 
 \code{\link{StructuralVariants}},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagTranslocations}()},
 \code{\link{plotApairOfChrs}()}
 }

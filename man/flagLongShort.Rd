@@ -40,6 +40,7 @@ flagLongShort(exampleColinear, annot, select = "arbitrary")
 Other Flagging functions: 
 \code{\link{flagAll}()},
 \code{\link{flagColinearAlignments}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagTranslocations}()}
 }

@@ -80,6 +80,7 @@ flagColinearAlignments(exampleNotColinear)
 \seealso{
 Other Flagging functions: 
 \code{\link{flagAll}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
 \code{\link{flagTranslocations}()}

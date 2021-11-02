@@ -23,6 +23,7 @@ flagAll(exampleInversion)
 \seealso{
 Other Flagging functions: 
 \code{\link{flagColinearAlignments}()},
+\code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
 \code{\link{flagTranslocations}()}
