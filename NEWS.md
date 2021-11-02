@@ -1,4 +1,4 @@
-# GenomicBreaks 0.10.1
+# GenomicBreaks 0.10.0
 
 ## Backwards-incompatible changes
 
@@ -11,6 +11,8 @@
 * New `gb2xlim()` function to narrow focus on plots made with `plotApairOfChrs()`.
 * New `makeOxfordPlots()` function to create macrosynteny plots.  Thanks to
   Aleksandra Bliznina.
+* In `mergeSeqLevels()`, use maximal end value for each `seqlevel` if no
+  if no `seqlengths` were provided.
 * A new set of example 5-uplets, to illustrate double inversions.
 * Flag double inversions with `flagDoubleInversions()` and `flagAll()`, test
   them with `exampleDoubleInversion`.
