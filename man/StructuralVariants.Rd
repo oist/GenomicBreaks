@@ -29,7 +29,10 @@ aligned region, for instance as a gap, are not covered
 exampleColinear
 exampleNotColinear
 exampleColinear3
+exampleColinear5
 exampleInversion
+exampleInversion5uncollapsed
+exampleDoubleInversion
 exampleTranslocation
 exampleTranslocation2
 

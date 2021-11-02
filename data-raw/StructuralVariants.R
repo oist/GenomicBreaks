@@ -48,6 +48,8 @@ isSorted(exampleInversion)
 # Inversion in a 5-bloc context with non-collapsed regions
 # This is an intermediary step towards `exampleDoubleInversion`
 
+# ABC/ABC -> ABC/AbC
+
 exampleInversion5uncollapsed              <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
 strand(exampleInversion5uncollapsed)      <- c(              "+",            "-",            "-",            "+",            "+")
 exampleInversion5uncollapsed$query        <- GRanges(c("chrB:100-190", "chrB:300-390", "chrB:200-290", "chrB:400-490", "chrB:500-590"))
@@ -56,6 +58,7 @@ seqlengths(exampleInversion5uncollapsed)  <- seqlengths(exampleInversion5uncolla
 isSorted(exampleInversion5uncollapsed)
 
 # Double inversions
+# ABC/ABC -> ABC/baC -> ABC/bcA => 3+, 1-, 2-
 
 exampleDoubleInversion                    <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
 strand(exampleDoubleInversion)            <- c(              "+",            "+",            "-",            "-",            "+")
@@ -63,6 +66,34 @@ exampleDoubleInversion$query              <- GRanges(c("chrB:100-190", "chrB:400
 exampleDoubleInversion                    <- GBreaks(exampleDoubleInversion)
 seqlengths(exampleDoubleInversion)        <- seqlengths(exampleDoubleInversion$query) <- 600
 isSorted(exampleDoubleInversion)
+
+# Double inversions
+# ABC/ABC -> ABC/Acb -> ABC/Cab => 2-, 3-, 1+
+exampleDoubleInversion2                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion2)           <- c(              "+",            "-",            "-",            "+",            "+")
+exampleDoubleInversion2$query             <- GRanges(c("chrB:100-190", "chrB:300-390", "chrB:400-490", "chrB:200-290", "chrB:500-590"))
+exampleDoubleInversion2                   <- GBreaks(exampleDoubleInversion2)
+seqlengths(exampleDoubleInversion2)       <- seqlengths(exampleDoubleInversion2$query) <- 600
+isSorted(exampleDoubleInversion2)
+
+# Double inversions
+# ABC/cba -> ABC/BCa -> ABC/BAc => 2+, 1+, 3-
+exampleDoubleInversion3                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion3)           <- c(              "-",            "+",            "+",            "-",            "-")
+exampleDoubleInversion3$query             <- GRanges(c("chrB:500-590", "chrB:300-390", "chrB:200-290", "chrB:400-490", "chrB:100-190"))
+exampleDoubleInversion3                   <- GBreaks(exampleDoubleInversion3)
+seqlengths(exampleDoubleInversion3)       <- seqlengths(exampleDoubleInversion3$query) <- 600
+isSorted(exampleDoubleInversion3)
+
+# Double inversions
+# ABC/cba -> ABC/cAB -> ABC/aCB => 1-, 3+, 2+
+
+exampleDoubleInversion4                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion4)           <- c(              "-",            "-",            "+",            "+",            "-")
+exampleDoubleInversion4$query             <- GRanges(c("chrB:500-590", "chrB:200-290", "chrB:400-490", "chrB:300-390", "chrB:100-190"))
+exampleDoubleInversion4                   <- GBreaks(exampleDoubleInversion4)
+seqlengths(exampleDoubleInversion4)       <- seqlengths(exampleDoubleInversion4$query) <- 600
+isSorted(exampleDoubleInversion4)
 
 # Translocation
 
@@ -83,6 +114,15 @@ exampleTranslocation2                     <- GBreaks(exampleTranslocation2)
 seqlengths(exampleTranslocation2)         <- 500
 seqlengths(exampleTranslocation2$query)   <- c(500,500)
 isSorted(exampleTranslocation2)
+
+# Translocation downstream
+
+exampleTranslocation3                     <- GRanges(c("chrA:100-200", "chrA:201-300", "chrA:301-400"))
+strand(exampleTranslocation3)             <- c(              "+",            "+",            "+")
+exampleTranslocation3$query               <- GRanges(c("chrB:100-200", "chrB:301-400", "chrB:201-300"))
+exampleTranslocation3                     <- GBreaks(exampleTranslocation3)
+seqlengths(exampleTranslocation3)         <- seqlengths(exampleTranslocation3$query) <- 500
+isSorted(exampleTranslocation3)
 
 # Insertion on the target
 

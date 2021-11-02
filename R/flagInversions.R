@@ -67,6 +67,114 @@ flagInversions <- function (gb, tol = Inf) {
   gb.bak
 }
 
+#' Flag double inversions
+#'
+#' Two consecutive and overlapping inversions will generate patterns that can
+#' this function aims to detect.
+#'
+#' @param gb A [`GBreaks()`] object.
+#' @param details Returns more metadata columns if `TRUE`.
+#'
+#' @family Flagging functions
+#' @family Inversion functions
+#' @family Structural variants
+#'
+#' @examples
+#' # Start colinear.  Lower case meands minus strand
+#' z0 <- GBreaks(target = GRanges(c(A="T:10-15:+", B="T:20-25:+", C="T:30-35:+")),
+#'               query  = GRanges(c(A="Q:10-15",   B="Q:20-25",   C="Q:30-35")))
+#'
+#' # Swap coordinates of A and B on the query and flip strands  ABC -> baC
+#' z1 <- GBreaks(target = GRanges(c(A="T:10-15:-", B="T:20-25:-", C="T:30-35:+")),
+#'               query  = GRanges(c(a="Q:20-25",   b="Q:10-15",   C="Q:30-35")))
+#'
+#' # Now query order is b - a - C.  Swap a and C and flip strands baC -> bcA
+#' z2 <- GBreaks(target = GRanges(c(A="T:10-15:+", B="T:20-25:-", C="T:30-35:-")),
+#'               query  = GRanges(c(A="Q:30-35",   b="Q:10-15",   c="Q:20-25")))
+#'
+#' # Altogether, there are:
+#' # ABC -> baC -> bcA
+#' # ABC -> Acb -> Cab
+#' # cba -> BCa -> BAc
+#' # cba -> cAB -> aCB
+#'
+#'
+#' # z2 has same topoloty as package example
+#' plotApairOfChrs(z2)
+#' plotApairOfChrs(exampleDoubleInversion)
+#'
+#' flagDoubleInversions(exampleDoubleInversion )
+#'
+#' exampleDoubleInversionRev <- reverse(exampleDoubleInversion) |> sort(ignore.strand = TRUE)
+#' exampleDoubleInversionRev[2:4] |> plotApairOfChrs()
+#'
+#' @author Charles Plessy
+#'
+#' @export
+
+flagDoubleInversions <- function(gb, details = FALSE) {
+  if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
+
+  gb.bak <- gb # Backup the object
+
+  # Look ahead for the two next alignments
+  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
+  gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
+
+  gb$strand0 <- strand(gb)
+  gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
+  gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
+
+  # Pattern 1: bcA
+  # case (strand)-insensitive order of bcA is 3, 1, 2
+  # In that order, strands are +, -, -
+  # precede(IPos(c(3,1,2))) - 1:3
+  # We do not test value for the 3rd position (NA)
+  gb$pat_bcA <-
+    ( gb$qnext1  ==  1  &
+      gb$qnext2  == -2  &
+      gb$strand0 == "+" &
+      gb$strand1 == "-" &
+      gb$strand2 == "-"   ) |> sapply(isTRUE) # Turn NAs into FALSE
+
+  # Pattern 2: Cab
+  # precede(IPos(c(2,3,1))) - 1:3
+  gb$pat_Cab <-
+    ( gb$qnext0  ==  1  &
+      gb$qnext2  == -2  &
+      gb$strand0 == "-" &
+      gb$strand1 == "-" &
+      gb$strand2 == "+"   ) |> sapply(isTRUE)
+
+  # Pattern 3: BAc
+  # precede(IPos(c(2,1,3))) - 1:3
+  gb$pat_BAc <-
+    ( gb$qnext0  ==  2  &
+      gb$qnext1  == -1  &
+      gb$strand0 == "+" &
+      gb$strand1 == "+" &
+      gb$strand2 == "-"   ) |> sapply(isTRUE)
+
+  # Pattern 4; aCB
+  # precede(IPos(c(1,3,2))) - 1:3
+  gb$pat_aCB <-
+    ( gb$qnext0  ==  2  &
+      gb$qnext2  == -1  &
+      gb$strand0 == "-" &
+      gb$strand1 == "+" &
+      gb$strand2 == "+"   ) |> sapply(isTRUE)
+
+  gb$Dbl <- gb$pat_bcA | gb$pat_Cab |  gb$pat_BAc | gb$pat_aCB
+
+  if (isTRUE(details)) return(gb)
+
+  gb.bak$Dbl <- gb$Dbl
+
+  gb.bak
+}
+
+
 #' Show inversions and their flanking blocks.
 #'
 #' @param gb A [`GBreaks`] object processed with [`flagInversions`].
