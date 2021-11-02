@@ -89,7 +89,7 @@
                         <h4 class="author">Charlotte West</h4>
                         <h4 class="author">Charles Plessy</h4>
             
-            <h4 class="date">26 October, 2021</h4>
+            <h4 class="date">02 November, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/GenomicBreaks.Rmd"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="hidden name"><code>GenomicBreaks.Rmd</code></div>
@@ -238,7 +238,7 @@
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Subset for NC_047487.1 on the query genome</span>
-<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="fu">seqnames</span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span></code></pre></div>
+<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html">seqnames</a></span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 24 ranges and 2 metadata columns:
 ##        seqnames        ranges strand |     score                     query
 ##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;
@@ -257,7 +257,7 @@
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Add or modify columns on the fly</span>
-<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="st">"Width"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="st">"Width"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
 ##       seqnames      ranges strand |     score                   query     Width
 ##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt; &lt;integer&gt;
@@ -267,7 +267,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="st">"score"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="st">"score"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
 ##       seqnames      ranges strand |     score                   query
 ##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;               &lt;GRanges&gt;
@@ -286,7 +286,7 @@
 <p>Let us define an <strong>alignment stop</strong> to be a position defined in either the <em>target</em> or <em>query</em> genome, where an alignment begins or ends. Looking at the first line in the <code>gb</code> object above, <code>ChrI</code> positions 5860 and 10010 of the <em>target</em> would be defined as alignment stops. Correspondingly, we have positions 8723 and 12176 in <code>NC_047487.1</code> of the <em>query</em> genome as alignment stops.</p>
 <p>The function <code><a href="../reference/get_bps.html">get_bps()</a></code> takes in a <code>GBreaks</code> pairwise alignment or a simple <code>GRanges</code> object, and produces a <code>GRanges</code> object of it’s associated alignment stops. It has <code>direction</code>, <code>stranded</code> and <code>sorted</code> options to refind its output.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -296,7 +296,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -306,7 +306,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -316,7 +316,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -326,7 +326,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -336,7 +336,7 @@
 ##   -------
 ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##          seqnames    ranges strand
 ##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -346,7 +346,7 @@
 ##   -------
 ##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##          seqnames    ranges strand
 ##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -363,8 +363,8 @@
 <a href="#arms" class="anchor"></a>Arms</h2>
 <p>If the positions of the centromeres are known, an annotation file can be crafted to indicate the coordinates of the short and long arms, and the function <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code> can be used to transfer this annotation to the <code>GBreaks</code> object.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html">GRanges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chrI:1-151465"</span>, <span class="st">"chrI:151582-230218"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">annot</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html">GRanges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">c</a></span><span class="op">(</span><span class="st">"chrI:1-151465"</span>, <span class="st">"chrI:151582-230218"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">annot</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/flagLongShort.html">flagLongShort</a></span><span class="op">(</span><span class="va">gb</span>, <span class="va">annot</span><span class="op">)</span></code></pre></div>
 <pre><code>## GBreaks object with 505 ranges and 3 metadata columns:
 ##         seqnames      ranges strand |     score                   query
@@ -444,7 +444,7 @@
 <p>Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top.</p>
 <p>We can plot alignments for two of the target scaffolds side-by-side, using <code>align_scaf_plot-2</code>. This can be used in aid of superscaffolding.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/align_scaf_plot_2.html">align_scaf_plot_2</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chrI"</span>,<span class="st">"chrII"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/align_scaf_plot_2.html">align_scaf_plot_2</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html">c</a></span><span class="op">(</span><span class="st">"chrI"</span>,<span class="st">"chrII"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly.</p>
 </div>

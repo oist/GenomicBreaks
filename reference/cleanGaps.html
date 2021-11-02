@@ -165,30 +165,33 @@ please let me know in a GitHub issue or pull request.</p>
     <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cleanGaps</span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
-#&gt;       seqnames    ranges strand
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chrA   151-250      *
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'>GenomicRanges</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html'>gaps</a></span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 4 ranges and 0 metadata columns:
-#&gt;       seqnames    ranges strand
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chrA      1-99      +
-#&gt;   [2]     chrA   151-250      +
-#&gt;   [3]     chrA     1-300      -
-#&gt;   [4]     chrA     1-300      *
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='fu'>cleanGaps</span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GRanges object with 2 ranges and 0 metadata columns:
-#&gt;       seqnames    ranges strand
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chrA   191-209      *
-#&gt;   [2]     chrA   292-300      *
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>cleanGaps</span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GRanges object with 1 range and 0 metadata columns:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   151-250      *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='fu'>GenomicRanges</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html'>gaps</a></span><span class='op'>(</span><span class='va'>exampleColinear</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GRanges object with 4 ranges and 0 metadata columns:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA      1-99      +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   151-250      +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA     1-300      -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [4]     chrA     1-300      *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='fu'>cleanGaps</span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GRanges object with 2 ranges and 0 metadata columns:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   191-209      *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   292-300      *</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

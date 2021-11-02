@@ -160,54 +160,93 @@ aligned region, for instance as a gap, are not covered</p>
     <p>Charles Plessy</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>exampleColinear</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:100-150
-#&gt;   [2]     chrA   251-300      + | chrB:251-300
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleNotColinear</span>
-</div><div class='output co'>#&gt; GBreaks object with 2 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-150      + | chrB:201-251
-#&gt;   [2]     chrA   251-300      + |  chrB:50-100
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleColinear3</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-200      + | chrB:100-200
-#&gt;   [2]     chrA   201-300      + | chrB:201-300
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleInversion</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-190      + | chrB:100-190
-#&gt;   [2]     chrA   210-291      - | chrB:210-291
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleTranslocation</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-200      + | chrB:100-200
-#&gt;   [2]     chrA   201-300      + | chrC:201-300
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'><span class='va'>exampleTranslocation2</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        query
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-#&gt;   [1]     chrA   100-200      + | chrB:100-200
-#&gt;   [2]     chrA   201-300      - | chrC:201-300
-#&gt;   [3]     chrA   301-400      + | chrB:301-400
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>exampleColinear</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 2 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-150      + | chrB:100-150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   251-300      + | chrB:251-300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleNotColinear</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 2 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-150      + | chrB:201-251</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   251-300      + |  chrB:50-100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleColinear3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-200      + | chrB:100-200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   201-300      + | chrB:201-300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleColinear5</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   200-290      + | chrB:200-290</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   300-390      + | chrB:300-390</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [4]     chrA   400-490      + | chrB:400-490</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleInversion</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleInversion5uncollapsed</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   200-290      - | chrB:300-390</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   300-390      - | chrB:200-290</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [4]     chrA   400-490      + | chrB:400-490</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleDoubleInversion</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   200-290      + | chrB:400-490</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   300-390      - | chrB:200-290</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [4]     chrA   400-490      - | chrB:300-390</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleTranslocation</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-200      + | chrB:100-200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   201-300      + | chrC:201-300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'><span class='va'>exampleTranslocation2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-200      + | chrB:100-200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   201-300      - | chrC:201-300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

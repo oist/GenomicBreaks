@@ -163,16 +163,17 @@ ranges.</p>
 <code><a href='flagTranslocations.html'>flagTranslocations</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>showTranslocations</span><span class='op'>(</span><span class='fu'><a href='flagTranslocations.html'>flagTranslocations</a></span><span class='op'>(</span><span class='va'>exampleTranslocation</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; GBreaks object with 3 ranges and 2 metadata columns:
-#&gt;     seqnames    ranges strand |        query   tra
-#&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
-#&gt;   1     chrA   100-200      + | chrB:100-200  TRUE
-#&gt;   2     chrA   201-300      + | chrC:201-300 FALSE
-#&gt;   3     chrA   301-400      + | chrB:301-400 FALSE
-#&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>showTranslocations</span><span class='op'>(</span><span class='fu'><a href='flagTranslocations.html'>flagTranslocations</a></span><span class='op'>(</span><span class='va'>exampleTranslocation</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     seqnames    ranges strand |        query   tra</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1     chrA   100-200      + | chrB:100-200  TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2     chrA   201-300      + | chrC:201-300 FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3     chrA   301-400      + | chrB:301-400 FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
