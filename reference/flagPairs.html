@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flag inversions — flagInversions • GenomicBreaks</title>
+<title>Flag successive entries of a GBreaks object — flagPairs • GenomicBreaks</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Flag inversions — flagInversions" />
-<meta property="og:description" content="Flag ranges that start a triplet that would be colinear if the central pair
-were aligned to the opposite strand." />
+<meta property="og:title" content="Flag successive entries of a GBreaks object — flagPairs" />
+<meta property="og:description" content="Scans a sorted GBreaks object and issues a flag describing the relation
+between the current entry and the next entry." />
 
 
 
@@ -127,17 +127,17 @@ were aligned to the opposite strand." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flag inversions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagInversions.R'><code>R/flagInversions.R</code></a></small>
-    <div class="hidden name"><code>flagInversions.Rd</code></div>
+    <h1>Flag successive entries of a <code>GBreaks</code> object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/oist/GenomicBreaks/blob/master/R/flagPairs.R'><code>R/flagPairs.R</code></a></small>
+    <div class="hidden name"><code>flagPairs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Flag ranges that start a triplet that would be colinear if the central pair
-were aligned to the opposite strand.</p>
+    <p>Scans a sorted <code><a href='GBreaks-class.html'>GBreaks</a></code> object and issues a flag describing the relation
+between the current entry and the next entry.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>gb</span>, tol <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>flagPairs</span><span class='op'>(</span><span class='va'>gb</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,81 +146,95 @@ were aligned to the opposite strand.</p>
       <th>gb</th>
       <td><p>A <code><a href='GBreaks-class.html'>GBreaks()</a></code> object.</p></td>
     </tr>
-    <tr>
-      <th>tol</th>
-      <td><p>Tolerance window for the distance between two ranges.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the <code>GBreaks</code> object with an extra <code>inv</code> metadata column.</p>
+    <p>Returns the <code>GBreaks</code> object with an extra <code>pairs</code> metadata column.
+This <code>pairs</code> column is a factor of all flags, so that <code>table(gb$pairs)</code>
+always returns a vector of the same length, reporting <code>0</code> when necessary.
+This allows to easily aggregate results from multiple objects.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Here is a trivial example of an inversion.</p><pre>┌──────────────┬──────────────┬──────────────┐
-│ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
-└──────────────┴──────────────┴──────────────┘
-       +               -             +         (Alignment direction)
-┌──────────────┬──────────────┬──────────────┐
-│ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
-└──────────────┴──────────────┴──────────────┘
-</pre>
-
+    <p>Because the object is sorted, the next entry on the <em>target</em> genome is by
+definition following the current one unless the end of the sequence feature
+(contig, scaffold, …) is reached.  The two <em>target</em> ranges can be on the
+same strand or on opposite strands.  No difference is made between <code>+/-</code>
+and <code>-/+</code> orientations because it will be arbitrary unless the sequence
+features of both genomes are oriented, as in the case of comparing
+chromosomal assemblies of related species.</p>
+<p>Depending on whether the <em>query</em> ranges precede or follow each other, or
+are not next to each other, and depending on the strand of the alignments,
+a flag is issued on the current entry.  <code>Col</code> signals colinearity with the
+next entry, <code>Inv</code> an inversion on either entry, <code>Flp</code> signals that the order
+of the entries is as if one hand jumped over the other one.  When the <em>query</em>
+ranges are not next to each other, a <code>Scr</code> flag, for <em>scrambled</em>, is issued.
+Lastly, <code>Bnd</code> (for <em>boundary</em>) signals that there is no pair to analyse
+because the current entry is the last one for the current sequence level on
+the <em>target</em> genome.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Flagging functions: 
 <code><a href='flagAll.html'>flagAll</a>()</code>,
 <code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code>,
 <code><a href='flagDoubleInversions.html'>flagDoubleInversions</a>()</code>,
+<code><a href='flagInversions.html'>flagInversions</a>()</code>,
 <code><a href='flagLongShort.html'>flagLongShort</a>()</code>,
-<code><a href='flagPairs.html'>flagPairs</a>()</code>,
 <code><a href='flagTranslocations.html'>flagTranslocations</a>()</code></p>
 <p>Other Inversion functions: 
 <code><a href='filterInversions.html'>filterInversions</a>()</code>,
 <code><a href='flagDoubleInversions.html'>flagDoubleInversions</a>()</code>,
-<code><a href='flagPairs.html'>flagPairs</a>()</code>,
+<code><a href='flagInversions.html'>flagInversions</a>()</code>,
 <code><a href='leftInversionGaps.html'>leftInversionGaps</a>()</code>,
 <code><a href='showInversions.html'>showInversions</a>()</code></p>
+<p>Other Colinearity functions: 
+<code><a href='GOC.html'>GOC</a>()</code>,
+<code><a href='chain_contigs.html'>chain_contigs</a>()</code>,
+<code><a href='coalesce_contigs.html'>coalesce_contigs</a>()</code>,
+<code><a href='filterColinearRegions.html'>filterColinearRegions</a>()</code>,
+<code><a href='flagColinearAlignments.html'>flagColinearAlignments</a>()</code></p>
 <p>Other Structural variants: 
 <code><a href='StructuralVariants.html'>StructuralVariants</a></code>,
 <code><a href='flagDoubleInversions.html'>flagDoubleInversions</a>()</code>,
-<code><a href='flagPairs.html'>flagPairs</a>()</code>,
+<code><a href='flagInversions.html'>flagInversions</a>()</code>,
 <code><a href='flagTranslocations.html'>flagTranslocations</a>()</code>,
 <code><a href='plotApairOfChrs.html'>plotApairOfChrs</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span></span>
+    <pre class="examples"><span class='r-in'><span class='fu'>flagPairs</span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query   inv</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190  TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291 FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query    pairs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190      Inv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291      Inv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400      Bnd</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class='r-in'><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>exampleInversion</span>, tol <span class='op'>=</span> <span class='fl'>19</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>flagPairs</span><span class='op'>(</span><span class='va'>exampleTranslocation</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query   inv</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190 FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291 FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query    pairs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   100-200      + | chrB:100-200      Scr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   201-300      + | chrC:201-300      Scr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400      Bnd</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class='r-in'><span class='fu'><a href='plotApairOfChrs.html'>plotApairOfChrs</a></span><span class='op'>(</span><span class='va'>exampleInversion</span><span class='op'>)</span></span>
-<span class='r-plt img'><img src='flagInversions-1.png' alt='' width='700' height='433' /></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>flagInversions</span><span class='op'>(</span><span class='va'>exampleInversion</span> |&gt; <span class='fu'><a href='reverse.html'>reverse</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; <span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span>ignore.strand <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>       seqnames    ranges strand |        query   inv</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1]     chrA   101-200      - | chrB:301-400  TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [2]     chrA   210-291      + | chrB:210-291 FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   [3]     chrA   311-401      - | chrB:100-190 FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   -------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class='r-in'><span class='fu'><a href='plotApairOfChrs.html'>plotApairOfChrs</a></span><span class='op'>(</span><span class='va'>exampleInversion</span> |&gt; <span class='fu'><a href='reverse.html'>reverse</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-plt img'><img src='flagInversions-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># How the pair classes are defined:</span></span>
+<span class='r-in'><span class='fu'>GenomicBreaks</span><span class='fu'>:::</span><span class='va'>allPossiblePairClasses</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Qnext Strnd Snext pair     paste</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   next     +     +  Col  next + +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   prev     +     +  Flp  prev + +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  other     +     +  Scr other + +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   next     -     +  Inv  next - +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   prev     -     +  Inv  prev - +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  other     -     +  Scr other - +</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   next     +     -  Inv  next + -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   prev     +     -  Inv  prev + -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  other     +     -  Scr other + -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  next     -     -  Flp  next - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  prev     -     -  Col  prev - -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 other     -     -  Scr other - -</span>
 <span class='r-in'></span>
 </pre>
   </div>
