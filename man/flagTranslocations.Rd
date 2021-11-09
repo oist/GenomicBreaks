@@ -46,7 +46,8 @@ Other Flagging functions:
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
-\code{\link{flagLongShort}()}
+\code{\link{flagLongShort}()},
+\code{\link{flagPairs}()}
 
 Other Translocation functions: 
 \code{\link{filterTranslocations}()},
@@ -56,6 +57,7 @@ Other Structural variants:
 \code{\link{StructuralVariants}},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
+\code{\link{flagPairs}()},
 \code{\link{plotApairOfChrs}()}
 }
 \concept{Flagging functions}

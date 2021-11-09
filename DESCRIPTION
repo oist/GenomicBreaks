@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.9.1
+Version: 0.10.0
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",
@@ -61,6 +61,7 @@ Collate:
     'flagColinearAlignments.R'
     'flagAll.R'
     'flagLongShort.R'
+    'flagPairs.R'
     'genoPlotR.R'
     'getRefGenome.R'
     'get_bps.R'

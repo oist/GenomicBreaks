@@ -28,6 +28,7 @@ filterInversions(flagInversions(exampleInversion))
 Other Inversion functions: 
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
+\code{\link{flagPairs}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{showInversions}()}
 }

@@ -43,17 +43,20 @@ Other Flagging functions:
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagLongShort}()},
+\code{\link{flagPairs}()},
 \code{\link{flagTranslocations}()}
 
 Other Inversion functions: 
 \code{\link{filterInversions}()},
 \code{\link{flagDoubleInversions}()},
+\code{\link{flagPairs}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{showInversions}()}
 
 Other Structural variants: 
 \code{\link{StructuralVariants}},
 \code{\link{flagDoubleInversions}()},
+\code{\link{flagPairs}()},
 \code{\link{flagTranslocations}()},
 \code{\link{plotApairOfChrs}()}
 }

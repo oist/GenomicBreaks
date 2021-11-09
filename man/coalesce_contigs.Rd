@@ -66,7 +66,8 @@ Other Colinearity functions:
 \code{\link{GOC}()},
 \code{\link{chain_contigs}()},
 \code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()}
+\code{\link{flagColinearAlignments}()},
+\code{\link{flagPairs}()}
 
 Other modifier functions: 
 \code{\link{mergeSeqLevels}()},

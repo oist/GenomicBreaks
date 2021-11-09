@@ -53,6 +53,7 @@ Other Structural variants:
 \code{\link{StructuralVariants}},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
+\code{\link{flagPairs}()},
 \code{\link{flagTranslocations}()}
 }
 \author{

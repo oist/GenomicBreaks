@@ -83,13 +83,15 @@ Other Flagging functions:
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
+\code{\link{flagPairs}()},
 \code{\link{flagTranslocations}()}
 
 Other Colinearity functions: 
 \code{\link{GOC}()},
 \code{\link{chain_contigs}()},
 \code{\link{coalesce_contigs}()},
-\code{\link{filterColinearRegions}()}
+\code{\link{filterColinearRegions}()},
+\code{\link{flagPairs}()}
 }
 \author{
 Charlotte West

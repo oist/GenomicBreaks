@@ -32,7 +32,8 @@ Other Colinearity functions:
 \code{\link{GOC}()},
 \code{\link{coalesce_contigs}()},
 \code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()}
+\code{\link{flagColinearAlignments}()},
+\code{\link{flagPairs}()}
 }
 \author{
 Charles Plessy

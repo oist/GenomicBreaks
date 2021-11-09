@@ -8,6 +8,8 @@
 
 ## New functionalities
 
+* New `flagPairs()` function to exhaustively flag windows of 2 successive
+  `GBreaks` entries.
 * New `gb2xlim()` function to narrow focus on plots made with `plotApairOfChrs()`.
 * New `makeOxfordPlots()` function to create macrosynteny plots.  Thanks to
   Aleksandra Bliznina.
