@@ -1,9 +1,6 @@
 Bootstrap: docker
 From: debian:sid
 
-%files
-    . /GenomicBreaksSource
-
 %post
     apt update
     apt upgrade -y
