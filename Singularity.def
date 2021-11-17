@@ -12,8 +12,8 @@ From: debian:sid
     apt install -y libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
     apt install -y git bash-completion
     apt install -y libgl1 libnss3 libasound2 libxdamage1
-    wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-351-amd64.deb
-    apt --fix-broken -y install ./rstudio-2021.09.0-351-amd64.deb
+    wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-372-amd64.deb
+    apt --fix-broken -y install ./rstudio-2021.09.0-372-amd64.deb
     rm rstudio-*-amd64.deb
 
     R -e 'install.packages("BiocManager")'
