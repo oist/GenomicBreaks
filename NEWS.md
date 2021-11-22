@@ -1,3 +1,9 @@
+# GenomicBreaks 0.11.0
+
+## Backwards-incompatible changes
+
+* Remove project-specific `load_one_to_ones` function.
+
 # GenomicBreaks 0.10.0
 
 ## Backwards-incompatible changes

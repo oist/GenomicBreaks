@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.10.0
+Version: 0.11.0
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",
@@ -68,7 +68,6 @@ Collate:
     'int_frag.R'
     'inv2UCSCData.R'
     'load_genomic_breaks.R'
-    'load_one_to_ones.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
     'makeOxfordPlots.R'
