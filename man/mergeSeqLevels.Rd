@@ -25,8 +25,8 @@ sequences into larger ones.
 }
 \note{
 Be careful that in some cases it is needed to "flip" the sequence
-feature \code{\link{reverse}}' before merging, for instance when colinearity is with
-its reverse strand.
+feature with \code{\link{reverse}} before merging, for instance when colinearity is
+with its reverse strand.
 }
 \examples{
 gb       <- GRanges(c("XSR:101-180:+", "XSR:201-300:+",  "XSR:320-400:+"))
