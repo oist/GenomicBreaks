@@ -26,7 +26,7 @@
 makeOxfordPlots <- function (gb, selChroms = NULL,
                              sp1Name = "sp1", sp2Name = "sp2",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
-                             type = c("point", "line")) {
+                             type = c("line", "point")) {
 
 
   type <- match.arg(type)
