@@ -8,6 +8,7 @@
 #' @param sp1ChrArms A GenomicBreaks object of chromosome arms in sp1 genome
 #' @param sp2ChrArms A Genomic Breaks object of chromosome arms in sp2 genome
 #' @param type The type of the plot (`point` or `line`)
+#' @param size The size of the plotted dots or segments.
 #'
 #' @return Returns an Oxford (macrosynteny) plot generated with `ggplot2`
 #'
@@ -24,7 +25,7 @@
 
 makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
-                             type = c("line", "point")) {
+                             type = c("line", "point"), size = 1) {
 
   type <- match.arg(type)
 
@@ -45,11 +46,12 @@ makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
     aes(x = start, y = query.start, xend = end, yend = query.end)
 
   if (type == "point")
-    p <- p + geom_point(aes(colour = seqnames), shape = 20, size = 0.01)
+    p <- p + geom_point(aes(colour = seqnames), shape = 20, size = size)
 
   if (type == "line")
     p <- p + geom_segment(aes(colour = seqnames),
-                          lineend = "round")
+                          lineend = "round",
+                          size    = size)
 
   ## add title of the plot
   p <- p + ggtitle(paste(sp1Name, "vs", sp2Name, "macrosynteny plot")) +

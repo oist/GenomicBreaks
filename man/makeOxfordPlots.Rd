@@ -10,7 +10,8 @@ makeOxfordPlots(
   sp2Name = "sp2",
   sp1ChrArms = NULL,
   sp2ChrArms = NULL,
-  type = c("line", "point")
+  type = c("line", "point"),
+  size = 1
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ makeOxfordPlots(
 \item{sp2ChrArms}{A Genomic Breaks object of chromosome arms in sp2 genome}
 
 \item{type}{The type of the plot (\code{point} or \code{line})}
+
+\item{size}{The size of the plotted dots or segments.}
 }
 \value{
 Returns an Oxford (macrosynteny) plot generated with \code{ggplot2}
