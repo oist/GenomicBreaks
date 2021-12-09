@@ -48,7 +48,8 @@ makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
     p <- p + geom_point(aes(colour = seqnames), shape = 20, size = 0.01)
 
   if (type == "line")
-    p <- p + geom_segment(aes(colour = seqnames))
+    p <- p + geom_segment(aes(colour = seqnames),
+                          lineend = "round")
 
   ## add title of the plot
   p <- p + ggtitle(paste(sp1Name, "vs", sp2Name, "macrosynteny plot")) +
