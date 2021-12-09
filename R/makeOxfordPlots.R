@@ -3,7 +3,6 @@
 #' TBD
 #'
 #' @param gb A GenomicBreaks object
-#' @param selChroms A list of chromosomes in target genome to plot
 #' @param sp1Name Name of the first species (default: sp1)
 #' @param sp2Name Name of the second species (default: sp2)
 #' @param sp1ChrArms A GenomicBreaks object of chromosome arms in sp1 genome
@@ -23,18 +22,12 @@
 #' @import ggplot2
 #' @export
 
-makeOxfordPlots <- function (gb, selChroms = NULL,
-                             sp1Name = "sp1", sp2Name = "sp2",
+makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
                              type = c("line", "point")) {
 
 
   type <- match.arg(type)
-
-  # filter chromosomes
-  if(! is.null(selChroms)){
-    gb <- gb[seqnames(gb) %in% selChroms]
-  }
 
   targetMerged <- mergeSeqLevels(gb,       seqlevelsInUse(gb), "AllMerged")
   queryMerged  <- mergeSeqLevels(gb$query, seqlevelsInUse(gb$query), "AllMerged")

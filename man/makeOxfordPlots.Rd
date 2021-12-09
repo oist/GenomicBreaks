@@ -6,18 +6,15 @@
 \usage{
 makeOxfordPlots(
   gb,
-  selChroms = NULL,
   sp1Name = "sp1",
   sp2Name = "sp2",
   sp1ChrArms = NULL,
   sp2ChrArms = NULL,
-  type = c("point", "line")
+  type = c("line", "point")
 )
 }
 \arguments{
 \item{gb}{A GenomicBreaks object}
-
-\item{selChroms}{A list of chromosomes in target genome to plot}
 
 \item{sp1Name}{Name of the first species (default: sp1)}
 
