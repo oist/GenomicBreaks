@@ -15,25 +15,28 @@ makeOxfordPlots(
 )
 }
 \arguments{
-\item{gb}{A GenomicBreaks object}
+\item{gb}{A \code{GBreaks} object}
 
 \item{sp1Name}{Name of the first species (default: sp1)}
 
 \item{sp2Name}{Name of the second species (default: sp2)}
 
-\item{sp1ChrArms}{A GenomicBreaks object of chromosome arms in sp1 genome}
+\item{sp1ChrArms}{A \code{GBreaks} object of chromosome arms in sp1 genome}
 
-\item{sp2ChrArms}{A Genomic Breaks object of chromosome arms in sp2 genome}
+\item{sp2ChrArms}{A \code{GBreaks} object of chromosome arms in sp2 genome}
 
 \item{type}{The type of the plot (\code{point} or \code{line})}
 
 \item{size}{The size of the plotted dots or segments.}
 }
 \value{
-Returns an Oxford (macrosynteny) plot generated with \code{ggplot2}
+Returns a \code{ggplot2} object that can be further modified using the
+\code{+} operatore.
 }
 \description{
-TBD
+Takes a \code{\link{GBreaks}} object and prepares an Oxford (macrosynteny) of the
+coordinates of the \emph{query} ranges against the \emph{target} ranges after
+concatenating them.
 }
 \examples{
 makeOxfordPlots(exampleTranslocation)
