@@ -26,14 +26,19 @@
 #' @import ggplot2
 #' @export
 
-makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
+makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
                              type = c("line", "point"), size = 1) {
 
   type <- match.arg(type)
 
-  targetMerged <- mergeSeqLevels(gb,       seqlevelsInUse(gb), "AllMerged")
-  queryMerged  <- mergeSeqLevels(gb$query, seqlevelsInUse(gb$query), "AllMerged")
+  mergeSeqLevelsIfMany <- function(gr, seqs, name) {
+    if (length(seqlevelsInUse(gr)) == 1) return(gr)
+    mergeSeqLevels(gr, seqs, name)
+  }
+
+  targetMerged <- mergeSeqLevelsIfMany(gb,       seqlevelsInUse(gb),       sp1Name)
+  queryMerged  <- mergeSeqLevelsIfMany(gb$query, seqlevelsInUse(gb$query), sp2Name)
 
   breaks <- list()
   labels <- list()
@@ -61,7 +66,8 @@ makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
     theme(plot.title = element_text(hjust = 0.5))
 
   ## add x and y labels
-  p <- p + labs(x = sp1Name, y = sp2Name)
+  p <- p + labs(x = seqlevelsInUse(targetMerged),
+                y = seqlevelsInUse(queryMerged))
 
   ## add breaks
   if (is.null(sp1ChrArms)) {
