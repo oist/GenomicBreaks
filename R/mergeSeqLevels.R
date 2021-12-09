@@ -42,7 +42,8 @@ mergeSeqLevels <- function(gr, seqs, name) {
   if (all(is.na(seqlengths(gr))))
     seqlengths(gr) <- tapply(end(gr), seqnames(gr), max) |> as.vector()
   lengths <- seqlengths(seqinfo(gr))[seqs]
-  addlengths <- c(cumsum(head(lengths, -1)))
+  mode(lengths) <- "numeric"                      # 32-bit integers are too small for
+  addlengths <- c(cumsum(head(lengths, -1)))      # the cumulative sum on this line
   names(addlengths) <- tail(names(lengths), -1)
 
   # Add a new seqlevel
