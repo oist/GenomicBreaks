@@ -82,7 +82,8 @@ makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
   }
   p <- p +
     scale_y_continuous(expand = c(0, 0), breaks = breaks$sp2,
-                       minor_breaks = NULL, labels = labels$sp2)
+                       minor_breaks = NULL, labels = labels$sp2) +
+    coord_fixed()
 
   p
 }
