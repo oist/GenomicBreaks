@@ -34,7 +34,7 @@ TBD
 }
 \examples{
 makeOxfordPlots(exampleTranslocation)
-makeOxfordPlots(exampleTranslocation, type = "l")
+makeOxfordPlots(exampleTranslocation, type = "p")
 
 }
 \seealso{

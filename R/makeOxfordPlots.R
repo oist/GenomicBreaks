@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' makeOxfordPlots(exampleTranslocation)
-#' makeOxfordPlots(exampleTranslocation, type = "l")
+#' makeOxfordPlots(exampleTranslocation, type = "p")
 #'
 #' @import ggplot2
 #' @export
@@ -25,7 +25,6 @@
 makeOxfordPlots <- function (gb, sp1Name = "sp1", sp2Name = "sp2",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
                              type = c("line", "point")) {
-
 
   type <- match.arg(type)
 
