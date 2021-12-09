@@ -32,6 +32,18 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
 
   type <- match.arg(type)
 
+  if (sp1Name == "target") {
+    possibleName <- unique(genome(gb))
+    if (length(possibleName) == 1 & ! is.na(possibleName))
+    sp1Name <- possibleName
+  }
+
+  if (sp2Name == "query") {
+    possibleName <- unique(genome(gb$query))
+    if (length(possibleName) == 1 & ! is.na(possibleName))
+      sp2Name <- possibleName
+  }
+
   mergeSeqLevelsIfMany <- function(gr, seqs, name) {
     if (length(seqlevelsInUse(gr)) == 1) return(gr)
     mergeSeqLevels(gr, seqs, name)
