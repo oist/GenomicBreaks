@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.11.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/GenomicBreaks.html">Get started</a>
 </li>
@@ -68,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/oist/GenomicBreaks/">
+  <a href="https://github.com/oist/GenomicBreaks/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,27 +81,27 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="genomicbreaks" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#genomicbreaks" class="anchor"></a>GenomicBreaks</h1></div>
-<div id="purpose" class="section level2">
-<h2 class="hasAnchor">
-<a href="#purpose" class="anchor"></a>Purpose</h2>
-<p>We are developing the <code>GenomicBreaks</code> package to parse and process the alignment files produced by the our <a href="https://github.com/oist/plessy_pairwiseGenomeComparison">pariwise genome alignment pipeline</a>.</p>
+<div class="section level1">
+<div class="page-header"><h1 id="genomicbreaks">GenomicBreaks<a class="anchor" aria-label="anchor" href="#genomicbreaks"></a>
+</h1></div>
+<div class="section level2">
+<h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
+</h2>
+<p>We are developing the <code>GenomicBreaks</code> package to parse and process the alignment files produced by the our <a href="https://github.com/oist/plessy_pairwiseGenomeComparison" class="external-link">pariwise genome alignment pipeline</a>.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="install-the-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#install-the-package" class="anchor"></a>Install the package.</h3>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="install-the-package">Install the package.<a class="anchor" aria-label="anchor" href="#install-the-package"></a>
+</h3>
 <p>The following should work:</p>
 <pre><code>Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'</code></pre>
 <p>Add <code>dependencies=TRUE</code> if you would like to install the packages needed to build the vignettes.</p>
 </div>
-<div id="how-to-install-r-41-rstudio-and-bioconductor" class="section level3">
-<h3 class="hasAnchor">
-<a href="#how-to-install-r-41-rstudio-and-bioconductor" class="anchor"></a>How to install R 4.1, Rstudio and Bioconductor.</h3>
+<div class="section level3">
+<h3 id="how-to-install-r-41-rstudio-and-bioconductor">How to install R 4.1, Rstudio and Bioconductor.<a class="anchor" aria-label="anchor" href="#how-to-install-r-41-rstudio-and-bioconductor"></a>
+</h3>
 <p>On a Debian/Ubuntu system, try this:</p>
 <pre><code>sudo apt install r-base
 sudo apt install pandoc qpdf texlive # For vignette builds and package checks
@@ -123,9 +119,9 @@ Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::rep
 </code></pre>
 </div>
 </div>
-<div id="genomicbreaks-in-brief" class="section level2">
-<h2 class="hasAnchor">
-<a href="#genomicbreaks-in-brief" class="anchor"></a>GenomicBreaks in brief:</h2>
+<div class="section level2">
+<h2 id="genomicbreaks-in-brief">GenomicBreaks in brief:<a class="anchor" aria-label="anchor" href="#genomicbreaks-in-brief"></a>
+</h2>
 <p>A pairwise alignment of two genomes is loaded in <code>GBreaks</code> objects wrapping the <code>GRanges</code> class. Here is an example:</p>
 <pre><code>GBreaks object with 11 ranges and 2 metadata columns:
        seqnames            ranges strand |                  query     score
@@ -148,38 +144,51 @@ Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::rep
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/oist/GenomicBreaks/">https://​github.com/​oist/​GenomicBreaks/​</a>
-</li>
+<li><a href="https://github.com/oist/GenomicBreaks/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://opensource.org/licenses/BSD-3-Clause">BSD_3_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>
+<a href="https://opensource.org/licenses/BSD-3-Clause" class="external-link">BSD_3_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Charlotte West <br><small class="roles"> Author </small>  </li>
-<li>Charles Plessy <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7410-6295" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing GenomicBreaks</a></li>
 </ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Charlotte West <br><small class="roles"> Author </small>  </li>
+<li>Charles Plessy <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7410-6295" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlotte West, Charles Plessy.</p>
+  <p></p>
+<p>Developed by Charlotte West, Charles Plessy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -187,6 +196,8 @@ Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::rep
 
   
 
+
+  
 
   </body>
 </html>

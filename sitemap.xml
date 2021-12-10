@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/404.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/articles/StructuralVariants.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/authors.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/index.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/news/index.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/GBreaks-class.html</loc>
@@ -97,6 +118,9 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc>
   </url>
   <url>
@@ -158,11 +182,5 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/tan_bp.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/articles/StructuralVariants.html</loc>
   </url>
 </urlset>

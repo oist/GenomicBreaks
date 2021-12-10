@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.11.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/GenomicBreaks.html">Get started</a>
 </li>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/oist/GenomicBreaks/">
+  <a href="https://github.com/oist/GenomicBreaks/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -86,27 +82,27 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Structural Variants</h1>
-                        <h4 class="author">Charles Plessy</h4>
+                        <h4 data-toc-skip class="author">Charles Plessy</h4>
             
-            <h4 class="date">22 November, 2021</h4>
+            <h4 data-toc-skip class="date">10 December, 2021</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/master/vignettes/StructuralVariants.Rmd"><code>vignettes/StructuralVariants.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/HEAD/vignettes/StructuralVariants.Rmd" class="external-link"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
 
     </div>
 
     
     
-<div id="structural-variants" class="section level1">
-<h1 class="hasAnchor">
-<a href="#structural-variants" class="anchor"></a>Structural Variants</h1>
+<div class="section level1">
+<h1 id="structural-variants">Structural Variants<a class="anchor" aria-label="anchor" href="#structural-variants"></a>
+</h1>
 <p>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> objects here are provided as <em>lazy data</em> and by convention their name always start with <code>example</code>.</p>
-<div id="colinearity" class="section level2">
-<h2 class="hasAnchor">
-<a href="#colinearity" class="anchor"></a>Colinearity</h2>
-<div id="definition" class="section level3">
-<h3 class="hasAnchor">
-<a href="#definition" class="anchor"></a>Definition</h3>
+<div class="section level2">
+<h2 id="colinearity">Colinearity<a class="anchor" aria-label="anchor" href="#colinearity"></a>
+</h2>
+<div class="section level3">
+<h3 id="definition">Definition<a class="anchor" aria-label="anchor" href="#definition"></a>
+</h3>
 <p>We define <em>structural variants</em> as patterns of interruption of the colinearity between genomes.</p>
 <p>Colinearity is a property of pairs of mapped regions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -125,92 +121,92 @@
 <p><img src="StructuralVariants_files/figure-html/notColinearRegions_pair-2.png" width="700"></p>
 <p>In this example, the syntenic chromosomes are called <code>chrA</code> and <code>chrB</code>, but the names do not matter.</p>
 </div>
-<div id="technical-details" class="section level3">
-<h3 class="hasAnchor">
-<a href="#technical-details" class="anchor"></a>Technical details</h3>
+<div class="section level3">
+<h3 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
+</h3>
 <p>Remember that the <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> function puts the flag on the first member of the pair, ordered by the sequence on the <em>target</em> genome.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-150      + | chrB:100-150      TRUE
-##   [2]     chrA   251-300      + | chrB:251-300     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-150      + | chrB:100-150      TRUE</span>
+<span class="co">##   [2]     chrA   251-300      + | chrB:251-300     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="fu"><a href="../reference/reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA      1-50      - | chrB:251-300      TRUE
-##   [2]     chrA   151-201      - | chrB:100-150     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA      1-50      - | chrB:251-300      TRUE</span>
+<span class="co">##   [2]     chrA   151-201      - | chrB:100-150     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Note the tolerance window</span>
 <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span>, tol <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-150      + | chrB:100-150     FALSE
-##   [2]     chrA   251-300      + | chrB:251-300     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-150      + | chrB:100-150     FALSE</span>
+<span class="co">##   [2]     chrA   251-300      + | chrB:251-300     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Strandless mappings can also be colinear</span>
-<span class="va">exampleColinear</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-150      * | chrB:100-150      TRUE
-##   [2]     chrA   251-300      * | chrB:251-300     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<span class="va">exampleColinear</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-150      * | chrB:100-150      TRUE</span>
+<span class="co">##   [2]     chrA   251-300      * | chrB:251-300     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleNotColinear</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-150      + | chrB:201-251     FALSE
-##   [2]     chrA   251-300      + |  chrB:50-100     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-150      + | chrB:201-251     FALSE</span>
+<span class="co">##   [2]     chrA   251-300      + |  chrB:50-100     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <p>To make some sanity checks against the other flagging functions there is also an object containing three colinear mappings.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-200      + | chrB:100-200      TRUE
-##   [2]     chrA   201-300      + | chrB:201-300      TRUE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-200      + | chrB:100-200      TRUE</span>
+<span class="co">##   [2]     chrA   201-300      + | chrB:201-300      TRUE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 </div>
-<div id="limitation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#limitation" class="anchor"></a>Limitation</h3>
+<div class="section level3">
+<h3 id="limitation">Limitation<a class="anchor" aria-label="anchor" href="#limitation"></a>
+</h3>
 <p>At the moment we can not study the structural variants that are entirely contained in an aligned region, for instance an indel represented as an alignment gap.</p>
 </div>
 </div>
-<div id="inversions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inversions" class="anchor"></a>Inversions</h2>
-<div id="trivial-inversions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#trivial-inversions" class="anchor"></a>Trivial inversions</h3>
+<div class="section level2">
+<h2 id="inversions">Inversions<a class="anchor" aria-label="anchor" href="#inversions"></a>
+</h2>
+<div class="section level3">
+<h3 id="trivial-inversions">Trivial inversions<a class="anchor" aria-label="anchor" href="#trivial-inversions"></a>
+</h3>
 <p>Trivial inversions are triplets of mapped regions that would be colinear if the strand of the second one were reversed. Note that, like for colinear patterns, the flag is put on the first mapping of the triplet.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInversion</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
-##       seqnames    ranges strand |        query  colinear   inv
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
-##   [1]     chrA   100-190      + | chrB:100-190     FALSE  TRUE
-##   [2]     chrA   210-291      - | chrB:210-291     FALSE FALSE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear   inv</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;</span>
+<span class="co">##   [1]     chrA   100-190      + | chrB:100-190     FALSE  TRUE</span>
+<span class="co">##   [2]     chrA   210-291      - | chrB:210-291     FALSE FALSE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInversion</span>, main <span class="op">=</span> <span class="st">"An inverted region flanked by colinear regions"</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/inversions-1.png" width="700"></p>
@@ -220,39 +216,39 @@
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Removing the inversion restores colinearity</span>
 <span class="va">exampleInversion</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-190      + | chrB:100-190      TRUE
-##   [2]     chrA   301-400      + | chrB:301-400     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-190      + | chrB:100-190      TRUE</span>
+<span class="co">##   [2]     chrA   301-400      + | chrB:301-400     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Flipping the inversion restores colinearity</span>
-<span class="va">exampleInversion</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query  colinear
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;
-##   [1]     chrA   100-190      + | chrB:100-190      TRUE
-##   [2]     chrA   210-291      + | chrB:210-291      TRUE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<span class="va">exampleInversion</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">mutate</a></span><span class="op">(</span>strand <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="co">##   [1]     chrA   100-190      + | chrB:100-190      TRUE</span>
+<span class="co">##   [2]     chrA   210-291      + | chrB:210-291      TRUE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400     FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Note the tolerance window</span>
 <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">exampleInversion</span>, tol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |        query   inv
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;
-##   [1]     chrA   100-190      + | chrB:100-190 FALSE
-##   [2]     chrA   210-291      - | chrB:210-291 FALSE
-##   [3]     chrA   301-400      + | chrB:301-400 FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query   inv</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
+<span class="co">##   [1]     chrA   100-190      + | chrB:100-190 FALSE</span>
+<span class="co">##   [2]     chrA   210-291      - | chrB:210-291 FALSE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 </div>
-<div id="double-inversions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#double-inversions" class="anchor"></a>Double inversions</h3>
+<div class="section level3">
+<h3 id="double-inversions">Double inversions<a class="anchor" aria-label="anchor" href="#double-inversions"></a>
+</h3>
 <p>Double inversions are the result of two overlapping trivial inversions, and must be detected with a different approach.</p>
 <p>Here we show a triplet resulting from a double inversion, flanked by two regions that did not move.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -282,65 +278,65 @@
 <p><img src="StructuralVariants_files/figure-html/doubleInversions2-3.png" width="700"></p>
 </div>
 </div>
-<div id="transolocations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transolocations" class="anchor"></a>Transolocations</h2>
+<div class="section level2">
+<h2 id="transolocations">Transolocations<a class="anchor" aria-label="anchor" href="#transolocations"></a>
+</h2>
 <p>If a region has moved, but is not an inversion, then it is a translocation.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleTranslocation</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
-##       seqnames    ranges strand |        query  colinear   inv
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
-##   [2]     chrA   201-300      + | chrC:201-300     FALSE FALSE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear   inv</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;</span>
+<span class="co">##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE</span>
+<span class="co">##   [2]     chrA   201-300      + | chrC:201-300     FALSE FALSE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocation-1.png" width="700"></p>
 <p>It does not matter if the region moved on the minus strand</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleTranslocation2</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 3 metadata columns:
-##       seqnames    ranges strand |        query  colinear   inv
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;
-##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
-##   [2]     chrA   201-300      - | chrC:201-300     FALSE FALSE
-##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span>
+<span class="co">##       seqnames    ranges strand |        query  colinear   inv</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt; &lt;Rle&gt;</span>
+<span class="co">##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE</span>
+<span class="co">##   [2]     chrA   201-300      - | chrC:201-300     FALSE FALSE</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocationOnMinus-1.png" width="700"></p>
 </div>
-<div id="insertions-deletions-indels" class="section level2">
-<h2 class="hasAnchor">
-<a href="#insertions-deletions-indels" class="anchor"></a>Insertions / Deletions (indels)</h2>
+<div class="section level2">
+<h2 id="insertions-deletions-indels">Insertions / Deletions (indels)<a class="anchor" aria-label="anchor" href="#insertions-deletions-indels"></a>
+</h2>
 <p>NOTE that searching for insertion/deletions make little sense in one-to-one alignment unless the maximal distance for colinearity is set to a meaningful value.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleDeletion</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 1 metadata column:
-##       seqnames    ranges strand |        query
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-##   [1]     chrA   100-200      + | chrB:100-200
-##   [2]     chrA   201-300      + | chrC:401-500
-##   [3]     chrA   301-400      + | chrB:201-300
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class="co">##       seqnames    ranges strand |        query</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class="co">##   [1]     chrA   100-200      + | chrB:100-200</span>
+<span class="co">##   [2]     chrA   201-300      + | chrC:401-500</span>
+<span class="co">##   [3]     chrA   301-400      + | chrB:201-300</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-1.png" width="700"></p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInsertion</span></code></pre></div>
-<pre><code>## GBreaks object with 3 ranges and 1 metadata column:
-##       seqnames    ranges strand |        query
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;
-##   [1]     chrA   100-200      + | chrB:100-200
-##   [2]     chrA   201-300      + | chrB:301-400
-##   [3]     chrC   401-500      + | chrB:201-300
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome</code></pre>
+<pre><code><span class="co">## GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class="co">##       seqnames    ranges strand |        query</span>
+<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class="co">##   [1]     chrA   100-200      + | chrB:100-200</span>
+<span class="co">##   [2]     chrA   201-300      + | chrB:301-400</span>
+<span class="co">##   [3]     chrC   401-500      + | chrB:201-300</span>
+<span class="co">##   -------</span>
+<span class="co">##   seqinfo: 2 sequences from an unspecified genome</span></code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/indels-2.png" width="700"></p>
@@ -359,11 +355,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Charlotte West, Charles Plessy.</p>
+  <p></p>
+<p>Developed by Charlotte West, Charles Plessy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -371,6 +369,8 @@
 
   
 
+
+  
 
   </body>
 </html>
