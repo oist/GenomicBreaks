@@ -72,12 +72,13 @@ concatenating them.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeOxfordPlots</span><span class="op">(</span>
   <span class="va">gb</span>,
-  sp1Name <span class="op">=</span> <span class="st">"sp1"</span>,
-  sp2Name <span class="op">=</span> <span class="st">"sp2"</span>,
+  sp1Name <span class="op">=</span> <span class="st">"target"</span>,
+  sp2Name <span class="op">=</span> <span class="st">"query"</span>,
   sp1ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
   sp2ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span><span class="op">)</span>,
-  size <span class="op">=</span> <span class="fl">1</span>
+  size <span class="op">=</span> <span class="fl">1</span>,
+  diag <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -97,6 +98,8 @@ concatenating them.</p>
 <dd><p>The type of the plot (<code>point</code> or <code>line</code>)</p></dd>
 <dt>size</dt>
 <dd><p>The size of the plotted dots or segments.</p></dd>
+<dt>diag</dt>
+<dd><p>Diagonalise the plot by reordering <em>query</em> sequence levels.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
