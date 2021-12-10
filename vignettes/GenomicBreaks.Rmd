@@ -325,3 +325,9 @@ showInversions(flagInversions(coa)) |> plyranges::slice(1:3)   |> plotApairOfChr
 showInversions(flagInversions(coa)) |> plyranges::slice(4:9)   |> plotApairOfChrs()
 showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChrs()
 ```
+
+
+# To do:
+
+ - Generate a second pairwise alignment with a less syntenic yeast.
+ - Use it to demonstrate `orderQuerySeqLevels()`.

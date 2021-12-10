@@ -1,3 +1,18 @@
+# GenomicBreaks 0.11.99
+
+## Backwards-incompatible changes
+
+ * Removed `selChroms` parameter in `makeOxfordPlots()`.
+ * New defaults for `makeOxfordPlots()`: fixed-ratio line plot with round ends and
+   size of 1.  Axis labels are now "target" and "query" by default.  In any
+   case, Seqname is displayed instead of genome name if there is only one
+   sequence in the ranges object.
+
+## New functionalities
+
+ * New function `orderQuerySeqLevels()` to better diagonalise dot plots.
+ * New `size` parameter in `makeOxfordPlots()`
+
 # GenomicBreaks 0.11.0
 
 ## Backwards-incompatible changes
