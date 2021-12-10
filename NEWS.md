@@ -12,6 +12,8 @@
 
  * New function `orderQuerySeqLevels()` to better diagonalise dot plots.
  * New `size` parameter in `makeOxfordPlots()`
+ * New `diag` parameter in `makeOxfordPlots()` to diagonalise the plots by
+   re-ordering _query_ sequence levels.
 
 # GenomicBreaks 0.11.0
 

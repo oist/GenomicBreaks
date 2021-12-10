@@ -6,12 +6,13 @@
 \usage{
 makeOxfordPlots(
   gb,
-  sp1Name = "sp1",
-  sp2Name = "sp2",
+  sp1Name = "target",
+  sp2Name = "query",
   sp1ChrArms = NULL,
   sp2ChrArms = NULL,
   type = c("line", "point"),
-  size = 1
+  size = 1,
+  diag = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ makeOxfordPlots(
 \item{type}{The type of the plot (\code{point} or \code{line})}
 
 \item{size}{The size of the plotted dots or segments.}
+
+\item{diag}{Diagonalise the plot by reordering \emph{query} sequence levels.}
 }
 \value{
 Returns a \code{ggplot2} object that can be further modified using the

@@ -11,6 +11,7 @@
 #' @param sp2ChrArms A `GBreaks` object of chromosome arms in sp2 genome
 #' @param type The type of the plot (`point` or `line`)
 #' @param size The size of the plotted dots or segments.
+#' @param diag Diagonalise the plot by reordering _query_ sequence levels.
 #'
 #' @return Returns a `ggplot2` object that can be further modified using the
 #' `+` operatore.
@@ -28,7 +29,8 @@
 
 makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
-                             type = c("line", "point"), size = 1) {
+                             type = c("line", "point"), size = 1,
+                             diag = TRUE) {
 
   type <- match.arg(type)
 
@@ -44,12 +46,23 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
       sp2Name <- possibleName
   }
 
+  # Discard seqlevels not in use
+  seqlevels(gb)       <- seqlevelsInUse(gb)
+  seqlevels(gb$query) <- seqlevelsInUse(gb$query)
+
+  # Merge seq levels if needed.
   mergeSeqLevelsIfMany <- function(gr, seqs, name) {
     if (length(seqlevelsInUse(gr)) == 1) return(gr)
     mergeSeqLevels(gr, seqs, name)
   }
 
   targetMerged <- mergeSeqLevelsIfMany(gb,       seqlevelsInUse(gb),       sp1Name)
+
+  if(isTRUE(diag)) {
+    newOrder <- orderQuerySeqLevels(GBreaks(target = targetMerged, query = gb$query))
+    seqlevels(gb$query) <- seqlevels(gb$query)[newOrder]
+  }
+
   queryMerged  <- mergeSeqLevelsIfMany(gb$query, seqlevelsInUse(gb$query), sp2Name)
 
   breaks <- list()
