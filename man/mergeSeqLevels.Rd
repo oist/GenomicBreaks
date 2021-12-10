@@ -46,6 +46,7 @@ mergeSeqLevels(gb, seqlevelsInUse(gb), "AllMerged")
 \seealso{
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
+\code{\link{guessSeqLengths}()},
 \code{\link{reverse}()},
 \code{\link{swap}()}
 }

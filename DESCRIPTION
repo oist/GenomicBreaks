@@ -65,6 +65,7 @@ Collate:
     'genoPlotR.R'
     'getRefGenome.R'
     'get_bps.R'
+    'guessSeqLenghts.R'
     'int_frag.R'
     'inv2UCSCData.R'
     'load_genomic_breaks.R'

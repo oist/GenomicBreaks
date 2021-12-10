@@ -34,13 +34,15 @@
 #'
 #' @author Charles Plessy
 #'
+#' @include guessSeqLenghts.R
+#'
 #' @export
 
 mergeSeqLevels <- function(gr, seqs, name) {
 
   # Calculate how much to add to the coordinates of each seqlevel before merging
   if (all(is.na(seqlengths(gr))))
-    seqlengths(gr) <- tapply(end(gr), seqnames(gr), max) |> as.vector()
+    gr <- forceSeqLengths(gr)
   lengths <- seqlengths(seqinfo(gr))[seqs]
   mode(lengths) <- "numeric"                      # 32-bit integers are too small for
   addlengths <- c(cumsum(head(lengths, -1)))      # the cumulative sum on this line

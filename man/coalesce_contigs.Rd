@@ -70,6 +70,7 @@ Other Colinearity functions:
 \code{\link{flagPairs}()}
 
 Other modifier functions: 
+\code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
 \code{\link{swap}()}

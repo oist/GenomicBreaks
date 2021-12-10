@@ -25,6 +25,7 @@ swap(exampleColinear3)
 \seealso{
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
+\code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()}
 }
