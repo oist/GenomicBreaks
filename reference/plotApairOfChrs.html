@@ -21,7 +21,7 @@ with the largest fraction of the mappings) or given as a parameter."><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.1</span>
       </span>
     </div>
 
@@ -74,7 +74,14 @@ with the largest fraction of the mappings) or given as a parameter.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">gb</span>, chrT <span class="op">=</span> <span class="cn">NULL</span>, chrQ <span class="op">=</span> <span class="cn">NULL</span>, dna_seg_scale <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotApairOfChrs</span><span class="op">(</span>
+  <span class="va">gb</span>,
+  chrT <span class="op">=</span> <span class="cn">NULL</span>,
+  chrQ <span class="op">=</span> <span class="cn">NULL</span>,
+  dna_seg_scale <span class="op">=</span> <span class="cn">TRUE</span>,
+  dna_seg_labels <span class="op">=</span> <span class="cn">NULL</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -89,6 +96,9 @@ with the largest fraction of the mappings) or given as a parameter.</p>
 the longest cumulative match on <code>chrT</code>.</p></dd>
 <dt>dna_seg_scale</dt>
 <dd><p>Plot coordinats and a scale bar (defaults to <code>TRUE</code>).</p></dd>
+<dt>dna_seg_labels</dt>
+<dd><p>A character vector to override default labels for
+sequence names.</p></dd>
 <dt>...</dt>
 <dd><p>Further arguments are passed to <code>plot_gene_map</code>.</p></dd>
 </dl></div>
@@ -129,6 +139,10 @@ displayed.</p>
 <span class="r-plt img"><img src="plotApairOfChrs-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="plotApairOfChrs-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Labels can be overriden.</span></span>
+<span class="r-in"><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span>, dna_seg_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"over..."</span>, <span class="st">"...ridden"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="plotApairOfChrs-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
