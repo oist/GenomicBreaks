@@ -224,6 +224,7 @@ plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL,
 #'
 #' @author Charles Plessy
 #'
+#' @family genoPlotR functions
 #' @family converter functions
 #'
 #' @export

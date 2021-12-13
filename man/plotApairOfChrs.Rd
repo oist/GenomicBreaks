@@ -57,6 +57,7 @@ plotApairOfChrs(exampleDeletion, dna_seg_labels = c("over...", "...ridden"))
 Other genoPlotR functions: 
 \code{\link{gb2comp}()},
 \code{\link{gb2dna_seg}()},
+\code{\link{gb2xlim}()},
 \code{\link{gr2dna_seg}()}
 
 Other plot functions: 

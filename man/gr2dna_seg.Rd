@@ -28,6 +28,7 @@ gr2dna_seg(exampleInversion$query)
 Other genoPlotR functions: 
 \code{\link{gb2comp}()},
 \code{\link{gb2dna_seg}()},
+\code{\link{gb2xlim}()},
 \code{\link{plotApairOfChrs}()}
 
 Other converter functions: 

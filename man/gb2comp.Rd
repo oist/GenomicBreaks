@@ -31,6 +31,7 @@ gb2comp(exampleInversion)
 \seealso{
 Other genoPlotR functions: 
 \code{\link{gb2dna_seg}()},
+\code{\link{gb2xlim}()},
 \code{\link{gr2dna_seg}()},
 \code{\link{plotApairOfChrs}()}
 
