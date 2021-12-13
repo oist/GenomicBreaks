@@ -140,6 +140,8 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' @param chrQ (Optional) A sequence name on the _query_ genome.  Defaults to
 #'        the longest cumulative match on `chrT`.
 #' @param dna_seg_scale Plot coordinats and a scale bar (defaults to `TRUE`).
+#' @param dna_seg_labels A character vector to override default labels for
+#'        sequence names.
 #' @param ... Further arguments are passed to `plot_gene_map`.
 #'
 #' @author Charles Plessy
@@ -151,13 +153,19 @@ gb2comp <- function(gb, color = NULL, ignore.strand = FALSE) {
 #' plotApairOfChrs(exampleInversion)
 #' plotApairOfChrs(exampleDeletion)
 #'
+#' # Labels can be overriden.
+#' plotApairOfChrs(exampleDeletion, dna_seg_labels = c("over...", "...ridden"))
+#'
 #' @family genoPlotR functions
 #' @family plot functions
 #' @family Structural variants
 #'
 #' @export
 
-plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, dna_seg_scale=TRUE, ...) {
+plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL,
+                            dna_seg_scale  = TRUE,
+                            dna_seg_labels = NULL,
+                            ...) {
   # If needed, guess name of target seqlevel
   if(is.null(chrT))
     chrT <- seqlevelsInUse(gb)[1]
@@ -188,7 +196,12 @@ plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL, dna_seg_scale=TRUE, ...) {
 
   compList <- list(gb2comp(roi))
 
-  genoPlotR::plot_gene_map(dsList, compList, dna_seg_scale=dna_seg_scale, ...)
+  if(is.null(dna_seg_labels)) dna_seg_labels <- c(chrT, chrQ)
+
+  genoPlotR::plot_gene_map(dsList, compList,
+                           dna_seg_scale  = dna_seg_scale,
+                           dna_seg_labels = dna_seg_labels,
+                           ...)
 }
 
 #' GBreaks to xlim

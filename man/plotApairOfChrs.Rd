@@ -4,7 +4,14 @@
 \alias{plotApairOfChrs}
 \title{Plots a pair of chromosomes from a \code{GBreaks} object.}
 \usage{
-plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, dna_seg_scale = TRUE, ...)
+plotApairOfChrs(
+  gb,
+  chrT = NULL,
+  chrQ = NULL,
+  dna_seg_scale = TRUE,
+  dna_seg_labels = NULL,
+  ...
+)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
@@ -16,6 +23,9 @@ plotApairOfChrs(gb, chrT = NULL, chrQ = NULL, dna_seg_scale = TRUE, ...)
 the longest cumulative match on \code{chrT}.}
 
 \item{dna_seg_scale}{Plot coordinats and a scale bar (defaults to \code{TRUE}).}
+
+\item{dna_seg_labels}{A character vector to override default labels for
+sequence names.}
 
 \item{...}{Further arguments are passed to \code{plot_gene_map}.}
 }
@@ -38,6 +48,9 @@ displayed.
 \examples{
 plotApairOfChrs(exampleInversion)
 plotApairOfChrs(exampleDeletion)
+
+# Labels can be overriden.
+plotApairOfChrs(exampleDeletion, dna_seg_labels = c("over...", "...ridden"))
 
 }
 \seealso{

@@ -1,3 +1,9 @@
+# GenomicBreaks 0.12.1
+
+ * The `plotApairOfChrs()` function now plots the name of the selected sequence
+   levels instead of `target` and `query`.  The labels can be overriden with
+   the `dna_seg_labels` parameters.  Closes issue #6.
+
 # GenomicBreaks 0.12.0
 
 ## Backwards-incompatible changes
