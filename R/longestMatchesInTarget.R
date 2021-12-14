@@ -1,37 +1,36 @@
 #' Find longest matches from target to query genome.
 #'
-#' Using a `GenomicBreaks` object representing the alignment of a query genome
-#' on a target genome, finds the longest match of each sequence (representing
-#' contigs, scaffolds, etc.) of the query genome on the target genome.  Thus,
-#' each sequence of the query genome is represented only once in total, but
-#' sequences of the target genome can be represented multiple times if they
-#' are the longest match of multiple query genome sequences.  When the target
-#' genome is more contiguous than the query genome, and if there are no
+#' Using a [`GBreaks`] object representing the alignment of a _query_ genome
+#' on a _target_ genome, finds the longest match of each sequence level
+#' (representing contigs, scaffolds, etc.) of the _query_ on the _target_.
+#'
+#' Each sequence of the _query_ is represented only once in the output, but
+#' sequences of the _target_ genome can be represented multiple times if they
+#' are the longest match of multiple _query_ genome sequences.  When the _target_
+#' genome is more contiguous than the _query_ genome, and if there are no
 #' major structural variations between them, this will reveal arrangements of
 #' colinear sequences in the query genome.
 #'
-#' @param gb A GenomicBreaks object
+#' For a more compact version of the results, the output of this function can be
+#' piped to `strandNames(query = TRUE)`.
+#'
+#' @param gb A `GBreaks` object
 #' @param min.width Minimum width of a match (on the query genome) for being
 #'        considered.
 #' @param min.matches Discard query sequences that have fewer longest matches than
 #'        `min.matches` on the target.  Default is 2, so that only results relevant
 #'        to chaining genomes are kept.
 #'
-#' @return Returns a GRangesList object containing one GenomicBreak object per
+#' @return Returns a [`GRangesList`] object containing one [`GBreaks`] object per
 #' sequence on the query genome.
 #'
-#' @details For a more compact version of the results, the output of this
-#' function can be piped to `strandNames(query = TRUE)`.
-#'
 #' @examples
-#' \dontrun{
-#' library("BSgenome.Odioica.local.OSKA2016")
-#' library("BSgenome.Odioica.local.OKI2018.I69")
-#' gb <- load_genomic_breaks(
-#'   system.file("extdata/OSKA2016__I69-5.gff3.gz", package="GenomicBreaks"),
-#'   target = OSKA2016,
-#'   query = OKI2018_I69)
-#' }
+#' exampleColinear3
+#' exampleColinear3 |> longestMatchesInTarget(min.width = 0, min.matches = 1)
+#'
+#' @author Charles Plessy
+#'
+#' @family scaffolding functions
 #'
 #' @importFrom S4Vectors endoapply
 #'

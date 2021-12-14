@@ -7,7 +7,7 @@
 longestMatchesInTarget(gb, min.width = 10000, min.matches = 2)
 }
 \arguments{
-\item{gb}{A GenomicBreaks object}
+\item{gb}{A \code{GBreaks} object}
 
 \item{min.width}{Minimum width of a match (on the query genome) for being
 considered.}
@@ -17,32 +17,31 @@ considered.}
 to chaining genomes are kept.}
 }
 \value{
-Returns a GRangesList object containing one GenomicBreak object per
+Returns a \code{\link{GRangesList}} object containing one \code{\link{GBreaks}} object per
 sequence on the query genome.
 }
 \description{
-Using a \code{GenomicBreaks} object representing the alignment of a query genome
-on a target genome, finds the longest match of each sequence (representing
-contigs, scaffolds, etc.) of the query genome on the target genome.  Thus,
-each sequence of the query genome is represented only once in total, but
-sequences of the target genome can be represented multiple times if they
-are the longest match of multiple query genome sequences.  When the target
-genome is more contiguous than the query genome, and if there are no
-major structural variations between them, this will reveal arrangements of
-colinear sequences in the query genome.
+Using a \code{\link{GBreaks}} object representing the alignment of a \emph{query} genome
+on a \emph{target} genome, finds the longest match of each sequence level
+(representing contigs, scaffolds, etc.) of the \emph{query} on the \emph{target}.
 }
 \details{
-For a more compact version of the results, the output of this
-function can be piped to \code{strandNames(query = TRUE)}.
+Each sequence of the \emph{query} is represented only once in the output, but
+sequences of the \emph{target} genome can be represented multiple times if they
+are the longest match of multiple \emph{query} genome sequences.  When the \emph{target}
+genome is more contiguous than the \emph{query} genome, and if there are no
+major structural variations between them, this will reveal arrangements of
+colinear sequences in the query genome.
+
+For a more compact version of the results, the output of this function can be
+piped to \code{strandNames(query = TRUE)}.
 }
 \examples{
-\dontrun{
-library("BSgenome.Odioica.local.OSKA2016")
-library("BSgenome.Odioica.local.OKI2018.I69")
-gb <- load_genomic_breaks(
-  system.file("extdata/OSKA2016__I69-5.gff3.gz", package="GenomicBreaks"),
-  target = OSKA2016,
-  query = OKI2018_I69)
-}
+exampleColinear3
+exampleColinear3 |> longestMatchesInTarget(min.width = 0, min.matches = 1)
 
 }
+\author{
+Charles Plessy
+}
+\concept{scaffolding functions}
