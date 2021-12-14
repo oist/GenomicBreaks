@@ -7,7 +7,7 @@
 strandNames(gb, flip = FALSE, query = FALSE)
 }
 \arguments{
-\item{gb}{A \code{GenomicBreaks} object or a \code{GRangesList} of \code{GenomicBreaks}
+\item{gb}{A \code{GBreaks} object or a \code{\link{GRangesList}} of \code{GBreaks}
 objects.}
 
 \item{flip}{Flip the strand names.}
@@ -16,15 +16,21 @@ objects.}
 }
 \value{
 Returns a character vector, or a list of character vectors if the
-input was a \code{GRangesList}.
+input was a \code{\link{GRangesList}}.
 }
 \description{
 Extract sequence names and pastes strand information to it.
 }
 \examples{
-gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-strandNames(gb1)
-strandNames(gb1, query = TRUE)
+strandNames(exampleColinear)
+strandNames(exampleColinear, query = TRUE)
 
 }
+\seealso{
+Other scaffolding functions: 
+\code{\link{longestMatchesInTarget}()}
+}
+\author{
+Charles Plessy
+}
+\concept{scaffolding functions}

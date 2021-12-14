@@ -2,20 +2,21 @@
 #'
 #' Extract sequence names and pastes strand information to it.
 #'
-#' @param gb A `GenomicBreaks` object or a `GRangesList` of `GenomicBreaks`
+#' @param gb A `GBreaks` object or a [`GRangesList`] of `GBreaks`
 #'           objects.
 #' @param flip Flip the strand names.
 #' @param query Work on the query genome.
 #'
-#'
 #' @return Returns a character vector, or a list of character vectors if the
-#' input was a `GRangesList`.
+#' input was a [`GRangesList`].
+#'
+#' @author Charles Plessy
+#'
+#' @family scaffolding functions
 #'
 #' @examples
-#' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-#' gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-#' strandNames(gb1)
-#' strandNames(gb1, query = TRUE)
+#' strandNames(exampleColinear)
+#' strandNames(exampleColinear, query = TRUE)
 #'
 #' @export
 
