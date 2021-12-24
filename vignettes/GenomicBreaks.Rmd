@@ -318,6 +318,15 @@ makeOxfordPlots(gb |> plyranges::filter(seqnames        == "chrI",
   ggtitle("sacCer3 vs sacPar “Oxford” plot")
 ```
 
+Pass `type = 'none'` to receive a `ggplot` object with no layer, that you can
+customise at wish.
+
+```{r custom_oxford_plots2}
+makeOxfordPlots(gb_Neu, type = 'none') +
+  geom_segment(aes(col = strand), size = 1, lineend = "round") +
+  ggtitle("N. crassa chrIII vs P. comata chr7 “Oxford” plot")
+```
+
 ## Trivial translocations
 
 ### Definitions

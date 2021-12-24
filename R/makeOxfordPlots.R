@@ -9,12 +9,13 @@
 #' @param sp2Name Name of the second species (default: sp2)
 #' @param sp1ChrArms A `GBreaks` object of chromosome arms in sp1 genome
 #' @param sp2ChrArms A `GBreaks` object of chromosome arms in sp2 genome
-#' @param type The type of the plot (`point` or `line`)
+#' @param type The type of the plot (`point`, `line` or `none`)
 #' @param size The size of the plotted dots or segments.
 #' @param diag Diagonalise the plot by reordering _query_ sequence levels.
 #'
 #' @return Returns a `ggplot2` object that can be further modified using the
-#' `+` operatore.
+#' `+` operator.  Use `type = 'none'` to receive an object without _geom_
+#' layer.
 #'
 #' @author Aleksandra Bliznina
 #'
@@ -29,7 +30,7 @@
 
 makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
-                             type = c("line", "point"), size = 1,
+                             type = c("line", "point", "none"), size = 1,
                              diag = TRUE) {
 
   type <- match.arg(type)
@@ -73,6 +74,7 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
                                  end =   end(targetMerged),
+                              strand = strand(targetMerged),
                          query.start = ifelse(strand (gb) == "+", start(queryMerged),   end(queryMerged)),
                            query.end = ifelse(strand (gb) == "+",   end(queryMerged), start(queryMerged)),
                             seqnames = seqnames(gb))) +

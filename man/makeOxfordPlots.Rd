@@ -10,7 +10,7 @@ makeOxfordPlots(
   sp2Name = "query",
   sp1ChrArms = NULL,
   sp2ChrArms = NULL,
-  type = c("line", "point"),
+  type = c("line", "point", "none"),
   size = 1,
   diag = TRUE
 )
@@ -26,7 +26,7 @@ makeOxfordPlots(
 
 \item{sp2ChrArms}{A \code{GBreaks} object of chromosome arms in sp2 genome}
 
-\item{type}{The type of the plot (\code{point} or \code{line})}
+\item{type}{The type of the plot (\code{point}, \code{line} or \code{none})}
 
 \item{size}{The size of the plotted dots or segments.}
 
@@ -34,7 +34,8 @@ makeOxfordPlots(
 }
 \value{
 Returns a \code{ggplot2} object that can be further modified using the
-\code{+} operatore.
+\code{+} operator.  Use \code{type = 'none'} to receive an object without \emph{geom}
+layer.
 }
 \description{
 Takes a \code{\link{GBreaks}} object and prepares an Oxford (macrosynteny) of the
