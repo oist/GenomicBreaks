@@ -18,7 +18,7 @@ maximal end coordinate found in the object."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.2</span>
       </span>
     </div>
 
@@ -68,9 +68,7 @@ maximal end coordinate found in the object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">guessSeqLengths</span><span class="op">(</span><span class="va">gr</span><span class="op">)</span>
-
-<span class="fu">forceSeqLengths</span><span class="op">(</span><span class="va">gr</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">guessSeqLengths</span><span class="op">(</span><span class="va">gr</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,20 +80,13 @@ maximal end coordinate found in the object.</p>
     <h2>Value</h2>
     <p><code>guessSeqLengths</code> returns sequence lengths that have been guessed
 as the maximal end coordinates found in the object, or the object's
-<code>seqlengths</code> if if they did already exist.
-<code>forceSeqLengths</code> returns the object in which the sequence lengths
-have been set to the maximal end coordinates found in the object if if they
-did not exist.</p>
+<code>seqlengths</code> if if they did already exist.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other modifier functions: 
 <code><a href="coalesce_contigs.html">coalesce_contigs</a>()</code>,
-<code><a href="mergeSeqLevels.html">mergeSeqLevels</a>()</code>,
-<code><a href="reverse.html">reverse</a>()</code>,
-<code><a href="swap.html">swap</a>()</code></p>
-<p>Other modifier functions: 
-<code><a href="coalesce_contigs.html">coalesce_contigs</a>()</code>,
+<code><a href="forceSeqLengths.html">forceSeqLengths</a>()</code>,
 <code><a href="mergeSeqLevels.html">mergeSeqLevels</a>()</code>,
 <code><a href="reverse.html">reverse</a>()</code>,
 <code><a href="swap.html">swap</a>()</code></p></div>
@@ -127,19 +118,6 @@ did not exist.</p>
 <span class="r-in"><span class="fu">guessSeqLengths</span><span class="op">(</span><span class="va">gb2</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> chrB chrC </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  400  300 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">forceSeqLengths</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrB   100-200      *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrC   201-300      *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrB   301-400      *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
-<span class="r-in"><span class="fu">forceSeqLengths</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> |&gt; <span class="fu">seqlengths</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> chrB chrC </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  500  500 </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

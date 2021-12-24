@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.2</span>
       </span>
     </div>
 
@@ -61,6 +61,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.12.2" id="genomicbreaks-0122">GenomicBreaks 0.12.2<a class="anchor" aria-label="anchor" href="#genomicbreaks-0122"></a></h2>
+<div class="section level3">
+<h3 id="new-functionalities-0-12-2">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-12-2"></a></h3>
+<ul><li>The function <code>forceSeqLevels()</code> now operates on both the <em>target</em> and the <em>query</em> ranges of <code>GBreaks</code> objects.</li>
+<li>New example data set: <em>Neurospora crassa</em> chromosome III aligned to its homologue in <em>Podospora comata</em>: chromosome 7.</li>
+<li>New <code><a href="../reference/strand_randomisation_index.html">strand_randomisation_index()</a></code>.</li>
+<li>
+<code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> includes strand information in the returned object.</li>
+<li>New <code>type = 'none'</code> option for <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code>, for better customisation.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.12.1" id="genomicbreaks-0121">GenomicBreaks 0.12.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-0121"></a></h2>
 <ul><li>The <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> function now plots the name of the selected sequence levels instead of <code>target</code> and <code>query</code>. The labels can be overriden with the <code>dna_seg_labels</code> parameters. Closes issue <a href="https://github.com/oist/GenomicBreaks/issues/6" class="external-link">#6</a>.</li>
 </ul></div>
@@ -77,7 +89,7 @@
 <li>New <code>diag</code> parameter in <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> to diagonalise the plots by re-ordering <em>query</em> sequence levels.</li>
 <li>New <code>size</code> parameter in <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code>
 </li>
-<li>New <code><a href="../reference/guessSeqLengths.html">guessSeqLengths()</a></code> and <code><a href="../reference/guessSeqLengths.html">forceSeqLengths()</a></code> functions to use as last ressort when sequence lengths are not known.</li>
+<li>New <code><a href="../reference/guessSeqLengths.html">guessSeqLengths()</a></code> and <code><a href="../reference/forceSeqLengths.html">forceSeqLengths()</a></code> functions to use as last ressort when sequence lengths are not known.</li>
 </ul></div>
 </div>
     <div class="section level2">

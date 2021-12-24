@@ -100,6 +100,9 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/forceSeqLengths.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/gb2comp.html</loc>
   </url>
   <url>
@@ -176,6 +179,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/strandNames.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/strand_randomisation_index.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/subsetByOverlaps.html</loc>

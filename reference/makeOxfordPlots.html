@@ -19,7 +19,7 @@ concatenating them."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.12.2</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@ concatenating them.</p>
   sp2Name <span class="op">=</span> <span class="st">"query"</span>,
   sp1ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
   sp2ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span><span class="op">)</span>,
+  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span>, <span class="st">"none"</span><span class="op">)</span>,
   size <span class="op">=</span> <span class="fl">1</span>,
   diag <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
@@ -95,7 +95,7 @@ concatenating them.</p>
 <dt>sp2ChrArms</dt>
 <dd><p>A <code>GBreaks</code> object of chromosome arms in sp2 genome</p></dd>
 <dt>type</dt>
-<dd><p>The type of the plot (<code>point</code> or <code>line</code>)</p></dd>
+<dd><p>The type of the plot (<code>point</code>, <code>line</code> or <code>none</code>)</p></dd>
 <dt>size</dt>
 <dd><p>The size of the plotted dots or segments.</p></dd>
 <dt>diag</dt>
@@ -104,7 +104,7 @@ concatenating them.</p>
     <div id="value">
     <h2>Value</h2>
     <p>Returns a <code>ggplot2</code> object that can be further modified using the
-<code>+</code> operatore.</p>
+<code>+</code> operator.  Use <code>type = 'none'</code> to receive an object without <em>geom</em>layer.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
