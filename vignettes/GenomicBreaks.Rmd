@@ -46,17 +46,34 @@ library("BSgenome.Scerevisiae.UCSC.sacCer3")
 
 ## Example data
 
-This package contains an example data file representing the alignment of the
-_Saccharomyces paradoxus_ genome version `ASM207905v1` to the `SacCer3` reference genome of
-_S. cerevisiae_.  An alignment file was produced with a Nextflow
+This package contains example data files representing the alignment of two
+closely related _Saccharomyces_ yeast genomes, and of two more distantly related
+homologous chromosomes of _Sordariomycetes_ filamentous fungi.
+
+### _Saccharomyces cerevisiae_ – _S. paradoxus_
+
+Alignment of the _Saccharomyces paradoxus_ genome version `ASM207905v1` to the
+`SacCer3` reference genome of _S. cerevisiae_, produced with the Nextflow
 [pairwise alignment pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison)
 and converted to [GFF3](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
 format with the `maf-convert gff -J 1000000` command of the
 [LAST](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst) package.
 
-```{r locate_example_data}
-exdata <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
-rtracklayer::import(exdata)
+```{r locate_example_data_Sac}
+exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
+rtracklayer::import(exdata_Sac)
+```
+
+### _Neurospora crassa_ chromosome III – _Podospora comata_ chromosome 7
+
+Alignment of the _Neurospora crassa_ genome version `NC12` downloaded from
+ENSEMBL 52, to the _Podospora comata_ genome version `ASM1735489v1` downloaded
+from `GenBank`, produce with the same commands as above.  The alignment was
+then filtered to reduce the size and complexity of the example data, by
+retaining only the matches between chromosome III and chromosome 7 (`CP071499`).
+
+```{r locate_example_data_Neu}
+exdata_Neu <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks")
 ```
 
 # GBreaks objects
@@ -73,9 +90,13 @@ of the alignment is held by the _target_ `GRanges`, and the _query_ `GRanges`
 are strandless.  The objects are sorted by `seqname` first.
 
 ```{r GRanges object}
-gb <- load_genomic_breaks(exdata, Scerevisiae)
+gb <- load_genomic_breaks(exdata_Sac, Scerevisiae)
 gb
 gb$query
+
+# No BSgenome available for N. crassa and P. comata.
+# This data does not contain match_part entries, so set the type parameter.
+gb_Neu <- load_genomic_breaks(exdata_Neu, type = "match")
 ```
 
 ## Maniuplation of GBreaks objects with plyranges
@@ -171,6 +192,7 @@ genome.
 ```{r}
 correlation_index(gb)
 correlation_index(swap(gb))
+correlation_index(gb_Neu)
 ```
 
 ### Gene Order Conservation
@@ -189,6 +211,7 @@ position of orthologues, represented in a `GBreaks` object._
 ```{r}
 GOC(gb)
 GOC(swap(gb))
+GOC(gb_Neu)
 ```
 
 ## Visualising alignments
@@ -235,11 +258,29 @@ probability of being breakpoints.
 
 ## Genome plots with genoPlotR
 
+### Plotting alignments versus plotting coalesced regions
+
 To visualise synteny it is clearer to plot from the coalseced objects.
 
-```{r test_genoPlotR}
-plotApairOfChrs(gb,  "chrI")
-plotApairOfChrs(coa, "chrI")
+```{r plotApairOfChrs_Sac}
+plotApairOfChrs(gb,  "chrI", main = "S. cerevisiae / S. paradoxus")
+plotApairOfChrs(coa, "chrI", main = "S. cerevisiae / S. paradoxus")
+```
+
+### Flipping a chromosome
+
+In the genome sequences of _N. crassa_ and _P. comata_, the homologous
+chromosomes `III` and `7` have been assembled on reverse orientations.  It
+is possible to _“reverse-complement”_ a sequence feature with the `?reverse`
+function of _GenomicBreaks_.  To reverse-complement a sequence, one needs to
+know its length.  When this information is not available in the `seqlengths`
+slot of the object, the _GenomicBreaks_ function `?forceSeqLengths` can be used
+to estimate it based on the coordinate of the most distal alignment.
+
+```{r plotApairOfChrs_Neu}
+plotApairOfChrs(gb_Neu, main = "Neurospora crassa chrIII / Podospora comata chr7")
+gb_Neu |> forceSeqLengths() |> reverse(query = TRUE) |>
+  plotApairOfChrs(main = "Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)")
 ```
 
 ## “Oxford” dot plots
@@ -249,6 +290,7 @@ all the sequence levels are merged.
 
 ```{r oxford_plots}
 makeOxfordPlots(gb)
+makeOxfordPlots(gb_Neu |> forceSeqLengths() |> reverse(query = TRUE))
 ```
 
 The plots are `ggplot2` objects that can be further customised.  Also, when
