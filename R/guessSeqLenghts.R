@@ -60,7 +60,7 @@ guessSeqLengths <- function(gr) {
 #'
 #' @export
 
-setGeneric("forceSeqLengths", function(x, ...) standardGeneric("forceSeqLengths"))
+setGeneric("forceSeqLengths", function(x) standardGeneric("forceSeqLengths"))
 
 forceSeqLengths_GRanges <- function(x) {
   if (!any(is.na(seqlengths(x)))) return (x)

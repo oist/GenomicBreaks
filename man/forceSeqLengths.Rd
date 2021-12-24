@@ -4,7 +4,7 @@
 \alias{forceSeqLengths}
 \title{Set sequence lengths if there were none}
 \usage{
-forceSeqLengths(x, ...)
+forceSeqLengths(x)
 }
 \arguments{
 \item{x}{A \code{GBreaks} or a \code{GRanges} object.}
