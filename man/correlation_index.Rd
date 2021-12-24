@@ -34,6 +34,7 @@ correlation_index(gb)
 \seealso{
 Other Similarity indexes: 
 \code{\link{GOC}()},
+\code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }
 \concept{Similarity indexes}

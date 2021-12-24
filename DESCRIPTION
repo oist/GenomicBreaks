@@ -79,6 +79,7 @@ Collate:
     'scaf_align_plot.R'
     'serviceFunctions.R'
     'strandNames.R'
+    'strand_randomisation_index.R'
     'swap.R'
     'synteny_index.R'
     'tan_bp.R'

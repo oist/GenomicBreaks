@@ -62,6 +62,7 @@ Other Colinearity functions:
 
 Other Similarity indexes: 
 \code{\link{correlation_index}()},
+\code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }
 \concept{Colinearity functions}

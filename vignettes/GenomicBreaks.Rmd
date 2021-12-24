@@ -214,6 +214,18 @@ GOC(swap(gb))
 GOC(gb_Neu)
 ```
 
+### Strand randomisation index
+
+The `?strand_randomisation_index` tends towards zero when within each feature
+of the _target_ genome there are as many bases aligned to the plus and on the
+minus strands.  It tends towards 1 when within each feature most bases are
+aligned to the same strand.
+
+```{r strand_randomisation_index}
+strand_randomisation_index(gb)
+strand_randomisation_index(gb_Neu)
+```
+
 ## Visualising alignments
 
 We can use the function `scaf_align_plot` to see the alignment of query
