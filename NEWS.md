@@ -1,3 +1,15 @@
+# GenomicBreaks 0.12.2
+
+## New functionalities
+
+ * The function `forceSeqLevels()` now operates on both the _target_ and
+   the _query_ ranges of `GBreaks` objects.
+ * New example data set:  _Neurospora crassa_ chromosome III aligned to its
+   homologue in _Podospora comata_: chromosome 7.
+ * New `strand_randomisation_index()`.
+ * `makeOxfordPlots()` includes strand information in the returned object.
+ * New `type = 'none'` option for `makeOxfordPlots()`, for better customisation.
+
 # GenomicBreaks 0.12.1
 
  * The `plotApairOfChrs()` function now plots the name of the selected sequence

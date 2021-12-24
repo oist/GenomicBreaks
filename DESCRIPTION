@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.12.1
+Version: 0.12.2
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",
