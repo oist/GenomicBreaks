@@ -76,6 +76,11 @@ forceSeqLengths_GBreaks <- function(x) {
   x
 }
 
+#' @rdname forceSeqLengths
+
 setMethod("forceSeqLengths", "GRanges", forceSeqLengths_GRanges)
+
+#' @rdname  forceSeqLengths
+
 
 setMethod("forceSeqLengths", "GBreaks", forceSeqLengths_GBreaks)

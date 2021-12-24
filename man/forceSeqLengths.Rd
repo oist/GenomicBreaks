@@ -2,9 +2,15 @@
 % Please edit documentation in R/guessSeqLenghts.R
 \name{forceSeqLengths}
 \alias{forceSeqLengths}
+\alias{forceSeqLengths,GRanges-method}
+\alias{forceSeqLengths,GBreaks-method}
 \title{Set sequence lengths if there were none}
 \usage{
 forceSeqLengths(x)
+
+\S4method{forceSeqLengths}{GRanges}(x)
+
+\S4method{forceSeqLengths}{GBreaks}(x)
 }
 \arguments{
 \item{x}{A \code{GBreaks} or a \code{GRanges} object.}
