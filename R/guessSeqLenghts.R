@@ -28,22 +28,54 @@ guessSeqLengths <- function(gr) {
   tapply(end(gr), seqnames(gr), max)
 }
 
-#' @rdname guessSeqLengths
+#' Set sequence lengths if there were none
+#'
+#' Takes a [`GBreaks`] or a [`GRanges`] object and if `seqlengths` are not
+#' available, sets them using the output of the [`guessSeqLengths`] function.
+#'
+#' @param x A `GBreaks` or a `GRanges` object.
 #'
 #' @returns [`forceSeqLengths`] returns the object in which the sequence lengths
 #' have been set to the maximal end coordinates found in the object if if they
-#' did not exist.
+#' did not exist.  For `GBreaks` objects it handles both the _target_ and the
+#' _query_ ranges at the same time.
 #'
 #' @family modifier functions
 #'
 #' @examples
-#' forceSeqLengths(exampleTranslocation$query)
-#' forceSeqLengths(exampleTranslocation$query) |> seqlengths()
+#' # Prepare an example object with no seqlengths
+#' gb <- exampleTranslocation
+#' seqlengths(gb) <-  seqlengths(gb$query) <- NA
+#' gb
+#'
+#' # Note that the new seqlengths returned by forceSeqLengths are shorter
+#' # because we can not guess about length of the unaligned ends.
+#' forceSeqLengths(gb)  |> seqlengths()
+#' exampleTranslocation |> seqlengths()
+#'
+#' # forceSeqLengths can take whole GBreaks objects as input, or simple GRanges
+#' forceSeqLengths(gb)$query    |> seqlengths()
+#' forceSeqLengths(gb$query)    |> seqlengths()
+#' forceSeqLengths(granges(gb)) |> seqlengths()
 #'
 #' @export
 
-forceSeqLengths <- function(gr) {
-  if (!any(is.na(seqlengths(gr)))) return (gr)
-  seqlengths(gr) <- as.vector(guessSeqLengths(gr))
-  gr
+setGeneric("forceSeqLengths", function(x, ...) standardGeneric("forceSeqLengths"))
+
+forceSeqLengths_GRanges <- function(x) {
+  if (!any(is.na(seqlengths(x)))) return (x)
+  seqlengths(x) <- as.vector(guessSeqLengths(x))
+  x
 }
+
+forceSeqLengths_GBreaks <- function(x) {
+  if (any(is.na(seqlengths(x))))
+    seqlengths(x) <- as.vector(guessSeqLengths(x))
+  if (any(is.na(seqlengths(x$query))))
+    seqlengths(x$query) <- as.vector(guessSeqLengths(x$query))
+  x
+}
+
+setMethod("forceSeqLengths", "GRanges", forceSeqLengths_GRanges)
+
+setMethod("forceSeqLengths", "GBreaks", forceSeqLengths_GBreaks)

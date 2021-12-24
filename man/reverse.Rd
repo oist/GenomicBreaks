@@ -37,6 +37,7 @@ See also the \code{\link[IRanges:reverse-methods]{IRanges::reverse}} function.
 
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
+\code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{swap}()}

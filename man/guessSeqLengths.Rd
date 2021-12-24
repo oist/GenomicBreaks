@@ -2,12 +2,9 @@
 % Please edit documentation in R/guessSeqLenghts.R
 \name{guessSeqLengths}
 \alias{guessSeqLengths}
-\alias{forceSeqLengths}
 \title{Guesstimate seqlevel lengths}
 \usage{
 guessSeqLengths(gr)
-
-forceSeqLengths(gr)
 }
 \arguments{
 \item{gr}{A \code{\link{GRanges}} object}
@@ -16,10 +13,6 @@ forceSeqLengths(gr)
 \code{\link{guessSeqLengths}} returns sequence lengths that have been guessed
 as the maximal end coordinates found in the object, or the object's
 \code{seqlengths} if if they did already exist.
-
-\code{\link{forceSeqLengths}} returns the object in which the sequence lengths
-have been set to the maximal end coordinates found in the object if if they
-did not exist.
 }
 \description{
 When no \code{\link{seqlengths}} are available, one can resort to set them as to the
@@ -33,19 +26,11 @@ gb2 <- exampleTranslocation
 seqlengths(gb2$query) <- NA
 guessSeqLengths(gb2$query)
 
-forceSeqLengths(exampleTranslocation$query)
-forceSeqLengths(exampleTranslocation$query) |> seqlengths()
-
 }
 \seealso{
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{reverse}()},
-\code{\link{swap}()}
-
-Other modifier functions: 
-\code{\link{coalesce_contigs}()},
+\code{\link{forceSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
 \code{\link{swap}()}
