@@ -84,7 +84,7 @@
       <h1 data-toc-skip>Structural Variants</h1>
                         <h4 data-toc-skip class="author">Charles Plessy</h4>
             
-            <h4 data-toc-skip class="date">24 December, 2021</h4>
+            <h4 data-toc-skip class="date">27 January, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/HEAD/vignettes/StructuralVariants.Rmd" class="external-link"><code>vignettes/StructuralVariants.Rmd</code></a></small>
       <div class="hidden name"><code>StructuralVariants.Rmd</code></div>
@@ -93,16 +93,16 @@
 
     
     
-<div class="section level1">
-<h1 id="structural-variants">Structural Variants<a class="anchor" aria-label="anchor" href="#structural-variants"></a>
-</h1>
-<p>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> objects here are provided as <em>lazy data</em> and by convention their name always start with <code>example</code>.</p>
 <div class="section level2">
-<h2 id="colinearity">Colinearity<a class="anchor" aria-label="anchor" href="#colinearity"></a>
+<h2 id="structural-variants">Structural Variants<a class="anchor" aria-label="anchor" href="#structural-variants"></a>
 </h2>
+<p>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> objects here are provided as <em>lazy data</em> and by convention their name always start with <code>example</code>.</p>
 <div class="section level3">
-<h3 id="definition">Definition<a class="anchor" aria-label="anchor" href="#definition"></a>
+<h3 id="colinearity">Colinearity<a class="anchor" aria-label="anchor" href="#colinearity"></a>
 </h3>
+<div class="section level4">
+<h4 id="definition">Definition<a class="anchor" aria-label="anchor" href="#definition"></a>
+</h4>
 <p>We define <em>structural variants</em> as patterns of interruption of the colinearity between genomes.</p>
 <p>Colinearity is a property of pairs of mapped regions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -121,9 +121,9 @@
 <p><img src="StructuralVariants_files/figure-html/notColinearRegions_pair-2.png" width="700"></p>
 <p>In this example, the syntenic chromosomes are called <code>chrA</code> and <code>chrB</code>, but the names do not matter.</p>
 </div>
-<div class="section level3">
-<h3 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
-</h3>
+<div class="section level4">
+<h4 id="technical-details">Technical details<a class="anchor" aria-label="anchor" href="#technical-details"></a>
+</h4>
 <p>Remember that the <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> function puts the flag on the first member of the pair, ordered by the sequence on the <em>target</em> genome.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span></code></pre></div>
@@ -184,18 +184,18 @@
 <span class="co">##   -------</span>
 <span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 </div>
-<div class="section level3">
-<h3 id="limitation">Limitation<a class="anchor" aria-label="anchor" href="#limitation"></a>
-</h3>
+<div class="section level4">
+<h4 id="limitation">Limitation<a class="anchor" aria-label="anchor" href="#limitation"></a>
+</h4>
 <p>At the moment we can not study the structural variants that are entirely contained in an aligned region, for instance an indel represented as an alignment gap.</p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="inversions">Inversions<a class="anchor" aria-label="anchor" href="#inversions"></a>
-</h2>
 <div class="section level3">
-<h3 id="trivial-inversions">Trivial inversions<a class="anchor" aria-label="anchor" href="#trivial-inversions"></a>
+<h3 id="inversions">Inversions<a class="anchor" aria-label="anchor" href="#inversions"></a>
 </h3>
+<div class="section level4">
+<h4 id="trivial-inversions">Trivial inversions<a class="anchor" aria-label="anchor" href="#trivial-inversions"></a>
+</h4>
 <p>Trivial inversions are triplets of mapped regions that would be colinear if the strand of the second one were reversed. Note that, like for colinear patterns, the flag is put on the first mapping of the triplet.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleInversion</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -246,9 +246,9 @@
 <span class="co">##   -------</span>
 <span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
 </div>
-<div class="section level3">
-<h3 id="double-inversions">Double inversions<a class="anchor" aria-label="anchor" href="#double-inversions"></a>
-</h3>
+<div class="section level4">
+<h4 id="double-inversions">Double inversions<a class="anchor" aria-label="anchor" href="#double-inversions"></a>
+</h4>
 <p>Double inversions are the result of two overlapping trivial inversions, and must be detected with a different approach.</p>
 <p>Here we show a triplet resulting from a double inversion, flanked by two regions that did not move.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -278,9 +278,9 @@
 <p><img src="StructuralVariants_files/figure-html/doubleInversions2-3.png" width="700"></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="transolocations">Transolocations<a class="anchor" aria-label="anchor" href="#transolocations"></a>
-</h2>
+<div class="section level3">
+<h3 id="transolocations">Transolocations<a class="anchor" aria-label="anchor" href="#transolocations"></a>
+</h3>
 <p>If a region has moved, but is not an inversion, then it is a translocation.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleTranslocation</span> |&gt; <span class="fu"><a href="../reference/flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -310,9 +310,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></code></pre></div>
 <p><img src="StructuralVariants_files/figure-html/translocationOnMinus-1.png" width="700"></p>
 </div>
-<div class="section level2">
-<h2 id="insertions-deletions-indels">Insertions / Deletions (indels)<a class="anchor" aria-label="anchor" href="#insertions-deletions-indels"></a>
-</h2>
+<div class="section level3">
+<h3 id="insertions-deletions-indels">Insertions / Deletions (indels)<a class="anchor" aria-label="anchor" href="#insertions-deletions-indels"></a>
+</h3>
 <p>NOTE that searching for insertion/deletions make little sense in one-to-one alignment unless the maximal distance for colinearity is set to a meaningful value.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">exampleDeletion</span></code></pre></div>
@@ -361,7 +361,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
