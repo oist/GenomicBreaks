@@ -327,6 +327,16 @@ makeOxfordPlots(gb_Neu, type = 'none') +
   ggtitle("N. crassa chrIII vs P. comata chr7 “Oxford” plot")
 ```
 
+## Genomic sequences
+
+You can retrieve the genomic sequences of the ranges in the `GBreaks` objects
+provided that a `BSgenome` packages are available and were indicated at load
+time.
+
+```{r getSeqs}
+BSgenome::getSeq(BSgenome::getBSgenome(gb |> genome() |> unique()), gb)
+```
+
 ## Trivial translocations
 
 ### Definitions
