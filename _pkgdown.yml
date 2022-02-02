@@ -14,3 +14,49 @@ reference:
     - starts_with("flag")
     - starts_with("filter")
     - starts_with("show")
+  - title: Bioconductor API functions
+    desc: Functions that provide compatibility with GRanges, etc.
+  - contents:
+    - GBreaks-class
+    - as
+    - reverse
+    - subsetByOverlaps_GBreaks
+    - range_GBreaks
+    - reverse
+  - title: Motifier functions
+    desc: Functions that takes GBreaks object and return them modified.
+  - contents:
+    - has_concept("modifier functions")
+  - title: Other functions
+  - contents:
+    - StructuralVariants   
+    - align_scaf_plot_2    
+    - bp_coverage
+    - bp_heatmap
+    - bp_pair_analysis
+    - chain_contigs
+    - cleanGaps
+    - coalesce_contigs
+    - dist2next
+    - feature_coverage
+    - flipStrandNames
+    - forceSeqLengths
+    - gb2comp
+    - gb2dna_seg
+    - gb2xlim
+    - get_bps
+    - gr2dna_seg
+    - guessSeqLengths
+    - int_frag
+    - inv2UCSCData
+    - isSorted
+    - leftInversionGaps    
+    - load_genomic_breaks  
+    - longestMatchesInTarget 
+    - makeInversion.chr    
+    - master_bp_analysis   
+    - mergeSeqLevels
+    - orderQuerySeqLevels  
+    - scaf_align_plot
+    - strandNames
+    - swap
