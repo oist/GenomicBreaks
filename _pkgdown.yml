@@ -1,1 +1,16 @@
 url: https://oist.github.io/GenomicBreaks
+reference:
+  - title: Plotting functions
+    desc: Graphical display of pairwise alignments
+  - contents:
+    - has_concept("plot functions")
+  - title: Distance functions
+    desc: Various ways to estimate the similarity between two genomes.
+  - contents:
+    - has_concept("Similarity indexes")
+  - title: Flags and filters
+    desc: Functions to flag patterns of alignments and filter them.
+  - contents:
+    - starts_with("flag")
+    - starts_with("filter")
+    - starts_with("show")
