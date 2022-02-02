@@ -60,78 +60,42 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="all-functions">All functions <a href="#all-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p>
+          <h2 id="plotting-functions">Plotting functions <a href="#plotting-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Graphical display of pairwise alignments</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="GBreaks-class.html">GBreaks-class</a></code> </p>
+          <p><code><a href="makeOxfordPlots.html">makeOxfordPlots()</a></code> </p>
         </td>
-        <td><p>The GenomicBreaks class</p></td>
+        <td><p>Make Oxford Plots</p></td>
       </tr><tr><td>
+          <p><code><a href="plotApairOfChrs.html">plotApairOfChrs()</a></code> </p>
+        </td>
+        <td><p>Plots a pair of chromosomes from a <code>GBreaks</code> object.</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="distance-functions">Distance functions <a href="#distance-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Various ways to estimate the similarity between two genomes.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="GOC.html">GOC()</a></code> </p>
         </td>
         <td><p>Gene Order Conservation</p></td>
-      </tr><tr><td>
-          <p><code><a href="StructuralVariants.html">StructuralVariants</a></code> </p>
-        </td>
-        <td><p>Structural Variants</p></td>
-      </tr><tr><td>
-          <p><code><a href="align_scaf_plot_2.html">align_scaf_plot_2()</a></code> </p>
-        </td>
-        <td><p>Compare Alignments over two Reference scaffolds</p></td>
-      </tr><tr><td>
-          <p><code><a href="as.html">as</a></code> </p>
-        </td>
-        <td><p>Conversion from <code><a href="https://rdrr.io/pkg/CNEr/man/Axt-class.html" class="external-link">CNEr::Axt</a></code> objects</p></td>
-      </tr><tr><td>
-          <p><code><a href="bp_coverage.html">bp_coverage()</a></code> </p>
-        </td>
-        <td><p>Coverage over Breakpoints</p></td>
-      </tr><tr><td>
-          <p><code><a href="bp_heatmap.html">bp_heatmap()</a></code> </p>
-        </td>
-        <td><p>Breakpoint Associated Heatmaps for Pairwise Aligned Genomes</p></td>
-      </tr><tr><td>
-          <p><code><a href="bp_pair_analysis.html">bp_pair_analysis()</a></code> </p>
-        </td>
-        <td><p>Breakpoint Pairwise Comparison using Reference Genome as Coordinate System</p></td>
-      </tr><tr><td>
-          <p><code><a href="chain_contigs.html">chain_contigs()</a></code> </p>
-        </td>
-        <td><p>Chain contigs in pairwise alignments</p></td>
-      </tr><tr><td>
-          <p><code><a href="cleanGaps.html">cleanGaps()</a></code> </p>
-        </td>
-        <td><p>Gaps between ranges</p></td>
-      </tr><tr><td>
-          <p><code><a href="coalesce_contigs.html">coalesce_contigs()</a></code> </p>
-        </td>
-        <td><p>Coalesce Pairwise Alignments</p></td>
       </tr><tr><td>
           <p><code><a href="correlation_index.html">correlation_index()</a></code> </p>
         </td>
         <td><p>Index representing how correlated syntenic regions are</p></td>
       </tr><tr><td>
-          <p><code><a href="dist2next.html">dist2next()</a></code> </p>
+          <p><code><a href="strand_randomisation_index.html">strand_randomisation_index()</a></code> </p>
         </td>
-        <td><p>Distances to next ranges</p></td>
+        <td><p>Index measuring how 'random' the alignment strand has become.</p></td>
       </tr><tr><td>
-          <p><code><a href="feature_coverage.html">feature_coverage()</a></code> </p>
+          <p><code><a href="synteny_index.html">synteny_index()</a></code> </p>
         </td>
-        <td><p>Feature coverage heatmap</p></td>
-      </tr><tr><td>
-          <p><code><a href="filterColinearRegions.html">filterColinearRegions()</a></code> </p>
-        </td>
-        <td><p>Filter colinear regions</p></td>
-      </tr><tr><td>
-          <p><code><a href="filterInversions.html">filterInversions()</a></code> </p>
-        </td>
-        <td><p>Extract central blocks in inversions</p></td>
-      </tr><tr><td>
-          <p><code><a href="filterTranslocations.html">filterTranslocations()</a></code> </p>
-        </td>
-        <td><p>Extract central blocks in translocations</p></td>
-      </tr><tr><td>
+        <td><p>Index representing how 'syntenic' two genomes are</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="flags-and-filters">Flags and filters <a href="#flags-and-filters" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions to flag patterns of alignments and filter them.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="flagAll.html">flagAll()</a></code> </p>
         </td>
         <td><p>Compute all flags</p></td>
@@ -159,6 +123,122 @@
           <p><code><a href="flagTranslocations.html">flagTranslocations()</a></code> </p>
         </td>
         <td><p>Flag translocations</p></td>
+      </tr><tr><td>
+          <p><code><a href="filterColinearRegions.html">filterColinearRegions()</a></code> </p>
+        </td>
+        <td><p>Filter colinear regions</p></td>
+      </tr><tr><td>
+          <p><code><a href="filterInversions.html">filterInversions()</a></code> </p>
+        </td>
+        <td><p>Extract central blocks in inversions</p></td>
+      </tr><tr><td>
+          <p><code><a href="filterTranslocations.html">filterTranslocations()</a></code> </p>
+        </td>
+        <td><p>Extract central blocks in translocations</p></td>
+      </tr><tr><td>
+          <p><code><a href="showInversions.html">showInversions()</a></code> </p>
+        </td>
+        <td><p>Show inversions and their flanking blocks.</p></td>
+      </tr><tr><td>
+          <p><code><a href="showTranslocations.html">showTranslocations()</a></code> </p>
+        </td>
+        <td><p>Show translocations and their flanking blocks.</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="bioconductor-api-functions">Bioconductor API functions <a href="#bioconductor-api-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions that provide compatibility with GRanges, etc.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="GBreaks-class.html">GBreaks-class</a></code> </p>
+        </td>
+        <td><p>The GenomicBreaks class</p></td>
+      </tr><tr><td>
+          <p><code><a href="as.html">as</a></code> </p>
+        </td>
+        <td><p>Conversion from <code><a href="https://rdrr.io/pkg/CNEr/man/Axt-class.html" class="external-link">CNEr::Axt</a></code> objects</p></td>
+      </tr><tr><td>
+          <p><code><a href="reverse.html">reverse()</a></code> </p>
+        </td>
+        <td><p>Reverse genomic ranges</p></td>
+      </tr><tr><td>
+          <p><code><a href="subsetByOverlaps.html">subsetByOverlaps_GBreaks()</a></code> <code><a href="subsetByOverlaps.html">subsetByOverlaps(<i>&lt;GBreaks&gt;</i>,<i>&lt;GBreaks&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>subsetByOverlaps method for <code>GBreaks</code> objects</p></td>
+      </tr><tr><td>
+          <p><code><a href="range.html">range_GBreaks()</a></code> <code><a href="range.html">range(<i>&lt;GBreaks&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Range method for <code>GBreaks</code> objects</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="motifier-functions">Motifier functions <a href="#motifier-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions that takes GBreaks object and return them modified.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="coalesce_contigs.html">coalesce_contigs()</a></code> </p>
+        </td>
+        <td><p>Coalesce Pairwise Alignments</p></td>
+      </tr><tr><td>
+          <p><code><a href="forceSeqLengths.html">forceSeqLengths()</a></code> </p>
+        </td>
+        <td><p>Set sequence lengths if there were none</p></td>
+      </tr><tr><td>
+          <p><code><a href="guessSeqLengths.html">guessSeqLengths()</a></code> </p>
+        </td>
+        <td><p>Guesstimate seqlevel lengths</p></td>
+      </tr><tr><td>
+          <p><code><a href="mergeSeqLevels.html">mergeSeqLevels()</a></code> </p>
+        </td>
+        <td><p>Merge seqlevels in a larger one</p></td>
+      </tr><tr><td>
+          <p><code><a href="reverse.html">reverse()</a></code> </p>
+        </td>
+        <td><p>Reverse genomic ranges</p></td>
+      </tr><tr><td>
+          <p><code><a href="swap.html">swap()</a></code> </p>
+        </td>
+        <td><p>Swap target and query genomes</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="other-functions">Other functions <a href="#other-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="StructuralVariants.html">StructuralVariants</a></code> </p>
+        </td>
+        <td><p>Structural Variants</p></td>
+      </tr><tr><td>
+          <p><code><a href="align_scaf_plot_2.html">align_scaf_plot_2()</a></code> </p>
+        </td>
+        <td><p>Compare Alignments over two Reference scaffolds</p></td>
+      </tr><tr><td>
+          <p><code><a href="bp_coverage.html">bp_coverage()</a></code> </p>
+        </td>
+        <td><p>Coverage over Breakpoints</p></td>
+      </tr><tr><td>
+          <p><code><a href="bp_heatmap.html">bp_heatmap()</a></code> </p>
+        </td>
+        <td><p>Breakpoint Associated Heatmaps for Pairwise Aligned Genomes</p></td>
+      </tr><tr><td>
+          <p><code><a href="bp_pair_analysis.html">bp_pair_analysis()</a></code> </p>
+        </td>
+        <td><p>Breakpoint Pairwise Comparison using Reference Genome as Coordinate System</p></td>
+      </tr><tr><td>
+          <p><code><a href="chain_contigs.html">chain_contigs()</a></code> </p>
+        </td>
+        <td><p>Chain contigs in pairwise alignments</p></td>
+      </tr><tr><td>
+          <p><code><a href="cleanGaps.html">cleanGaps()</a></code> </p>
+        </td>
+        <td><p>Gaps between ranges</p></td>
+      </tr><tr><td>
+          <p><code><a href="coalesce_contigs.html">coalesce_contigs()</a></code> </p>
+        </td>
+        <td><p>Coalesce Pairwise Alignments</p></td>
+      </tr><tr><td>
+          <p><code><a href="dist2next.html">dist2next()</a></code> </p>
+        </td>
+        <td><p>Distances to next ranges</p></td>
+      </tr><tr><td>
+          <p><code><a href="feature_coverage.html">feature_coverage()</a></code> </p>
+        </td>
+        <td><p>Feature coverage heatmap</p></td>
       </tr><tr><td>
           <p><code><a href="flipStrandNames.html">flipStrandNames()</a></code> </p>
         </td>
@@ -220,10 +300,6 @@
         </td>
         <td><p>Make an inversion</p></td>
       </tr><tr><td>
-          <p><code><a href="makeOxfordPlots.html">makeOxfordPlots()</a></code> </p>
-        </td>
-        <td><p>Make Oxford Plots</p></td>
-      </tr><tr><td>
           <p><code><a href="master_bp_analysis.html">master_bp_analysis()</a></code> </p>
         </td>
         <td><p>Master Breakpoint Analysis</p></td>
@@ -236,49 +312,17 @@
         </td>
         <td><p>Ordering permutation for <em>query</em> relative to <em>target</em></p></td>
       </tr><tr><td>
-          <p><code><a href="plotApairOfChrs.html">plotApairOfChrs()</a></code> </p>
-        </td>
-        <td><p>Plots a pair of chromosomes from a <code>GBreaks</code> object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="range.html">range_GBreaks()</a></code> <code><a href="range.html">range(<i>&lt;GBreaks&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Range method for <code>GBreaks</code> objects</p></td>
-      </tr><tr><td>
-          <p><code><a href="reverse.html">reverse()</a></code> </p>
-        </td>
-        <td><p>Reverse genomic ranges</p></td>
-      </tr><tr><td>
           <p><code><a href="scaf_align_plot.html">scaf_align_plot()</a></code> </p>
         </td>
         <td><p>Plot Alignment of Single Reference Scaffold</p></td>
-      </tr><tr><td>
-          <p><code><a href="showInversions.html">showInversions()</a></code> </p>
-        </td>
-        <td><p>Show inversions and their flanking blocks.</p></td>
-      </tr><tr><td>
-          <p><code><a href="showTranslocations.html">showTranslocations()</a></code> </p>
-        </td>
-        <td><p>Show translocations and their flanking blocks.</p></td>
       </tr><tr><td>
           <p><code><a href="strandNames.html">strandNames()</a></code> </p>
         </td>
         <td><p>Sequence name with strand information</p></td>
       </tr><tr><td>
-          <p><code><a href="strand_randomisation_index.html">strand_randomisation_index()</a></code> </p>
-        </td>
-        <td><p>Index measuring how 'random' the alignment strand has become.</p></td>
-      </tr><tr><td>
-          <p><code><a href="subsetByOverlaps.html">subsetByOverlaps_GBreaks()</a></code> <code><a href="subsetByOverlaps.html">subsetByOverlaps(<i>&lt;GBreaks&gt;</i>,<i>&lt;GBreaks&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>subsetByOverlaps method for <code>GBreaks</code> objects</p></td>
-      </tr><tr><td>
           <p><code><a href="swap.html">swap()</a></code> </p>
         </td>
         <td><p>Swap target and query genomes</p></td>
-      </tr><tr><td>
-          <p><code><a href="synteny_index.html">synteny_index()</a></code> </p>
-        </td>
-        <td><p>Index representing how 'syntenic' two genomes are</p></td>
       </tr><tr><td>
           <p><code><a href="tan_bp.html">tan_bp()</a></code> </p>
         </td>
