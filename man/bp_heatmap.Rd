@@ -2,24 +2,33 @@
 % Please edit documentation in R/bp_heatmap.R
 \name{bp_heatmap}
 \alias{bp_heatmap}
-\title{Breakpoint Associated Heatmaps for Pairwise Aligned Genomes}
+\title{Breakpoint Associated Heatmaps}
 \usage{
 bp_heatmap(gr_ob, gen_seq = NULL, basep_range, pat, ...)
 }
 \arguments{
 \item{gr_ob}{GRanges object containing pairwise alignment}
 
-\item{gen_seq}{(deprecated) This should be either a BSgenome object or a DNAStringSet object, such that the genome sequence is contained in this input.  Current version detects genome sequence automatically.}
+\item{gen_seq}{(deprecated) This should be either a BSgenome object or a
+DNAStringSet object, such that the genome sequence is contained in
+this input.  Current version detects genome sequence automatically.}
 
-\item{basep_range}{range over which heatmap characteristic is plotted. Breakpoints will be aligned at the center of this.}
+\item{basep_range}{range over which heatmap characteristic is plotted.
+Breakpoints will be aligned at the center of this.}
 
 \item{pat}{character string of desired pattern/characteristic to be plotted on heatmap}
 
-\item{...}{Pass other arguments to \code{get_bps}.}
+\item{...}{Pass other arguments to \code{\link{get_bps}}.}
 }
 \value{
 Heatmap of pattern around centred breakpoints
 }
 \description{
-This function generates a Heatmap of the specified pattern, over breakpoints aligned at the centre of the plot. The result can be piped into \code{smoothHeatmap} and then \code{plotHeatmapList} or \code{plotHeatmapMeta}
+This function generates a heatmap of the specified pattern, over breakpoints
+aligned at the centre of the plot. The result can be piped into
+\code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
+\code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}
+}
+\author{
+Charlotte West
 }

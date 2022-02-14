@@ -1,19 +1,28 @@
-#' Breakpoint Associated Heatmaps for Pairwise Aligned Genomes
+#' Breakpoint Associated Heatmaps
 #'
-#' This function generates a Heatmap of the specified pattern, over breakpoints aligned at the centre of the plot. The result can be piped into \code{smoothHeatmap} and then \code{plotHeatmapList} or \code{plotHeatmapMeta}
+#' This function generates a heatmap of the specified pattern, over breakpoints
+#' aligned at the centre of the plot. The result can be piped into
+#' [`heatmaps::smoothHeatmap`] and then [`heatmaps::plotHeatmapList`] or
+#' [`heatmaps::plotHeatmapMeta`]
 #'
 #' @param gr_ob GRanges object containing pairwise alignment
-#' @param gen_seq (deprecated) This should be either a BSgenome object or a DNAStringSet object, such that the genome sequence is contained in this input.  Current version detects genome sequence automatically.
-#' @param basep_range range over which heatmap characteristic is plotted. Breakpoints will be aligned at the center of this.
+#' @param gen_seq (deprecated) This should be either a BSgenome object or a
+#'        DNAStringSet object, such that the genome sequence is contained in
+#'        this input.  Current version detects genome sequence automatically.
+#' @param basep_range range over which heatmap characteristic is plotted.
+#'        Breakpoints will be aligned at the center of this.
 #' @param pat character string of desired pattern/characteristic to be plotted on heatmap
-#' @param ... Pass other arguments to \code{get_bps}.
+#' @param ... Pass other arguments to [`get_bps`].
 #' @return Heatmap of pattern around centred breakpoints
+#'
 #' @export
-#' @import GenomicRanges
+#'
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @importFrom heatmaps PatternHeatmap
 #' @importFrom Biostrings getSeq
+#'
+#' @author Charlotte West
 
 bp_heatmap <- function (gr_ob, gen_seq = NULL, basep_range, pat, ...) {
 
