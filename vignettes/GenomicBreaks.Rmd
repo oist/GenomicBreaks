@@ -120,6 +120,28 @@ gb |> plyranges::mutate("score" = width) |> head(3)
 
 See the [vignette of _plyranges_](https://bioconductor.org/packages/release/bioc/vignettes/plyranges/inst/doc/an-introduction.html) for more details.
 
+## Subsetting with core Bioconductor functions
+
+Some core Bioconductor functions from the `GenomicRanges` package have been
+adapted to work on `GBreaks` objects.
+
+The `?%in%` operator returns a `TRUE` or `FALSE` value per element in its first
+argument if they match in the second argument.  Here is a toy example:
+
+```{r example_with_in}
+gb[4:5] %in% gb
+```
+
+For `?subsetByOverlaps`, one match on either the _target_ or the _query_ genome
+is enough.
+
+```{r example_subsetbyoverlaps}
+gb |> subsetByOverlaps(GRanges("chrI:200000-240000"))
+gb |> subsetByOverlaps(GBreaks( target = GRanges("chrI:200000-240000")
+                              ,  query = GRanges("NC_047494.1:200000-800000")))
+```
+
+
 ## Breakpoints and alignment stops
 
 Let us define an **alignment stop** to be a position defined in either the
