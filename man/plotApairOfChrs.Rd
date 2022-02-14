@@ -61,6 +61,8 @@ Other genoPlotR functions:
 \code{\link{gr2dna_seg}()}
 
 Other plot functions: 
+\code{\link{bp_heatmap}()},
+\code{\link{bp_pair_analysis}()},
 \code{\link{makeOxfordPlots}()}
 
 Other Structural variants: 

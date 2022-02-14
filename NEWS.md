@@ -1,3 +1,10 @@
+# GenomicBreaks 0.13.0
+
+## Backwards-incompatible changes
+
+ * The function `bp_heatmap` now expects to genome sequences to be reachable
+ via `BSgenome::getBSgenome`.
+
 # GenomicBreaks 0.12.2
 
 ## New functionalities

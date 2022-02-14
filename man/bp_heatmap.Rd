@@ -4,24 +4,21 @@
 \alias{bp_heatmap}
 \title{Breakpoint Associated Heatmaps}
 \usage{
-bp_heatmap(gr_ob, gen_seq = NULL, basep_range, pat, ...)
+bp_heatmap(gr, window, pattern, ...)
 }
 \arguments{
-\item{gr_ob}{GRanges object containing pairwise alignment}
+\item{gr}{\code{GRanges} object containing pairwise alignment}
 
-\item{gen_seq}{(deprecated) This should be either a BSgenome object or a
-DNAStringSet object, such that the genome sequence is contained in
-this input.  Current version detects genome sequence automatically.}
-
-\item{basep_range}{range over which heatmap characteristic is plotted.
+\item{window}{Range over which heatmap characteristic is plotted.
 Breakpoints will be aligned at the center of this.}
 
-\item{pat}{character string of desired pattern/characteristic to be plotted on heatmap}
+\item{pattern}{Character string of desired pattern/characteristic to be
+plotted on heatmap.}
 
 \item{...}{Pass other arguments to \code{\link{get_bps}}.}
 }
 \value{
-Heatmap of pattern around centred breakpoints
+Returns a \code{\link{Heatmap}} object of \code{pattern} around centred breakpoints.
 }
 \description{
 This function generates a heatmap of the specified pattern, over breakpoints
@@ -29,6 +26,28 @@ aligned at the centre of the plot. The result can be piped into
 \code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
 \code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}
 }
+\note{
+The \code{GRanges} object is expected to have a \emph{sequence information}
+(see \code{\link{seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
+object via the \code{\link[BSgenome:available.genomes]{BSgenome::getBSgenome}} function.
+}
+\examples{
+# The plot makes no sense, but that is the best example I have at the moment.
+exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
+gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
+bp_heatmap(gb, 200, 'GC', dir = "left") |>
+  heatmaps::smoothHeatmap() |> heatmaps::plotHeatmapList()
+
+}
+\seealso{
+Other plot functions: 
+\code{\link{bp_pair_analysis}()},
+\code{\link{makeOxfordPlots}()},
+\code{\link{plotApairOfChrs}()}
+}
 \author{
 Charlotte West
+
+Charles Plessy
 }
+\concept{plot functions}

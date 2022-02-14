@@ -5,17 +5,18 @@
 #' [`heatmaps::smoothHeatmap`] and then [`heatmaps::plotHeatmapList`] or
 #' [`heatmaps::plotHeatmapMeta`]
 #'
-#' @param gr_ob GRanges object containing pairwise alignment
-#' @param gen_seq (deprecated) This should be either a BSgenome object or a
-#'        DNAStringSet object, such that the genome sequence is contained in
-#'        this input.  Current version detects genome sequence automatically.
-#' @param basep_range range over which heatmap characteristic is plotted.
+#' @param gr `GRanges` object containing pairwise alignment
+#' @param window Range over which heatmap characteristic is plotted.
 #'        Breakpoints will be aligned at the center of this.
-#' @param pat character string of desired pattern/characteristic to be plotted on heatmap
+#' @param pattern Character string of desired pattern/characteristic to be
+#'        plotted on heatmap.
 #' @param ... Pass other arguments to [`get_bps`].
-#' @return Heatmap of pattern around centred breakpoints
 #'
-#' @export
+#' @return Returns a [`Heatmap`] object of `pattern` around centred breakpoints.
+#'
+#' @note The `GRanges` object is expected to have a _sequence information_
+#' (see [`seqinfo`]) that allows the retrieval its corresponding `BSgenome`
+#' object via the [`BSgenome::getBSgenome`] function.
 #'
 #' @import IRanges
 #' @import GenomeInfoDb
@@ -23,26 +24,34 @@
 #' @importFrom Biostrings getSeq
 #'
 #' @author Charlotte West
+#' @author Charles Plessy
+#'
+#' @family plot functions
+#'
+#' @examples
+#' # The plot makes no sense, but that is the best example I have at the moment.
+#' exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
+#' gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
+#' bp_heatmap(gb, 200, 'GC', dir = "left") |>
+#'   heatmaps::smoothHeatmap() |> heatmaps::plotHeatmapList()
+#'
+#' @export
 
-bp_heatmap <- function (gr_ob, gen_seq = NULL, basep_range, pat, ...) {
+bp_heatmap <- function (gr, window, pattern, ...) {
 
   # Suppress warnings about overflow
   suppressWarnings(
-  gr_bps <- get_bps(gr_ob, ...) + basep_range/2
+  gr_bps <- get_bps(gr, ...) + window / 2
   )
   # Remove the out-of-bound ranges.
   gr_bps <- gr_bps[gr_bps == trim(gr_bps)]
 
   # Detect genome name and get BSgenome object
-  if (is.null(gen_seq)) {
-    gen_seq <- unique(genome(gr_ob))
-    if (length(gen_seq) != 1)
-      stop("Expected one genome name, found ", dQuote(gen_seq), " instead.")
-    # Convert from genome name to genome object
-    gen_seq <- get(gen_seq)
-  }
+  genomeName <- unique(genome(gr))
+  if(is.na(genomeName)) stop("No BSgenome information in the GRanges/GBreaks object.")
+  genome <- BSgenome::getBSgenome(genomeName)
 
   # Heatmap
-  hm_prep <- getSeq(gen_seq, gr_bps)
-  PatternHeatmap(hm_prep, pattern = pat, c(-basep_range/2, basep_range/2))
+  hm_prep <- getSeq(genome, gr_bps)
+  PatternHeatmap(hm_prep, pattern = pattern, c(-window / 2, window / 2))
 }

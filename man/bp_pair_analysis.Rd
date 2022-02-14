@@ -4,20 +4,35 @@
 \alias{bp_pair_analysis}
 \title{Breakpoint Pairwise Comparison using Reference Genome as Coordinate System}
 \usage{
-bp_pair_analysis(gr_ref_q1, gr_ref_q2, win, lab)
+bp_pair_analysis(gb1, gb2, window, label)
 }
 \arguments{
-\item{gr_ref_q1}{pairwise alignment between the reference genome and query genome 1}
+\item{gb1}{\code{GBreaks} object of the alignment between the \emph{target} genome and \emph{query} genome 1.}
 
-\item{gr_ref_q2}{is the pw alignment between the reference genome and query genome 2}
+\item{gb2}{\code{GBreaks} object of the alignment between the \emph{target} genome and \emph{query} genome 2.}
 
-\item{win}{range around query1 breakpoints of which query2 breakpoints are projected on to. Should be even number}
+\item{window}{range around query1 breakpoints of which query2 breakpoints are projected on to. Should be even number}
 
-\item{lab}{string which will be the label on the graph}
+\item{label}{string which will be the label on the graph}
 }
 \value{
-The output is a coverage heatmap that can be plotted with smoothHeatmap(output), then pipe into plotHeatmapList
+Returns a \code{\link{Heatmap}} object of \code{pattern} that can be piped into
+\code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
+\code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}.
 }
 \description{
-This function takes in two pairwise alignments, with the same reference genome. A heatmap is produced, where the breakpoints of query1 are the centre point reference, and the breakpoints of query2 that fall within the window are projected onto it. Format of the pairwise alignments are expected to be GRanges objects, with information about the query genome in the metadata column.
+This function takes two \code{\link{GBreaks}} objects, with the same \emph{target} genome.
+A heatmap is produced, where the breakpoints of \emph{query} 1 are the centre
+point reference, and the breakpoints of \emph{query} 2 that fall within the window
+are projected onto it.
 }
+\seealso{
+Other plot functions: 
+\code{\link{bp_heatmap}()},
+\code{\link{makeOxfordPlots}()},
+\code{\link{plotApairOfChrs}()}
+}
+\author{
+Charlotte West
+}
+\concept{plot functions}
