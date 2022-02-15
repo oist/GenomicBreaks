@@ -21,6 +21,7 @@ reference:
   - contents:
     - GBreaks-class
     - as
+    - getSeq
     - reverse
     - subsetByOverlaps_GBreaks
     - range_GBreaks

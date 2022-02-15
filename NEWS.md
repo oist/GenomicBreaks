@@ -1,5 +1,10 @@
 # GenomicBreaks 0.13.0
 
+## New functionalities
+
+ * New `getSeq()` method for `GRanges` and `GBreaks` objects that have proper
+   `seqinfo` for an installed `BSgenome` package.
+
 ## Backwards-incompatible changes
 
  * The function `bp_heatmap` now expects to genome sequences to be reachable

@@ -64,6 +64,7 @@ Collate:
     'flagPairs.R'
     'genoPlotR.R'
     'getRefGenome.R'
+    'getSeq.R'
     'get_bps.R'
     'guessSeqLenghts.R'
     'int_frag.R'
