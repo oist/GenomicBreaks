@@ -4,25 +4,40 @@
 \alias{feature_coverage}
 \title{Feature coverage heatmap}
 \usage{
-feature_coverage(gr_ob, feat, win, lab, ...)
+feature_coverage(gr, feat, window, label, ...)
 }
 \arguments{
-\item{gr_ob}{GenomicBreaks object containing pairwise alignment}
+\item{gr}{A \code{\link{GRanges}} object.}
 
-\item{feat}{GRanges object containing the feature in target genome.}
+\item{feat}{A \code{GRanges} object representing the feature of interest.}
 
-\item{win}{window over which to observe tandem coverage over each breakpoint}
+\item{window}{Window over which to observe feature coverage.}
 
-\item{lab}{label for the plot}
+\item{label}{Label for the plot.}
 
-\item{...}{Other arguments passed to \code{get_bps}.}
+\item{...}{Other arguments passed to \code{\link{get_bps}} in order to select the
+boundaries, their order and their orientation.}
 }
 \value{
-The output is \code{Heatmap} object representing a coverage heatmap that
-can be postprocessed with \code{smoothHeatmap(output)}, then piped into
-\code{plotHeatmapList}.
+Returns a \code{\link{Heatmap}} object that can be piped into
+\code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
+\code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}.
 }
 \description{
-Produces a heatmap of a genomic feature around breakpoints. The feature has
-binary coverage represented by a genomic range.
+Wraps the \code{\link[heatmaps:CoverageHeatmap]{heatmaps::CoverageHeatmap}} function to produce a heatmap centred
+on the boundaries of \emph{genomic ranges}.  Assuming that these ranges are a
+\code{\link{GBreaks}} object, then the boundaries approximate breakpoints.
 }
+\seealso{
+Other plot functions: 
+\code{\link{bp_heatmap}()},
+\code{\link{bp_pair_analysis}()},
+\code{\link{makeOxfordPlots}()},
+\code{\link{plotApairOfChrs}()}
+
+Other heatmap functions: 
+\code{\link{bp_heatmap}()},
+\code{\link{bp_pair_analysis}()}
+}
+\concept{heatmap functions}
+\concept{plot functions}

@@ -1,29 +1,35 @@
 #' Feature coverage heatmap
 #'
-#' Produces a heatmap of a genomic feature around breakpoints. The feature has
-#' binary coverage represented by a genomic range.
+#' Wraps the [`heatmaps::CoverageHeatmap`] function to produce a heatmap centred
+#' on the boundaries of _genomic ranges_.  Assuming that these ranges are a
+#' [`GBreaks`] object, then the boundaries approximate breakpoints.
 #'
-#' @param gr_ob GenomicBreaks object containing pairwise alignment
-#' @param feat GRanges object containing the feature in target genome.
-#' @param win window over which to observe tandem coverage over each breakpoint
-#' @param lab label for the plot
-#' @param ... Other arguments passed to `get_bps`.
+#' @param gr A [`GRanges`] object.
+#' @param feat A `GRanges` object representing the feature of interest.
+#' @param window Window over which to observe feature coverage.
+#' @param label Label for the plot.
+#' @param ... Other arguments passed to [`get_bps`] in order to select the
+#'        boundaries, their order and their orientation.
 #'
-#' @return The output is `Heatmap` object representing a coverage heatmap that
-#' can be postprocessed with `smoothHeatmap(output)`, then piped into
-#' `plotHeatmapList`.
+#' @return Returns a [`Heatmap`] object that can be piped into
+#' [`heatmaps::smoothHeatmap`] and then [`heatmaps::plotHeatmapList`] or
+#' [`heatmaps::plotHeatmapMeta`].
 #'
-#' @export
-#' @import GenomicRanges
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @importFrom heatmaps CoverageHeatmap
+#'
+#' @family plot functions
+#' @family heatmap functions
+#'
+#' @export
 
-feature_coverage <- function(gr_ob, feat, win, lab, ...){
+
+feature_coverage <- function(gr, feat, window, label, ...) {
 
   # reference bps gr object
   suppressWarnings(
-    ref_bps <- get_bps(gr_ob, ...) + win/2
+    ref_bps <- get_bps(gr, ...) + window/2
   )
 
   # Remove windows that reach boundaries.
@@ -31,5 +37,5 @@ feature_coverage <- function(gr_ob, feat, win, lab, ...){
   ref_bps_trim <- ref_bps[ref_trim]
 
   # heatmap
-  CoverageHeatmap(windows = ref_bps_trim, track = feat, coords = c(-win/2, win/2), label = lab)
+  CoverageHeatmap(windows = ref_bps_trim, track = feat, coords = c(-window/2, window/2), label = label)
 }

@@ -51,6 +51,7 @@ makeOxfordPlots(exampleTranslocation, type = "p")
 Other plot functions: 
 \code{\link{bp_heatmap}()},
 \code{\link{bp_pair_analysis}()},
+\code{\link{feature_coverage}()},
 \code{\link{plotApairOfChrs}()}
 }
 \author{

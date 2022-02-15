@@ -17,6 +17,7 @@
 #' @author Charlotte West
 #'
 #' @family plot functions
+#' @family heatmap functions
 #'
 #' @import GenomicRanges
 #' @import IRanges

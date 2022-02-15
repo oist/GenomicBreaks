@@ -27,6 +27,7 @@
 #' @author Charles Plessy
 #'
 #' @family plot functions
+#' @family heatmap functions
 #'
 #' @examples
 #' # The plot makes no sense, but that is the best example I have at the moment.

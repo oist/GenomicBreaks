@@ -42,12 +42,18 @@ bp_heatmap(gb, 200, 'GC', dir = "left") |>
 \seealso{
 Other plot functions: 
 \code{\link{bp_pair_analysis}()},
+\code{\link{feature_coverage}()},
 \code{\link{makeOxfordPlots}()},
 \code{\link{plotApairOfChrs}()}
+
+Other heatmap functions: 
+\code{\link{bp_pair_analysis}()},
+\code{\link{feature_coverage}()}
 }
 \author{
 Charlotte West
 
 Charles Plessy
 }
+\concept{heatmap functions}
 \concept{plot functions}

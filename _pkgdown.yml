@@ -2,6 +2,8 @@ url: https://oist.github.io/GenomicBreaks
 reference:
   - title: Plotting functions
     desc: Graphical display of pairwise alignments
+  - title: Heatmap Functions
+    desc: Functions that return a `Heatmap` object from the `heatmaps` package.
   - contents:
     - has_concept("plot functions")
   - title: Distance functions
@@ -29,8 +31,8 @@ reference:
     - has_concept("modifier functions")
   - title: Other functions
   - contents:
-    - StructuralVariants   
-    - align_scaf_plot_2    
+    - StructuralVariants
+    - align_scaf_plot_2
     - bp_coverage
     - bp_heatmap
     - bp_pair_analysis
@@ -50,13 +52,13 @@ reference:
     - int_frag
     - inv2UCSCData
     - isSorted
-    - leftInversionGaps    
-    - load_genomic_breaks  
-    - longestMatchesInTarget 
-    - makeInversion.chr    
-    - master_bp_analysis   
+    - leftInversionGaps
+    - load_genomic_breaks
+    - longestMatchesInTarget
+    - makeInversion.chr
+    - master_bp_analysis
     - mergeSeqLevels
-    - orderQuerySeqLevels  
+    - orderQuerySeqLevels
     - scaf_align_plot
     - strandNames
     - swap

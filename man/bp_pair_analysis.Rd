@@ -29,10 +29,16 @@ are projected onto it.
 \seealso{
 Other plot functions: 
 \code{\link{bp_heatmap}()},
+\code{\link{feature_coverage}()},
 \code{\link{makeOxfordPlots}()},
 \code{\link{plotApairOfChrs}()}
+
+Other heatmap functions: 
+\code{\link{bp_heatmap}()},
+\code{\link{feature_coverage}()}
 }
 \author{
 Charlotte West
 }
+\concept{heatmap functions}
 \concept{plot functions}
