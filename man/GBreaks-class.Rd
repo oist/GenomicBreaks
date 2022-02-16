@@ -20,3 +20,13 @@ gb
 gb$query
 
 }
+\seealso{
+Other Bioconductor API functions: 
+\code{\link{as}()},
+\code{\link{getSeq}()},
+\code{\link{pairwiseAlignment}()},
+\code{\link{range_GBreaks}()},
+\code{\link{reverse}()},
+\code{\link{subsetByOverlaps_GBreaks}()}
+}
+\concept{Bioconductor API functions}

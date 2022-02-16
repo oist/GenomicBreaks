@@ -12,6 +12,8 @@
 #' gb
 #' gb$query
 #'
+#' @family Bioconductor API functions
+#'
 #' @importFrom methods callNextMethod new setClass
 #'
 #' @export GBreaks
@@ -42,6 +44,9 @@ setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query =
 #'
 #' @importFrom CNEr first second
 #' @importFrom methods as setAs
+#'
+#' @family Bioconductor API functions
+#'
 #' @name as
 #' @export
 
@@ -99,6 +104,8 @@ setMethod("isSorted", "GBreaks", isSorted_GBreaks)
 #'
 #' @returns tbd
 #'
+#' @family Bioconductor API functions
+#'
 #' @rdname range
 #' @examples
 #' range(exampleColinear3)
@@ -139,6 +146,8 @@ setMethod("range", "GBreaks", range_GBreaks)
 #' @param ... etc
 #'
 #' @returns tbd
+#'
+#' @family Bioconductor API functions
 #'
 #' @rdname subsetByOverlaps
 #' @examples

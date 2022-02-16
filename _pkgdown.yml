@@ -19,13 +19,7 @@ reference:
   - title: Bioconductor API functions
     desc: Functions that provide compatibility with GRanges, etc.
   - contents:
-    - GBreaks-class
-    - as
-    - getSeq
-    - reverse
-    - subsetByOverlaps_GBreaks
-    - range_GBreaks
-    - reverse
+    - has_concept("Bioconductor API functions")
   - title: Motifier functions
     desc: Functions that takes GBreaks object and return them modified.
   - contents:

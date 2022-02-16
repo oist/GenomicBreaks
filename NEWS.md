@@ -4,6 +4,8 @@
 
  * New `getSeq()` method for `GRanges` and `GBreaks` objects that have proper
    `seqinfo` for an installed `BSgenome` package.
+ * New `pairwiseAlignment()` method for `GRanges` and `GBreaks` objects, that
+   will call `getSeq()` automatically.
 
 ## Backwards-incompatible changes
 

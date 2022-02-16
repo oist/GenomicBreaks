@@ -32,6 +32,14 @@ getSeq(GRanges("chrI:1-20", seqinfo = seqinfo(Scerevisiae)))
 }
 \seealso{
 See also the \code{\link[Biostrings:getSeq]{Biostrings::getSeq}} function.
+
+Other Bioconductor API functions: 
+\code{\link{GBreaks-class}},
+\code{\link{as}()},
+\code{\link{pairwiseAlignment}()},
+\code{\link{range_GBreaks}()},
+\code{\link{reverse}()},
+\code{\link{subsetByOverlaps_GBreaks}()}
 }
 \author{
 Charles Plessy

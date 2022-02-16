@@ -15,3 +15,13 @@ the reverse-complement strand.  Therefore, although in the \emph{CNEr} object
 they are stored in a \emph{GRanges} object, they do not represent genomic ranges.
 In order to do so, there is a \code{\link[CNEr:fixCoordinates]{CNEr::fixCoordinates}} function.
 }
+\seealso{
+Other Bioconductor API functions: 
+\code{\link{GBreaks-class}},
+\code{\link{getSeq}()},
+\code{\link{pairwiseAlignment}()},
+\code{\link{range_GBreaks}()},
+\code{\link{reverse}()},
+\code{\link{subsetByOverlaps_GBreaks}()}
+}
+\concept{Bioconductor API functions}

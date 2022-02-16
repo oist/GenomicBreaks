@@ -17,6 +17,7 @@
 #' reverse(exampleInsertion, query = TRUE)
 #'
 #' @family modifier functions
+#' @family Bioconductor API functions
 #' @seealso See also the [`IRanges::reverse`] function.
 #'
 #' @importFrom IRanges reverse

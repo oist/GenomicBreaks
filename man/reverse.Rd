@@ -41,8 +41,17 @@ Other modifier functions:
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{swap}()}
+
+Other Bioconductor API functions: 
+\code{\link{GBreaks-class}},
+\code{\link{as}()},
+\code{\link{getSeq}()},
+\code{\link{pairwiseAlignment}()},
+\code{\link{range_GBreaks}()},
+\code{\link{subsetByOverlaps_GBreaks}()}
 }
 \author{
 Charles Plessy
 }
+\concept{Bioconductor API functions}
 \concept{modifier functions}
