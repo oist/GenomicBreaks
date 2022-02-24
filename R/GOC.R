@@ -27,21 +27,16 @@
 #' (2003): 600-3. [doi:10.1016/j.tig.2003.09.011](https://doi.org/10.1016/j.tig.2003.09.011)
 #'
 #' @examples
-#' gb1       <- GRanges(c(A="Ref:100-200:+", B="Ref:400-500:+"))
-#' gb1$query <- GRanges(c(A="Que:100-200",   B="Que:400-500"))
-#' gb1
-#' GOC(gb1)
+#' exampleColinear
+#' GOC(exampleColinear)
 #'
-#' gb4       <- GRanges(c("Ref:100-200:+",   "Ref:400-500:+",   "Ref:600-700:+"))
-#' gb4$query <- GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
-#' gb4
-#' GOC(gb4)
-#' GOC(gb4, vicinity = 1)
+#' exampleTranslocation
+#' GOC(exampleTranslocation)
+#' GOC(exampleTranslocation, v=1)
 #'
-#' inv       <- GRanges(c("XSR:101-180:+", "XSR:201-300:-",  "XSR:320-400:+"))
-#' inv$query <- GRanges(c( "S1:101-200",    "S1:201-300",     "S1:301-400"))
-#' inv
-#' GOC(inv, vicinity = 1)
+#' # GOC computation is strandless
+#' exampleInversion
+#' GOC(exampleInversion)
 #'
 #' @export
 

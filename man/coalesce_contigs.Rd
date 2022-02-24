@@ -21,10 +21,7 @@ For convenience during analysis sessions, its \emph{score} is set to the width o
 the ranges on the \emph{target} genome.
 }
 \description{
-This algorithm take in a pairwise genome alignment, represented as a
-collection of intervals in a \emph{target} genome paired with intervals in a
-\emph{query} genome.  It reduces the number of pairs by coalescing pairs that are
-within close proximity on the same strand (user determined).
+Coalesce Pairwise Alignments
 }
 \note{
 Fragmented alignments arising from incorrect basecalls, misassembly or
@@ -53,7 +50,6 @@ follow(gb2)
 precede(gb2, ignore.strand = TRUE)
 # Query range [1] follows query range [2]
 follow(gb2$query)
-coalesce_contigs(gb2)
 
 # Coalescing strandless objects
 gb3 <- exampleColinear3

@@ -14,10 +14,7 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#'
-#' gb4       <- GRanges(c("Ref:100-200:+", "Ref:400-500:+", "Ref:600-700:+"))
-#' gb4$query <- GRanges(c("Que:1100-1200:+", "Que:1700-1800:+", "Que:1500-1600:+"))
-#' chain_contigs(gb4)
+#' chain_contigs(exampleInversion)
 #'
 #' @importFrom BiocParallel bplapply
 #' @importFrom S4Vectors subjectHits
