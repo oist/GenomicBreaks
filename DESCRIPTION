@@ -54,6 +54,7 @@ Collate:
     'bp_pair_analysis.R'
     'chain_contigs.R'
     'cleanGaps.R'
+    'zipWithNext.R'
     'coalesce_contigs.R'
     'correlation_index.R'
     'feature_coverage.R'

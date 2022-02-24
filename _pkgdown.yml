@@ -54,3 +54,4 @@ reference:
     - scaf_align_plot
     - strandNames
     - tan_bp
+    - zipWithNext
