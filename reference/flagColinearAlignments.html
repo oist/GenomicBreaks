@@ -101,8 +101,8 @@ each genome (<code>tdist</code> and <code>qdist</code>).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Internally, <code>flagColinearAlignments()</code> uses the <code>precede</code>
-and <code>follow</code> functions functions to determine what is the
+    <p>Internally, <code>flagColinearAlignments()</code> uses the <code><a href="https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html" class="external-link">GenomicRanges::precede</a></code>
+and <code><a href="https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html" class="external-link">GenomicRanges::follow</a></code> functions functions to determine what is the
 <em>next</em>.  For a given range, these functions return the index position of the
 range it precedes or follows, or <code>NA</code> as the first range follows nothing and
 the last range precedes nothing.  See the examples for details.</p>
@@ -194,7 +194,8 @@ the future if too confusing or useless.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Colinearity check on strandless objects</span></span>
 <span class="r-in"><span class="va">gb3</span> <span class="op">&lt;-</span> <span class="va">exampleColinear3</span></span>
-<span class="r-in"><span class="fu">strand</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"*"</span></span>
+<span class="r-in"><span class="va">gb4</span> <span class="op">&lt;-</span> <span class="va">gb2</span></span>
+<span class="r-in"><span class="fu">strand</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">strand</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"*"</span></span>
 <span class="r-in"><span class="fu">flagColinearAlignments</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query  colinear</span>
@@ -202,6 +203,15 @@ the future if too confusing or useless.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-200      * | chrB:100-200      TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   201-300      * | chrB:201-300      TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      * | chrB:301-400     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span class="fu">flagColinearAlignments</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query  colinear</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   101-200      * | chrB:301-400      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   201-300      * | chrB:201-300      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-401      * | chrB:100-200     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"></span>

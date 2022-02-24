@@ -63,6 +63,10 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.13.0" id="genomicbreaks-0130">GenomicBreaks 0.13.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0130"></a></h2>
 <div class="section level3">
+<h3 id="important-bug-fixes-0-13-0">Important bug fixes<a class="anchor" aria-label="anchor" href="#important-bug-fixes-0-13-0"></a></h3>
+<ul><li>The <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> function was corrected so that strandless ranges are called <em>colinear</em> when they satisfy the conditions on any strand. Before, they would be treated like plus-strand ranges, causing failure to detect colinearity on the minus strand.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-functionalities-0-13-0">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-13-0"></a></h3>
 <ul><li>New <code><a href="../reference/getSeq.html">getSeq()</a></code> method for <code>GRanges</code> and <code>GBreaks</code> objects that have proper <code>seqinfo</code> for an installed <code>BSgenome</code> package.</li>
 <li>New <code><a href="../reference/pairwiseAlignment.html">pairwiseAlignment()</a></code> method for <code>GRanges</code> and <code>GBreaks</code> objects, that will call <code><a href="../reference/getSeq.html">getSeq()</a></code> automatically.</li>
