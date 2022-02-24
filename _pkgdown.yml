@@ -10,6 +10,9 @@ reference:
     desc: Various ways to estimate the similarity between two genomes.
   - contents:
     - has_concept("Similarity indexes")
+    desc: Functions to analyse colinearity and synteny.
+  - contents:
+    - has_concept("Colinearity functions")
   - title: Flags and filters
     desc: Functions to flag patterns of alignments and filter them.
   - contents:
@@ -29,8 +32,6 @@ reference:
     - StructuralVariants
     - align_scaf_plot_2
     - bp_coverage
-    - bp_heatmap
-    - chain_contigs
     - cleanGaps
     - dist2next
     - feature_coverage
