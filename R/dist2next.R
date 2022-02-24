@@ -1,47 +1,60 @@
 #' Distances to next ranges
 #'
-#' Calculates the distance to the next range in the reference and query genome.
+#' Calculates the distance to the next range in the _target_ and _query_ genome.
 #'
-#' Note that because the last range has not next neighbor, the last value is set
-#' to Inf arbitrarily.
+#' The distance is defined by the [`GenomicRanges::distance`] function.  Note
+#' that because the last range has not next neighbor, the last value is set
+#' to `Inf` arbitrarily.
 #'
-#' @param gr_ob A GenomicBreaks object.
-#' @param step Distance to the n^th^ block (default: first).
-#' @param ignore.strand Calculate distance for ranges on different starands.
+#' @param x A [`GRanges`] or a [`GBreaks`] object.
+#' @param step Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
+#'        block (default: first).
+#' @param ignore.strand Calculate distance for ranges on different strands.
 #'
-#' @return Returns the object with two extra metadata colums, `tdist` and
-#' `qdist`, containing the distance to the next range in the reference and query
-#' genomes respectively.
+#' @return For `GRanges`, returns the object with one extra metadata colums,
+#' `dist`, and for `GBreaks` two extra columns `tdist` and `qdist`, containing
+#' the distance to the next range in the reference and query genomes
+#' respectively.
 #'
 #' @family Colinearity functions
 #'
 #' @examples
-#' gb1       <- GRanges(c("chr1:100-200:+",
-#'                                       "chr1:201-300:+",
-#'                                       "chr1:400-500:+",
-#'                                       "chr1:700-800:-"))
-#'
-#' gb1$query <- GRanges(c("chr1:100-200:+",
-#'                                       "chr1:201-300:+",
-#'                                       "chr1:400-500:+",
-#'                                       "chr1:700-800:-"))
-#' dist2next(gb1)
-#' dist2next(gb1, ignore.strand = TRUE)
-#' dist2next(gb1, 2)
+#' dist2next(exampleInversion)
+#' dist2next(granges(exampleInversion))
+#' dist2next(exampleInversion, ignore.strand = TRUE)
+#' dist2next(exampleInversion - 20, ignore.strand = TRUE)
+#' dist2next(exampleInversion, 2)
 #'
 #' @importFrom GenomicRanges distance
 #' @importFrom utils head tail
 #' @export
 
-dist2next <- function (gr_ob, step = 1, ignore.strand = FALSE) {
-  d2n <- function(gr, step) {
-    c( distance( head(gr, -step)
-               , tail(gr, -step)
+
+setGeneric("dist2next", function(x, step = 1, ignore.strand = FALSE) standardGeneric("dist2next"))
+
+dist2next_GRanges <- function(x, step = 1, ignore.strand = FALSE) {
+  x$dist <-
+    c( distance( head(x, -step)
+               , tail(x, -step)
                , ignore.strand) + 1  # Why is there +1 here ??
      , rep(Inf, step)
      )
-  }
-  gr_ob$tdist <- d2n(gr_ob      , step)
-  gr_ob$qdist <- d2n(gr_ob$query, step)
-  gr_ob
+  x
 }
+
+dist2next_GBreaks <- function(x, step = 1, ignore.strand = FALSE) {
+  x$tdist <- dist2next(granges(x)      , step, ignore.strand = ignore.strand)$dist
+  x$qdist <- dist2next(granges(x$query), step, ignore.strand = ignore.strand)$dist
+  x$query$dist <- NULL
+  x
+}
+
+#' @rdname dist2next
+#' @export
+
+setMethod("dist2next", "GRanges", dist2next_GRanges)
+
+#' @rdname dist2next
+#' @export
+
+setMethod("dist2next", "GBreaks", dist2next_GBreaks)

@@ -2,42 +2,44 @@
 % Please edit documentation in R/dist2next.R
 \name{dist2next}
 \alias{dist2next}
+\alias{dist2next,GRanges-method}
+\alias{dist2next,GBreaks-method}
 \title{Distances to next ranges}
 \usage{
-dist2next(gr_ob, step = 1, ignore.strand = FALSE)
+dist2next(x, step = 1, ignore.strand = FALSE)
+
+\S4method{dist2next}{GRanges}(x, step = 1, ignore.strand = FALSE)
+
+\S4method{dist2next}{GBreaks}(x, step = 1, ignore.strand = FALSE)
 }
 \arguments{
-\item{gr_ob}{A GenomicBreaks object.}
+\item{x}{A \code{\link{GRanges}} or a \code{\link{GBreaks}} object.}
 
-\item{step}{Distance to the n^th^ block (default: first).}
+\item{step}{Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
+block (default: first).}
 
-\item{ignore.strand}{Calculate distance for ranges on different starands.}
+\item{ignore.strand}{Calculate distance for ranges on different strands.}
 }
 \value{
-Returns the object with two extra metadata colums, \code{tdist} and
-\code{qdist}, containing the distance to the next range in the reference and query
-genomes respectively.
+For \code{GRanges}, returns the object with one extra metadata colums,
+\code{dist}, and for \code{GBreaks} two extra columns \code{tdist} and \code{qdist}, containing
+the distance to the next range in the reference and query genomes
+respectively.
 }
 \description{
-Calculates the distance to the next range in the reference and query genome.
+Calculates the distance to the next range in the \emph{target} and \emph{query} genome.
 }
 \details{
-Note that because the last range has not next neighbor, the last value is set
-to Inf arbitrarily.
+The distance is defined by the \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::distance}} function.  Note
+that because the last range has not next neighbor, the last value is set
+to \code{Inf} arbitrarily.
 }
 \examples{
-gb1       <- GRanges(c("chr1:100-200:+",
-                                      "chr1:201-300:+",
-                                      "chr1:400-500:+",
-                                      "chr1:700-800:-"))
-
-gb1$query <- GRanges(c("chr1:100-200:+",
-                                      "chr1:201-300:+",
-                                      "chr1:400-500:+",
-                                      "chr1:700-800:-"))
-dist2next(gb1)
-dist2next(gb1, ignore.strand = TRUE)
-dist2next(gb1, 2)
+dist2next(exampleInversion)
+dist2next(granges(exampleInversion))
+dist2next(exampleInversion, ignore.strand = TRUE)
+dist2next(exampleInversion - 20, ignore.strand = TRUE)
+dist2next(exampleInversion, 2)
 
 }
 \seealso{

@@ -17,7 +17,9 @@
 ## Backwards-incompatible changes
 
  * The function `bp_heatmap` now expects to genome sequences to be reachable
- via `BSgenome::getBSgenome`.
+   via `BSgenome::getBSgenome`.
+ * The function `dist2next` now operates on `GRanges` and `GBreaks`, and its
+   main argument is renamed to `x`.
 
 # GenomicBreaks 0.12.2
 
