@@ -21,16 +21,16 @@ For convenience during analysis sessions, its \emph{score} is set to the width o
 the ranges on the \emph{target} genome.
 }
 \description{
-This algorithm take in a genome-to-genome alignment, represented as a
-collection of intervals in a query genome paired with intervals in a target
-genome.  It reduces the number of pairs by coalescing pairs that are
+This algorithm take in a pairwise genome alignment, represented as a
+collection of intervals in a \emph{target} genome paired with intervals in a
+\emph{query} genome.  It reduces the number of pairs by coalescing pairs that are
 within close proximity on the same strand (user determined).
 }
 \note{
 Fragmented alignments arising from incorrect basecalls, misassembly or
 misalignments can cause us to infer artificial breakpoints
 
-Internally, \code{coalesce_contigs} uses \verb{[flagColinearAlignments()]}  See the
+Internally, \code{coalesce_contigs} uses \code{\link[=flagColinearAlignments]{flagColinearAlignments()}}  See the
 examples for details.
 }
 \examples{
@@ -57,8 +57,10 @@ coalesce_contigs(gb2)
 
 # Coalescing strandless objects
 gb3 <- exampleColinear3
-strand(gb3) <- "*"
+gb4 <- gb2
+strand(gb4) <- strand(gb3) <- "*"
 coalesce_contigs(gb3)
+coalesce_contigs(gb4)
 
 }
 \seealso{

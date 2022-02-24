@@ -33,8 +33,8 @@ alignment on the \emph{query} genome, with strand information being taken into
 account.
 }
 \details{
-Internally, \code{flagColinearAlignments()} uses the \code{\link{precede}}
-and \code{\link{follow}} functions functions to determine what is the
+Internally, \code{flagColinearAlignments()} uses the \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::precede}}
+and \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::follow}} functions functions to determine what is the
 \emph{next}.  For a given range, these functions return the index position of the
 range it precedes or follows, or \code{NA} as the first range follows nothing and
 the last range precedes nothing.  See the examples for details.
@@ -69,8 +69,10 @@ follow(gb2$query)
 
 # Colinearity check on strandless objects
 gb3 <- exampleColinear3
-strand(gb3) <- "*"
+gb4 <- gb2
+strand(gb4) <- strand(gb3) <- "*"
 flagColinearAlignments(gb3)
+flagColinearAlignments(gb4)
 
 # Ranges that should not coalesce because they are not
 # ordered properly

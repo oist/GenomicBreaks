@@ -1,14 +1,14 @@
 #' Coalesce Pairwise Alignments
 #'
-#' This algorithm take in a genome-to-genome alignment, represented as a
-#' collection of intervals in a query genome paired with intervals in a target
-#' genome.  It reduces the number of pairs by coalescing pairs that are
+#' This algorithm take in a pairwise genome alignment, represented as a
+#' collection of intervals in a _target_ genome paired with intervals in a
+#' _query_ genome.  It reduces the number of pairs by coalescing pairs that are
 #' within close proximity on the same strand (user determined).
 #'
 #' @note Fragmented alignments arising from incorrect basecalls, misassembly or
 #' misalignments can cause us to infer artificial breakpoints
 #'
-#' Internally, `coalesce_contigs` uses `[flagColinearAlignments()]`  See the
+#' Internally, `coalesce_contigs` uses [`flagColinearAlignments()`]  See the
 #' examples for details.
 #'
 #' @param gb [`GBreaks`] object of the pairwise alignment.
@@ -51,8 +51,10 @@
 #'
 #' # Coalescing strandless objects
 #' gb3 <- exampleColinear3
-#' strand(gb3) <- "*"
+#' gb4 <- gb2
+#' strand(gb4) <- strand(gb3) <- "*"
 #' coalesce_contigs(gb3)
+#' coalesce_contigs(gb4)
 #'
 #' @export
 #' @importFrom GenomicRanges GRanges

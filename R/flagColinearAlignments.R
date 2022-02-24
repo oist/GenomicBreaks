@@ -6,8 +6,8 @@
 #' alignment on the _query_ genome, with strand information being taken into
 #' account.
 #'
-#' Internally, `flagColinearAlignments()` uses the [`precede`]
-#' and [`follow`] functions functions to determine what is the
+#' Internally, `flagColinearAlignments()` uses the [`GenomicRanges::precede`]
+#' and [`GenomicRanges::follow`] functions functions to determine what is the
 #' _next_.  For a given range, these functions return the index position of the
 #' range it precedes or follows, or `NA` as the first range follows nothing and
 #' the last range precedes nothing.  See the examples for details.
@@ -55,8 +55,10 @@
 #'
 #' # Colinearity check on strandless objects
 #' gb3 <- exampleColinear3
-#' strand(gb3) <- "*"
+#' gb4 <- gb2
+#' strand(gb4) <- strand(gb3) <- "*"
 #' flagColinearAlignments(gb3)
+#' flagColinearAlignments(gb4)
 #'
 #' # Ranges that should not coalesce because they are not
 #' # ordered properly
