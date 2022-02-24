@@ -107,11 +107,14 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
 
   # When the reference strand is "+", we want the query blocks to be colinear
   # and when the reference is "-" we want them to be anti-colinear.
-  gb$t_col <- ( decode(strand(gb)) %in% c("+", "*") & gb$tfoll == 1 ) |
-              ( decode(strand(gb)) %in%    c("-")   & gb$tprev == 1 )
+  gb$t_col <- ( decode(strand(gb)) %in% c("+") &  gb$tfoll == 1                ) |
+              ( decode(strand(gb)) %in% c("-") &  gb$tprev == 1                ) |
+              ( decode(strand(gb)) %in% c("*") & (gb$tfoll == 1 | gb$tprev == 1) )
 
-  gb$q_col <- ( decode(strand(gb)) %in% c("+", "*") & gb$qfoll == 1 ) |
-              ( decode(strand(gb)) %in%    c("-")   & gb$qprev == 1 )
+
+  gb$q_col <- ( decode(strand(gb)) %in% c("+") &  gb$qfoll == 1                ) |
+              ( decode(strand(gb)) %in% c("-") &  gb$qprev == 1                ) |
+              ( decode(strand(gb)) %in% c("*") & (gb$qfoll == 1 | gb$qprev == 1) )
 
   # Calculate distance and check if it is within tolerance threshold
   # See 18939aa98b2db83a2360d5a0e92966581de4799e about tol + 1
