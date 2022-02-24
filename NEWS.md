@@ -2,10 +2,10 @@
 
 ## Important bug fixes
 
- * The `flagColinearAlignments()` function was corrected so that strandless
-   ranges are called _colinear_ when they satisfy the conditions on any strand.
-   Before, they would be treated like plus-strand ranges, causing failure to
-   detect colinearity on the minus strand.
+ * The `flagColinearAlignments()` and `coalesce_contigs()` functions were
+   corrected so that strandless ranges are called _colinear_ when they satisfy
+   the conditions on any strand.  Before, they would be treated like plus-strand
+   ranges, causing failure to detect colinearity on the minus strand.
 
 ## New functionalities
 

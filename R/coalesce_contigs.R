@@ -1,5 +1,7 @@
 #' Coalesce Pairwise Alignments
 #'
+#' @include zipWithNext.R
+#'
 #' This algorithm take in a pairwise genome alignment, represented as a
 #' collection of intervals in a _target_ genome paired with intervals in a
 #' _query_ genome.  It reduces the number of pairs by coalescing pairs that are
@@ -47,7 +49,6 @@
 #' precede(gb2, ignore.strand = TRUE)
 #' # Query range [1] follows query range [2]
 #' follow(gb2$query)
-#' coalesce_contigs(gb2)
 #'
 #' # Coalescing strandless objects
 #' gb3 <- exampleColinear3
@@ -106,13 +107,22 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gb$q_add <- gb$qdist
   gb[gb$colinear != TRUE]$q_add <- 0
 
+  # Guess strand for strandless ranges.
+  # By definition, if the `colinear` flag is `TRUE`, then the query range is
+  # to be merged with the next one.  This is done by extending the start or the
+  # end coordinate of the query range, based on its position relative to the
+  # next query range.
+  gb$zippedStartQueries <- zipWithNext(start(gb$query))
+  gb$guessedStrand <- ifelse(first(gb$zippedStartQueries) < second(gb$zippedStartQueries), '+', '-')
+  strand(gb[strand(gb) == '*' & gb$colinear]) <- gb$guessedStrand[decode(strand(gb)) == '*' & gb$colinear]
+
+  # Extend start or end according to the strand.
   end(  q_ext[strand(gb) == "+"]) <- end(  q_ext[strand(gb) == "+"]) + gb[strand(gb) == "+"]$q_add
-  end(  q_ext[strand(gb) == "*"]) <- end(  q_ext[strand(gb) == "*"]) + gb[strand(gb) == "*"]$q_add
   start(q_ext[strand(gb) == "-"]) <- start(q_ext[strand(gb) == "-"]) - gb[strand(gb) == "-"]$q_add
 
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
-  strand(gr_red$query) <- "*" # Restore un-strandedness
+  strand(q_ext) <- "*" # Restore un-strandedness
 
   score(gr_red) <- width(gr_red)
 
