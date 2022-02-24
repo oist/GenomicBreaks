@@ -10,6 +10,7 @@ reference:
     desc: Various ways to estimate the similarity between two genomes.
   - contents:
     - has_concept("Similarity indexes")
+  - title: Colinearity functions
     desc: Functions to analyse colinearity and synteny.
   - contents:
     - has_concept("Colinearity functions")
