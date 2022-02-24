@@ -33,7 +33,6 @@ reference:
     - align_scaf_plot_2
     - bp_coverage
     - cleanGaps
-    - dist2next
     - feature_coverage
     - flipStrandNames
     - gb2comp

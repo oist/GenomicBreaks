@@ -13,6 +13,8 @@
 #' `qdist`, containing the distance to the next range in the reference and query
 #' genomes respectively.
 #'
+#' @family Colinearity functions
+#'
 #' @examples
 #' gb1       <- GRanges(c("chr1:100-200:+",
 #'                                       "chr1:201-300:+",

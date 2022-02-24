@@ -56,6 +56,7 @@ loss of gene order in bacteria.} \emph{Trends in genetics : TIG} vol. 19,11
 Other Colinearity functions: 
 \code{\link{chain_contigs}()},
 \code{\link{coalesce_contigs}()},
+\code{\link{dist2next}()},
 \code{\link{filterColinearRegions}()},
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagPairs}()}

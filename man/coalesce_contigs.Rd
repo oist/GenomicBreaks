@@ -67,6 +67,7 @@ coalesce_contigs(gb4)
 Other Colinearity functions: 
 \code{\link{GOC}()},
 \code{\link{chain_contigs}()},
+\code{\link{dist2next}()},
 \code{\link{filterColinearRegions}()},
 \code{\link{flagColinearAlignments}()},
 \code{\link{flagPairs}()}
