@@ -2,10 +2,16 @@ url: https://oist.github.io/GenomicBreaks
 reference:
   - title: Plotting functions
     desc: Graphical display of pairwise alignments
+  - contents:
+    - has_concept("plot functions")
   - title: Heatmap Functions
     desc: Functions that return a `Heatmap` object from the `heatmaps` package.
   - contents:
-    - has_concept("plot functions")
+    - has_concept("heatmap functions")
+  - title: genoPlotR functions
+    desc: Functions related to the `genoPlotR` package that we use for pair chromosome plots.
+  - contents:
+    - has_concept("genoPlotR functions")
   - title: Distance functions
     desc: Various ways to estimate the similarity between two genomes.
   - contents:
@@ -36,12 +42,8 @@ reference:
     - cleanGaps
     - feature_coverage
     - flipStrandNames
-    - gb2comp
-    - gb2dna_seg
-    - gb2xlim
     - get_bps
     - gr2dna_seg
-    - guessSeqLengths
     - int_frag
     - inv2UCSCData
     - isSorted
