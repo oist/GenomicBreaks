@@ -29,6 +29,11 @@ GenomicRanges::gaps(exampleColinear)
 cleanGaps(exampleInversion)
 
 }
+\seealso{
+Other Reducing functions: 
+\code{\link{get_bps}()}
+}
 \author{
 Charles Plessy
 }
+\concept{Reducing functions}

@@ -36,3 +36,8 @@ get_bps(exampleInversion, stranded = TRUE)
 get_bps(exampleInversion, direction = "right", stranded = TRUE)
 
 }
+\seealso{
+Other Reducing functions: 
+\code{\link{cleanGaps}()}
+}
+\concept{Reducing functions}

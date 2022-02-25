@@ -13,6 +13,8 @@
 #' @note If you find replacement provided by a package that we already import,
 #' please let me know in a GitHub issue or pull request.
 #'
+#' @family Reducing functions
+#'
 #' @examples
 #' cleanGaps(exampleColinear)
 #' GenomicRanges::gaps(exampleColinear)

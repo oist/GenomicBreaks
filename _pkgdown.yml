@@ -31,18 +31,20 @@ reference:
   - contents:
     - has_concept("Bioconductor API functions")
   - title: Motifier functions
-    desc: Functions that takes GBreaks object and return them modified.
+    desc: Functions that take `GBreaks` objects and return them modified.
   - contents:
     - has_concept("modifier functions")
+  - title: Reducing functions
+    desc: Functions that take `GBreaks` objects and return simpler `GRanges` objects.
+  - contents:
+    - has_concept("Reducing functions")
   - title: Other functions
   - contents:
     - StructuralVariants
     - align_scaf_plot_2
     - bp_coverage
-    - cleanGaps
     - feature_coverage
     - flipStrandNames
-    - get_bps
     - gr2dna_seg
     - int_frag
     - inv2UCSCData

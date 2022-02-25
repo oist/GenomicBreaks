@@ -12,6 +12,8 @@
 #'
 #' @return `GRanges` object of the breakpoints
 #'
+#' @family Reducing functions
+#'
 #' @examples
 #' get_bps(exampleInversion)
 #' get_bps(exampleInversion, direction = "left")
