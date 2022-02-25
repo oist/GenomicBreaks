@@ -13,6 +13,8 @@
    `seqinfo` for an installed `BSgenome` package.
  * New `pairwiseAlignment()` method for `GRanges` and `GBreaks` objects, that
    will call `getSeq()` automatically.
+ * New "mid" option to the `direction` argument of `get_bps()`, to output
+   breakpoints at mid-distance between ranges.
 
 ## Backwards-incompatible changes
 

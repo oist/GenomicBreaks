@@ -2,34 +2,37 @@
 % Please edit documentation in R/get_bps.R
 \name{get_bps}
 \alias{get_bps}
-\title{Breakpoints}
+\title{Get breakpoints}
 \usage{
 get_bps(
-  gr_ob,
-  direction = c("both", "left", "right"),
+  gr,
+  direction = c("both", "left", "right", "mid"),
   stranded = FALSE,
   sorted = TRUE
 )
 }
 \arguments{
-\item{gr_ob}{GRanges object containing pairwise alignment}
+\item{gr}{\code{GRanges} object containing pairwise alignment}
 
-\item{direction}{Will return the breakpoints on \code{both}, \code{left} or \code{right} side(s) of the range.}
+\item{direction}{Return the breakpoints on \code{both}, \code{left} or \code{right} side(s)
+of the range, or at the \code{mid}point between ranges.}
 
-\item{stranded}{If \code{TRUE}, will assign a \code{+} strand to the left-side breakpoints and a \code{-} strand to the right-side ones.}
+\item{stranded}{If \code{TRUE}, will assign a \code{+} strand to the left-side
+breakpoints and a \code{-} strand to the right-side ones.}
 
 \item{sorted}{Sorts the object before returning it.}
 }
 \value{
-GRanges object of the breakpoints
+\code{GRanges} object of the breakpoints
 }
 \description{
-Given a GRanges object, the function produces a GRanges object detailing the breakpoints only. The only converted data is that of the main GRanges subject, and no metadata is processed or carried through
+Given a \code{\link{GBreaks}} or \code{\link{GRanges}} object, the function produces a \code{GRanges}
+object detailing the breakpoints only.
 }
 \examples{
-gr <- GRanges(c("chr2", "chr2", "chr1", "chr3"), IRanges::IRanges(1:4, width=4:1))
-get_bps(gr)
-get_bps(gr, direction = "left")
-get_bps(gr, stranded = TRUE)
-get_bps(gr, direction = "right", stranded = TRUE)
+get_bps(exampleInversion)
+get_bps(exampleInversion, direction = "left")
+get_bps(exampleInversion, stranded = TRUE)
+get_bps(exampleInversion, direction = "right", stranded = TRUE)
+
 }
