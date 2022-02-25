@@ -63,10 +63,6 @@
           <h2 id="plotting-functions">Plotting functions <a href="#plotting-functions" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Graphical display of pairwise alignments</p>
         </th>
-      </tr></tbody><tbody><tr><th colspan="2">
-          <h2 id="heatmap-functions">Heatmap Functions <a href="#heatmap-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Functions that return a <code>Heatmap</code> object from the <code>heatmaps</code> package.</p>
-        </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="bp_heatmap.html">bp_heatmap()</a></code> </p>
         </td>
@@ -83,6 +79,46 @@
           <p><code><a href="makeOxfordPlots.html">makeOxfordPlots()</a></code> </p>
         </td>
         <td><p>Make Oxford Plots</p></td>
+      </tr><tr><td>
+          <p><code><a href="plotApairOfChrs.html">plotApairOfChrs()</a></code> </p>
+        </td>
+        <td><p>Plots a pair of chromosomes from a <code>GBreaks</code> object.</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="heatmap-functions">Heatmap Functions <a href="#heatmap-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions that return a <code>Heatmap</code> object from the <code>heatmaps</code> package.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="bp_heatmap.html">bp_heatmap()</a></code> </p>
+        </td>
+        <td><p>Breakpoint Associated Heatmaps</p></td>
+      </tr><tr><td>
+          <p><code><a href="bp_pair_analysis.html">bp_pair_analysis()</a></code> </p>
+        </td>
+        <td><p>Breakpoint Pairwise Comparison using Reference Genome as Coordinate System</p></td>
+      </tr><tr><td>
+          <p><code><a href="feature_coverage.html">feature_coverage()</a></code> </p>
+        </td>
+        <td><p>Feature coverage heatmap</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="genoplotr-functions">genoPlotR functions <a href="#genoplotr-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions related to the <code>genoPlotR</code> package that we use for pair chromosome plots.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="gb2comp.html">gb2comp()</a></code> </p>
+        </td>
+        <td><p>Convert <code>GBreaks</code> object to a <code>comparison</code> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="gb2dna_seg.html">gb2dna_seg()</a></code> </p>
+        </td>
+        <td><p>Convert <code>GBreaks</code> object to a list of <code>dna_seg</code> objects</p></td>
+      </tr><tr><td>
+          <p><code><a href="gb2xlim.html">gb2xlim()</a></code> </p>
+        </td>
+        <td><p>GBreaks to xlim</p></td>
+      </tr><tr><td>
+          <p><code><a href="gr2dna_seg.html">gr2dna_seg()</a></code> </p>
+        </td>
+        <td><p>Convert <code>GRanges</code> object to <code>dna_seg</code> format</p></td>
       </tr><tr><td>
           <p><code><a href="plotApairOfChrs.html">plotApairOfChrs()</a></code> </p>
         </td>
@@ -225,7 +261,7 @@
         <td><p>subsetByOverlaps method for <code>GBreaks</code> objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="motifier-functions">Motifier functions <a href="#motifier-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Functions that takes GBreaks object and return them modified.</p>
+          <p class="section-desc"></p><p>Functions that take <code>GBreaks</code> objects and return them modified.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="coalesce_contigs.html">coalesce_contigs()</a></code> </p>
@@ -252,6 +288,18 @@
         </td>
         <td><p>Swap target and query genomes</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="reducing-functions">Reducing functions <a href="#reducing-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Functions that take <code>GBreaks</code> objects and return simpler <code>GRanges</code> objects.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="cleanGaps.html">cleanGaps()</a></code> </p>
+        </td>
+        <td><p>Gaps between ranges</p></td>
+      </tr><tr><td>
+          <p><code><a href="get_bps.html">get_bps()</a></code> </p>
+        </td>
+        <td><p>Get breakpoints</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="other-functions">Other functions <a href="#other-functions" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
@@ -268,10 +316,6 @@
         </td>
         <td><p>Coverage over Breakpoints</p></td>
       </tr><tr><td>
-          <p><code><a href="cleanGaps.html">cleanGaps()</a></code> </p>
-        </td>
-        <td><p>Gaps between ranges</p></td>
-      </tr><tr><td>
           <p><code><a href="feature_coverage.html">feature_coverage()</a></code> </p>
         </td>
         <td><p>Feature coverage heatmap</p></td>
@@ -280,29 +324,9 @@
         </td>
         <td><p>Reverse order and flip strand</p></td>
       </tr><tr><td>
-          <p><code><a href="gb2comp.html">gb2comp()</a></code> </p>
-        </td>
-        <td><p>Convert <code>GBreaks</code> object to a <code>comparison</code> object</p></td>
-      </tr><tr><td>
-          <p><code><a href="gb2dna_seg.html">gb2dna_seg()</a></code> </p>
-        </td>
-        <td><p>Convert <code>GBreaks</code> object to a list of <code>dna_seg</code> objects</p></td>
-      </tr><tr><td>
-          <p><code><a href="gb2xlim.html">gb2xlim()</a></code> </p>
-        </td>
-        <td><p>GBreaks to xlim</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_bps.html">get_bps()</a></code> </p>
-        </td>
-        <td><p>Breakpoints</p></td>
-      </tr><tr><td>
           <p><code><a href="gr2dna_seg.html">gr2dna_seg()</a></code> </p>
         </td>
         <td><p>Convert <code>GRanges</code> object to <code>dna_seg</code> format</p></td>
-      </tr><tr><td>
-          <p><code><a href="guessSeqLengths.html">guessSeqLengths()</a></code> </p>
-        </td>
-        <td><p>Guesstimate seqlevel lengths</p></td>
       </tr><tr><td>
           <p><code><a href="int_frag.html">int_frag()</a></code> </p>
         </td>
