@@ -122,7 +122,7 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
 
   # reduce and concatenate
   gr_red$query <- reduceAndSort(q_ext)
-  strand(q_ext) <- "*" # Restore un-strandedness
+  strand(gr_red$query) <- "*" # Restore un-strandedness
 
   score(gr_red) <- width(gr_red)
 
