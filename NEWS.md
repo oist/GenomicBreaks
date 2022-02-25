@@ -15,6 +15,8 @@
    will call `getSeq()` automatically.
  * New "mid" option to the `direction` argument of `get_bps()`, to output
    breakpoints at mid-distance between ranges.
+ * New `bridgeRegions()` function that maps unaligned regions of the _target_ to
+   the _query_ genome when they are flanked by colinear regions.
 
 ## Backwards-incompatible changes
 

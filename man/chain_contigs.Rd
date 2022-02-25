@@ -27,6 +27,7 @@ chain_contigs(exampleInversion)
 \seealso{
 Other Colinearity functions: 
 \code{\link{GOC}()},
+\code{\link{bridgeRegions}()},
 \code{\link{coalesce_contigs}()},
 \code{\link{dist2next}()},
 \code{\link{filterColinearRegions}()},

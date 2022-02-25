@@ -62,6 +62,7 @@ coalesce_contigs(gb4)
 \seealso{
 Other Colinearity functions: 
 \code{\link{GOC}()},
+\code{\link{bridgeRegions}()},
 \code{\link{chain_contigs}()},
 \code{\link{dist2next}()},
 \code{\link{filterColinearRegions}()},
@@ -69,6 +70,7 @@ Other Colinearity functions:
 \code{\link{flagPairs}()}
 
 Other modifier functions: 
+\code{\link{bridgeRegions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
