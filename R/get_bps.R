@@ -19,6 +19,7 @@
 #' get_bps(exampleInversion, direction = "left")
 #' get_bps(exampleInversion, stranded = TRUE)
 #' get_bps(exampleInversion, direction = "right", stranded = TRUE)
+#' get_bps(exampleInversion, direction = "mid")
 #'
 #' @importFrom GenomicRanges start end GRanges
 #' @importFrom IRanges IRanges
@@ -49,8 +50,8 @@ get_bps <- function(gr, direction = c("both", "left", "right", "mid"), stranded 
     gr <- gr_ends
   } else if (direction == "mid") {
     gr <- gr_starts
-    start(gr) <- round((start(gr) + start(gr_ends)) / 2)
-    end(gr) <- start(gr)
+    end(gr) <- round((start(gr) + start(gr_ends)) / 2)
+    start(gr) <- end(gr)
   }
   if (sorted) gr <- sort(gr, ignore.strand = TRUE)
   granges(gr)

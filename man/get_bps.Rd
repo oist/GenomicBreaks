@@ -34,6 +34,7 @@ get_bps(exampleInversion)
 get_bps(exampleInversion, direction = "left")
 get_bps(exampleInversion, stranded = TRUE)
 get_bps(exampleInversion, direction = "right", stranded = TRUE)
+get_bps(exampleInversion, direction = "mid")
 
 }
 \seealso{
