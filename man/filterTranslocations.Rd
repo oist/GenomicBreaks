@@ -4,12 +4,14 @@
 \alias{filterTranslocations}
 \title{Extract central blocks in translocations}
 \usage{
-filterTranslocations(gb, rename = TRUE)
+filterTranslocations(gb, rename = TRUE, remove = FALSE)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object processed with \code{\link{flagTranslocations}}.}
 
 \item{rename}{Replace range names by their numeric order before subsetting.}
+
+\item{remove}{Filter out instead of filtering in.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are not
@@ -22,6 +24,7 @@ Extract central blocks in translocations
 }
 \examples{
 filterTranslocations(flagTranslocations(exampleTranslocation))
+filterTranslocations(remove = TRUE, flagTranslocations(exampleTranslocation))
 
 }
 \seealso{

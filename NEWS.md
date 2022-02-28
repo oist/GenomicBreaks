@@ -17,6 +17,7 @@
    breakpoints at mid-distance between ranges.
  * New `bridgeRegions()` function that maps unaligned regions of the _target_ to
    the _query_ genome when they are flanked by colinear regions.
+ * `filterTranslocations()` gains a `remove` flag.
 
 ## Backwards-incompatible changes
 

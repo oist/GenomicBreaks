@@ -102,6 +102,8 @@ showTranslocations <- function(gb, rename = TRUE) {
 #'
 #' @param rename Replace range names by their numeric order before subsetting.
 #'
+#' @param remove Filter out instead of filtering in.
+#'
 #' @family Translocation functions
 #'
 #' @returns Returns the `GBreaks` object in which all ranges that are not
@@ -111,13 +113,16 @@ showTranslocations <- function(gb, rename = TRUE) {
 #'
 #' @examples
 #' filterTranslocations(flagTranslocations(exampleTranslocation))
+#' filterTranslocations(remove = TRUE, flagTranslocations(exampleTranslocation))
 #'
 #' @export
 
-filterTranslocations <- function(gb, rename = TRUE) {
+filterTranslocations <- function(gb, rename = TRUE, remove = FALSE) {
   if (is.null(gb$tra)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
   flagPos <- which(gb$tra) + 1
+  if (isTRUE(remove))
+    flagPos <- -(flagPos)
   gb[flagPos]
 }
