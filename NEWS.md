@@ -18,6 +18,8 @@
  * New `bridgeRegions()` function that maps unaligned regions of the _target_ to
    the _query_ genome when they are flanked by colinear regions.
  * `filterTranslocations()` gains a `remove` flag.
+ * `swap` gains a `sort` flag, so that in interactive sessions,
+   `gb |> swap() |> sort(i=T)` can be replaced by the shorter `gb |> swap(s = T)`.
 
 ## Backwards-incompatible changes
 

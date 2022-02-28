@@ -4,10 +4,12 @@
 \alias{swap}
 \title{Swap target and query genomes}
 \usage{
-swap(gb)
+swap(gb, sort = FALSE)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} object}
+\item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{sort}{Sort the returned object, ignoring strand.}
 }
 \value{
 A new \code{GBreaks} object representing the input's \emph{query} ranges,
@@ -16,10 +18,13 @@ is unchanged.
 }
 \description{
 Produce a new object in which the information about the \emph{target} and
-\emph{query} genomes have been inverted.
+\emph{query} genomes have been inverted.  As a large number of \emph{GenomicBreaks}
+functions require \code{GBreaks} objects that were sorted with strand information
+ignored, a \code{sort} option is provided to do that.
 }
 \examples{
-swap(exampleColinear3)
+swap(exampleDeletion)
+swap(exampleDeletion, sort = TRUE)
 
 }
 \seealso{
