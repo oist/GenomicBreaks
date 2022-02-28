@@ -119,6 +119,5 @@ filterTranslocations <- function(gb, rename = TRUE) {
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
   flagPos <- which(gb$tra) + 1
-  flagContext <- c(flagPos) |> unique() |> sort()
-  gb[flagContext]
+  gb[flagPos]
 }
