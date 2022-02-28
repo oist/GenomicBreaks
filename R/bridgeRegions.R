@@ -44,8 +44,8 @@ bridgeRegions <- function(gb) {
     # Check strand
     onMinus <- all(strand(gb) == "-")
     # Need to subtract 1 temporarly because some ranges are adjacent (no gap).
-    GBreaks(target = cleanGaps(gb      - 1) -1,
-            query  = cleanGaps(gb$query -1) -1 |> sort(decreasing = onMinus))
+    GBreaks(target =                            cleanGaps(gb      - 1) -1 ,
+            query  = sort(decreasing = onMinus, cleanGaps(gb$query -1) -1))
   }) |> unlist()
   # Remove names and return
   names(br) <- NULL
