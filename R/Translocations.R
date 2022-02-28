@@ -1,7 +1,7 @@
 #' Flag translocations
 #'
 #' Flag ranges that start a triplet that would be colinear if the central pair
-#' were colinear, and that are an inversion.
+#' were colinear, and that are not an inversion.
 #'
 #' Here is a trivial example of a translocation
 #'

@@ -16,7 +16,7 @@ Returns the \code{GBreaks} object with an extra \code{tra} metadata column.
 }
 \description{
 Flag ranges that start a triplet that would be colinear if the central pair
-were colinear, and that are an inversion.
+were colinear, and that are not an inversion.
 }
 \details{
 Here is a trivial example of a translocation\preformatted{┌──────────────┬──────────────┬──────────────┐
