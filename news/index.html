@@ -73,7 +73,9 @@
 <li>New “mid” option to the <code>direction</code> argument of <code><a href="../reference/get_bps.html">get_bps()</a></code>, to output breakpoints at mid-distance between ranges.</li>
 <li>New <code><a href="../reference/bridgeRegions.html">bridgeRegions()</a></code> function that maps unaligned regions of the <em>target</em> to the <em>query</em> genome when they are flanked by colinear regions.</li>
 <li>
-<code><a href="../reference/filterTranslocations.html">filterTranslocations()</a></code> gains a <code>remove</code> flag.</li>
+<code><a href="../reference/filterTranslocations.html">filterTranslocations()</a></code> gains a <code>remove</code> flag and <code>flagTranslocations</code> gains a <code>both</code> flag.</li>
+<li>
+<code>swap</code> gains a <code>sort</code> flag, so that in interactive sessions, <code>gb |&gt; swap() |&gt; sort(i=T)</code> can be replaced by the shorter <code>gb |&gt; swap(s = T)</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="backwards-incompatible-changes-0-13-0">Backwards-incompatible changes<a class="anchor" aria-label="anchor" href="#backwards-incompatible-changes-0-13-0"></a></h3>
