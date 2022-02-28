@@ -66,7 +66,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filterTranslocations</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filterTranslocations</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -75,6 +75,8 @@
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object processed with <code><a href="flagTranslocations.html">flagTranslocations</a></code>.</p></dd>
 <dt>rename</dt>
 <dd><p>Replace range names by their numeric order before subsetting.</p></dd>
+<dt>remove</dt>
+<dd><p>Filter out instead of filtering in.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -97,6 +99,14 @@ of its ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2     chrA   201-300      + | chrC:201-300 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span class="fu">filterTranslocations</span><span class="op">(</span>remove <span class="op">=</span> <span class="cn">TRUE</span>, <span class="fu"><a href="flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     seqnames    ranges strand |        query   tra</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1     chrA   100-200      + | chrB:100-200  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"></span>
