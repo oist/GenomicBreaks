@@ -4,12 +4,14 @@
 \alias{flagTranslocations}
 \title{Flag translocations}
 \usage{
-flagTranslocations(gb, tol = Inf)
+flagTranslocations(gb, tol = Inf, both = TRUE)
 }
 \arguments{
 \item{gb}{A \code{GBreaks()} object.}
 
 \item{tol}{Tolerance window for the distance between two ranges.}
+
+\item{both}{Flag both the \emph{target} and \emph{query} ranges.}
 }
 \value{
 Returns the \code{GBreaks} object with an extra \code{tra} metadata column.
@@ -19,7 +21,11 @@ Flag ranges that start a triplet that would be colinear if the central pair
 were colinear, and that are not an inversion.
 }
 \details{
-Here is a trivial example of a translocation\preformatted{┌──────────────┬──────────────┬──────────────┐
+The result of the flagging differs if the \emph{target} and \emph{query} ranges are
+swapped.  Therefore, by default this function will search for translocations
+on both cases, and flag both ranges.
+
+Here is a trivial example of a translocation:\preformatted{┌──────────────┬──────────────┬──────────────┐
 │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
 └──────────────┴──────────────┴──────────────┘
        +               +             +         (Alignment direction)
@@ -34,7 +40,8 @@ flagTranslocations(exampleTranslocation2)
 plotApairOfChrs(exampleTranslocation)
 flagTranslocations(exampleDeletion)
 flagTranslocations(exampleInsertion)
-flagTranslocations(exampleInsertion |> swap() |> sort(ignore.strand = TRUE))
+flagTranslocations(exampleInsertion  |> swap(sort = TRUE))
+flagTranslocations(exampleInsertion) |> swap(sort = TRUE)
 flagTranslocations(sort(reverse(exampleDeletion)))
 flagTranslocations(exampleInversion)
 flagTranslocations(exampleColinear3)

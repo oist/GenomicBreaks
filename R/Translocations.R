@@ -3,7 +3,11 @@
 #' Flag ranges that start a triplet that would be colinear if the central pair
 #' were colinear, and that are not an inversion.
 #'
-#' Here is a trivial example of a translocation
+#' The result of the flagging differs if the _target_ and _query_ ranges are
+#' swapped.  Therefore, by default this function will search for translocations
+#' on both cases, and flag both ranges.
+#'
+#' Here is a trivial example of a translocation:
 #'
 #' ```
 #' ┌──────────────┬──────────────┬──────────────┐
@@ -17,6 +21,7 @@
 #'
 #' @param gb A `GBreaks()` object.
 #' @param tol Tolerance window for the distance between two ranges.
+#' @param both Flag both the _target_ and _query_ ranges.
 #'
 #' @return Returns the `GBreaks` object with an extra `tra` metadata column.
 #'
@@ -30,7 +35,8 @@
 #' plotApairOfChrs(exampleTranslocation)
 #' flagTranslocations(exampleDeletion)
 #' flagTranslocations(exampleInsertion)
-#' flagTranslocations(exampleInsertion |> swap() |> sort(ignore.strand = TRUE))
+#' flagTranslocations(exampleInsertion  |> swap(sort = TRUE))
+#' flagTranslocations(exampleInsertion) |> swap(sort = TRUE)
 #' flagTranslocations(sort(reverse(exampleDeletion)))
 #' flagTranslocations(exampleInversion)
 #' flagTranslocations(exampleColinear3)
@@ -39,7 +45,7 @@
 #' @importFrom GenomicRanges precede
 #' @export
 
-flagTranslocations <- function (gb, tol = Inf) {
+flagTranslocations <- function (gb, tol = Inf, both = TRUE) {
   # Enforce sorting, to guarantee colinearity on the _target_ranges
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
@@ -66,6 +72,15 @@ flagTranslocations <- function (gb, tol = Inf) {
   if(tol < Inf) stop("Not implemented yet")
 
   gb.bak$tra[is.na(gb.bak$tra)] <- FALSE
+
+  if (isTRUE(both)) {
+    gb.swapped <- swap(gb.bak, sort = TRUE)
+    gb.swapped <- flagTranslocations(gb.swapped, tol = tol, both = FALSE)
+    gb.swapped$query$tra <- gb.swapped$tra # Save the flag on the _query_ because swap will drop the _target_ one.
+    gb.reswapped <- swap(gb.swapped, sort = TRUE)
+    gb.bak$query$tra <- gb.reswapped$tra
+  }
+
   gb.bak
 }
 
