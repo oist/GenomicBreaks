@@ -32,24 +32,22 @@ get_bps <- function(gr, direction = c("both", "left", "right", "mid"), stranded 
   if (direction == "mid") {
     if(isTRUE(stranded)) stop(dQuote('direction == "mid"'), " is not compatible with ", dQuote("stranded == TRUE"), ".")
     gr <- cleanGaps(gr)
-  }
-  gr_starts <- flank(gr, -1, start = TRUE,  ignore.strand = TRUE) # start bps
-  gr_ends   <- flank(gr, -1, start = FALSE, ignore.strand = TRUE) # end bps
-  if (stranded) {
-    strand(gr_starts) <- "+"
-    strand(gr_ends)   <- "-"
-  } else {
-    strand(gr_starts) <- "*"
-    strand(gr_ends)   <- "*"
-  }
-  if (direction == "both") {
-    gr <- c(gr_starts, gr_ends) # concatenate start and end bps
-  } else if (direction == "left") {
-    gr <- gr_starts
-  } else if (direction == "right") {
-    gr <- gr_ends
-  } else if (direction == "mid") {
     gr <- resize(gr, 1, fix = "center")
+  } else {
+    gr_starts <- flank(gr, -1, start = TRUE,  ignore.strand = TRUE) # start bps
+    gr_ends   <- flank(gr, -1, start = FALSE, ignore.strand = TRUE) # end bps
+    if (stranded) {
+      strand(gr_starts) <- "+"
+      strand(gr_ends)   <- "-"
+    } else {
+      strand(gr_starts) <- "*"
+      strand(gr_ends)   <- "*"
+    }
+    gr <- switch(direction,
+      left  =   gr_starts,
+      both  = c(gr_starts, gr_ends),
+      right =              gr_ends
+    )
   }
   if (sorted) gr <- sort(gr, ignore.strand = TRUE)
   granges(gr)
