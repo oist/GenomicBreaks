@@ -12,6 +12,8 @@
 #' @param type The type of the plot (`point`, `line` or `none`)
 #' @param size The size of the plotted dots or segments.
 #' @param diag Diagonalise the plot by reordering _query_ sequence levels.
+#' @param col Colour of the plotted dots or lines by `seqnames`, `strand` or
+#'        `score`.
 #'
 #' @return Returns a `ggplot2` object that can be further modified using the
 #' `+` operator.  Use `type = 'none'` to receive an object without _geom_
@@ -31,8 +33,10 @@
 makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              sp1ChrArms = NULL, sp2ChrArms = NULL,
                              type = c("line", "point", "none"), size = 1,
-                             diag = TRUE) {
+                             diag = TRUE, col = c("seqnames", "strand", "score")) {
 
+  col  <- match.arg(col)
+  if (col == "score") stop("`col = score` is not implemented yet, sorry !")
   type <- match.arg(type)
 
   if (sp1Name == "target") {
@@ -81,10 +85,10 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
     aes(x = start, y = query.start, xend = end, yend = query.end)
 
   if (type == "point")
-    p <- p + geom_point(aes(colour = seqnames), shape = 20, size = size)
+    p <- p + geom_point(aes_string(colour = col), shape = 20, size = size)
 
   if (type == "line")
-    p <- p + geom_segment(aes(colour = seqnames),
+    p <- p + geom_segment(aes_string(colour = col),
                           lineend = "round",
                           size    = size)
 

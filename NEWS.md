@@ -1,3 +1,10 @@
+# GenomicBreaks 0.13.1
+
+## New functionalities
+
+ * The `makeOxfordPlots()` function gains a `col` argument for choosing to color
+   by strand.
+
 # GenomicBreaks 0.13.0
 
 ## Important bug fixes

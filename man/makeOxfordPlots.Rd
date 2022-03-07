@@ -12,7 +12,8 @@ makeOxfordPlots(
   sp2ChrArms = NULL,
   type = c("line", "point", "none"),
   size = 1,
-  diag = TRUE
+  diag = TRUE,
+  col = c("seqnames", "strand", "score")
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ makeOxfordPlots(
 \item{size}{The size of the plotted dots or segments.}
 
 \item{diag}{Diagonalise the plot by reordering \emph{query} sequence levels.}
+
+\item{col}{Colour of the plotted dots or lines by \code{seqnames}, \code{strand} or
+\code{score}.}
 }
 \value{
 Returns a \code{ggplot2} object that can be further modified using the
