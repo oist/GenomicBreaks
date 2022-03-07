@@ -19,7 +19,7 @@ concatenating them."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GenomicBreaks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.13.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.13.1</span>
       </span>
     </div>
 
@@ -78,7 +78,8 @@ concatenating them.</p>
   sp2ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span>, <span class="st">"none"</span><span class="op">)</span>,
   size <span class="op">=</span> <span class="fl">1</span>,
-  diag <span class="op">=</span> <span class="cn">TRUE</span>
+  diag <span class="op">=</span> <span class="cn">TRUE</span>,
+  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seqnames"</span>, <span class="st">"strand"</span>, <span class="st">"score"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -100,6 +101,9 @@ concatenating them.</p>
 <dd><p>The size of the plotted dots or segments.</p></dd>
 <dt>diag</dt>
 <dd><p>Diagonalise the plot by reordering <em>query</em> sequence levels.</p></dd>
+<dt>col</dt>
+<dd><p>Colour of the plotted dots or lines by <code>seqnames</code>, <code>strand</code> or
+<code>score</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
