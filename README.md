@@ -4,9 +4,18 @@ GenomicBreaks
 Purpose
 -------
 
-We are developing the `GenomicBreaks` package to parse and process the
-alignment files produced by the our
-[pariwise genome alignment pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison).
+_GenomicBreaks_ is a `R` package using _[Bioconductor](https://bioconductor.org/)_
+libraries to analyse pairwise alignments of whole genomes in which the gene
+order has been scrambled by evolution, like in the picture below that represents
+the comparison of homologous chromosomes in two distantly related molds,
+_N. crassa_ (chrIII) and _P. comata_ (chr7).
+
+<center><img src="man/figures/plotApairOfChrs_Neu-2.png" alt="Comparison between Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)" width = "40%"/></center>
+
+This package is especially designed to parse and process the alignment files
+produced by the our [pairwise genome alignment
+pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison), but should
+be capable to import output of other pipelines as well.
 
 Installation
 ------------
@@ -65,4 +74,4 @@ GBreaks object with 11 ranges and 2 metadata columns:
   seqinfo: 19 sequences from OKI2018_I69 genome
 ```
 
-See <https://oist.github.io/GenomicBreaks> for further details.
+See “_Get started_” on <https://oist.github.io/GenomicBreaks> for further details.
