@@ -47,7 +47,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,7 +87,11 @@
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
-<p>We are developing the <code>GenomicBreaks</code> package to parse and process the alignment files produced by the our <a href="https://github.com/oist/plessy_pairwiseGenomeComparison" class="external-link">pariwise genome alignment pipeline</a>.</p>
+<p><em>GenomicBreaks</em> is a <code>R</code> package using <em><a href="https://bioconductor.org/" class="external-link">Bioconductor</a></em> libraries to analyse pairwise alignments of whole genomes in which the gene order has been scrambled by evolution, like in the picture below that represents the comparison of homologous chromosomes in two distantly related molds, <em>N. crassa</em> (chrIII) and <em>P. comata</em> (chr7).</p>
+<center>
+<img src="reference/figures/plotApairOfChrs_Neu-2.png" alt="Comparison between Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)" width="40%">
+</center>
+<p>This package is especially designed to parse and process the alignment files produced by the our <a href="https://github.com/oist/plessy_pairwiseGenomeComparison" class="external-link">pairwise genome alignment pipeline</a>, but should be capable to import output of other pipelines as well.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -137,7 +141,7 @@ Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::rep
    [9]     chr1 11300902-11301564      - |   Chr1:9597979-9599493       663
   -------
   seqinfo: 19 sequences from OKI2018_I69 genome</code></pre>
-<p>See <a href="https://oist.github.io/GenomicBreaks" class="uri">https://oist.github.io/GenomicBreaks</a> for further details.</p>
+<p>See “<em>Get started</em>” on <a href="https://oist.github.io/GenomicBreaks" class="uri">https://oist.github.io/GenomicBreaks</a> for further details.</p>
 </div>
 </div>
   </div>
