@@ -36,7 +36,6 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              diag = TRUE, col = c("seqnames", "strand", "score")) {
 
   col  <- match.arg(col)
-  if (col == "score") stop("`col = score` is not implemented yet, sorry !")
   type <- match.arg(type)
 
   if (sp1Name == "target") {
@@ -81,7 +80,8 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                               strand = strand(targetMerged),
                          query.start = ifelse(strand (gb) == "+", start(queryMerged),   end(queryMerged)),
                            query.end = ifelse(strand (gb) == "+",   end(queryMerged), start(queryMerged)),
-                            seqnames = seqnames(gb))) +
+                            seqnames = seqnames(gb),
+                               score = score(gb))) +
     aes(x = start, y = query.start, xend = end, yend = query.end)
 
   if (type == "point")

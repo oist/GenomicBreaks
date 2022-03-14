@@ -3,7 +3,7 @@
 ## New functionalities
 
  * The `makeOxfordPlots()` function gains a `col` argument for choosing to color
-   by strand.
+   by strand or by score.
 
 # GenomicBreaks 0.13.0
 
