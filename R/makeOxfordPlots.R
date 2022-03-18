@@ -74,6 +74,8 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
 
   ## This is needed to silence "no visible binding for global variable" NOTEs
   start <- query.start <- end <- query.end <- seqnames <- NULL
+  ## This is needed to build the data frame below regardless a score exists.
+  if (is.null(score(gb))) score(gb) <- NA
   ## plot main data
   p <- ggplot(data.frame(      start = start(targetMerged),
                                  end =   end(targetMerged),
