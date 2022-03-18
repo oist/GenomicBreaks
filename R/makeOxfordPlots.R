@@ -70,6 +70,7 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   queryMerged  <- mergeSeqLevelsIfMany(gb$query, seqlevelsInUse(gb$query), sp2Name)
 
   breaks <- list()
+  ticks  <- list()
   labels <- list()
 
   ## This is needed to silence "no visible binding for global variable" NOTEs
@@ -103,21 +104,38 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                 y = seqlevelsInUse(queryMerged))
 
   ## add breaks
+  calcBreakPosition <- function(gr) {
+    # list of seqlengths, starting with zero
+    lengths <- c(0,seqlengths(gb)[seqlevelsInUse(gb)])
+    # Return the position of the boundary of each seqlengths
+    # in the context of the merged object
+    lengths |> unname()|> cumsum()
+  }
+  calcLabelPosition <- function(breakPos) {
+    # Return the position of the midpoint of each seqlengths
+    # in the context of the merged object
+    breakPos |> zipWithNext() |> as.data.frame() |>
+      rowMeans() |> head(-1)
+  }
+
   if (is.null(sp1ChrArms)) {
-    breaks$sp1 <- unname(c(0, cumsum(head(seqlengths(gb)[seqlevelsInUse(gb)], -1))))
+    breaks$sp1 <- calcBreakPosition(gb)
+    ticks$sp1  <- calcLabelPosition(breaks$sp1)
     labels$sp1 <- seqlevelsInUse(gb)
   } else {
     breaks$sp1 <- end(sp1ChrArms)
     labels$sp1 <- as.character(round(breaks$sp1 / 10**6, 1))
   }
   p <- p +
-    scale_x_continuous(expand = c(0, 0), breaks = breaks$sp1,
-                       minor_breaks = NULL, labels = labels$sp1)
+    scale_x_continuous(expand = c(0, 0), minor_breaks = NULL,
+                       breaks = breaks$sp1, labels = NULL, position = 'top',
+                       sec.axis = dup_axis(breaks=ticks$sp1, labels=labels$sp1))
 
   if (is.null(sp2ChrArms)) {
     if (all(is.na(seqlengths(gb$query))))
       seqlengths(gb$query) <- tapply(end(gb$query), seqnames(gb$query), max) |> as.vector()
-    breaks$sp2 <- unname(c(0, cumsum(head(seqlengths(gb$query)[seqlevelsInUse(gb$query)], -1))))
+    breaks$sp2 <- calcBreakPosition(gb$query)
+    ticks$sp2  <- calcLabelPosition(breaks$sp2)
     labels$sp2 <- seqlevelsInUse(gb$query)
   }
   else {
@@ -125,9 +143,13 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
     labels$sp2 <- as.character(round(breaks$sp2 / 10**6, 1))
   }
   p <- p +
-    scale_y_continuous(expand = c(0, 0), breaks = breaks$sp2,
-                       minor_breaks = NULL, labels = labels$sp2) +
+    scale_y_continuous(expand = c(0, 0), minor_breaks = NULL,
+                       breaks = breaks$sp2, labels = NULL, position = 'right',
+                       sec.axis = dup_axis(breaks=ticks$sp2, labels=labels$sp2)) +
     coord_fixed()
+
+  if (col == 'seqnames')
+    p <- p + theme(legend.position="none")
 
   p
 }
