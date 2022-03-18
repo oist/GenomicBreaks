@@ -54,6 +54,9 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   seqlevels(gb)       <- seqlevelsInUse(gb)
   seqlevels(gb$query) <- seqlevelsInUse(gb$query)
 
+  # Ensure we have sequence lengths
+  gb <- forceSeqLengths(gb)
+
   # Merge seq levels if needed.
   mergeSeqLevelsIfMany <- function(gr, seqs, name) {
     if (length(seqlevelsInUse(gr)) == 1) return(gr)
@@ -132,8 +135,6 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                        sec.axis = dup_axis(breaks=ticks$sp1, labels=labels$sp1))
 
   if (is.null(sp2ChrArms)) {
-    if (all(is.na(seqlengths(gb$query))))
-      seqlengths(gb$query) <- tapply(end(gb$query), seqnames(gb$query), max) |> as.vector()
     breaks$sp2 <- calcBreakPosition(gb$query)
     ticks$sp2  <- calcLabelPosition(breaks$sp2)
     labels$sp2 <- seqlevelsInUse(gb$query)
