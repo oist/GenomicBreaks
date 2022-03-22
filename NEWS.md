@@ -4,6 +4,10 @@
 
  * The `makeOxfordPlots()` function gains a `col` argument for choosing to color
    by strand or by score.
+   
+## Bug fixes
+
+ * In `makeOxfordPlots()`, the sequence names are now centered on their region.
 
 # GenomicBreaks 0.13.0
 
