@@ -109,7 +109,7 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   ## add breaks
   calcBreakPosition <- function(gr) {
     # list of seqlengths, starting with zero
-    lengths <- c(0,seqlengths(gb)[seqlevelsInUse(gb)])
+    lengths <- c(0,seqlengths(gr)[seqlevelsInUse(gr)])
     # Return the position of the boundary of each seqlengths
     # in the context of the merged object
     lengths |> unname()|> cumsum()
