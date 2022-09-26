@@ -70,24 +70,31 @@ on a <em>target</em> genome, finds the longest match of each sequence level
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">longestMatchesInTarget</span><span class="op">(</span><span class="va">gb</span>, min.width <span class="op">=</span> <span class="fl">10000</span>, min.matches <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">longestMatchesInTarget</span><span class="op">(</span><span class="va">gb</span>, min.width <span class="op">=</span> <span class="fl">10000</span>, min.matches <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code>GBreaks</code> object</p></dd>
+
+
 <dt>min.width</dt>
 <dd><p>Minimum width of a match (on the query genome) for being
 considered.</p></dd>
+
+
 <dt>min.matches</dt>
 <dd><p>Discard query sequences that have fewer longest matches than
 <code>min.matches</code> on the target.  Default is 2, so that only results relevant
 to chaining genomes are kept.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>GRangesList</code> object containing one <code><a href="GBreaks-class.html">GBreaks</a></code> object per
+    
+
+<p>Returns a <code>GRangesList</code> object containing one <code><a href="GBreaks-class.html">GBreaks</a></code> object per
 sequence on the query genome.</p>
     </div>
     <div id="details">
@@ -113,7 +120,7 @@ piped to <code>strandNames(query = TRUE)</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">exampleColinear3</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleColinear3</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
@@ -122,7 +129,7 @@ piped to <code>strandNames(query = TRUE)</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="va">exampleColinear3</span> |&gt; <span class="fu">longestMatchesInTarget</span><span class="op">(</span>min.width <span class="op">=</span> <span class="fl">0</span>, min.matches <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">exampleColinear3</span> <span class="op">|&gt;</span> <span class="fu">longestMatchesInTarget</span><span class="op">(</span>min.width <span class="op">=</span> <span class="fl">0</span>, min.matches <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRangesList object of length 1:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $chrB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 1 metadata column:</span>
@@ -132,7 +139,7 @@ piped to <code>strandNames(query = TRUE)</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +154,7 @@ piped to <code>strandNames(query = TRUE)</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

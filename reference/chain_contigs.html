@@ -66,22 +66,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">chain_contigs</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, drop.within <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chain_contigs</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, drop.within <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p><code><a href="GBreaks-class.html">GBreaks</a></code> object of the pairwise alignment.</p></dd>
+
+
 <dt>tol</dt>
 <dd><p>Unaligned region of width lesser than or equal to <code>tol</code> in both
 the reference and query case will be bridged in coalescing.</p></dd>
+
+
 <dt>drop.within</dt>
 <dd><p>Discard the chains that are included in other chains.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>TBW</p>
+    
+
+<p>TBW</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -101,7 +108,7 @@ the reference and query case will be bridged in coalescing.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">chain_contigs</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">chain_contigs</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
@@ -109,7 +116,7 @@ the reference and query case will be bridged in coalescing.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291        82</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -124,7 +131,7 @@ the reference and query case will be bridged in coalescing.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -85,7 +85,7 @@
                         <h4 data-toc-skip class="author">Charlotte West</h4>
                         <h4 data-toc-skip class="author">Charles Plessy</h4>
             
-            <h4 data-toc-skip class="date">18 April, 2022</h4>
+            <h4 data-toc-skip class="date">26 September, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/HEAD/vignettes/GenomicBreaks.Rmd" class="external-link"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="hidden name"><code>GenomicBreaks.Rmd</code></div>
@@ -95,8 +95,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html" class="external-link">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html" class="external-link">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -106,16 +106,16 @@
 </h3>
 <p>Core packages that provide functions we use a lot.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://oist.github.io/GenomicBreaks">'GenomicBreaks'</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/BSgenome" class="external-link">'BSgenome'</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/GenomicFeatures" class="external-link">'GenomicFeatures'</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/GenomicRanges" class="external-link">'GenomicRanges'</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">'ggplot2'</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://oist.github.io/GenomicBreaks">'GenomicBreaks'</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/BSgenome" class="external-link">'BSgenome'</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/GenomicFeatures" class="external-link">'GenomicFeatures'</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/GenomicRanges" class="external-link">'GenomicRanges'</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">'ggplot2'</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>We will use yeast data as an example, so let’s load the <code>Scerevisiae</code> BSgenome package.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Scerevisiae.UCSC.sacCer3"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Scerevisiae.UCSC.sacCer3"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
@@ -127,50 +127,50 @@
 </h4>
 <p>Alignment of the <em>Saccharomyces paradoxus</em> genome version <code>ASM207905v1</code> to the <code>SacCer3</code> reference genome of <em>S. cerevisiae</em>, produced with the Nextflow <a href="https://github.com/oist/plessy_pairwiseGenomeComparison" class="external-link">pairwise alignment pipeline</a> and converted to <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md" class="external-link">GFF3</a> format with the <code>maf-convert gff -J 1000000</code> command of the <a href="https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst" class="external-link">LAST</a> package.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">exdata_Sac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/SacCer3__SacPar.gff3.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span>
-<span class="fu">rtracklayer</span><span class="fu">::</span><span class="fu">import</span><span class="op">(</span><span class="va">exdata_Sac</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 590 ranges and 8 metadata columns:</span>
-<span class="co">##         seqnames          ranges strand |      source       type     score</span>
-<span class="co">##            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;factor&gt;   &lt;factor&gt; &lt;numeric&gt;</span>
-<span class="co">##     [1]     chrM     58008-76168      + | maf-convert match             NA</span>
-<span class="co">##     [2]     chrM     58008-60967      + | maf-convert match_part     12243</span>
-<span class="co">##     [3]     chrM     61783-62447      + | maf-convert match_part      2557</span>
-<span class="co">##     [4]     chrM     63688-64744      + | maf-convert match_part      1520</span>
-<span class="co">##     [5]     chrM     66006-66345      + | maf-convert match_part      1159</span>
-<span class="co">##     ...      ...             ...    ... .         ...        ...       ...</span>
-<span class="co">##   [586]    chrIX   300905-301573      - | maf-convert match_part      1576</span>
-<span class="co">##   [587]    chrXV 1073474-1074872      - | maf-convert match             NA</span>
-<span class="co">##   [588]    chrXV 1073474-1074872      - | maf-convert match_part      3761</span>
-<span class="co">##   [589]   chrVII 1081381-1082672      - | maf-convert match             NA</span>
-<span class="co">##   [590]   chrVII 1081381-1082672      - | maf-convert match_part      4057</span>
-<span class="co">##             phase            ID                   Name                 Target</span>
-<span class="co">##         &lt;integer&gt;   &lt;character&gt;            &lt;character&gt;            &lt;character&gt;</span>
-<span class="co">##     [1]      &lt;NA&gt; NC_018044.1.1    NC_018044.1:1-16261                   &lt;NA&gt;</span>
-<span class="co">##     [2]      &lt;NA&gt;          &lt;NA&gt;     NC_018044.1:1-2820     NC_018044.1 1 2820</span>
-<span class="co">##     [3]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:2834-3463  NC_018044.1 2834 3463</span>
-<span class="co">##     [4]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:4786-5811  NC_018044.1 4786 5811</span>
-<span class="co">##     [5]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:6743-7110  NC_018044.1 6743 7110</span>
-<span class="co">##     ...       ...           ...                    ...                    ...</span>
-<span class="co">##   [586]      &lt;NA&gt;          &lt;NA&gt; NC_047502.1:665227-6.. NC_047502.1 665227 6..</span>
-<span class="co">##   [587]      &lt;NA&gt; NC_047502.1.8  NC_047502.1:7842-9171                   &lt;NA&gt;</span>
-<span class="co">##   [588]      &lt;NA&gt;          &lt;NA&gt;  NC_047502.1:7842-9171  NC_047502.1 7842 9171</span>
-<span class="co">##   [589]      &lt;NA&gt; NC_047502.1.9  NC_047502.1:2001-3295                   &lt;NA&gt;</span>
-<span class="co">##   [590]      &lt;NA&gt;          &lt;NA&gt;  NC_047502.1:2001-3295  NC_047502.1 2001 3295</span>
-<span class="co">##                  Parent</span>
-<span class="co">##         &lt;CharacterList&gt;</span>
-<span class="co">##     [1]                </span>
-<span class="co">##     [2]   NC_018044.1.1</span>
-<span class="co">##     [3]   NC_018044.1.1</span>
-<span class="co">##     [4]   NC_018044.1.1</span>
-<span class="co">##     [5]   NC_018044.1.1</span>
-<span class="co">##     ...             ...</span>
-<span class="co">##   [586]   NC_047502.1.7</span>
-<span class="co">##   [587]                </span>
-<span class="co">##   [588]   NC_047502.1.8</span>
-<span class="co">##   [589]                </span>
-<span class="co">##   [590]   NC_047502.1.9</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></code></pre>
+<code class="sourceCode R"><span><span class="va">exdata_Sac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/SacCer3__SacPar.gff3.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span></span>
+<span><span class="fu">rtracklayer</span><span class="fu">::</span><span class="fu">import</span><span class="op">(</span><span class="va">exdata_Sac</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 590 ranges and 8 metadata columns:</span></span>
+<span><span class="co">##         seqnames          ranges strand |      source       type     score</span></span>
+<span><span class="co">##            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;factor&gt;   &lt;factor&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">##     [1]     chrM     58008-76168      + | maf-convert match             NA</span></span>
+<span><span class="co">##     [2]     chrM     58008-60967      + | maf-convert match_part     12243</span></span>
+<span><span class="co">##     [3]     chrM     61783-62447      + | maf-convert match_part      2557</span></span>
+<span><span class="co">##     [4]     chrM     63688-64744      + | maf-convert match_part      1520</span></span>
+<span><span class="co">##     [5]     chrM     66006-66345      + | maf-convert match_part      1159</span></span>
+<span><span class="co">##     ...      ...             ...    ... .         ...        ...       ...</span></span>
+<span><span class="co">##   [586]    chrIX   300905-301573      - | maf-convert match_part      1576</span></span>
+<span><span class="co">##   [587]    chrXV 1073474-1074872      - | maf-convert match             NA</span></span>
+<span><span class="co">##   [588]    chrXV 1073474-1074872      - | maf-convert match_part      3761</span></span>
+<span><span class="co">##   [589]   chrVII 1081381-1082672      - | maf-convert match             NA</span></span>
+<span><span class="co">##   [590]   chrVII 1081381-1082672      - | maf-convert match_part      4057</span></span>
+<span><span class="co">##             phase            ID                   Name                 Target</span></span>
+<span><span class="co">##         &lt;integer&gt;   &lt;character&gt;            &lt;character&gt;            &lt;character&gt;</span></span>
+<span><span class="co">##     [1]      &lt;NA&gt; NC_018044.1.1    NC_018044.1:1-16261                   &lt;NA&gt;</span></span>
+<span><span class="co">##     [2]      &lt;NA&gt;          &lt;NA&gt;     NC_018044.1:1-2820     NC_018044.1 1 2820</span></span>
+<span><span class="co">##     [3]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:2834-3463  NC_018044.1 2834 3463</span></span>
+<span><span class="co">##     [4]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:4786-5811  NC_018044.1 4786 5811</span></span>
+<span><span class="co">##     [5]      &lt;NA&gt;          &lt;NA&gt;  NC_018044.1:6743-7110  NC_018044.1 6743 7110</span></span>
+<span><span class="co">##     ...       ...           ...                    ...                    ...</span></span>
+<span><span class="co">##   [586]      &lt;NA&gt;          &lt;NA&gt; NC_047502.1:665227-6.. NC_047502.1 665227 6..</span></span>
+<span><span class="co">##   [587]      &lt;NA&gt; NC_047502.1.8  NC_047502.1:7842-9171                   &lt;NA&gt;</span></span>
+<span><span class="co">##   [588]      &lt;NA&gt;          &lt;NA&gt;  NC_047502.1:7842-9171  NC_047502.1 7842 9171</span></span>
+<span><span class="co">##   [589]      &lt;NA&gt; NC_047502.1.9  NC_047502.1:2001-3295                   &lt;NA&gt;</span></span>
+<span><span class="co">##   [590]      &lt;NA&gt;          &lt;NA&gt;  NC_047502.1:2001-3295  NC_047502.1 2001 3295</span></span>
+<span><span class="co">##                  Parent</span></span>
+<span><span class="co">##         &lt;CharacterList&gt;</span></span>
+<span><span class="co">##     [1]                </span></span>
+<span><span class="co">##     [2]   NC_018044.1.1</span></span>
+<span><span class="co">##     [3]   NC_018044.1.1</span></span>
+<span><span class="co">##     [4]   NC_018044.1.1</span></span>
+<span><span class="co">##     [5]   NC_018044.1.1</span></span>
+<span><span class="co">##     ...             ...</span></span>
+<span><span class="co">##   [586]   NC_047502.1.7</span></span>
+<span><span class="co">##   [587]                </span></span>
+<span><span class="co">##   [588]   NC_047502.1.8</span></span>
+<span><span class="co">##   [589]                </span></span>
+<span><span class="co">##   [590]   NC_047502.1.9</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="neurospora-crassa-chromosome-iii-podospora-comata-chromosome-7">
@@ -178,7 +178,7 @@
 </h4>
 <p>Alignment of the <em>Neurospora crassa</em> genome version <code>NC12</code> downloaded from ENSEMBL 52, to the <em>Podospora comata</em> genome version <code>ASM1735489v1</code> downloaded from <code>GenBank</code>, produce with the same commands as above. The alignment was then filtered to reduce the size and complexity of the example data, by retaining only the matches between chromosome III and chromosome 7 (<code>CP071499</code>).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">exdata_Neu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/NeuCra__PodCom.III__7.gff3.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">exdata_Neu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/NeuCra__PodCom.III__7.gff3.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -187,111 +187,111 @@
 </h2>
 <p>Pairwise genome alignments are loaded in <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> objects that wrap the <code>GRanges</code> class. By convention, we write that the <em>query</em> genome (the one that was provided as a FASTA file) is aligned to the <em>target</em> genome (the one that was indexed by the aligner). The <em>target</em> genome (on the left) is the main part of the object, and the <em>query</em> genome information (right) is contained in the metadata columns (<code>mcols</code>) of the structure. Information on contig or scaffold length is optionaly loaded from <code>BSgenome</code> objects, from which <code>seqinfo</code> data is extracted and passed to the <code>GRanges</code>. By convention, strand information of the alignment is held by the <em>target</em> <code>GRanges</code>, and the <em>query</em> <code>GRanges</code> are strandless. The objects are sorted by <code>seqname</code> first.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_genomic_breaks.html">load_genomic_breaks</a></span><span class="op">(</span><span class="va">exdata_Sac</span>, <span class="va">Scerevisiae</span><span class="op">)</span>
-<span class="va">gb</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 505 ranges and 2 metadata columns:</span>
-<span class="co">##         seqnames      ranges strand |     score                   query</span>
-<span class="co">##            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt;</span>
-<span class="co">##     [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716</span>
-<span class="co">##     [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680</span>
-<span class="co">##     [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537</span>
-<span class="co">##     [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175</span>
-<span class="co">##     [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866</span>
-<span class="co">##     ...      ...         ...    ... .       ...                     ...</span>
-<span class="co">##   [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439</span>
-<span class="co">##   [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180</span>
-<span class="co">##   [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261</span>
-<span class="co">##   [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865</span>
-<span class="co">##   [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_genomic_breaks.html">load_genomic_breaks</a></span><span class="op">(</span><span class="va">exdata_Sac</span>, <span class="va">Scerevisiae</span><span class="op">)</span></span>
+<span><span class="va">gb</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 505 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##         seqnames      ranges strand |     score                   query</span></span>
+<span><span class="co">##            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt;</span></span>
+<span><span class="co">##     [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716</span></span>
+<span><span class="co">##     [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680</span></span>
+<span><span class="co">##     [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537</span></span>
+<span><span class="co">##     [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175</span></span>
+<span><span class="co">##     [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866</span></span>
+<span><span class="co">##     ...      ...         ...    ... .       ...                     ...</span></span>
+<span><span class="co">##   [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439</span></span>
+<span><span class="co">##   [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180</span></span>
+<span><span class="co">##   [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261</span></span>
+<span><span class="co">##   [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865</span></span>
+<span><span class="co">##   [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span><span class="op">$</span><span class="va">query</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 505 ranges and 0 metadata columns:</span>
-<span class="co">##            seqnames      ranges strand</span>
-<span class="co">##               &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##     [1] NC_047487.1  8723-12716      *</span>
-<span class="co">##     [2] NC_047487.1 13035-13680      *</span>
-<span class="co">##     [3] NC_047487.1 15380-16537      *</span>
-<span class="co">##     [4] NC_047487.1 17263-20175      *</span>
-<span class="co">##     [5] NC_047487.1 20203-20866      *</span>
-<span class="co">##     ...         ...         ...    ...</span>
-<span class="co">##   [501] NC_018044.1   7758-8439      *</span>
-<span class="co">##   [502] NC_018044.1   8783-9180      *</span>
-<span class="co">##   [503] NC_018044.1  9650-16261      *</span>
-<span class="co">##   [504] NC_018044.1 53206-55865      *</span>
-<span class="co">##   [505] NC_018044.1 57885-61592      *</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span><span class="op">$</span><span class="va">query</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 505 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##            seqnames      ranges strand</span></span>
+<span><span class="co">##               &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##     [1] NC_047487.1  8723-12716      *</span></span>
+<span><span class="co">##     [2] NC_047487.1 13035-13680      *</span></span>
+<span><span class="co">##     [3] NC_047487.1 15380-16537      *</span></span>
+<span><span class="co">##     [4] NC_047487.1 17263-20175      *</span></span>
+<span><span class="co">##     [5] NC_047487.1 20203-20866      *</span></span>
+<span><span class="co">##     ...         ...         ...    ...</span></span>
+<span><span class="co">##   [501] NC_018044.1   7758-8439      *</span></span>
+<span><span class="co">##   [502] NC_018044.1   8783-9180      *</span></span>
+<span><span class="co">##   [503] NC_018044.1  9650-16261      *</span></span>
+<span><span class="co">##   [504] NC_018044.1 53206-55865      *</span></span>
+<span><span class="co">##   [505] NC_018044.1 57885-61592      *</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># No BSgenome available for N. crassa and P. comata.</span>
-<span class="co"># This data does not contain match_part entries, so set the type parameter.</span>
-<span class="va">gb_Neu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_genomic_breaks.html">load_genomic_breaks</a></span><span class="op">(</span><span class="va">exdata_Neu</span>, type <span class="op">=</span> <span class="st">"match"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># No BSgenome available for N. crassa and P. comata.</span></span>
+<span><span class="co"># This data does not contain match_part entries, so set the type parameter.</span></span>
+<span><span class="va">gb_Neu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_genomic_breaks.html">load_genomic_breaks</a></span><span class="op">(</span><span class="va">exdata_Neu</span>, type <span class="op">=</span> <span class="st">"match"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="maniuplation-of-gbreaks-objects-with-plyranges">Maniuplation of GBreaks objects with plyranges<a class="anchor" aria-label="anchor" href="#maniuplation-of-gbreaks-objects-with-plyranges"></a>
 </h3>
 <p>With the <em>plyranges</em> package it is easy to manipulate <code>GBreaks</code> objects, in particular when filtering on features of the <em>query</em> genome.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Subset for chrI on the target genome.</span>
-<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqnames</span> <span class="op">==</span> <span class="st">"chrI"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 22 ranges and 2 metadata columns:</span>
-<span class="co">##        seqnames        ranges strand |     score                     query</span>
-<span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span>
-<span class="co">##    [1]     chrI    5860-10010      + |     10609    NC_047487.1:8723-12716</span>
-<span class="co">##    [2]     chrI   11157-11782      + |      1253   NC_047487.1:13035-13680</span>
-<span class="co">##    [3]     chrI   25371-26528      + |      3651   NC_047487.1:15380-16537</span>
-<span class="co">##    [4]     chrI   26849-29699      + |      6130   NC_047487.1:17263-20175</span>
-<span class="co">##    [5]     chrI   29937-30607      + |       767   NC_047487.1:20203-20866</span>
-<span class="co">##    ...      ...           ...    ... .       ...                       ...</span>
-<span class="co">##   [18]     chrI 197472-198417      + |       644 NC_047487.1:187015-188000</span>
-<span class="co">##   [19]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span>
-<span class="co">##   [20]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span>
-<span class="co">##   [21]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span>
-<span class="co">##   [22]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Subset for chrI on the target genome.</span></span>
+<span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqnames</span> <span class="op">==</span> <span class="st">"chrI"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 22 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##        seqnames        ranges strand |     score                     query</span></span>
+<span><span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span></span>
+<span><span class="co">##    [1]     chrI    5860-10010      + |     10609    NC_047487.1:8723-12716</span></span>
+<span><span class="co">##    [2]     chrI   11157-11782      + |      1253   NC_047487.1:13035-13680</span></span>
+<span><span class="co">##    [3]     chrI   25371-26528      + |      3651   NC_047487.1:15380-16537</span></span>
+<span><span class="co">##    [4]     chrI   26849-29699      + |      6130   NC_047487.1:17263-20175</span></span>
+<span><span class="co">##    [5]     chrI   29937-30607      + |       767   NC_047487.1:20203-20866</span></span>
+<span><span class="co">##    ...      ...           ...    ... .       ...                       ...</span></span>
+<span><span class="co">##   [18]     chrI 197472-198417      + |       644 NC_047487.1:187015-188000</span></span>
+<span><span class="co">##   [19]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span></span>
+<span><span class="co">##   [20]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span></span>
+<span><span class="co">##   [21]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span></span>
+<span><span class="co">##   [22]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Subset for NC_047487.1 on the query genome</span>
-<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">seqnames</a></span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 24 ranges and 2 metadata columns:</span>
-<span class="co">##        seqnames        ranges strand |     score                     query</span>
-<span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span>
-<span class="co">##    [1]     chrI    5860-10010      + |     10609    NC_047487.1:8723-12716</span>
-<span class="co">##    [2]     chrI   11157-11782      + |      1253   NC_047487.1:13035-13680</span>
-<span class="co">##    [3]     chrI   25371-26528      + |      3651   NC_047487.1:15380-16537</span>
-<span class="co">##    [4]     chrI   26849-29699      + |      6130   NC_047487.1:17263-20175</span>
-<span class="co">##    [5]     chrI   29937-30607      + |       767   NC_047487.1:20203-20866</span>
-<span class="co">##    ...      ...           ...    ... .       ...                       ...</span>
-<span class="co">##   [20]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span>
-<span class="co">##   [21]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span>
-<span class="co">##   [22]   chrVII 402974-403256      + |       730 NC_047487.1:179771-180020</span>
-<span class="co">##   [23]  chrVIII 527711-528802      + |      3617 NC_047487.1:202798-203906</span>
-<span class="co">##   [24]  chrVIII 530396-533532      + |      6424 NC_047487.1:205275-208524</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Subset for NC_047487.1 on the query genome</span></span>
+<span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">seqnames</a></span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 24 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##        seqnames        ranges strand |     score                     query</span></span>
+<span><span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span></span>
+<span><span class="co">##    [1]     chrI    5860-10010      + |     10609    NC_047487.1:8723-12716</span></span>
+<span><span class="co">##    [2]     chrI   11157-11782      + |      1253   NC_047487.1:13035-13680</span></span>
+<span><span class="co">##    [3]     chrI   25371-26528      + |      3651   NC_047487.1:15380-16537</span></span>
+<span><span class="co">##    [4]     chrI   26849-29699      + |      6130   NC_047487.1:17263-20175</span></span>
+<span><span class="co">##    [5]     chrI   29937-30607      + |       767   NC_047487.1:20203-20866</span></span>
+<span><span class="co">##    ...      ...           ...    ... .       ...                       ...</span></span>
+<span><span class="co">##   [20]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span></span>
+<span><span class="co">##   [21]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span></span>
+<span><span class="co">##   [22]   chrVII 402974-403256      + |       730 NC_047487.1:179771-180020</span></span>
+<span><span class="co">##   [23]  chrVIII 527711-528802      + |      3617 NC_047487.1:202798-203906</span></span>
+<span><span class="co">##   [24]  chrVIII 530396-533532      + |      6424 NC_047487.1:205275-208524</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Add or modify columns on the fly</span>
-<span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">mutate</a></span><span class="op">(</span><span class="st">"Width"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span>
-<span class="co">##       seqnames      ranges strand |     score                   query     Width</span>
-<span class="co">##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt; &lt;integer&gt;</span>
-<span class="co">##   [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716      4151</span>
-<span class="co">##   [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680       626</span>
-<span class="co">##   [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537      1158</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Add or modify columns on the fly</span></span>
+<span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="st">"Width"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##       seqnames      ranges strand |     score                   query     Width</span></span>
+<span><span class="co">##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716      4151</span></span>
+<span><span class="co">##   [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680       626</span></span>
+<span><span class="co">##   [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537      1158</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">mutate</a></span><span class="op">(</span><span class="st">"score"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span>
-<span class="co">##       seqnames      ranges strand |     score                   query</span>
-<span class="co">##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;               &lt;GRanges&gt;</span>
-<span class="co">##   [1]     chrI  5860-10010      + |      4151  NC_047487.1:8723-12716</span>
-<span class="co">##   [2]     chrI 11157-11782      + |       626 NC_047487.1:13035-13680</span>
-<span class="co">##   [3]     chrI 25371-26528      + |      1158 NC_047487.1:15380-16537</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="st">"score"</span> <span class="op">=</span> <span class="va">width</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames      ranges strand |     score                   query</span></span>
+<span><span class="co">##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;               &lt;GRanges&gt;</span></span>
+<span><span class="co">##   [1]     chrI  5860-10010      + |      4151  NC_047487.1:8723-12716</span></span>
+<span><span class="co">##   [2]     chrI 11157-11782      + |       626 NC_047487.1:13035-13680</span></span>
+<span><span class="co">##   [3]     chrI 25371-26528      + |      1158 NC_047487.1:15380-16537</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Etc…</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Etc…</span></span></code></pre></div>
 <p>See the <a href="https://bioconductor.org/packages/release/bioc/vignettes/plyranges/inst/doc/an-introduction.html" class="external-link">vignette of <em>plyranges</em></a> for more details.</p>
 </div>
 <div class="section level3">
@@ -300,39 +300,39 @@
 <p>Some core Bioconductor functions from the <code>GenomicRanges</code> package have been adapted to work on <code>GBreaks</code> objects.</p>
 <p>The <code>?%in%</code> operator returns a <code>TRUE</code> or <code>FALSE</code> value per element in its first argument if they match in the second argument. Here is a toy example:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">gb</span></code></pre></div>
-<pre><code><span class="co">## [1] TRUE TRUE</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="va">gb</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE TRUE</span></span></code></pre>
 <p>For <code><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html" class="external-link">?subsetByOverlaps</a></code>, one match on either the <em>target</em> or the <em>query</em> genome is enough.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chrI:200000-240000"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 4 ranges and 2 metadata columns:</span>
-<span class="co">##       seqnames        ranges strand |     score                     query</span>
-<span class="co">##          &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span>
-<span class="co">##   [1]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span>
-<span class="co">##   [2]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span>
-<span class="co">##   [3]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span>
-<span class="co">##   [4]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chrI:200000-240000"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 4 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames        ranges strand |     score                     query</span></span>
+<span><span class="co">##          &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span></span>
+<span><span class="co">##   [1]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span></span>
+<span><span class="co">##   [2]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span></span>
+<span><span class="co">##   [3]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span></span>
+<span><span class="co">##   [4]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps</a></span><span class="op">(</span><span class="fu"><a href="../reference/GBreaks-class.html">GBreaks</a></span><span class="op">(</span> target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chrI:200000-240000"</span><span class="op">)</span>
-                              ,  query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"NC_047494.1:200000-800000"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 14 ranges and 2 metadata columns:</span>
-<span class="co">##        seqnames        ranges strand |     score                     query</span>
-<span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span>
-<span class="co">##    [1]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span>
-<span class="co">##    [2]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span>
-<span class="co">##    [3]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span>
-<span class="co">##    [4]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span>
-<span class="co">##    [5]  chrVIII 214336-237947      + |     98269 NC_047494.1:199224-222890</span>
-<span class="co">##    ...      ...           ...    ... .       ...                       ...</span>
-<span class="co">##   [10]  chrVIII 392227-463918      + |    286060 NC_047494.1:377750-449530</span>
-<span class="co">##   [11]  chrVIII 463919-466794      + |     11508 NC_047494.1:449874-452585</span>
-<span class="co">##   [12]  chrVIII 466808-520394      + |    223091 NC_047494.1:452922-506473</span>
-<span class="co">##   [13]  chrVIII 520644-523428      + |      5768 NC_047494.1:506784-509589</span>
-<span class="co">##   [14]  chrVIII 523430-526473      + |      5029 NC_047494.1:509966-512985</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps</a></span><span class="op">(</span><span class="fu"><a href="../reference/GBreaks-class.html">GBreaks</a></span><span class="op">(</span> target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chrI:200000-240000"</span><span class="op">)</span></span>
+<span>                              ,  query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"NC_047494.1:200000-800000"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 14 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##        seqnames        ranges strand |     score                     query</span></span>
+<span><span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                 &lt;GRanges&gt;</span></span>
+<span><span class="co">##    [1]     chrI 198484-200975      + |      9880 NC_047487.1:192875-195376</span></span>
+<span><span class="co">##    [2]     chrI 200976-204211      + |     11801 NC_047487.1:195559-198812</span></span>
+<span><span class="co">##    [3]     chrI 205647-208058      + |      8709 NC_047494.1:515228-517518</span></span>
+<span><span class="co">##    [4]     chrI 224773-227362      + |     11047 NC_047487.1:224711-227317</span></span>
+<span><span class="co">##    [5]  chrVIII 214336-237947      + |     98269 NC_047494.1:199224-222890</span></span>
+<span><span class="co">##    ...      ...           ...    ... .       ...                       ...</span></span>
+<span><span class="co">##   [10]  chrVIII 392227-463918      + |    286060 NC_047494.1:377750-449530</span></span>
+<span><span class="co">##   [11]  chrVIII 463919-466794      + |     11508 NC_047494.1:449874-452585</span></span>
+<span><span class="co">##   [12]  chrVIII 466808-520394      + |    223091 NC_047494.1:452922-506473</span></span>
+<span><span class="co">##   [13]  chrVIII 520644-523428      + |      5768 NC_047494.1:506784-509589</span></span>
+<span><span class="co">##   [14]  chrVIII 523430-526473      + |      5029 NC_047494.1:509966-512985</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="breakpoints-and-alignment-stops">Breakpoints and alignment stops<a class="anchor" aria-label="anchor" href="#breakpoints-and-alignment-stops"></a>
@@ -340,75 +340,75 @@
 <p>Let us define an <strong>alignment stop</strong> to be a position defined in either the <em>target</em> or <em>query</em> genome, where an alignment begins or ends. Looking at the first line in the <code>gb</code> object above, <code>ChrI</code> positions 5860 and 10010 of the <em>target</em> would be defined as alignment stops. Correspondingly, we have positions 8723 and 12176 in <code>NC_047487.1</code> of the <em>query</em> genome as alignment stops.</p>
 <p>The function <code><a href="../reference/get_bps.html">get_bps()</a></code> takes in a <code>GBreaks</code> pairwise alignment or a simple <code>GRanges</code> object, and produces a <code>GRanges</code> object of it’s associated alignment stops. It has <code>direction</code>, <code>stranded</code> and <code>sorted</code> options to refind its output.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrI      5860      *</span>
-<span class="co">##   [2]     chrI     10010      *</span>
-<span class="co">##   [3]     chrI     11157      *</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrI      5860      *</span></span>
+<span><span class="co">##   [2]     chrI     10010      *</span></span>
+<span><span class="co">##   [3]     chrI     11157      *</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrI      5860      *</span>
-<span class="co">##   [2]     chrI     11157      *</span>
-<span class="co">##   [3]     chrI     25371      *</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrI      5860      *</span></span>
+<span><span class="co">##   [2]     chrI     11157      *</span></span>
+<span><span class="co">##   [3]     chrI     25371      *</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrI      5860      +</span>
-<span class="co">##   [2]     chrI     10010      -</span>
-<span class="co">##   [3]     chrI     11157      +</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrI      5860      +</span></span>
+<span><span class="co">##   [2]     chrI     10010      -</span></span>
+<span><span class="co">##   [3]     chrI     11157      +</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrI      5860      +</span>
-<span class="co">##   [2]     chrI     11157      +</span>
-<span class="co">##   [3]     chrI     25371      +</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>,                      stranded <span class="op">=</span> <span class="cn">TRUE</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrI      5860      +</span></span>
+<span><span class="co">##   [2]     chrI     11157      +</span></span>
+<span><span class="co">##   [3]     chrI     25371      +</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrI     10010      -</span>
-<span class="co">##   [2]     chrI     11782      -</span>
-<span class="co">##   [3]     chrI     26528      -</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrI     10010      -</span></span>
+<span><span class="co">##   [2]     chrI     11782      -</span></span>
+<span><span class="co">##   [3]     chrI     26528      -</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##          seqnames    ranges strand</span>
-<span class="co">##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1] NC_047487.1      8723      *</span>
-<span class="co">##   [2] NC_047487.1     13035      *</span>
-<span class="co">##   [3] NC_047487.1     15380      *</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, sorted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##          seqnames    ranges strand</span></span>
+<span><span class="co">##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1] NC_047487.1      8723      *</span></span>
+<span><span class="co">##   [2] NC_047487.1     13035      *</span></span>
+<span><span class="co">##   [3] NC_047487.1     15380      *</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span>
-<span class="co">##          seqnames    ranges strand</span>
-<span class="co">##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##   [1] NC_018044.1         1      *</span>
-<span class="co">##   [2] NC_018044.1      2820      *</span>
-<span class="co">##   [3] NC_018044.1      2834      *</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_bps.html">get_bps</a></span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##          seqnames    ranges strand</span></span>
+<span><span class="co">##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1] NC_018044.1         1      *</span></span>
+<span><span class="co">##   [2] NC_018044.1      2820      *</span></span>
+<span><span class="co">##   [3] NC_018044.1      2834      *</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <p>Now, let us define a <strong>genomic breakpoint</strong> (or simply breakpoint) to be a genomic structural mutation, arising from breakage and repair of the chromosome. Such structural events include insertion, deletion, inversion and translocation, and often arise during recombination.</p>
 <p>This package seeks to determine, of the group of alignment stops, which are likely genomic breakpoints and analyse them. Thus, filtering out alignment stops that are a result of bioinformatic errors.</p>
 </div>
@@ -417,38 +417,38 @@
 </h3>
 <p>If the positions of the centromeres are known, an annotation file can be crafted to indicate the coordinates of the short and long arms, and the function <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code> can be used to transfer this annotation to the <code>GBreaks</code> object.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrI:1-151465"</span>, <span class="st">"chrI:151582-230218"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">annot</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/flagLongShort.html">flagLongShort</a></span><span class="op">(</span><span class="va">gb</span>, <span class="va">annot</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 505 ranges and 3 metadata columns:</span>
-<span class="co">##         seqnames      ranges strand |     score                   query</span>
-<span class="co">##            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt;</span>
-<span class="co">##     [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716</span>
-<span class="co">##     [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680</span>
-<span class="co">##     [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537</span>
-<span class="co">##     [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175</span>
-<span class="co">##     [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866</span>
-<span class="co">##     ...      ...         ...    ... .       ...                     ...</span>
-<span class="co">##   [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439</span>
-<span class="co">##   [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180</span>
-<span class="co">##   [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261</span>
-<span class="co">##   [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865</span>
-<span class="co">##   [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592</span>
-<span class="co">##              Arm</span>
-<span class="co">##         &lt;factor&gt;</span>
-<span class="co">##     [1]    short</span>
-<span class="co">##     [2]    short</span>
-<span class="co">##     [3]    short</span>
-<span class="co">##     [4]    short</span>
-<span class="co">##     [5]    short</span>
-<span class="co">##     ...      ...</span>
-<span class="co">##   [501]       NA</span>
-<span class="co">##   [502]       NA</span>
-<span class="co">##   [503]       NA</span>
-<span class="co">##   [504]       NA</span>
-<span class="co">##   [505]       NA</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrI:1-151465"</span>, <span class="st">"chrI:151582-230218"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">annot</span><span class="op">$</span><span class="va">Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/flagLongShort.html">flagLongShort</a></span><span class="op">(</span><span class="va">gb</span>, <span class="va">annot</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 505 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##         seqnames      ranges strand |     score                   query</span></span>
+<span><span class="co">##            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;               &lt;GRanges&gt;</span></span>
+<span><span class="co">##     [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716</span></span>
+<span><span class="co">##     [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680</span></span>
+<span><span class="co">##     [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537</span></span>
+<span><span class="co">##     [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175</span></span>
+<span><span class="co">##     [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866</span></span>
+<span><span class="co">##     ...      ...         ...    ... .       ...                     ...</span></span>
+<span><span class="co">##   [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439</span></span>
+<span><span class="co">##   [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180</span></span>
+<span><span class="co">##   [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261</span></span>
+<span><span class="co">##   [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865</span></span>
+<span><span class="co">##   [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592</span></span>
+<span><span class="co">##              Arm</span></span>
+<span><span class="co">##         &lt;factor&gt;</span></span>
+<span><span class="co">##     [1]    short</span></span>
+<span><span class="co">##     [2]    short</span></span>
+<span><span class="co">##     [3]    short</span></span>
+<span><span class="co">##     [4]    short</span></span>
+<span><span class="co">##     [5]    short</span></span>
+<span><span class="co">##     ...      ...</span></span>
+<span><span class="co">##   [501]       NA</span></span>
+<span><span class="co">##   [502]       NA</span></span>
+<span><span class="co">##   [503]       NA</span></span>
+<span><span class="co">##   [504]       NA</span></span>
+<span><span class="co">##   [505]       NA</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="measures-of-distance">Measures of distance<a class="anchor" aria-label="anchor" href="#measures-of-distance"></a>
@@ -458,25 +458,25 @@
 </h4>
 <p>Ad-hoc index measuring to what extent a scaffold of the <em>target</em> genome is mostly aligned to a single scaffold in the <em>query</em> genome. See <code><a href="../reference/synteny_index.html">?synteny_index</a></code> for details. One limitation to the use of this index is that it requires that at least the <em>query</em> genome is a complete chromosome assembly.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/synteny_index.html">synteny_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9954872</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/synteny_index.html">synteny_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9954872</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/synteny_index.html">synteny_index</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9954982</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/synteny_index.html">synteny_index</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9954982</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="correlation">Correlation<a class="anchor" aria-label="anchor" href="#correlation"></a>
 </h4>
 <p>Ad-hoc index measuring the correlation of the coordinates of the syntenic alignments in scaffolds of a <em>target</em> genome and their best match in the <em>query</em> genome. See <code><a href="../reference/correlation_index.html">?correlation_index</a></code> for details. This index is more robust to the presence of uncollapsed haplotypes in the <em>query</em> genome.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9942222</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9942222</span></span></code></pre>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9946129</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9946129</span></span></code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] -0.7143233</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/correlation_index.html">correlation_index</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] -0.7143233</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="gene-order-conservation">Gene Order Conservation<a class="anchor" aria-label="anchor" href="#gene-order-conservation"></a>
@@ -484,25 +484,25 @@
 <p>The <code><a href="../reference/GOC.html">GOC()</a></code> function calcluates the Gene Order Conservation number defined by Rocha (2003, <a href="https://doi.org/10.1016/j.tig.2003.09.011" class="external-link uri">https://doi.org/10.1016/j.tig.2003.09.011</a>) as “<em>the average number of orthologues for which the consecutive orthologue co-occurs close by in the other genome. It varies between 0 (no co-occurrence) and 1 (complete gene order conservation)</em>”.</p>
 <p><em>Note that calculating GOC on whole-genome alignments is not expected to produce meaningful results, and the example below is just to show that the computation is possible. This function is more useful when comparing the position of orthologues, represented in a <code>GBreaks</code> object.</em></p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9227557</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9227557</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.9123173</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="fu"><a href="../reference/swap.html">swap</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.9123173</span></span></code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.504298</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/GOC.html">GOC</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.504298</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="strand-randomisation-index">Strand randomisation index<a class="anchor" aria-label="anchor" href="#strand-randomisation-index"></a>
 </h4>
 <p>The <code><a href="../reference/strand_randomisation_index.html">?strand_randomisation_index</a></code> tends towards zero when within each feature of the <em>target</em> genome there are as many bases aligned to the plus and on the minus strands. It tends towards 1 when within each feature most bases are aligned to the same strand.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/strand_randomisation_index.html">strand_randomisation_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.989879</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/strand_randomisation_index.html">strand_randomisation_index</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.989879</span></span></code></pre>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/strand_randomisation_index.html">strand_randomisation_index</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0.01680228</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/strand_randomisation_index.html">strand_randomisation_index</a></span><span class="op">(</span><span class="va">gb_Neu</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 0.01680228</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -510,12 +510,12 @@
 </h3>
 <p>We can use the function <code>scaf_align_plot</code> to see the alignment of query scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/scaf_align_plot.html">scaf_align_plot</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="st">"chrI"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/scaf_align_plot.html">scaf_align_plot</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="st">"chrI"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top.</p>
 <p>We can plot alignments for two of the target scaffolds side-by-side, using <code>align_scaf_plot-2</code>. This can be used in aid of superscaffolding.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/align_scaf_plot_2.html">align_scaf_plot_2</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrI"</span>,<span class="st">"chrII"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/align_scaf_plot_2.html">align_scaf_plot_2</a></span><span class="op">(</span><span class="va">gb</span>, scaf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrI"</span>,<span class="st">"chrII"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly.</p>
 </div>
@@ -525,12 +525,12 @@
 <p>Large syntenic regions can often appear cluttered with alignment breaks, spanning just a few basepairs. They are either an artefact (for instance in case of incomplete purge of haplotypes) and or true breakpoint. The algorithm in <code>coalesce_contigs</code> is used to produce a new GRanges object with fewer alignment breaks by coalescing alignments separated by short (user specified) distances. This distance need be agreeable in both the target and query genome in order for the coalscion to happen.</p>
 <p>For example, coalescing gaps of less than 500 basepairs in the <code>gb</code> alignment:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 505</span></code></pre>
+<code class="sourceCode R"><span><span class="va">coa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 505</span></span></code></pre>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 88</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 88</span></span></code></pre>
 <p>The resulting <code>GBreaks</code> object has far fewer alignments and therefore far fewer alignment stops. The algorithm is an initial step in alignment stop filtering, with the goal of a reduced number of alignment stops that have a high probability of being breakpoints.</p>
 </div>
 <div class="section level3">
@@ -541,10 +541,10 @@
 </h4>
 <p>To visualise synteny it is clearer to plot from the coalseced objects.</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb</span>,  <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb</span>,  <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-1.png" width="700"></p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-2.png" width="700"></p>
 </div>
 <div class="section level4">
@@ -552,11 +552,11 @@
 </h4>
 <p>In the genome sequences of <em>N. crassa</em> and <em>P. comata</em>, the homologous chromosomes <code>III</code> and <code>7</code> have been assembled on reverse orientations. It is possible to <em>“reverse-complement”</em> a sequence feature with the <code><a href="../reference/reverse.html">?reverse</a></code> function of <em>GenomicBreaks</em>. To reverse-complement a sequence, one needs to know its length. When this information is not available in the <code>seqlengths</code> slot of the object, the <em>GenomicBreaks</em> function <code><a href="../reference/forceSeqLengths.html">?forceSeqLengths</a></code> can be used to estimate it based on the coordinate of the most distal alignment.</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb_Neu</span>, main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb_Neu</span>, main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-1.png" width="700"></p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gb_Neu</span> |&gt; <span class="fu"><a href="../reference/forceSeqLengths.html">forceSeqLengths</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/reverse.html">reverse</a></span><span class="op">(</span>query <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gb_Neu</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/forceSeqLengths.html">forceSeqLengths</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reverse.html">reverse</a></span><span class="op">(</span>query <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-2.png" width="700"></p>
 </div>
 </div>
@@ -565,24 +565,24 @@
 </h3>
 <p>The function <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> outputs “Oxford” macrosynteny plots in which all the sequence levels are merged.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/oxford_plots-1.png" width="700"></p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb_Neu</span>, col <span class="op">=</span> <span class="st">"strand"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"N. crassa chrIII vs P. comata chr7 “Oxford” plot"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb_Neu</span>, col <span class="op">=</span> <span class="st">"strand"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"N. crassa chrIII vs P. comata chr7 “Oxford” plot"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/oxford_plots-2.png" width="700"></p>
 <p>The plots are <code>ggplot2</code> objects that can be further customised. Also, when there is only one sequence levels in the <em>target</em> or <em>query</em> genomes, their name is displayed, and addition of numeric scales show meaningful coordinates.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqnames</span>        <span class="op">==</span> <span class="st">"chrI"</span>,
-                                        <span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">seqnames</a></span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"sacCer3 vs sacPar “Oxford” plot"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="co">## replace the existing scale.</span></code></pre>
-<pre><code><span class="co">## Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="co">## replace the existing scale.</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqnames</span>        <span class="op">==</span> <span class="st">"chrI"</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">seqnames</a></span><span class="op">(</span><span class="va">query</span><span class="op">)</span> <span class="op">==</span> <span class="st">"NC_047487.1"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position<span class="op">=</span><span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"sacCer3 vs sacPar “Oxford” plot"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Scale for 'x' is already present. Adding another scale for 'x', which will</span></span>
+<span><span class="co">## replace the existing scale.</span></span></code></pre>
+<pre><code><span><span class="co">## Scale for 'y' is already present. Adding another scale for 'y', which will</span></span>
+<span><span class="co">## replace the existing scale.</span></span></code></pre>
 <p><img src="GenomicBreaks_files/figure-html/custom_oxford_plots-1.png" width="700"></p>
 <p>Pass <code>type = 'none'</code> to receive a <code>ggplot</code> object with no layer, that you can customise at wish.</p>
 </div>
@@ -591,20 +591,20 @@
 </h3>
 <p>You can retrieve the genomic sequences of the ranges in the <code>GBreaks</code> objects provided that a <code>BSgenome</code> packages are available and were indicated at load time.</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">BSgenome</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/getSeq-methods.html" class="external-link">getSeq</a></span><span class="op">(</span><span class="fu">BSgenome</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/available.genomes.html" class="external-link">getBSgenome</a></span><span class="op">(</span><span class="va">gb</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">genome</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="va">gb</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## DNAStringSet object of length 505:</span>
-<span class="co">##        width seq</span>
-<span class="co">##   [1]   4151 <span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">GG</span>...<span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span></span>
-<span class="co">##   [2]    626 <span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span>...<span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span></span>
-<span class="co">##   [3]   1158 <span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span>
-<span class="co">##   [4]   2851 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFD7AF;">T</span></span>
-<span class="co">##   [5]    671 <span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GGG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span>...<span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span></span>
-<span class="co">##   ...    ... ...</span>
-<span class="co">## [501]    832 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span>
-<span class="co">## [502]    376 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span></span>
-<span class="co">## [503]   6991 <span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTTTTTTT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span>
-<span class="co">## [504]   2667 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span></span>
-<span class="co">## [505]   4861 <span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">BSgenome</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html" class="external-link">getSeq</a></span><span class="op">(</span><span class="fu">BSgenome</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BSgenome/man/available.genomes.html" class="external-link">getBSgenome</a></span><span class="op">(</span><span class="va">gb</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">genome</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DNAStringSet object of length 505:</span></span>
+<span><span class="co">##        width seq</span></span>
+<span><span class="co">##   [1]   4151 <span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">GG</span>...<span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span></span></span>
+<span><span class="co">##   [2]    626 <span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span>...<span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span></span></span>
+<span><span class="co">##   [3]   1158 <span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span></span>
+<span><span class="co">##   [4]   2851 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFD7AF;">T</span></span></span>
+<span><span class="co">##   [5]    671 <span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GGG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span>...<span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span></span></span>
+<span><span class="co">##   ...    ... ...</span></span>
+<span><span class="co">## [501]    832 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFFF;">G</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span></span>
+<span><span class="co">## [502]    376 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span>...<span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span></span></span>
+<span><span class="co">## [503]   6991 <span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TTTTTTTT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TTT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span></span></span>
+<span><span class="co">## [504]   2667 <span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">GG</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span></span></span>
+<span><span class="co">## [505]   4861 <span style="color: #000000; background-color: #FFAFAF;">AAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAAAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span>...<span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #FFAFAF;">AAA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFFF;">G</span><span style="color: #000000; background-color: #AFFFAF;">C</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">TT</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">AA</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #AFFFAF;">CC</span><span style="color: #000000; background-color: #FFAFAF;">A</span><span style="color: #000000; background-color: #FFD7AF;">T</span><span style="color: #000000; background-color: #FFAFAF;">A</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="trivial-translocations">Trivial translocations<a class="anchor" aria-label="anchor" href="#trivial-translocations"></a>
@@ -627,17 +627,17 @@
 └──────────────┴──────────────┴──────────────┘</code></pre>
 <p>Is represented as:</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">exampleTranslocation</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 3 ranges and 1 metadata column:</span>
-<span class="co">##       seqnames    ranges strand |        query</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
-<span class="co">##   [1]     chrA   100-200      + | chrB:100-200</span>
-<span class="co">##   [2]     chrA   201-300      + | chrC:201-300</span>
-<span class="co">##   [3]     chrA   301-400      + | chrB:301-400</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
+<code class="sourceCode R"><span><span class="va">exampleTranslocation</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 3 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |        query</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span></span>
+<span><span class="co">##   [1]     chrA   100-200      + | chrB:100-200</span></span>
+<span><span class="co">##   [2]     chrA   201-300      + | chrC:201-300</span></span>
+<span><span class="co">##   [3]     chrA   301-400      + | chrB:301-400</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></span></code></pre>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/ideal_insertions-1.png" width="700"></p>
 <p>See <code><a href="../articles/StructuralVariants.html">vignette("StructuralVariants", package = "GenomicBreaks")</a></code> for other examples of translocations.</p>
 <p>Note also that <em>without an outgroup it is not possible to know in which genome the move happened</em>.</p>
@@ -646,35 +646,35 @@
 <h4 id="detection">Detection<a class="anchor" aria-label="anchor" href="#detection"></a>
 </h4>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span>
-<span class="co">##       seqnames    ranges strand |        query   tra</span>
-<span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
-<span class="co">##   [1]     chrA   100-200      + | chrB:100-200  TRUE</span>
-<span class="co">##   [2]     chrA   201-300      + | chrC:201-300 FALSE</span>
-<span class="co">##   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand |        query   tra</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrA   100-200      + | chrB:100-200  TRUE</span></span>
+<span><span class="co">##   [2]     chrA   201-300      + | chrC:201-300 FALSE</span></span>
+<span><span class="co">##   [3]     chrA   301-400      + | chrB:301-400 FALSE</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></span></code></pre>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showTranslocations.html">showTranslocations</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 32 ranges and 3 metadata columns:</span>
-<span class="co">##      seqnames        ranges strand |                     query     score   tra</span>
-<span class="co">##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt; &lt;Rle&gt;</span>
-<span class="co">##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664  TRUE</span>
-<span class="co">##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249  TRUE</span>
-<span class="co">##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157 FALSE</span>
-<span class="co">##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694 FALSE</span>
-<span class="co">##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417  TRUE</span>
-<span class="co">##   ..      ...           ...    ... .                       ...       ...   ...</span>
-<span class="co">##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467 FALSE</span>
-<span class="co">##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072 FALSE</span>
-<span class="co">##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789  TRUE</span>
-<span class="co">##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835 FALSE</span>
-<span class="co">##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450 FALSE</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/showTranslocations.html">showTranslocations</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 32 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##      seqnames        ranges strand |                     query     score   tra</span></span>
+<span><span class="co">##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt; &lt;Rle&gt;</span></span>
+<span><span class="co">##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664  TRUE</span></span>
+<span><span class="co">##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249  TRUE</span></span>
+<span><span class="co">##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157 FALSE</span></span>
+<span><span class="co">##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694 FALSE</span></span>
+<span><span class="co">##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417  TRUE</span></span>
+<span><span class="co">##   ..      ...           ...    ... .                       ...       ...   ...</span></span>
+<span><span class="co">##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467 FALSE</span></span>
+<span><span class="co">##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072 FALSE</span></span>
+<span><span class="co">##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789  TRUE</span></span>
+<span><span class="co">##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835 FALSE</span></span>
+<span><span class="co">##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450 FALSE</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, chrT <span class="op">=</span> <span class="st">"chrI"</span>, xlim <span class="op">=</span> <span class="fu"><a href="../reference/gb2xlim.html">gb2xlim</a></span><span class="op">(</span><span class="va">coa</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, chrT <span class="op">=</span> <span class="st">"chrI"</span>, xlim <span class="op">=</span> <span class="fu"><a href="../reference/gb2xlim.html">gb2xlim</a></span><span class="op">(</span><span class="va">coa</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_insertions-1.png" width="700"></p>
 </div>
 </div>
@@ -687,75 +687,75 @@
 </h4>
 <p>More inversions are found after coalescing colinear blocks because of situations where <code>+ - +</code> was <code>+ - - +</code> before collapsing.</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 88 ranges and 3 metadata columns:</span>
-<span class="co">##        seqnames        ranges strand |                     query     score</span>
-<span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt;</span>
-<span class="co">##    [1]     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664</span>
-<span class="co">##    [2]     chrI 184533-184781      + | NC_047487.1:176430-176696       249</span>
-<span class="co">##    [3]     chrI 185343-187499      + | NC_047487.1:170368-174401      2157</span>
-<span class="co">##    [4]     chrI 187502-189195      + | NC_047487.1:177293-179769      1694</span>
-<span class="co">##    [5]     chrI 189813-204211      + | NC_047487.1:180061-198812     14399</span>
-<span class="co">##    ...      ...           ...    ... .                       ...       ...</span>
-<span class="co">##   [84]     chrM     6313-9737      - |   NC_018044.1:62854-65728      3425</span>
-<span class="co">##   [85]     chrM   12828-50712      + |   NC_018044.1:22453-53190     37885</span>
-<span class="co">##   [86]     chrM   56625-57960      + |   NC_018044.1:70280-71345      1336</span>
-<span class="co">##   [87]     chrM   58008-76168      + |       NC_018044.1:1-16261     18161</span>
-<span class="co">##   [88]     chrM   77356-85779      + |   NC_018044.1:53206-61592      8424</span>
-<span class="co">##          inv</span>
-<span class="co">##        &lt;Rle&gt;</span>
-<span class="co">##    [1] FALSE</span>
-<span class="co">##    [2] FALSE</span>
-<span class="co">##    [3] FALSE</span>
-<span class="co">##    [4] FALSE</span>
-<span class="co">##    [5] FALSE</span>
-<span class="co">##    ...   ...</span>
-<span class="co">##   [84] FALSE</span>
-<span class="co">##   [85] FALSE</span>
-<span class="co">##   [86] FALSE</span>
-<span class="co">##   [87] FALSE</span>
-<span class="co">##   [88] FALSE</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 88 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##        seqnames        ranges strand |                     query     score</span></span>
+<span><span class="co">##           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##    [1]     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664</span></span>
+<span><span class="co">##    [2]     chrI 184533-184781      + | NC_047487.1:176430-176696       249</span></span>
+<span><span class="co">##    [3]     chrI 185343-187499      + | NC_047487.1:170368-174401      2157</span></span>
+<span><span class="co">##    [4]     chrI 187502-189195      + | NC_047487.1:177293-179769      1694</span></span>
+<span><span class="co">##    [5]     chrI 189813-204211      + | NC_047487.1:180061-198812     14399</span></span>
+<span><span class="co">##    ...      ...           ...    ... .                       ...       ...</span></span>
+<span><span class="co">##   [84]     chrM     6313-9737      - |   NC_018044.1:62854-65728      3425</span></span>
+<span><span class="co">##   [85]     chrM   12828-50712      + |   NC_018044.1:22453-53190     37885</span></span>
+<span><span class="co">##   [86]     chrM   56625-57960      + |   NC_018044.1:70280-71345      1336</span></span>
+<span><span class="co">##   [87]     chrM   58008-76168      + |       NC_018044.1:1-16261     18161</span></span>
+<span><span class="co">##   [88]     chrM   77356-85779      + |   NC_018044.1:53206-61592      8424</span></span>
+<span><span class="co">##          inv</span></span>
+<span><span class="co">##        &lt;Rle&gt;</span></span>
+<span><span class="co">##    [1] FALSE</span></span>
+<span><span class="co">##    [2] FALSE</span></span>
+<span><span class="co">##    [3] FALSE</span></span>
+<span><span class="co">##    [4] FALSE</span></span>
+<span><span class="co">##    [5] FALSE</span></span>
+<span><span class="co">##    ...   ...</span></span>
+<span><span class="co">##   [84] FALSE</span></span>
+<span><span class="co">##   [85] FALSE</span></span>
+<span><span class="co">##   [86] FALSE</span></span>
+<span><span class="co">##   [87] FALSE</span></span>
+<span><span class="co">##   [88] FALSE</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## GBreaks object with 12 ranges and 3 metadata columns:</span>
-<span class="co">##      seqnames         ranges strand |                      query     score</span>
-<span class="co">##         &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt; |                  &lt;GRanges&gt; &lt;integer&gt;</span>
-<span class="co">##   10   chrIII   11513-149405      + |   NC_047489.1:41910-177147    137893</span>
-<span class="co">##   11   chrIII  149866-151360      - |  NC_047489.1:178201-178974      1495</span>
-<span class="co">##   12   chrIII  151968-168384      + |  NC_047489.1:179584-195977     16417</span>
-<span class="co">##   34   chrVII   10270-110708      + |   NC_047493.1:11332-110230    100439</span>
-<span class="co">##   35   chrVII  112352-121552      - |  NC_047493.1:111748-121071      9201</span>
-<span class="co">##   ..      ...            ...    ... .                        ...       ...</span>
-<span class="co">##   39   chrVII  823466-828795      - |  NC_047493.1:792155-797486      5330</span>
-<span class="co">##   40   chrVII 828909-1076119      + | NC_047493.1:799044-1046538    247211</span>
-<span class="co">##   52     chrX   19114-354004      + |   NC_047496.1:12159-351096    334891</span>
-<span class="co">##   53     chrX  355632-374591      - |  NC_047496.1:353062-371883     18960</span>
-<span class="co">##   54     chrX  374938-727499      + |  NC_047496.1:373079-722743    352562</span>
-<span class="co">##        inv</span>
-<span class="co">##      &lt;Rle&gt;</span>
-<span class="co">##   10  TRUE</span>
-<span class="co">##   11 FALSE</span>
-<span class="co">##   12 FALSE</span>
-<span class="co">##   34  TRUE</span>
-<span class="co">##   35 FALSE</span>
-<span class="co">##   ..   ...</span>
-<span class="co">##   39 FALSE</span>
-<span class="co">##   40 FALSE</span>
-<span class="co">##   52  TRUE</span>
-<span class="co">##   53 FALSE</span>
-<span class="co">##   54 FALSE</span>
-<span class="co">##   -------</span>
-<span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## GBreaks object with 12 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##      seqnames         ranges strand |                      query     score</span></span>
+<span><span class="co">##         &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt; |                  &lt;GRanges&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##   10   chrIII   11513-149405      + |   NC_047489.1:41910-177147    137893</span></span>
+<span><span class="co">##   11   chrIII  149866-151360      - |  NC_047489.1:178201-178974      1495</span></span>
+<span><span class="co">##   12   chrIII  151968-168384      + |  NC_047489.1:179584-195977     16417</span></span>
+<span><span class="co">##   34   chrVII   10270-110708      + |   NC_047493.1:11332-110230    100439</span></span>
+<span><span class="co">##   35   chrVII  112352-121552      - |  NC_047493.1:111748-121071      9201</span></span>
+<span><span class="co">##   ..      ...            ...    ... .                        ...       ...</span></span>
+<span><span class="co">##   39   chrVII  823466-828795      - |  NC_047493.1:792155-797486      5330</span></span>
+<span><span class="co">##   40   chrVII 828909-1076119      + | NC_047493.1:799044-1046538    247211</span></span>
+<span><span class="co">##   52     chrX   19114-354004      + |   NC_047496.1:12159-351096    334891</span></span>
+<span><span class="co">##   53     chrX  355632-374591      - |  NC_047496.1:353062-371883     18960</span></span>
+<span><span class="co">##   54     chrX  374938-727499      + |  NC_047496.1:373079-722743    352562</span></span>
+<span><span class="co">##        inv</span></span>
+<span><span class="co">##      &lt;Rle&gt;</span></span>
+<span><span class="co">##   10  TRUE</span></span>
+<span><span class="co">##   11 FALSE</span></span>
+<span><span class="co">##   12 FALSE</span></span>
+<span><span class="co">##   34  TRUE</span></span>
+<span><span class="co">##   35 FALSE</span></span>
+<span><span class="co">##   ..   ...</span></span>
+<span><span class="co">##   39 FALSE</span></span>
+<span><span class="co">##   40 FALSE</span></span>
+<span><span class="co">##   52  TRUE</span></span>
+<span><span class="co">##   53 FALSE</span></span>
+<span><span class="co">##   54 FALSE</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>   <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" width="700"></p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>   |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>   <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png" width="700"></p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> |&gt; <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyranges/man/tidyverse-reexports.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png" width="700"></p>
 </div>
 </div>
@@ -787,7 +787,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

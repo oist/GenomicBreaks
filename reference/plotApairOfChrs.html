@@ -74,37 +74,50 @@ with the largest fraction of the mappings) or given as a parameter.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotApairOfChrs</span><span class="op">(</span>
-  <span class="va">gb</span>,
-  chrT <span class="op">=</span> <span class="cn">NULL</span>,
-  chrQ <span class="op">=</span> <span class="cn">NULL</span>,
-  dna_seg_scale <span class="op">=</span> <span class="cn">TRUE</span>,
-  dna_seg_labels <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotApairOfChrs</span><span class="op">(</span></span>
+<span>  <span class="va">gb</span>,</span>
+<span>  chrT <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  chrQ <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  dna_seg_scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dna_seg_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
 <dt>chrT</dt>
 <dd><p>A sequence name on the <em>target</em> genome.  Defaults to the first
 <em>sequence level</em> of the <code>gb</code> object.</p></dd>
+
+
 <dt>chrQ</dt>
 <dd><p>(Optional) A sequence name on the <em>query</em> genome.  Defaults to
 the longest cumulative match on <code>chrT</code>.</p></dd>
+
+
 <dt>dna_seg_scale</dt>
 <dd><p>Plot coordinats and a scale bar (defaults to <code>TRUE</code>).</p></dd>
+
+
 <dt>dna_seg_labels</dt>
 <dd><p>A character vector to override default labels for
 sequence names.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments are passed to <code>plot_gene_map</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Plots to the active device and returns and <code>oma::oma_layout</code> object
+    
+
+<p>Plots to the active device and returns and <code>oma::oma_layout</code> object
 like the <code><a href="https://rdrr.io/pkg/genoPlotR/man/plot_gene_map.html" class="external-link">genoPlotR::plot_gene_map</a></code> function.</p>
     </div>
     <div id="note">
@@ -139,15 +152,15 @@ displayed.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotApairOfChrs-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotApairOfChrs-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Labels can be overriden.</span></span>
-<span class="r-in"><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span>, dna_seg_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"over..."</span>, <span class="st">"...ridden"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Labels can be overriden.</span></span></span>
+<span class="r-in"><span><span class="fu">plotApairOfChrs</span><span class="op">(</span><span class="va">exampleDeletion</span>, dna_seg_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"over..."</span>, <span class="st">"...ridden"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotApairOfChrs-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -162,7 +175,7 @@ displayed.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

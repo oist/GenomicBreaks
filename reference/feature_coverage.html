@@ -70,26 +70,37 @@ on the boundaries of <em>genomic ranges</em>.  Assuming that these ranges are a
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">feature_coverage</span><span class="op">(</span><span class="va">gr</span>, <span class="va">feat</span>, <span class="va">window</span>, <span class="va">label</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">feature_coverage</span><span class="op">(</span><span class="va">gr</span>, <span class="va">feat</span>, <span class="va">window</span>, <span class="va">label</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gr</dt>
 <dd><p>A <code>GRanges</code> object.</p></dd>
+
+
 <dt>feat</dt>
 <dd><p>A <code>GRanges</code> object representing the feature of interest.</p></dd>
+
+
 <dt>window</dt>
 <dd><p>Window over which to observe feature coverage.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>Label for the plot.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments passed to <code><a href="get_bps.html">get_bps</a></code> in order to select the
 boundaries, their order and their orientation.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>Heatmap</code> object that can be piped into
+    
+
+<p>Returns a <code>Heatmap</code> object that can be piped into
 <code><a href="https://rdrr.io/pkg/heatmaps/man/smoothHeatmap.html" class="external-link">heatmaps::smoothHeatmap</a></code> and then <code><a href="https://rdrr.io/pkg/heatmaps/man/plotHeatmapList.html" class="external-link">heatmaps::plotHeatmapList</a></code> or
 <code><a href="https://rdrr.io/pkg/heatmaps/man/plotHeatmapMeta.html" class="external-link">heatmaps::plotHeatmapMeta</a></code>.</p>
     </div>
@@ -117,7 +128,7 @@ boundaries, their order and their orientation.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

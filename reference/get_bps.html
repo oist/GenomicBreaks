@@ -68,30 +68,39 @@ object detailing the breakpoints only.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_bps</span><span class="op">(</span>
-  <span class="va">gr</span>,
-  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"left"</span>, <span class="st">"right"</span>, <span class="st">"mid"</span><span class="op">)</span>,
-  stranded <span class="op">=</span> <span class="cn">FALSE</span>,
-  sorted <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_bps</span><span class="op">(</span></span>
+<span>  <span class="va">gr</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"left"</span>, <span class="st">"right"</span>, <span class="st">"mid"</span><span class="op">)</span>,</span>
+<span>  stranded <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sorted <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gr</dt>
 <dd><p><code>GRanges</code> object containing pairwise alignment</p></dd>
+
+
 <dt>direction</dt>
 <dd><p>Return the breakpoints on <code>both</code>, <code>left</code> or <code>right</code> side(s)
 of the range, or at the <code>mid</code>point between ranges.</p></dd>
+
+
 <dt>stranded</dt>
 <dd><p>If <code>TRUE</code>, will assign a <code>+</code> strand to the left-side
 breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
+
+
 <dt>sorted</dt>
 <dd><p>Sorts the object before returning it.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>GRanges</code> object of the breakpoints</p>
+    
+
+<p><code>GRanges</code> object of the breakpoints</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -101,7 +110,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 6 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -113,7 +122,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [6]     chrA       400      *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 3 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -122,7 +131,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA       301      *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 6 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -134,7 +143,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [6]     chrA       400      -</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"right"</span>, stranded <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 3 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -143,7 +152,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA       400      -</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_bps</span><span class="op">(</span><span class="va">exampleInversion</span>, direction <span class="op">=</span> <span class="st">"mid"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 2 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -151,7 +160,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA       296      *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -166,7 +175,7 @@ breakpoints and a <code>-</code> strand to the right-side ones.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

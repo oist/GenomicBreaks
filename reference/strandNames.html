@@ -66,7 +66,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">strandNames</span><span class="op">(</span><span class="va">gb</span>, flip <span class="op">=</span> <span class="cn">FALSE</span>, query <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">strandNames</span><span class="op">(</span><span class="va">gb</span>, flip <span class="op">=</span> <span class="cn">FALSE</span>, query <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,14 +74,21 @@
     <dl><dt>gb</dt>
 <dd><p>A <code>GBreaks</code> object or a <code>GRangesList</code> of <code>GBreaks</code>
 objects.</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>Flip the strand names.</p></dd>
+
+
 <dt>query</dt>
 <dd><p>Work on the query genome.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a character vector, or a list of character vectors if the
+    
+
+<p>Returns a character vector, or a list of character vectors if the
 input was a <code>GRangesList</code>.</p>
     </div>
     <div id="see-also">
@@ -96,11 +103,11 @@ input was a <code>GRangesList</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">strandNames</span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">strandNames</span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "chrA+" "chrA+"</span>
-<span class="r-in"><span class="fu">strandNames</span><span class="op">(</span><span class="va">exampleColinear</span>, query <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">strandNames</span><span class="op">(</span><span class="va">exampleColinear</span>, query <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "chrB+" "chrB+"</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -115,7 +122,7 @@ input was a <code>GRangesList</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

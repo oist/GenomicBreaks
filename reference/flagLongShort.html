@@ -70,25 +70,35 @@ can be useful to know if genomic region belongs to long or a short arm.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">gr</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span>, <span class="st">"arbitrary"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">gr</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span>, <span class="st">"arbitrary"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gr</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> or a simple <code>GRanges</code> object</p></dd>
+
+
 <dt>annot</dt>
 <dd><p>A <code>GRanges</code> file containing the coordinate of arms and their
 nature (such as <code>long</code>, <code>short</code>, <code>XSR</code> or <code>YSR</code>) in a <code>Type</code>
 <em>metadata column</em>.</p></dd>
+
+
 <dt>select</dt>
 <dd><p>One method among <code>first</code>, <code>last</code> and <code>arbitrary</code>, to decide
 on how to handle the regions that match both arms.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a modified version of the object with an extra <em>metadata
-column</em>, <code>Arm</code> in which the information from the annotation file's <code>Type</code>column was transferred.  See the examples below and in the manual of
+    
+
+<p>Returns a modified version of the object with an extra <em>metadata
+column</em>, <code>Arm</code> in which the information from the annotation file's <code>Type</code></p>
+
+
+<p>column was transferred.  See the examples below and in the manual of
 <code><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">IRanges::findOverlaps</a></code> for details. on how regions that match both arms
 are handled.</p>
     </div>
@@ -109,9 +119,9 @@ are handled.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrA:1-140"</span>, <span class="st">"chrA:150-500"</span><span class="op">)</span>, Type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">annot</span> <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chrA:1-140"</span>, <span class="st">"chrA:150-500"</span><span class="op">)</span>, Type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"short"</span>, <span class="st">"long"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query      Arm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;</span>
@@ -119,7 +129,7 @@ are handled.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   251-300      + | chrB:251-300    long </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query      Arm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;</span>
@@ -127,7 +137,7 @@ are handled.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   251-300      + | chrB:251-300     long</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="st">"arbitrary"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagLongShort</span><span class="op">(</span><span class="va">exampleColinear</span>, <span class="va">annot</span>, select <span class="op">=</span> <span class="st">"arbitrary"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query      Arm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;factor&gt;</span>
@@ -135,7 +145,7 @@ are handled.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   251-300      + | chrB:251-300    long </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -150,7 +160,7 @@ are handled.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

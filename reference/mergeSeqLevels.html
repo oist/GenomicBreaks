@@ -68,21 +68,28 @@ sequences into larger ones.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gr</span>, <span class="va">seqs</span>, <span class="va">name</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gr</span>, <span class="va">seqs</span>, <span class="va">name</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gr</dt>
 <dd><p>A <code>GRanges</code> object.</p></dd>
+
+
 <dt>seqs</dt>
 <dd><p>A character vector of <code>seqlevels</code> from <code>gr</code></p></dd>
+
+
 <dt>name</dt>
 <dd><p>The name of the new sequence level to be added</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a modified <code>GRanges</code> object in which the sequences have been
+    
+
+<p>Returns a modified <code>GRanges</code> object in which the sequences have been
 merged.  Its <code>seqinfo</code> has a new entry for the new level, and the old
 levels are not removed.  If no <code>seqlengths</code> were present in the original
 object, they are arbitrarily set as the maximal end value for each <code>seqlevel</code>.</p>
@@ -110,20 +117,20 @@ with its reverse strand.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gb</span>       <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"XSR:101-180:+"</span>, <span class="st">"XSR:201-300:+"</span>,  <span class="st">"XSR:320-400:+"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gb</span><span class="op">$</span><span class="va">query</span> <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="st">"S1:101-200"</span>,      <span class="st">"S2:1-100"</span>,    <span class="st">"S3:1-100"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">seqlengths</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">genome</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"GenomeX"</span></span>
-<span class="r-in"><span class="fu">isCircular</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">seqinfo</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gb</span>       <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"XSR:101-180:+"</span>, <span class="st">"XSR:201-300:+"</span>,  <span class="st">"XSR:320-400:+"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gb</span><span class="op">$</span><span class="va">query</span> <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="st">"S1:101-200"</span>,      <span class="st">"S2:1-100"</span>,    <span class="st">"S3:1-100"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">seqlengths</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">genome</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"GenomeX"</span></span></span>
+<span class="r-in"><span><span class="fu">isCircular</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">seqinfo</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Seqinfo object with 3 sequences from GenomeX genome:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqnames seqlengths isCircular  genome</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S1              200      FALSE GenomeX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S2              100      FALSE GenomeX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S3              100      FALSE GenomeX</span>
-<span class="r-in"><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gb</span><span class="op">$</span><span class="va">query</span> <span class="op">&lt;-</span> <span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S2"</span>, <span class="st">"S3"</span><span class="op">)</span>, <span class="st">"Scaf1"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gb</span></span>
+<span class="r-in"><span><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gb</span><span class="op">$</span><span class="va">query</span> <span class="op">&lt;-</span> <span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S2"</span>, <span class="st">"S3"</span><span class="op">)</span>, <span class="st">"Scaf1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gb</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |         query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;GRanges&gt;</span>
@@ -132,15 +139,15 @@ with its reverse strand.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]      XSR   320-400      + | Scaf1:101-200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span class="fu">seqinfo</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">seqinfo</span><span class="op">(</span><span class="va">gb</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Seqinfo object with 4 sequences from GenomeX genome:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqnames seqlengths isCircular  genome</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Scaf1           200      FALSE GenomeX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S1              200      FALSE GenomeX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S2              100      FALSE GenomeX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   S3              100      FALSE GenomeX</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gb</span>, <span class="fu">seqlevelsInUse</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span>, <span class="st">"AllMerged"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gb</span>, <span class="fu">seqlevelsInUse</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span>, <span class="st">"AllMerged"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |         query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;GRanges&gt;</span>
@@ -149,7 +156,7 @@ with its reverse strand.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3] AllMerged   320-400      + | Scaf1:101-200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -164,7 +171,7 @@ with its reverse strand.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

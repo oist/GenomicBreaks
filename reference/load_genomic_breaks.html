@@ -70,34 +70,48 @@ by the aligner.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">load_genomic_breaks</span><span class="op">(</span>
-  <span class="va">file</span>,
-  target_bsgenome <span class="op">=</span> <span class="cn">NULL</span>,
-  query_bsgenome <span class="op">=</span> <span class="cn">NULL</span>,
-  sort <span class="op">=</span> <span class="cn">TRUE</span>,
-  type <span class="op">=</span> <span class="st">"match_part"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">load_genomic_breaks</span><span class="op">(</span></span>
+<span>  <span class="va">file</span>,</span>
+<span>  target_bsgenome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  query_bsgenome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sort <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"match_part"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file</dt>
 <dd><p>Path to a file in GFF3 format.</p></dd>
+
+
 <dt>target_bsgenome</dt>
 <dd><p>A <code>BSgenome</code> object representing the target genome.</p></dd>
+
+
 <dt>query_bsgenome</dt>
 <dd><p>A <code>BSgenome</code> object representing the query genome.</p></dd>
+
+
 <dt>sort</dt>
 <dd><p>Returns the object sorted, ignoring strand information.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Sequence ontology term representing an alignment block
 (default: <code>match_part</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code><a href="GBreaks-class.html">GBreaks</a></code> object where each element represents a pairwise
+    
+
+<p>Returns a <code><a href="GBreaks-class.html">GBreaks</a></code> object where each element represents a pairwise
 alignment block.  The <code>granges</code> part of the object contains the coordinates
-on the <em>target</em> genome, and the <code>query</code> metadata column contains the <em>query</em>coordinates in <code>GRanges</code> format.  The <code>seqinfo</code> of each <code>BSgenome</code> object
+on the <em>target</em> genome, and the <code>query</code> metadata column contains the <em>query</em></p>
+
+
+<p>coordinates in <code>GRanges</code> format.  The <code>seqinfo</code> of each <code>BSgenome</code> object
 passed as parameters are copied to the <code>GRanges</code> objects accordingly.</p>
     </div>
     <div id="details">
@@ -115,15 +129,15 @@ the <em>plus</em> strand.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Odioica.local.OSKA2016"</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Odioica.local.OKI2018.I69"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">load_genomic_breaks</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/OSKA2016__I69-5.gff3.gz"</span>, package<span class="op">=</span><span class="st">"GenomicBreaks"</span><span class="op">)</span>,</span>
-<span class="r-in">  target <span class="op">=</span> <span class="va">OSKA2016</span>,</span>
-<span class="r-in">  query <span class="op">=</span> <span class="va">OKI2018_I69</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Odioica.local.OSKA2016"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Odioica.local.OKI2018.I69"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">load_genomic_breaks</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/OSKA2016__I69-5.gff3.gz"</span>, package<span class="op">=</span><span class="st">"GenomicBreaks"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="va">OSKA2016</span>,</span></span>
+<span class="r-in"><span>  query <span class="op">=</span> <span class="va">OKI2018_I69</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,7 +152,7 @@ the <em>plus</em> strand.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

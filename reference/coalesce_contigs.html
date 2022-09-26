@@ -66,22 +66,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, minwidth <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, minwidth <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p><code><a href="GBreaks-class.html">GBreaks</a></code> object of the pairwise alignment.</p></dd>
+
+
 <dt>tol</dt>
 <dd><p>Unaligned region of width lesser than or equal to <code>tol</code> in both
 the reference and query case will be bridged in coalescing.</p></dd>
+
+
 <dt>minwidth</dt>
 <dd><p>Remove the intervals whose width smaller than this value.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a new <code>GBreaks</code> object with a reduced number of alignments
+    
+
+<p>Returns a new <code>GBreaks</code> object with a reduced number of alignments
 fragments due to coalescion.  The returned object is sorted ignoring strand.
 For convenience during analysis sessions, its <em>score</em> is set to the width of
 the ranges on the <em>target</em> genome.</p>
@@ -119,7 +126,7 @@ examples for details.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear3</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear3</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 10 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tfoll     qfoll     tprev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
@@ -133,24 +140,24 @@ examples for details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]        -1      &lt;NA&gt;      &lt;NA&gt;       Inf       Inf     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-400      + | chrB:100-400       301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Target range [1] precedes target range [2]</span></span>
-<span class="r-in"><span class="fu">precede</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Target range [1] precedes target range [2]</span></span></span>
+<span class="r-in"><span><span class="fu">precede</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2  3 NA</span>
-<span class="r-in"><span class="co"># Query range [1] precedes query range [2]</span></span>
-<span class="r-in"><span class="fu">precede</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Query range [1] precedes query range [2]</span></span></span>
+<span class="r-in"><span><span class="fu">precede</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2  3 NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Ranges on the minus strand</span></span>
-<span class="r-in"><span class="va">gb2</span> <span class="op">&lt;-</span> <span class="va">exampleColinear3</span> |&gt; <span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">gb2</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Ranges on the minus strand</span></span></span>
+<span class="r-in"><span><span class="va">gb2</span> <span class="op">&lt;-</span> <span class="va">exampleColinear3</span> <span class="op">|&gt;</span> <span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">gb2</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 10 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tfoll     qfoll     tprev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
@@ -164,43 +171,43 @@ examples for details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]      &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;       Inf       Inf     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   101-401      - | chrB:100-400       301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Target range [1] follows target range [2]</span></span>
-<span class="r-in"><span class="fu">follow</span><span class="op">(</span><span class="va">gb2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Target range [1] follows target range [2]</span></span></span>
+<span class="r-in"><span><span class="fu">follow</span><span class="op">(</span><span class="va">gb2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2  3 NA</span>
-<span class="r-in"><span class="co"># Or, ignoring strand, target range [1] precedes target range [2]</span></span>
-<span class="r-in"><span class="fu">precede</span><span class="op">(</span><span class="va">gb2</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Or, ignoring strand, target range [1] precedes target range [2]</span></span></span>
+<span class="r-in"><span><span class="fu">precede</span><span class="op">(</span><span class="va">gb2</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2  3 NA</span>
-<span class="r-in"><span class="co"># Query range [1] follows query range [2]</span></span>
-<span class="r-in"><span class="fu">follow</span><span class="op">(</span><span class="va">gb2</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Query range [1] follows query range [2]</span></span></span>
+<span class="r-in"><span><span class="fu">follow</span><span class="op">(</span><span class="va">gb2</span><span class="op">$</span><span class="va">query</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2  3 NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Coalescing strandless objects</span></span>
-<span class="r-in"><span class="va">gb3</span> <span class="op">&lt;-</span> <span class="va">exampleColinear3</span></span>
-<span class="r-in"><span class="va">gb4</span> <span class="op">&lt;-</span> <span class="va">gb2</span></span>
-<span class="r-in"><span class="fu">strand</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">strand</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"*"</span></span>
-<span class="r-in"><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Coalescing strandless objects</span></span></span>
+<span class="r-in"><span><span class="va">gb3</span> <span class="op">&lt;-</span> <span class="va">exampleColinear3</span></span></span>
+<span class="r-in"><span><span class="va">gb4</span> <span class="op">&lt;-</span> <span class="va">gb2</span></span></span>
+<span class="r-in"><span><span class="fu">strand</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">strand</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"*"</span></span></span>
+<span class="r-in"><span><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-400      * | chrB:100-400       301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">coalesce_contigs</span><span class="op">(</span><span class="va">gb4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   101-401      * | chrB:100-400       301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -215,7 +222,7 @@ examples for details.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

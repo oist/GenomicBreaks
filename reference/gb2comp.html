@@ -66,21 +66,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gb2comp</span><span class="op">(</span><span class="va">gb</span>, color <span class="op">=</span> <span class="cn">NULL</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gb2comp</span><span class="op">(</span><span class="va">gb</span>, color <span class="op">=</span> <span class="cn">NULL</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
 <dt>color</dt>
 <dd><p>(optional) A vector of colors, of same length as <code>gb</code>.</p></dd>
+
+
 <dt>ignore.strand</dt>
 <dd><p>Ignore strand information?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code><a href="https://rdrr.io/pkg/genoPlotR/man/comparison.html" class="external-link">genoPlotR::comparison</a></code> object.</p>
+    
+
+<p>Returns a <code><a href="https://rdrr.io/pkg/genoPlotR/man/comparison.html" class="external-link">genoPlotR::comparison</a></code> object.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -107,12 +114,12 @@ object also conforms to this assumption.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">gb2comp</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gb2comp</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   start1 end1 start2 end2 direction      color            col</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    100  190    100  190         1 darksalmon     darksalmon</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    210  291    291  210        -1 darksalmon cornflowerblue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    301  400    301  400         1 darksalmon     darksalmon</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -127,7 +134,7 @@ object also conforms to this assumption.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

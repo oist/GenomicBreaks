@@ -66,19 +66,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gb2dna_seg</span><span class="op">(</span><span class="va">gb</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gb2dna_seg</span><span class="op">(</span><span class="va">gb</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code>GRanges</code> or a <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Extra arguments passed to <code>dna_seg()</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>list</code> of two <code><a href="https://rdrr.io/pkg/genoPlotR/man/dna_seg.html" class="external-link">genoPlotR::dna_seg</a></code> objects, respectively
+    
+
+<p>Returns a <code>list</code> of two <code><a href="https://rdrr.io/pkg/genoPlotR/man/dna_seg.html" class="external-link">genoPlotR::dna_seg</a></code> objects, respectively
 for the <em>target</em> ranges the <em>query</em> ranges.</p>
     </div>
     <div id="see-also">
@@ -100,7 +105,7 @@ for the <em>target</em> ranges the <em>query</em> ranges.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">gb2dna_seg</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gb2dna_seg</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $target</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             name start end strand  col fill lty lwd pch cex gene_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 chrA:100-190:+   100 190      1 blue blue   1   1   8   1    blocks</span>
@@ -113,7 +118,7 @@ for the <em>target</em> ranges the <em>query</em> ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 chrB:210-291   210 291     -1 blue blue   1   1   8   1    blocks</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 chrB:301-400   301 400      1 blue blue   1   1   8   1    blocks</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -128,7 +133,7 @@ for the <em>target</em> ranges the <em>query</em> ranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

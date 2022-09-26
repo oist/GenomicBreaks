@@ -68,20 +68,25 @@ instance, with a step of 1, <em>a</em> <em>b</em> <em>c</em> would become <em>a,
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">zipWithNext</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">zipWithNext</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Object with a vector structure.</p></dd>
+
+
 <dt>step</dt>
 <dd><p>Remove the first <code>step</code> entries from the object before zipping
 it with itself.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://rdrr.io/pkg/S4Vectors/man/Pairs-class.html" class="external-link">S4Vectors::Pairs</a></code> object with a copy of <code>x</code> in the <code>first</code> slot,
+    
+
+<p>A <code><a href="https://rdrr.io/pkg/S4Vectors/man/Pairs-class.html" class="external-link">S4Vectors::Pairs</a></code> object with a copy of <code>x</code> in the <code>first</code> slot,
 and <code>x</code> with <code>step</code> elements removed from its head and complemented with
 <code>NAs</code> in the <code>second</code> slot.</p>
     </div>
@@ -95,7 +100,7 @@ should use <code>head</code> or <code>tail</code>, which causes bugs or delays i
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">zipWithNext</span><span class="op">(</span><span class="va">LETTERS</span>, step <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">zipWithNext</span><span class="op">(</span><span class="va">LETTERS</span>, step <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pairs object with 26 pairs and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              first      second</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;character&gt; &lt;character&gt;</span>
@@ -110,7 +115,7 @@ should use <code>head</code> or <code>tail</code>, which causes bugs or delays i
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [24]           X           Z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [25]           Y        &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [26]           Z        &lt;NA&gt;</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -125,7 +130,7 @@ should use <code>head</code> or <code>tail</code>, which causes bugs or delays i
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

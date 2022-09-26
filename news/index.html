@@ -64,15 +64,16 @@
 <h2 class="page-header" data-toc-text="0.13.1" id="genomicbreaks-0131">GenomicBreaks 0.13.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-0131"></a></h2>
 <div class="section level3">
 <h3 id="new-functionalities-0-13-1">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-13-1"></a></h3>
-<ul><li>The <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> function gains a <code>col</code> argument for choosing to color by strand or by score.</li>
-</ul></div>
+<ul><li>The <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> function gains a <code>col</code> argument for choosing to color by strand or by score.</li></ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-13-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-13-1"></a></h3>
+<ul><li>In <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code>, the sequence names are now centered on their region.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.13.0" id="genomicbreaks-0130">GenomicBreaks 0.13.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0130"></a></h2>
 <div class="section level3">
 <h3 id="important-bug-fixes-0-13-0">Important bug fixes<a class="anchor" aria-label="anchor" href="#important-bug-fixes-0-13-0"></a></h3>
-<ul><li>The <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> and <code><a href="../reference/coalesce_contigs.html">coalesce_contigs()</a></code> functions were corrected so that strandless ranges are called <em>colinear</em> when they satisfy the conditions on any strand. Before, they would be treated like plus-strand ranges, causing failure to detect colinearity on the minus strand.</li>
-</ul></div>
+<ul><li>The <code><a href="../reference/flagColinearAlignments.html">flagColinearAlignments()</a></code> and <code><a href="../reference/coalesce_contigs.html">coalesce_contigs()</a></code> functions were corrected so that strandless ranges are called <em>colinear</em> when they satisfy the conditions on any strand. Before, they would be treated like plus-strand ranges, causing failure to detect colinearity on the minus strand.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functionalities-0-13-0">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-13-0"></a></h3>
 <ul><li>New <code><a href="../reference/getSeq.html">getSeq()</a></code> method for <code>GRanges</code> and <code>GBreaks</code> objects that have proper <code>seqinfo</code> for an installed <code>BSgenome</code> package.</li>
@@ -104,8 +105,7 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.12.1" id="genomicbreaks-0121">GenomicBreaks 0.12.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-0121"></a></h2>
-<ul><li>The <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> function now plots the name of the selected sequence levels instead of <code>target</code> and <code>query</code>. The labels can be overriden with the <code>dna_seg_labels</code> parameters. Closes issue <a href="https://github.com/oist/GenomicBreaks/issues/6" class="external-link">#6</a>.</li>
-</ul></div>
+<ul><li>The <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code> function now plots the name of the selected sequence levels instead of <code>target</code> and <code>query</code>. The labels can be overriden with the <code>dna_seg_labels</code> parameters. Closes issue <a href="https://github.com/oist/GenomicBreaks/issues/6" class="external-link">#6</a>.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.12.0" id="genomicbreaks-0120">GenomicBreaks 0.12.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0120"></a></h2>
 <div class="section level3">
@@ -126,8 +126,7 @@
 <h2 class="page-header" data-toc-text="0.11.0" id="genomicbreaks-0110">GenomicBreaks 0.11.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0110"></a></h2>
 <div class="section level3">
 <h3 id="backwards-incompatible-changes-0-11-0">Backwards-incompatible changes<a class="anchor" aria-label="anchor" href="#backwards-incompatible-changes-0-11-0"></a></h3>
-<ul><li>Remove project-specific <code>load_one_to_ones</code> function.</li>
-</ul></div>
+<ul><li>Remove project-specific <code>load_one_to_ones</code> function.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.10.0" id="genomicbreaks-0100">GenomicBreaks 0.10.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0100"></a></h2>
@@ -148,16 +147,14 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-10-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-0"></a></h3>
-<ul><li>Add strand check on <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code> so that it does not return a false positive on <code>exampleDoubleInversion</code>.</li>
-</ul></div>
+<ul><li>Add strand check on <code><a href="../reference/flagTranslocations.html">flagTranslocations()</a></code> so that it does not return a false positive on <code>exampleDoubleInversion</code>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.1" id="genomicbreaks-091">GenomicBreaks 0.9.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-091"></a></h2>
 <div class="section level3">
 <h3 id="new-functionalities-0-9-1">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-9-1"></a></h3>
 <ul><li>
-<code><a href="../reference/flagAll.html">flagAll()</a></code> now ensures that flags do not collide, and reports translocations.</li>
-</ul></div>
+<code><a href="../reference/flagAll.html">flagAll()</a></code> now ensures that flags do not collide, and reports translocations.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.9.0" id="genomicbreaks-090">GenomicBreaks 0.9.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-090"></a></h2>
@@ -167,8 +164,8 @@
 <li>New <code><a href="../reference/filterColinearRegions.html">filterColinearRegions()</a></code> function.</li>
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
 <li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
-<li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/inter-range-methods.html" class="external-link">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>seqnames</em>, ignoring strand information.</li>
-<li>New <code><a href="https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
+<li>New <code><a href="https://rdrr.io/r/base/range.html" class="external-link">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>seqnames</em>, ignoring strand information.</li>
+<li>New <code><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-9-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-0"></a></h3>
@@ -182,8 +179,7 @@
 <h2 class="page-header" data-toc-text="0.8.0" id="genomicbreaks-080">GenomicBreaks 0.8.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-080"></a></h2>
 <div class="section level3">
 <h3 id="backwards-incompatible-changes-0-8-0">Backwards-incompatible changes<a class="anchor" aria-label="anchor" href="#backwards-incompatible-changes-0-8-0"></a></h3>
-<ul><li>Remove <code>flagInterruptions</code>, which was nonsense.</li>
-</ul></div>
+<ul><li>Remove <code>flagInterruptions</code>, which was nonsense.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functionalities-0-8-0">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-8-0"></a></h3>
 <ul><li>New <code><a href="../reference/isSorted.html">isSorted()</a></code> method to properly test with <code>ignore.strand</code> set to <code>TRUE</code>.</li>
@@ -201,8 +197,7 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.1" id="genomicbreaks-071">GenomicBreaks 0.7.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-071"></a></h2>
-<ul><li>Fix namespace and variable bugs that were preventing <code><a href="../reference/reverse.html">reverse()</a></code> to run.</li>
-</ul></div>
+<ul><li>Fix namespace and variable bugs that were preventing <code><a href="../reference/reverse.html">reverse()</a></code> to run.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.7.0" id="genomicbreaks-070">GenomicBreaks 0.7.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-070"></a></h2>
 <ul><li>New <code><a href="../reference/mergeSeqLevels.html">mergeSeqLevels()</a></code> function to concatenate sequence features, for instance before plotting.</li>
@@ -212,17 +207,14 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.0" id="genomicbreaks-060">GenomicBreaks 0.6.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-060"></a></h2>
-<ul><li>Add pairwise chromosome plot functions using the <a href="http://genoplotr.r-forge.r-project.org" class="external-link"><code>genoPlotR</code></a> package, see in particular <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code>.</li>
-</ul></div>
+<ul><li>Add pairwise chromosome plot functions using the <a href="http://genoplotr.r-forge.r-project.org" class="external-link"><code>genoPlotR</code></a> package, see in particular <code><a href="../reference/plotApairOfChrs.html">plotApairOfChrs()</a></code>.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.3" id="genomicbreaks-053">GenomicBreaks 0.5.3<a class="anchor" aria-label="anchor" href="#genomicbreaks-053"></a></h2>
 <ul><li>
-<em>pkgdown</em> update.</li>
-</ul></div>
+<em>pkgdown</em> update.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.2" id="genomicbreaks-052">GenomicBreaks 0.5.2<a class="anchor" aria-label="anchor" href="#genomicbreaks-052"></a></h2>
-<ul><li>Greatly speed up <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code>.</li>
-</ul></div>
+<ul><li>Greatly speed up <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code>.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.1" id="genomicbreaks-051">GenomicBreaks 0.5.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-051"></a></h2>
 <ul><li>Correct a variable name bug in <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code>.</li>
@@ -230,8 +222,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5.0" id="genomicbreaks-050">GenomicBreaks 0.5.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-050"></a></h2>
-<ul><li>Add a <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code> function to transfer annotations about chromosome arms.</li>
-</ul></div>
+<ul><li>Add a <code><a href="../reference/flagLongShort.html">flagLongShort()</a></code> function to transfer annotations about chromosome arms.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="genomicbreaks-040">GenomicBreaks 0.4.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-040"></a></h2>
 <ul><li>Use alignments of <em>Saccharomyces paradoxus</em> to <em>S. cerevisiae</em> as example data.</li>
@@ -239,12 +230,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="genomicbreaks-030">GenomicBreaks 0.3.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-030"></a></h2>
-<ul><li>Added the <code><a href="../reference/leftInversionGaps.html">leftInversionGaps()</a></code> function.</li>
-</ul></div>
+<ul><li>Added the <code><a href="../reference/leftInversionGaps.html">leftInversionGaps()</a></code> function.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="genomicbreaks-020">GenomicBreaks 0.2.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-020"></a></h2>
-<ul><li>Document the package with <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a>.</li>
-</ul></div>
+<ul><li>Document the package with <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a>.</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -259,7 +248,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

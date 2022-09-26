@@ -68,15 +68,18 @@ this function aims to detect.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">flagDoubleInversions</span><span class="op">(</span><span class="va">gb</span>, details <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flagDoubleInversions</span><span class="op">(</span><span class="va">gb</span>, details <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks()</a></code> object.</p></dd>
+
+
 <dt>details</dt>
 <dd><p>Returns more metadata columns if <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -107,32 +110,32 @@ this function aims to detect.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Start colinear.  Lower case meands minus strand</span></span>
-<span class="r-in"><span class="va">z0</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:+"</span>, B<span class="op">=</span><span class="st">"T:20-25:+"</span>, C<span class="op">=</span><span class="st">"T:30-35:+"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"Q:10-15"</span>,   B<span class="op">=</span><span class="st">"Q:20-25"</span>,   C<span class="op">=</span><span class="st">"Q:30-35"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Swap coordinates of A and B on the query and flip strands  ABC -&gt; baC</span></span>
-<span class="r-in"><span class="va">z1</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:-"</span>, B<span class="op">=</span><span class="st">"T:20-25:-"</span>, C<span class="op">=</span><span class="st">"T:30-35:+"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="st">"Q:20-25"</span>,   b<span class="op">=</span><span class="st">"Q:10-15"</span>,   C<span class="op">=</span><span class="st">"Q:30-35"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Now query order is b - a - C.  Swap a and C and flip strands baC -&gt; bcA</span></span>
-<span class="r-in"><span class="va">z2</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:+"</span>, B<span class="op">=</span><span class="st">"T:20-25:-"</span>, C<span class="op">=</span><span class="st">"T:30-35:-"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"Q:30-35"</span>,   b<span class="op">=</span><span class="st">"Q:10-15"</span>,   c<span class="op">=</span><span class="st">"Q:20-25"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Altogether, there are:</span></span>
-<span class="r-in"><span class="co"># ABC -&gt; baC -&gt; bcA</span></span>
-<span class="r-in"><span class="co"># ABC -&gt; Acb -&gt; Cab</span></span>
-<span class="r-in"><span class="co"># cba -&gt; BCa -&gt; BAc</span></span>
-<span class="r-in"><span class="co"># cba -&gt; cAB -&gt; aCB</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># z2 has same topoloty as package example</span></span>
-<span class="r-in"><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">z2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Start colinear.  Lower case meands minus strand</span></span></span>
+<span class="r-in"><span><span class="va">z0</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:+"</span>, B<span class="op">=</span><span class="st">"T:20-25:+"</span>, C<span class="op">=</span><span class="st">"T:30-35:+"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"Q:10-15"</span>,   B<span class="op">=</span><span class="st">"Q:20-25"</span>,   C<span class="op">=</span><span class="st">"Q:30-35"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Swap coordinates of A and B on the query and flip strands  ABC -&gt; baC</span></span></span>
+<span class="r-in"><span><span class="va">z1</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:-"</span>, B<span class="op">=</span><span class="st">"T:20-25:-"</span>, C<span class="op">=</span><span class="st">"T:30-35:+"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a<span class="op">=</span><span class="st">"Q:20-25"</span>,   b<span class="op">=</span><span class="st">"Q:10-15"</span>,   C<span class="op">=</span><span class="st">"Q:30-35"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Now query order is b - a - C.  Swap a and C and flip strands baC -&gt; bcA</span></span></span>
+<span class="r-in"><span><span class="va">z2</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span>target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"T:10-15:+"</span>, B<span class="op">=</span><span class="st">"T:20-25:-"</span>, C<span class="op">=</span><span class="st">"T:30-35:-"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>              query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A<span class="op">=</span><span class="st">"Q:30-35"</span>,   b<span class="op">=</span><span class="st">"Q:10-15"</span>,   c<span class="op">=</span><span class="st">"Q:20-25"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Altogether, there are:</span></span></span>
+<span class="r-in"><span><span class="co"># ABC -&gt; baC -&gt; bcA</span></span></span>
+<span class="r-in"><span><span class="co"># ABC -&gt; Acb -&gt; Cab</span></span></span>
+<span class="r-in"><span><span class="co"># cba -&gt; BCa -&gt; BAc</span></span></span>
+<span class="r-in"><span><span class="co"># cba -&gt; cAB -&gt; aCB</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># z2 has same topoloty as package example</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">z2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="flagDoubleInversions-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDoubleInversion</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleDoubleInversion</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="flagDoubleInversions-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">flagDoubleInversions</span><span class="op">(</span><span class="va">exampleDoubleInversion</span> <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">flagDoubleInversions</span><span class="op">(</span><span class="va">exampleDoubleInversion</span> <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 5 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query       Dbl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
@@ -143,11 +146,11 @@ this function aims to detect.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">exampleDoubleInversionRev</span> <span class="op">&lt;-</span> <span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleDoubleInversion</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">exampleDoubleInversionRev</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> |&gt; <span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">exampleDoubleInversionRev</span> <span class="op">&lt;-</span> <span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleDoubleInversion</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">exampleDoubleInversionRev</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="flagDoubleInversions-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -162,7 +165,7 @@ this function aims to detect.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

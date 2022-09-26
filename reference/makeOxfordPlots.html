@@ -70,45 +70,67 @@ concatenating them.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeOxfordPlots</span><span class="op">(</span>
-  <span class="va">gb</span>,
-  sp1Name <span class="op">=</span> <span class="st">"target"</span>,
-  sp2Name <span class="op">=</span> <span class="st">"query"</span>,
-  sp1ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
-  sp2ChrArms <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span>, <span class="st">"none"</span><span class="op">)</span>,
-  size <span class="op">=</span> <span class="fl">1</span>,
-  diag <span class="op">=</span> <span class="cn">TRUE</span>,
-  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seqnames"</span>, <span class="st">"strand"</span>, <span class="st">"score"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeOxfordPlots</span><span class="op">(</span></span>
+<span>  <span class="va">gb</span>,</span>
+<span>  sp1Name <span class="op">=</span> <span class="st">"target"</span>,</span>
+<span>  sp2Name <span class="op">=</span> <span class="st">"query"</span>,</span>
+<span>  sp1ChrArms <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sp2ChrArms <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"point"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  diag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seqnames"</span>, <span class="st">"strand"</span>, <span class="st">"score"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code>GBreaks</code> object</p></dd>
+
+
 <dt>sp1Name</dt>
 <dd><p>Name of the first species (default: sp1)</p></dd>
+
+
 <dt>sp2Name</dt>
 <dd><p>Name of the second species (default: sp2)</p></dd>
+
+
 <dt>sp1ChrArms</dt>
 <dd><p>A <code>GBreaks</code> object of chromosome arms in sp1 genome</p></dd>
+
+
 <dt>sp2ChrArms</dt>
 <dd><p>A <code>GBreaks</code> object of chromosome arms in sp2 genome</p></dd>
+
+
 <dt>type</dt>
 <dd><p>The type of the plot (<code>point</code>, <code>line</code> or <code>none</code>)</p></dd>
+
+
 <dt>size</dt>
 <dd><p>The size of the plotted dots or segments.</p></dd>
+
+
 <dt>diag</dt>
 <dd><p>Diagonalise the plot by reordering <em>query</em> sequence levels.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>Colour of the plotted dots or lines by <code>seqnames</code>, <code>strand</code> or
 <code>score</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>ggplot2</code> object that can be further modified using the
-<code>+</code> operator.  Use <code>type = 'none'</code> to receive an object without <em>geom</em>layer.</p>
+    
+
+<p>Returns a <code>ggplot2</code> object that can be further modified using the
+<code>+</code> operator.  Use <code>type = 'none'</code> to receive an object without <em>geom</em></p>
+
+
+<p>layer.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -125,11 +147,11 @@ concatenating them.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">makeOxfordPlots</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">makeOxfordPlots</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="makeOxfordPlots-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">makeOxfordPlots</span><span class="op">(</span><span class="va">exampleTranslocation</span>, type <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">makeOxfordPlots</span><span class="op">(</span><span class="va">exampleTranslocation</span>, type <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="makeOxfordPlots-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +166,7 @@ concatenating them.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

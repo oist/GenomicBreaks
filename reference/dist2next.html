@@ -66,28 +66,35 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for GRanges</span>
-<span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># S4 method for GBreaks</span>
-<span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for GRanges</span></span>
+<span><span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for GBreaks</span></span>
+<span><span class="fu">dist2next</span><span class="op">(</span><span class="va">x</span>, step <span class="op">=</span> <span class="fl">1</span>, ignore.strand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A <code>GRanges</code> or a <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
 <dt>step</dt>
 <dd><p>Distance to the n<sup>th</sup>
 block (default: first).</p></dd>
+
+
 <dt>ignore.strand</dt>
 <dd><p>Calculate distance for ranges on different strands.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>For <code>GRanges</code>, returns the object with one extra metadata colums,
+    
+
+<p>For <code>GRanges</code>, returns the object with one extra metadata colums,
 <code>dist</code>, and for <code>GBreaks</code> two extra columns <code>tdist</code> and <code>qdist</code>, containing
 the distance to the next range in the reference and query genomes
 respectively.</p>
@@ -112,7 +119,7 @@ to <code>Inf</code> arbitrarily.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
@@ -121,7 +128,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">dist2next</span><span class="op">(</span><span class="fu">granges</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">dist2next</span><span class="op">(</span><span class="fu">granges</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |      dist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -130,7 +137,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + |       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
@@ -139,7 +146,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span> <span class="op">-</span> <span class="fl">20</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span> <span class="op">-</span> <span class="fl">20</span>, ignore.strand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
@@ -148,7 +155,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   321-380      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">dist2next</span><span class="op">(</span><span class="va">exampleInversion</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
@@ -157,7 +164,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -172,7 +179,7 @@ to <code>Inf</code> arbitrarily.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

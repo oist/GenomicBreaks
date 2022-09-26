@@ -68,21 +68,28 @@ were colinear, and that are not an inversion.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, both <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">gb</span>, tol <span class="op">=</span> <span class="cn">Inf</span>, both <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks()</a></code> object.</p></dd>
+
+
 <dt>tol</dt>
 <dd><p>Tolerance window for the distance between two ranges.</p></dd>
+
+
 <dt>both</dt>
 <dd><p>Flag both the <em>target</em> and <em>query</em> ranges.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns the <code>GBreaks</code> object with an extra <code>tra</code> metadata column.</p>
+    
+
+<p>Returns the <code>GBreaks</code> object with an extra <code>tra</code> metadata column.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -121,7 +128,7 @@ on both cases, and flag both ranges.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -130,7 +137,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleTranslocation2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -139,9 +146,9 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="flagTranslocations-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -150,7 +157,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:201-300 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -159,7 +166,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrC   401-500      + | chrB:201-300 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span>  |&gt; <span class="fu"><a href="swap.html">swap</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span>  <span class="op">|&gt;</span> <span class="fu"><a href="swap.html">swap</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -168,7 +175,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrB   301-400      + | chrA:201-300 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span> |&gt; <span class="fu"><a href="swap.html">swap</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInsertion</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="swap.html">swap</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |   tra        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;Rle&gt;    &lt;GRanges&gt;</span>
@@ -177,7 +184,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrB   301-400      + | FALSE chrA:201-300</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="reverse.html">reverse</a></span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -186,7 +193,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-401      - | chrB:100-200 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -195,7 +202,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">flagTranslocations</span><span class="op">(</span><span class="va">exampleColinear3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   tra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
@@ -204,7 +211,7 @@ on both cases, and flag both ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -219,7 +226,7 @@ on both cases, and flag both ranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

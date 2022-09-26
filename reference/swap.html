@@ -72,19 +72,24 @@ ignored, a <code>sort</code> option is provided to do that.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">swap</span><span class="op">(</span><span class="va">gb</span>, sort <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">swap</span><span class="op">(</span><span class="va">gb</span>, sort <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
 <dt>sort</dt>
 <dd><p>Sort the returned object, ignoring strand.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A new <code>GBreaks</code> object representing the input's <em>query</em> ranges,
+    
+
+<p>A new <code>GBreaks</code> object representing the input's <em>query</em> ranges,
 with the input's <em>target</em> ranges in the <em>query</em> slot.  The strand information
 is unchanged.</p>
     </div>
@@ -101,7 +106,7 @@ is unchanged.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">swap</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">swap</span><span class="op">(</span><span class="va">exampleDeletion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
@@ -110,7 +115,7 @@ is unchanged.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrB   201-300      + | chrA:301-400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
-<span class="r-in"><span class="fu">swap</span><span class="op">(</span><span class="va">exampleDeletion</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">swap</span><span class="op">(</span><span class="va">exampleDeletion</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
@@ -119,7 +124,7 @@ is unchanged.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrC   401-500      + | chrA:201-300</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -134,7 +139,7 @@ is unchanged.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -66,46 +66,67 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">master_bp_analysis</span><span class="op">(</span>
-  <span class="va">pair_gr</span>,
-  <span class="va">co_tol</span>,
-  <span class="va">ref_tan</span>,
-  <span class="va">ref_tan_tol</span>,
-  <span class="va">q_tan</span>,
-  <span class="va">q_tan_tol</span>,
-  <span class="va">ref_cov</span>,
-  <span class="va">ref_cov_tol</span>,
-  <span class="va">q_cov</span>,
-  <span class="va">q_cov_tol</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">master_bp_analysis</span><span class="op">(</span></span>
+<span>  <span class="va">pair_gr</span>,</span>
+<span>  <span class="va">co_tol</span>,</span>
+<span>  <span class="va">ref_tan</span>,</span>
+<span>  <span class="va">ref_tan_tol</span>,</span>
+<span>  <span class="va">q_tan</span>,</span>
+<span>  <span class="va">q_tan_tol</span>,</span>
+<span>  <span class="va">ref_cov</span>,</span>
+<span>  <span class="va">ref_cov_tol</span>,</span>
+<span>  <span class="va">q_cov</span>,</span>
+<span>  <span class="va">q_cov_tol</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>pair_gr</dt>
 <dd><p>GRanges object containing pairwise alignment</p></dd>
+
+
 <dt>co_tol</dt>
 <dd><p>tolerance over which the coalescing algorithm in <code>coalesce_contigs</code> should bridge. If left blank, coalescing will not be performed</p></dd>
+
+
 <dt>ref_tan</dt>
 <dd><p>tandem repeat coverage for the reference genome in GRanges format</p></dd>
+
+
 <dt>ref_tan_tol</dt>
 <dd><p>proximity to which a breakpoint should be considered to be "near" a tandem repeat</p></dd>
+
+
 <dt>q_tan</dt>
 <dd><p>tandem repeat coverage for the query genome in GRanges format</p></dd>
+
+
 <dt>q_tan_tol</dt>
 <dd><p>proximity to which a breakpoint should be considered to be "near" a tandem repeat</p></dd>
+
+
 <dt>ref_cov</dt>
 <dd><p>reference genome coverage (per base)</p></dd>
+
+
 <dt>ref_cov_tol</dt>
 <dd><p>range overwhich to give average coverage over a breakpoint (reference genome)</p></dd>
+
+
 <dt>q_cov</dt>
 <dd><p>query genome coverage (per base)</p></dd>
+
+
 <dt>q_cov_tol</dt>
 <dd><p>range overwhich to give average coverage over a breakpoint (query genome)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list containing two GRanges objects; one for the reference genome and one for the query genome. Metadata columns contain information per breakpoint, indicated by left (start) breakpoint and right (end) breakpoint</p>
+    
+
+<p>a list containing two GRanges objects; one for the reference genome and one for the query genome. Metadata columns contain information per breakpoint, indicated by left (start) breakpoint and right (end) breakpoint</p>
     </div>
 
   </div>
@@ -120,7 +141,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

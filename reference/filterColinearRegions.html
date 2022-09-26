@@ -66,19 +66,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filterColinearRegions</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filterColinearRegions</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gb</dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object processed with <code><a href="flagColinearAlignments.html">flagColinearAlignments</a></code>.</p></dd>
+
+
 <dt>rename</dt>
 <dd><p>Replace range names by their numeric order before subsetting.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns the <code>GBreaks</code> object in which all ranges that are not
+    
+
+<p>Returns the <code>GBreaks</code> object in which all ranges that are not
 the central part of an inversion triplet have been discarded.  If the object
 was missing the <code>colinear</code> metadata column, return the object after
 discarding all of its ranges.</p>
@@ -97,7 +102,7 @@ discarding all of its ranges.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">filterColinearRegions</span><span class="op">(</span><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">filterColinearRegions</span><span class="op">(</span><span class="fu"><a href="flagColinearAlignments.html">flagColinearAlignments</a></span><span class="op">(</span><span class="va">exampleColinear</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     seqnames    ranges strand |        query  colinear</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;logical&gt;</span>
@@ -105,7 +110,7 @@ discarding all of its ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2     chrA   251-300      + | chrB:251-300     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -120,7 +125,7 @@ discarding all of its ranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
