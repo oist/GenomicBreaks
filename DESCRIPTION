@@ -31,8 +31,10 @@ Imports:
   graphics,
   Biostrings,
   BSgenome,
+  Rcpp,
   weights
-RoxygenNote: 7.1.2
+LinkingTo: Rcpp
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
@@ -45,6 +47,7 @@ VignetteBuilder: knitr
 Collate: 
     'GOC.R'
     'GenomicBreaks.R'
+    'RcppExports.R'
     'StructuralVariants.R'
     'dist2next.R'
     'Translocations.R'
