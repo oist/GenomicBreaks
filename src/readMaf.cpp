@@ -30,8 +30,17 @@ static std::istream& openIn(const std::string& fileName, std::ifstream& ifs) {
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector readMAF (std::string inputFileName) {
+Rcpp::CharacterVector readMAF (std::string inputFileName) {
+  Rcpp::CharacterVector seqnames1;
+  std::string seqname1;
   std::ifstream inFileStream;
   std::istream& input = openIn(inputFileName, inFileStream);
-  return 1;
+  std::string line;
+  while(getline(inFileStream, line)) {
+    if (line[0] != '#') {
+      std::stringstream(line) >> seqname1;
+      seqnames1.push_back(seqname1);
+    }
+  }
+  return seqnames1;
 }
