@@ -2,13 +2,14 @@
 
 #include <string.h>
 
-#include <algorithm>
 #include <cctype>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <stdexcept>
 #include <streambuf>
+
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 
 using namespace Rcpp;
 //' Read a MAF file
@@ -16,18 +17,6 @@ using namespace Rcpp;
 //' @param inputFileName The name of the file to read
 //' @return a GenomicBreaks object
 //' @export
-
-
-static void err(const std::string& s) {
-  throw std::runtime_error(s);
-}
-
-static std::istream& openIn(const std::string& fileName, std::ifstream& ifs) {
-  if (fileName == "-") return std::cin;
-  ifs.open(fileName.c_str());
-  if (!ifs) err("can't open file: " + fileName);
-  return ifs;
-}
 
 // [[Rcpp::export]]
 Rcpp::List readMAF (std::string inputFileName) {
@@ -40,6 +29,7 @@ Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::IntegerVector start2;
   Rcpp::IntegerVector length1;
   Rcpp::IntegerVector length2;
+
   std::string linetype;
   std::string seqname;
   int startpos;
@@ -47,11 +37,16 @@ Rcpp::List readMAF (std::string inputFileName) {
   std::string strand;
   int seqlength;
   std::string seq;
-  std::ifstream inFileStream;
-  std::istream& input = openIn(inputFileName, inFileStream);
-  std::string line;
   int score;
-  while(getline(inFileStream, line)) {
+
+  std::ifstream file(inputFileName, std::ios_base::in | std::ios_base::binary);
+  boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
+  //in.push(boost::iostreams::gzip_decompressor());
+  in.push(file);
+  std::istream incoming(&in);
+
+  std::string line;
+  while(getline(incoming, line)) {
     if (line[0] != '#') {
       // do nothing
     }
@@ -67,7 +62,7 @@ Rcpp::List readMAF (std::string inputFileName) {
       start1.push_back(startpos);
       length1.push_back(length);
       // Assume that there are always two 's' lines in a row
-      getline(inFileStream, line);
+      getline(incoming, line);
       std::stringstream(line) >> linetype >> seqname >> startpos >> length >> strand >> seqlength >> seq;
       seqnames2.push_back(seqname);
       seqlengths2.push_back(seqlength);
