@@ -11,13 +11,13 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // readMAF
-Rcpp::NumericVector readMAF(int A);
-RcppExport SEXP _GenomicBreaks_readMAF(SEXP ASEXP) {
+Rcpp::List readMAF(std::string inputFileName);
+RcppExport SEXP _GenomicBreaks_readMAF(SEXP inputFileNameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type A(ASEXP);
-    rcpp_result_gen = Rcpp::wrap(readMAF(A));
+    Rcpp::traits::input_parameter< std::string >::type inputFileName(inputFileNameSEXP);
+    rcpp_result_gen = Rcpp::wrap(readMAF(inputFileName));
     return rcpp_result_gen;
 END_RCPP
 }

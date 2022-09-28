@@ -1,24 +1,29 @@
 #include <Rcpp.h>
 
-#include <string.h>
-
-#include <cctype>
 #include <fstream>
 #include <iostream>
-#include <sstream>
-#include <streambuf>
 
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 
 using namespace Rcpp;
+
 //' Read a MAF file
 //'
+//' Reads a pairwise genome alignment in MAF format.  The file can be plain
+//' text or compressed with `gzip`.
+//'
+//' Known limitations: Does not expand shell metacharacters.  Trusts blindly
+//' file extension to determine compression.  Does not perform any validation on
+//' the file format.
+//'
 //' @param inputFileName The name of the file to read
-//' @return a GenomicBreaks object
+//' @return a `GenomicBreaks` object.
+//' @importFrom Rcpp evalCpp
+//' @useDynLib GenomicBreaks, .registration = TRUE
 //' @export
-
 // [[Rcpp::export]]
+
 Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::CharacterVector seqnames1;
   Rcpp::CharacterVector seqnames2;
@@ -41,7 +46,9 @@ Rcpp::List readMAF (std::string inputFileName) {
 
   std::ifstream file(inputFileName, std::ios_base::in | std::ios_base::binary);
   boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
-  //in.push(boost::iostreams::gzip_decompressor());
+  if(inputFileName.substr(inputFileName.find_last_of(".") + 1) == "gz") {
+    in.push(boost::iostreams::gzip_decompressor());
+  }
   in.push(file);
   std::istream incoming(&in);
 

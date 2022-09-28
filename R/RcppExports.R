@@ -3,10 +3,19 @@
 
 #' Read a MAF file
 #'
-#' @param file The name of the file to read
-#' @return a GenomicBreaks object
+#' Reads a pairwise genome alignment in MAF format.  The file can be plain
+#' text or compressed with `gzip`.
+#'
+#' Known limitations: Does not expand shell metacharacters.  Trusts blindly
+#' file extension to determine compression.  Does not perform any validation on
+#' the file format.
+#'
+#' @param inputFileName The name of the file to read
+#' @return a `GenomicBreaks` object.
+#' @importFrom Rcpp evalCpp
+#' @useDynLib GenomicBreaks, .registration = TRUE
 #' @export
-readMAF <- function(A = 10L) {
-    .Call('_GenomicBreaks_readMAF', PACKAGE = 'GenomicBreaks', A)
+readMAF <- function(inputFileName) {
+    .Call(`_GenomicBreaks_readMAF`, inputFileName)
 }
 
