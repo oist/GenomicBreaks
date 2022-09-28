@@ -21,7 +21,6 @@ using namespace Rcpp;
 //' @return a `GenomicBreaks` object.
 //' @importFrom Rcpp evalCpp
 //' @useDynLib GenomicBreaks, .registration = TRUE
-//' @export
 // [[Rcpp::export]]
 
 Rcpp::List readMAF (std::string inputFileName) {

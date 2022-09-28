@@ -65,3 +65,28 @@ load_genomic_breaks <- function (
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   as(gb, "GBreaks")
 }
+
+#' @note COORDINATES ON MINUS STRAND STILL WRONG!!!
+#' @rdname load_genomic_breaks
+#' @export
+
+load_genomic_breaks_MAF <- function (
+    file,
+    target_genome = NULL,
+    query_genome = NULL,
+    sort = TRUE,
+    type = NULL)
+{
+  l <- readMAF(file)
+  gb <- GRanges(l$seqnames1, IRanges(l$start1, width = l$length1), strand = l$strand)
+  score(gb) <- l$scores
+  seqlengths1 <- unique(l$seqlengths1)
+  names(seqlengths1) <- unique(l$seqnames1)
+  seqlengths(gb) <- seqlengths1
+  gb$query <- GRanges(l$seqnames2, IRanges(l$start2, width = l$length2))
+  seqlengths2 <- unique(l$seqlengths2)
+  names(seqlengths2) <- unique(l$seqnames2)
+  seqlengths(gb$query) <- seqlengths2
+  if (sort) gb <- sort(gb, ignore.strand = TRUE)
+  as(gb, "GBreaks")
+}

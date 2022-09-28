@@ -14,7 +14,6 @@
 #' @return a `GenomicBreaks` object.
 #' @importFrom Rcpp evalCpp
 #' @useDynLib GenomicBreaks, .registration = TRUE
-#' @export
 readMAF <- function(inputFileName) {
     .Call(`_GenomicBreaks_readMAF`, inputFileName)
 }

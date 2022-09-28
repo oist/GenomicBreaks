@@ -2,6 +2,7 @@
 % Please edit documentation in R/load_genomic_breaks.R
 \name{load_genomic_breaks}
 \alias{load_genomic_breaks}
+\alias{load_genomic_breaks_MAF}
 \title{Load pairwise genome alignments}
 \usage{
 load_genomic_breaks(
@@ -10,6 +11,14 @@ load_genomic_breaks(
   query_bsgenome = NULL,
   sort = TRUE,
   type = "match_part"
+)
+
+load_genomic_breaks_MAF(
+  file,
+  target_genome = NULL,
+  query_genome = NULL,
+  sort = TRUE,
+  type = NULL
 )
 }
 \arguments{
@@ -49,6 +58,9 @@ the match in the \emph{query} genome.  (Sorry that it is confusing…)
 \item Stand information is set so that \emph{query} genome coordinates are always on
 the \emph{plus} strand.
 }
+}
+\note{
+COORDINATES ON MINUS STRAND STILL WRONG!!!
 }
 \examples{
 \dontrun{
