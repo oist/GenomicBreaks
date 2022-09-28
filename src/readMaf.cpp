@@ -15,7 +15,7 @@ using namespace Rcpp;
 //'
 //' Known limitations: Does not expand shell metacharacters.  Trusts blindly
 //' file extension to determine compression.  Does not perform any validation on
-//' the file format.
+//' the file format.  Assumes that the score comes first in the 'a' lines.
 //'
 //' @param inputFileName The name of the file to read
 //' @return a `GenomicBreaks` object.
@@ -30,6 +30,7 @@ Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::IntegerVector seqlengths1;
   Rcpp::IntegerVector seqlengths2;
   Rcpp::CharacterVector strands;
+  Rcpp::IntegerVector scores;
   Rcpp::IntegerVector start1;
   Rcpp::IntegerVector start2;
   Rcpp::IntegerVector length1;
@@ -42,7 +43,6 @@ Rcpp::List readMAF (std::string inputFileName) {
   std::string strand;
   int seqlength;
   std::string seq;
-  int score;
 
   std::ifstream file(inputFileName, std::ios_base::in | std::ios_base::binary);
   boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
@@ -58,8 +58,14 @@ Rcpp::List readMAF (std::string inputFileName) {
       // do nothing
     }
     if (line[0] == 'a') {
-      // dummy score for the moment
-      score = 1;
+      // Example line: a score=762 mismap=1e-09
+      // I assume score comes first after 'a'.
+      std::string first;
+      std::string second;
+      std::stringstream(line) >> first >> second;
+      std::string delimiter = "=";
+      std::string token = second.substr(second.find(delimiter) + 1);
+      scores.push_back(std::stoi(token));
     }
     if (line[0] == 's') {
       // Example line: s BK006934.2   19127 1679 +  562643 AACCAATCCAAAA...
@@ -86,6 +92,7 @@ Rcpp::List readMAF (std::string inputFileName) {
                                              Named("seqlengths2") = seqlengths2,
                                              Named("start2") = start2,
                                              Named("length2") = length2,
-                                             Named("strand") = strands);
+                                             Named("strand") = strands,
+                                             Named("scores") = scores);
   return outputList;
 }

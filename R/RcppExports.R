@@ -8,7 +8,7 @@
 #'
 #' Known limitations: Does not expand shell metacharacters.  Trusts blindly
 #' file extension to determine compression.  Does not perform any validation on
-#' the file format.
+#' the file format.  Assumes that the score comes first in the 'a' lines.
 #'
 #' @param inputFileName The name of the file to read
 #' @return a `GenomicBreaks` object.

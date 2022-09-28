@@ -19,5 +19,5 @@ text or compressed with \code{gzip}.
 \details{
 Known limitations: Does not expand shell metacharacters.  Trusts blindly
 file extension to determine compression.  Does not perform any validation on
-the file format.
+the file format.  Assumes that the score comes first in the 'a' lines.
 }
