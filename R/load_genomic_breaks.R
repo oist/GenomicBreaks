@@ -66,7 +66,6 @@ load_genomic_breaks <- function (
   as(gb, "GBreaks")
 }
 
-#' @note COORDINATES ON MINUS STRAND STILL WRONG!!!
 #' @rdname load_genomic_breaks
 #' @export
 
@@ -78,6 +77,17 @@ load_genomic_breaks_MAF <- function (
     type = NULL)
 {
   l <- readMAF(file)
+  # Convert coordinates to GenomicRanges system
+  # http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5
+  # Make minus-strand coordinates relative to the start of the sequence
+  l$start2 <- ifelse(l$strand == "+",
+                     l$start2,
+                     l$seqlengths2 - l$start2 - l$length2 + 1)
+  # Add 1 to the starts
+  # http://genomewiki.ucsc.edu/index.php/Coordinate_Transforms
+  l$start1 = l$start1 + 1;
+  l$start2 = l$start2 + 1;
+  # Build GBreaks object
   gb <- GRanges(l$seqnames1, IRanges(l$start1, width = l$length1), strand = l$strand)
   score(gb) <- l$scores
   seqlengths1 <- unique(l$seqlengths1)

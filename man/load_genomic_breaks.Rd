@@ -59,9 +59,6 @@ the match in the \emph{query} genome.  (Sorry that it is confusing…)
 the \emph{plus} strand.
 }
 }
-\note{
-COORDINATES ON MINUS STRAND STILL WRONG!!!
-}
 \examples{
 \dontrun{
 library("BSgenome.Odioica.local.OSKA2016")
