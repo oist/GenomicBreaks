@@ -87,6 +87,8 @@ load_genomic_breaks_MAF <- function (
   seqlengths2 <- unique(l$seqlengths2)
   names(seqlengths2) <- unique(l$seqnames2)
   seqlengths(gb$query) <- seqlengths2
+  gb$aLength <- l$aLength
+  gb$matches <- l$matches
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   as(gb, "GBreaks")
 }
