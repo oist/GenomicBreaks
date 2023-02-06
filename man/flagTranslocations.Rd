@@ -25,14 +25,16 @@ The result of the flagging differs if the \emph{target} and \emph{query} ranges 
 swapped.  Therefore, by default this function will search for translocations
 on both cases, and flag both ranges.
 
-Here is a trivial example of a translocation:\preformatted{┌──────────────┬──────────────┬──────────────┐
+Here is a trivial example of a translocation:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{┌──────────────┬──────────────┬──────────────┐
 │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
 └──────────────┴──────────────┴──────────────┘
        +               +             +         (Alignment direction)
 ┌──────────────┬──────────────┬──────────────┐
 │ chrB:101-200 │ chrC:201-300 │ chrB:301-400 │ (Query genome)
 └──────────────┴──────────────┴──────────────┘
-}
+}\if{html}{\out{</div>}}
 }
 \examples{
 flagTranslocations(exampleTranslocation)

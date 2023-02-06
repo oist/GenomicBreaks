@@ -19,14 +19,16 @@ Flag ranges that start a triplet that would be colinear if the central pair
 were aligned to the opposite strand.
 }
 \details{
-Here is a trivial example of an inversion.\preformatted{┌──────────────┬──────────────┬──────────────┐
+Here is a trivial example of an inversion.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{┌──────────────┬──────────────┬──────────────┐
 │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
 └──────────────┴──────────────┴──────────────┘
        +               -             +         (Alignment direction)
 ┌──────────────┬──────────────┬──────────────┐
 │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ (Query genome)
 └──────────────┴──────────────┴──────────────┘
-}
+}\if{html}{\out{</div>}}
 }
 \examples{
 flagInversions(exampleInversion)

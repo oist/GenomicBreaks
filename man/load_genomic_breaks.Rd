@@ -2,7 +2,6 @@
 % Please edit documentation in R/load_genomic_breaks.R
 \name{load_genomic_breaks}
 \alias{load_genomic_breaks}
-\alias{load_genomic_breaks_MAF}
 \title{Load pairwise genome alignments}
 \usage{
 load_genomic_breaks(
@@ -12,26 +11,19 @@ load_genomic_breaks(
   sort = TRUE,
   type = "match_part"
 )
-
-load_genomic_breaks_MAF(
-  file,
-  target_genome = NULL,
-  query_genome = NULL,
-  sort = TRUE,
-  type = NULL
-)
 }
 \arguments{
-\item{file}{Path to a file in GFF3 format.}
+\item{file}{Path to a file in GFF3 or MAF format.  The file can be compressed
+with \emph{gzip}.}
 
-\item{target_bsgenome}{A \code{BSgenome} object representing the target genome.}
+\item{target_bsgenome}{A \code{BSgenome} object representing the \emph{target} genome.}
 
-\item{query_bsgenome}{A \code{BSgenome} object representing the query genome.}
+\item{query_bsgenome}{A \code{BSgenome} object representing the \emph{query} genome.}
 
 \item{sort}{Returns the object sorted, ignoring strand information.}
 
-\item{type}{Sequence ontology term representing an alignment block
-(default: \code{match_part}).}
+\item{type}{In GFF3 files, \emph{Sequence Ontology} term representing an alignment
+block (default: \code{match_part}).}
 }
 \value{
 Returns a \code{\link{GBreaks}} object where each element represents a pairwise
@@ -42,12 +34,12 @@ passed as parameters are copied to the \code{GRanges} objects accordingly.
 }
 \description{
 Loads alignments of a \emph{query} genome to a \emph{target} genome from a text file in
-GFF3 format.  By convention, the \emph{target} genome is the one that was indexed
-by the aligner.
+\emph{General Feature Format 3} (GFF3) or \emph{Multiple Alignemnt Format} (MAF).  By
+convention, the \emph{target} genome is the one that was indexed by the aligner.
 }
 \details{
-This function expects the pairwise alignment to be represented in GFF3 format
-in the following way:
+When the input is in GFF3 files, this function expects the pairwise alignment
+to be represented in in the following way:
 \itemize{
 \item Alignments blocks are represented by entries in specific sequence ontology
 term in the \emph{type} column.  Other entries will be discarded.  The default
@@ -69,4 +61,10 @@ load_genomic_breaks(
   query = OKI2018_I69)
 }
 
+}
+\seealso{
+The \href{http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5}{MAF format}
+documentation on the UCSC genome browser website, and the
+\href{https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md}{GFF3 specification}
+from the \emph{Sequence Ontology} group.
 }

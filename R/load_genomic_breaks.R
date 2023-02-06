@@ -1,11 +1,11 @@
 #' Load pairwise genome alignments
 #'
 #' Loads alignments of a _query_ genome to a _target_ genome from a text file in
-#' GFF3 format.  By convention, the _target_ genome is the one that was indexed
-#' by the aligner.
+#' _General Feature Format 3_ (GFF3) or _Multiple Alignemnt Format_ (MAF).  By
+#' convention, the _target_ genome is the one that was indexed by the aligner.
 #'
-#' This function expects the pairwise alignment to be represented in GFF3 format
-#' in the following way:
+#' When the input is in GFF3 files, this function expects the pairwise alignment
+#' to be represented in in the following way:
 #'
 #' * Alignments blocks are represented by entries in specific sequence ontology
 #'   term in the _type_ column.  Other entries will be discarded.  The default
@@ -16,12 +16,18 @@
 #' * Stand information is set so that _query_ genome coordinates are always on
 #'   the _plus_ strand.
 #'
-#' @param file Path to a file in GFF3 format.
-#' @param target_bsgenome A `BSgenome` object representing the target genome.
-#' @param query_bsgenome A `BSgenome` object representing the query genome.
+#' @param file Path to a file in GFF3 or MAF format.  The file can be compressed
+#'        with _gzip_.
+#' @param target_bsgenome A `BSgenome` object representing the _target_ genome.
+#' @param query_bsgenome A `BSgenome` object representing the _query_ genome.
 #' @param sort Returns the object sorted, ignoring strand information.
-#' @param type Sequence ontology term representing an alignment block
-#'        (default: `match_part`).
+#' @param type In GFF3 files, _Sequence Ontology_ term representing an alignment
+#'        block (default: `match_part`).
+#'
+#' @seealso The [MAF format](http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5)
+#' documentation on the UCSC genome browser website, and the
+#' [GFF3 specification](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
+#' from the _Sequence Ontology_ group.
 #'
 #' @return Returns a [`GBreaks`] object where each element represents a pairwise
 #' alignment block.  The `granges` part of the object contains the coordinates
@@ -43,6 +49,25 @@
 #' @export
 
 load_genomic_breaks <- function (
+    file,
+    target_bsgenome = NULL,
+    query_bsgenome = NULL,
+    sort = TRUE,
+    type = "match_part")
+{
+  file <- normalizePath(file, mustWork = TRUE)
+  if (grepl(".gff3$|gff3.gz$", file)) {
+    load_genomic_breaks_function <- load_genomic_breaks_GFF
+  } else if (grepl(".maf$|.maf.gz$", file)) {
+    load_genomic_breaks_function <- load_genomic_breaks_MAF
+  }
+  gb <- load_genomic_breaks_function(
+    file = file, target_bsgenome = target_bsgenome,
+    query_bsgenome = query_bsgenome, sort = sort, type = type)
+  gb
+}
+
+load_genomic_breaks_GFF <- function (
   file,
   target_bsgenome = NULL,
   query_bsgenome = NULL,
@@ -65,9 +90,6 @@ load_genomic_breaks <- function (
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   as(gb, "GBreaks")
 }
-
-#' @rdname load_genomic_breaks
-#' @export
 
 load_genomic_breaks_MAF <- function (
     file,

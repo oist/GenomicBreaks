@@ -11,7 +11,8 @@
 #' the file format.  Assumes that the score comes first in the 'a' lines.
 #'
 #' @param inputFileName The name of the file to read
-#' @return a `GenomicBreaks` object.
+#' @return a `list` object with containg coordinates of the alignments in both
+#' genomes and other information such as alignment width and number of matches.
 #' @importFrom Rcpp evalCpp
 #' @useDynLib GenomicBreaks, .registration = TRUE
 readMAF <- function(inputFileName) {
