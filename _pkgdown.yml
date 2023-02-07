@@ -57,6 +57,7 @@ reference:
     - makeInversion.chr
     - master_bp_analysis
     - orderQuerySeqLevels
+    - readMAF
     - scaf_align_plot
     - strandNames
     - tan_bp
