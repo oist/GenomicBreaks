@@ -115,10 +115,14 @@ load_genomic_breaks_MAF <- function (
   score(gb) <- l$scores
   seqlengths1        <- l $ seqlengths1 [!duplicated(l$seqnames1)]
   names(seqlengths1) <- l $ seqnames1   [!duplicated(l$seqnames1)]
+  # Add 1 to the lengths (see above)
+  seqlengths1 <- seqlengths1 + 1
   seqlengths(gb) <- seqlengths1
   gb$query <- GRanges(l$seqnames2, IRanges(l$start2, width = l$length2))
   seqlengths2        <- l $ seqlengths2 [!duplicated(l$seqnames2)]
   names(seqlengths2) <- l $ seqnames2   [!duplicated(l$seqnames2)]
+  # Add 1 to the lengths (see above)
+  seqlengths2 <- seqlengths2 + 1
   seqlengths(gb$query) <- seqlengths2
   gb$aLength <- l$aLength
   gb$matches <- l$matches
