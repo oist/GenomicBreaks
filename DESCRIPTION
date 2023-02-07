@@ -27,7 +27,6 @@ Imports:
   heatmaps,
   IRanges,
   GenomeInfoDb,
-  GenomicFeatures,
   stats,
   graphics,
   Biostrings,
@@ -39,6 +38,7 @@ RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
+  GenomicFeatures,
   gridExtra,
   Gviz,
   knitr,
