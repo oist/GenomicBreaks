@@ -9,6 +9,8 @@
 
 using namespace Rcpp;
 
+// [[Rcpp::depends(BH)]]
+
 //' Read a MAF file
 //'
 //' Reads a pairwise genome alignment in MAF format.  The file can be plain

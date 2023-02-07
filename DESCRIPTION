@@ -34,7 +34,7 @@ Imports:
   BSgenome,
   Rcpp,
   weights
-LinkingTo: Rcpp
+LinkingTo: Rcpp, BH
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests:
