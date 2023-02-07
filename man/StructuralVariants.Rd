@@ -5,7 +5,10 @@
 \alias{exampleColinear}
 \alias{exampleNotColinear}
 \alias{exampleColinear3}
+\alias{exampleColinear5}
 \alias{exampleInversion}
+\alias{exampleDoubleInversion}
+\alias{exampleInversion5uncollapsed}
 \alias{exampleTranslocation}
 \alias{exampleTranslocation2}
 \alias{exampleInsertion}
