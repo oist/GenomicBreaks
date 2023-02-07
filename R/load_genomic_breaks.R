@@ -55,10 +55,12 @@ load_genomic_breaks <- function (
     type = "match_part")
 {
   file <- normalizePath(file, mustWork = TRUE)
-  if (grepl(".gff3$|gff3.gz$", file)) {
+  if (grepl(".gff3$|gff3.gz$|.gff$|gff.gz$", file)) {
     load_genomic_breaks_function <- load_genomic_breaks_GFF
   } else if (grepl(".maf$|.maf.gz$", file)) {
     load_genomic_breaks_function <- load_genomic_breaks_MAF
+  } else {
+    stop("Unsupported file type: extension should be gff, gff.gz, gff3, gff3.gz, maf, or maf.gz.")
   }
   gb <- load_genomic_breaks_function(
     file = file, target_bsgenome = target_bsgenome,
