@@ -92,8 +92,8 @@ load_genomic_breaks_GFF <- function (
 
 load_genomic_breaks_MAF <- function (
     file,
-    target_genome = NULL,
-    query_genome = NULL,
+    target_bsgenome = NULL,
+    query_bsgenome = NULL,
     sort = TRUE,
     type = NULL)
 {
