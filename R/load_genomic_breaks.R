@@ -37,12 +37,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' library("BSgenome.Odioica.local.OSKA2016")
-#' library("BSgenome.Odioica.local.OKI2018.I69")
+#' library("BSgenome.Scerevisiae.UCSC.sacCer3")
 #' load_genomic_breaks(
-#'   system.file("extdata/OSKA2016__I69-5.gff3.gz", package="GenomicBreaks"),
-#'   target = OSKA2016,
-#'   query = OKI2018_I69)
+#'   system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"),
+#'   target = Scerevisiae,
+#'   query = NULL)
 #' }
 #'
 #' @importFrom rtracklayer import.gff3
