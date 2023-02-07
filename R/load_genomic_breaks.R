@@ -113,12 +113,12 @@ load_genomic_breaks_MAF <- function (
   # Build GBreaks object
   gb <- GRanges(l$seqnames1, IRanges(l$start1, width = l$length1), strand = l$strand)
   score(gb) <- l$scores
-  seqlengths1 <- unique(l$seqlengths1)
-  names(seqlengths1) <- unique(l$seqnames1)
+  seqlengths1        <- l $ seqlengths1 [!duplicated(l$seqnames1)]
+  names(seqlengths1) <- l $ seqnames1   [!duplicated(l$seqnames1)]
   seqlengths(gb) <- seqlengths1
   gb$query <- GRanges(l$seqnames2, IRanges(l$start2, width = l$length2))
-  seqlengths2 <- unique(l$seqlengths2)
-  names(seqlengths2) <- unique(l$seqnames2)
+  seqlengths2        <- l $ seqlengths2 [!duplicated(l$seqnames2)]
+  names(seqlengths2) <- l $ seqnames2   [!duplicated(l$seqnames2)]
   seqlengths(gb$query) <- seqlengths2
   gb$aLength <- l$aLength
   gb$matches <- l$matches
