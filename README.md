@@ -41,6 +41,7 @@ sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtif
 sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
 sudo apt install git bash-completion
 sudo apt install libgl1 libnss3 libasound2 libxdamage1
+sudo apt install libboost-iostreams-dev # To build GenomicBreaks
 wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-351-amd64.deb
 sudo apt --fix-broken -y install ./rstudio-2021.09.0-351-amd64.deb
 Rscript -e 'install.packages("BiocManager")'
