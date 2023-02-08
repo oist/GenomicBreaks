@@ -6,8 +6,9 @@ output:
   html_document: 
     keep_md: yes
 params:
-  mafFile: "~/FromDeigo/Fungi_Ncra/Podospora_comata.07.postmasked.maf.gz"
-  prefix: "Fungi_Ncra"
+  alnFile: "/absolute/path/to/your/file"
+  matchType: "match_part or match depending on GFF file format"
+  prefix: "PrefixForOutputFileNames"
 editor_options: 
   chunk_output_type: console
 ---
@@ -19,7 +20,7 @@ knitr::opts_knit$set(progress = TRUE, verbose = TRUE, root.dir = system2("pwd", 
 
 ```{r load_libraries}
 library("GenomicBreaks") |> suppressPackageStartupMessages()
-library("ggplot2") |> suppressPackageStartupMessages()
+library("ggplot2")       |> suppressPackageStartupMessages()
 ```
 
 How to use this Rmarkdown template:
@@ -42,68 +43,59 @@ Load data
 params
 
 # Load the alignment in a GBreaks object
-gb <-load_genomic_breaks(params$mafFile)
+gb <-load_genomic_breaks(params$alnFile, type = params$matchType)
 ```
 
-Coalesce contigs and study unaligned regions
---------------------------------------------
-
-```{r flag_genomic_breaks}
-gb <- gb |>
-  flagColinearAlignments() |>
-  flagTranslocations() |>
-  flagInversions()
-sapply(mcols(gb)[,c("colinear", "tra", "inv")], sum)
-```
+Coalesce contigs
+----------------
 
 ```{r coalesce_contigs}
 coa <- coalesce_contigs(gb)
 ```
 
-We flag the alignments again after discarding the shortest regions.  This
-allows the short colinear regions to consolidate first.  Thus, we only remove
-the short alignments that interrupt the colinearity of longer ones.
-
 ### Extract information
 
-Let's call the intervals between two alignment parts “_Unaligned_” sequences.
-We need a function that returns only them.  Bioconductor's `gaps()` function
-will return also the unaligned sequences between the start/end of chromosome
-and the first/last block.  The `cleanGaps` function below removes them before
-returning the object.
+We divide the genome into four categories: _isolated alignments_, _breakpoint
+regions_, _colinear alignments_ and _bridge regions_.
+
+_Colinear alignments_ are defined by the colinearity relationship computed
+in `?flagColinearAlignments`.  _Bridge regions_ separate alignments that are
+colinear to each other.  _Isolated alignments_ have no colinear counterparts
+and _breakpoint regions_ are the remaining intervals.  _Colinear regions_ are
+the union of _colinear alignments_ and _bridge regions_.
+
+As Bioconductor's `gaps()` function returns also the unaligned sequences between
+the start/end of chromosome and the first/last block, we use the `?cleanGaps`
+function that removes them before returning the object.
    
 ```{r clean_gaps}
-gb_unal  <- cleanGaps(gb)
-coa_unal <- cleanGaps(coa)
+isol <- gb[gb %in% coa]
+coli <- gb[!gb %in% coa]
+bri  <- bridgeRegions(gb)
+brk  <- cleanGaps(coa)
 ```
 
 ```{r plot_widths, dev = c('svg', 'png')}
-# To handle cases where everything is collapsed
-coa_unal__ <-
-  if(length(coa_unal) == 0) {
-    IRanges(start = 1, width = 0)
-  } else {
-    coa_unal
-  }
-
 # Need to wrap in a function to handle empty GRanges objects...
 width2df <- function(what, gr) {
-  if (length(gr) == 0) return (NULL)
-  data.frame(what = what, width = width(gr))
+  if (length(gr) == 0) {
+    data.frame(what = what, width = 0)
+  } else { 
+    data.frame(what = what, width = width(gr))
+  }
 }
 
-df <- rbind(
-  width2df(what = "aligned",     gr = gb),
-  width2df(what = "unaligned",   gr = gb_unal),
-  width2df(what = "collapsed",   gr = coa),
-  width2df(what = "uncollapsed", gr = coa_unal__)
-)
-
-ggplot(df) +
+rbind(
+  width2df(what = "isol_aln", gr = isol),
+  width2df(what = "breakpoint_regions",   gr = brk),
+  width2df(what = "colinear_aln", gr = coli),
+  width2df(what = "colinear_region", gr = coa),
+  width2df(what = "bridge", gr = bri)
+) |> ggplot() +
   aes(width) +
   geom_histogram() +
   scale_x_log10() +
-  facet_wrap(~what, nrow = 2)
+  facet_wrap(~what, ncol = 1)
 ```
 
 Inversions
@@ -115,15 +107,10 @@ sum(coa$inv)
 showInversions(coa) |> head(11)
 if (sum(coa$inv) > 10) {
   # Histogram of the widths
-  ggplot(data.frame(width = width(coa[coa$inv]))) +
+  ggplot(data.frame(width = width(filterInversions(coa)))) +
     aes(width) +
     geom_histogram() +
     scale_x_log10()
-  
-  # Why are the inversions overwhelmingly on the plus strand ?
-  ggplot(data.frame(strand = strand(coa[coa$inv]))) +
-    aes(strand) +
-    geom_bar()
 }
 ```
 
@@ -135,23 +122,14 @@ Patterns that can be described as translocations in the target genome.
 ```{r study_translocations}
 coa <- flagTranslocations(coa)
 sum(coa$tra)
-traPos <- NULL
+showTranslocations(coa) |> head(11)
+
 if (sum(coa$tra) > 10) {
-  traPos <- which(coa$tra) + 1
-  insContext <- c(traPos -1 , traPos, traPos + 1) |> unique() |> sort()
-  coa[traPos]
-  coa[insContext] |> head(11)
-  
   # Histogram of the widths
-  ggplot(data.frame(width = width(coa[traPos]))) +
+  ggplot(data.frame(width = width(filterTranslocations(coa)))) +
     aes(width) +
     geom_histogram() +
     scale_x_log10()
-  
-  # Why are the inversions overwhelmingly on the plus strand ?
-  ggplot(data.frame(strand = strand(coa[traPos]))) +
-    aes(strand) +
-    geom_bar()
 }
 ```
 
