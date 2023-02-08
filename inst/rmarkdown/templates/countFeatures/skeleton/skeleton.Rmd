@@ -32,7 +32,7 @@ different environment than the GenomicBreaks Singularity image.
 Example command
 
 ```
-R_LIBS_USER='' R -e 'rmarkdown::render("thisTemplate.Rmd", output_file = "./outFile.html", params = list(axtFile = "/path/do/dir/with/alignment/files"))'
+R_LIBS_USER='' R -e 'rmarkdown::render("thisTemplate.Rmd", output_file = "./outFile.html", params = list(alnFile = "/path/do/dir/with/alignment/files"))'
 ```
 
 Load data
