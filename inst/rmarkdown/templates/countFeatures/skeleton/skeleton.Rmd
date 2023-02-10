@@ -51,6 +51,7 @@ Coalesce contigs
 
 ```{r coalesce_contigs}
 coa <- coalesce_contigs(gb)
+makeOxfordPlots(coa) + ggtitle(params$alnFile)
 ```
 
 ### Extract information
@@ -73,6 +74,7 @@ isol <- gb[gb %in% coa]
 coli <- gb[!gb %in% coa]
 bri  <- bridgeRegions(gb)
 brk  <- cleanGaps(coa)
+brk_q <- cleanGaps(coa$query)
 ```
 
 ```{r plot_widths, dev = c('svg', 'png')}
@@ -138,16 +140,36 @@ Calculate numbers and prepare them for export in a YAML file
 ------------------------------------------------------------
 
 ```{r count_features}
+
+L50width <- function(gb) weighted.mean(width(gb), as.numeric(width(gb))) # as.num to avoid integer overflow
+summaryWidth <- function(gb) {
+  s <- summary(width(gb))
+  s["L50"]     <- L50width(gb)
+  s["Total"]   <- sum(width(gb))
+  s["N"]       <- length(gb)
+  s
+}
+  
 report <- list()
 
-report[["aligned_length_total"]]  <- sum(gb$aLength)
-report[["aligned_target_total"]]  <- sum(width(gb))
-report[["aligned_query_total"]]   <- sum(width(gb$query))
-report[["aligned_ranges_number"]] <- length(gb)
+report[["aligned_length_total"]]       <- sum(gb$aLength)
+report[["aligned_target_summary"]]     <- summaryWidth(gb)
+report[["aligned_query_summary"]]      <- summaryWidth(gb$query)
 
-report[["colinear_target_total"]] <- sum(width(coa))
-report[["colinear_query_total"]]  <- sum(width(coa$query))
-report[["colinear_ranges_number"]] <- length(coa)
+report[["col_reg_target_summary"]]     <- summaryWidth(coa)
+report[["col_reg_query_summary"]]      <- summaryWidth(coa$query)
+
+report[["colinear_target_summary"]]    <- summaryWidth(coli)
+report[["colinear_query_summary"]]     <- summaryWidth(coli$query)
+
+report[["isolated_target_summary"]]    <- summaryWidth(isol)
+report[["isolated_query_summary"]]     <- summaryWidth(isol$query)
+
+report[["bridge_target_summary"]]      <- summaryWidth(bri)
+report[["bridge_query_summary"]]       <- summaryWidth(bri$query)
+
+report[["break_target_summary"]]       <- summaryWidth(brk)
+report[["break_query_summary"]]        <- summaryWidth(brk_q)
 
 report[["percent_identity"]]           <- 100 * sum(gb$matches) / sum(gb$aLength)
 
