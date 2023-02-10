@@ -149,7 +149,7 @@ report[["colinear_target_total"]] <- sum(width(coa))
 report[["colinear_query_total"]]  <- sum(width(coa$query))
 report[["colinear_ranges_number"]] <- length(coa)
 
-report[["percent_similarity"]] <- 1 - sum(gb$matches) / sum(gb$aLength)
+report[["percent_identity"]]           <- 100 * sum(gb$matches) / sum(gb$aLength)
 
 report[["number_of_inversions"]]       <- sum(coa$inv)
 report[["number_of_transpositionsl"]]  <- sum(coa$tra)
