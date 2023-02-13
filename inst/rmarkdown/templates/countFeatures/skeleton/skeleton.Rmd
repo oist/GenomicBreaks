@@ -62,8 +62,8 @@ regions_, _colinear alignments_ and _bridge regions_.
 _Colinear alignments_ are defined by the colinearity relationship computed
 in `?flagColinearAlignments`.  _Bridge regions_ separate alignments that are
 colinear to each other.  _Isolated alignments_ have no colinear counterparts
-and _breakpoint regions_ are the remaining intervals.  _Colinear regions_ are
-the union of _colinear alignments_ and _bridge regions_.
+and _breakpoint regions_ are the remaining intervals.  _Colinear regions_ 
+(or _chains_) are the union of _colinear alignments_ and _bridge regions_.
 
 As Bioconductor's `gaps()` function returns also the unaligned sequences between
 the start/end of chromosome and the first/last block, we use the `?cleanGaps`
@@ -143,50 +143,48 @@ Calculate numbers and prepare them for export in a YAML file
 
 ```{r count_features}
 L50width <- function(gb) weighted.mean(width(gb), as.numeric(width(gb))) # as.num to avoid integer overflow
-summaryWidth <- function(gb) {
+summaryWidth <- function(gb, pasteToNames=NULL) {
+  if(length(gb) == 0) return(NULL)
   s <- summary(width(gb))
+  names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
   s["L50"]     <- L50width(gb)
   s["Total"]   <- sum(width(gb))
   s["N"]       <- length(gb)
-  as.list(s)
+  s <- as.list(s)
+  names(s) <- paste0(pasteToNames, names(s))
+  s
 }
   
-report <- list()
-
-report[["aligned_length_total"]]       <- sum(gb$aLength)
-report[["percent_identity"]]           <- 100 * sum(gb$matches) / sum(gb$aLength)
-
-report[["aligned_target_summary"]]     <- summaryWidth(gb)
-report[["aligned_query_summary"]]      <- summaryWidth(gb$query)
-
-report[["col_reg_target_summary"]]     <- summaryWidth(coa)
-report[["col_reg_query_summary"]]      <- summaryWidth(coa$query)
-
-report[["colinear_target_summary"]]    <- summaryWidth(coli)
-report[["colinear_query_summary"]]     <- summaryWidth(coli$query)
-
-report[["isolated_target_summary"]]    <- summaryWidth(isol)
-report[["isolated_query_summary"]]     <- summaryWidth(isol$query)
-
-report[["bridge_target_summary"]]      <- summaryWidth(bri)
-report[["bridge_query_summary"]]       <- summaryWidth(bri$query)
-
-report[["break_target_summary"]]       <- summaryWidth(brk)
-report[["break_query_summary"]]        <- summaryWidth(brk_q)
-
-report[["inversions_target_summary"]]  <- summaryWidth(inv)
-report[["inversions_query_summary"]]   <- summaryWidth(inv$query)
-
-report[["transp_target_summary"]]      <- summaryWidth(tra)
-report[["transp_query_summary"]]       <- summaryWidth(tra$query)
-
-report[["guessed_target_length"]]      <- sum(guessSeqLengths(gb))
-report[["guessed_query_length"]]       <- sum(guessSeqLengths(gb$query))
-
-report[["synteny_index"]]              <- synteny_index(gb)
-report[["correlation_index"]]          <- correlation_index(gb)
-report[["GOC_vicinity_4"]]             <- GOC(gb, vicinity = 4) # Default as of today
-report[["strand_randomisation_index"]] <- strand_randomisation_index(gb)
+report <- list() |>
+  c(aligned_length_total = sum(gb$aLength)) |>
+  c(matching_length_total = sum(gb$matches)) |>
+  c(percent_identity = 100 * sum(gb$matches) / sum(gb$aLength)) |>
+  c(summaryWidth(gb,         "aligned_target_"))      |>
+  c(summaryWidth(gb$query,   "aligned_query_"))       |>
+  c(summaryWidth(coa,        "chain_target_"))        |>
+  c(summaryWidth(coa$query,  "chain_query_"))         |>
+  c(summaryWidth(coli,       "collinear_target_"))    |>
+  c(summaryWidth(coli$query, "collinear_query_"))     |>
+  c(summaryWidth(isol,       "isolated_target_"))     |>
+  c(summaryWidth(isol$query,  "isolated_query_"))     |>
+  c(summaryWidth(bri,        "bridge_target_"))       |>
+  c(summaryWidth(bri$query,  "bridge_query_"))        |>
+  c(summaryWidth(brk,        "break_target_"))        |>
+  c(summaryWidth(brk_q,      "break_query_"))         |>
+  c(summaryWidth(inv,        "inverted_target_"))     |>
+  c(summaryWidth(inv$query,  "inverted_query_"))      |>
+  c(summaryWidth(tra,        "translocated_target_")) |>
+  c(summaryWidth(tra$query,  "translocated_query_"))  |>
+  c(guessed_target_length = sum(guessSeqLengths(gb))) |>
+  c(guessed_query_length =  sum(guessSeqLengths(gb$query))) |>
+  c(index_synteny_target = synteny_index(gb)) |>
+  c(index_synteny_query  = synteny_index(swap(gb))) |>
+  c(index_correlation_target = correlation_index(gb)) |>
+  c(index_correlation_query = correlation_index(swap(gb))) |>
+  c(index_GOCvicinity4_target = GOC(gb, vicinity = 4)) |> # Default as of today.  Does not make much sense on nucleotide sequences?
+  c(index_GOCvicinity4_query = GOC(swap(gb), vicinity = 4)) |> # Default as of today.  Does not make much sense on nucleotide sequences?
+  c(index_strandRand_target = strand_randomisation_index(gb)) |>
+  c(index_strandRand_query = strand_randomisation_index(swap(gb)))
 ```
 
 Export the results to a YAML file.
