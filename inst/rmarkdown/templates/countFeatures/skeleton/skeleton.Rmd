@@ -97,7 +97,7 @@ rbind(
   aes(width) +
   geom_histogram() +
   scale_x_log10() +
-  facet_wrap(~what, ncol = 1)
+  facet_wrap(~what, ncol = 1, scales = "free_y")
 ```
 
 Inversions
@@ -106,7 +106,8 @@ Inversions
 ```{r study_inversions}
 coa <- flagInversions(coa)
 sum(coa$inv)
-showInversions(coa) |> head(11)
+inv <- showInversions(coa)
+head(inv, 11)
 if (sum(coa$inv) > 10) {
   # Histogram of the widths
   ggplot(data.frame(width = width(filterInversions(coa)))) +
@@ -124,7 +125,8 @@ Patterns that can be described as translocations in the target genome.
 ```{r study_translocations}
 coa <- flagTranslocations(coa)
 sum(coa$tra)
-showTranslocations(coa) |> head(11)
+tra <- showTranslocations(coa)
+head(tra, 11)
 
 if (sum(coa$tra) > 10) {
   # Histogram of the widths
@@ -140,19 +142,20 @@ Calculate numbers and prepare them for export in a YAML file
 ------------------------------------------------------------
 
 ```{r count_features}
-
 L50width <- function(gb) weighted.mean(width(gb), as.numeric(width(gb))) # as.num to avoid integer overflow
 summaryWidth <- function(gb) {
   s <- summary(width(gb))
   s["L50"]     <- L50width(gb)
   s["Total"]   <- sum(width(gb))
   s["N"]       <- length(gb)
-  s
+  as.list(s)
 }
   
 report <- list()
 
 report[["aligned_length_total"]]       <- sum(gb$aLength)
+report[["percent_identity"]]           <- 100 * sum(gb$matches) / sum(gb$aLength)
+
 report[["aligned_target_summary"]]     <- summaryWidth(gb)
 report[["aligned_query_summary"]]      <- summaryWidth(gb$query)
 
@@ -171,10 +174,14 @@ report[["bridge_query_summary"]]       <- summaryWidth(bri$query)
 report[["break_target_summary"]]       <- summaryWidth(brk)
 report[["break_query_summary"]]        <- summaryWidth(brk_q)
 
-report[["percent_identity"]]           <- 100 * sum(gb$matches) / sum(gb$aLength)
+report[["inversions_target_summary"]]  <- summaryWidth(inv)
+report[["inversions_query_summary"]]   <- summaryWidth(inv$query)
 
-report[["number_of_inversions"]]       <- sum(coa$inv)
-report[["number_of_transpositionsl"]]  <- sum(coa$tra)
+report[["transp_target_summary"]]      <- summaryWidth(tra)
+report[["transp_query_summary"]]       <- summaryWidth(tra$query)
+
+report[["guessed_target_length"]]      <- sum(guessSeqLengths(gb))
+report[["guessed_query_length"]]       <- sum(guessSeqLengths(gb$query))
 
 report[["synteny_index"]]              <- synteny_index(gb)
 report[["correlation_index"]]          <- correlation_index(gb)
