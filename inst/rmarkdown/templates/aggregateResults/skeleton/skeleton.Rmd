@@ -1,20 +1,19 @@
 ---
 title: "Aggregate Results"
 author: "Charles Plessy"
-date: "24/08/2021"
+date: "10/02/2023"
 output: 
   html_document: 
     toc: yes
 params:
-  resultsDir: "~/projects/GenomicBreaks_results/results-v3/genomicbreaks/"
-  alnDir:     "~/projects/GenomicBreaks_results/results-v3/last/"
-  prefix: "test"
+  resultsDir: "path/to/the/yaml/files/"
 editor_options: 
   chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library("ggplot2")
 ```
 
 How to use this Rmarkdown template in a Singularity image:
@@ -29,7 +28,7 @@ Example command:
 R_LIBS_USER='' R -e 'rmarkdown::render("inst/rmarkdown/templates/aggregateResults/skeleton/skeleton.Rmd", output_file = "./toto.html", params = list(resultsDir = "/path/do/dir/with/yaml/files"))'
 ```
 
-## Data load
+# Data load
 
 ```{r load_data}
 library("yaml")
@@ -38,27 +37,7 @@ names(yamlFiles) <- yamlFiles |> basename() |> sub(pat = ".yaml", rep="")
 
 getStats <- function(file) {
   y <- yaml::read_yaml(file) |> yaml::yaml.load()
-  res <- list()
-  res$unaligned_mean_width <- y$unaligned_width_summary$Mean
-  res$aligned_mean_width   <- y$width_summary_aligned$Mean
-  res$collapsed_mean_width <- y$width_summary_collapsed$Mean
-  res$similarity           <- y$percent_similarity * 100
-  res$aligned_regions      <- y$number_of_ranges_part
-  res$collapsed_regions    <- y$number_of_ranges_col
-  res$collapsed_regions2   <- y$number_of_ranges_match
-  res$aligned_total        <- y$aligned_total
-  res$collapsed_total      <- y$collapsed_total
-  res$unaligned_total      <- y$unal_total
-  res$uncollapsed_total    <- y$uncol_total
-  res$synteny_index        <- y$synteny_index
-  res$correlation_index    <- y$correlation_index
-  res$N50_part             <- y$N50_part
-  res$N50_match            <- y$N50_match
-  res$N50_col              <- y$N50_col
-  res$L50_match            <- y$L50_match
-  res$L50_part             <- y$L50_part
-  res$L50_col              <- y$L50_col
-  unlist(res)
+  unlist(y)
 }
 
 # getStats_long <- function(file) {
@@ -72,262 +51,139 @@ getStats <- function(file) {
 # }
 
 df <- do.call(rbind, lapply(yamlFiles, getStats)) |> as.data.frame()
-df$similarity[is.na(df$similarity)] <- 100
+df <- df[,colSums(df) !=0] # Some ranges have always a minimum width of zero, and `cor()` does not like it.
 df$species1 <- strsplit(rownames(df), "__") |> lapply(\(.) .[1]) |> unlist()
 df$species2 <- strsplit(rownames(df), "__") |> lapply(\(.) .[2]) |> unlist()
-df$speciesGroup <- "Drosophila"
-df$speciesGroup[df$species1 %in% c("Bar2_p4", "OSKA2016v1.9", "OKI2018_I69_1.0")] <- "Oikopleura"
-df$speciesGroup[df$species1 %in% c("C_rob_HT", "C_int_P")] <- "Ciona"
-df$speciesGroup[df$species1 %in% c("NEAR")] <- "NEAR"
-df$speciesGroup[df$species1 %in% c("YASS", "YASSW")] <- "YASS"
-df$speciesGroup[df$species1 %in% c("RY32", "RY32W")] <- "RY32"
-
-df.benchmark <- df[df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
-df <-  df[! df$speciesGroup %in% c("YASS", "RY32", "NEAR"),]
 ```
 
-## Results
+# Results
 
-### Number of aligned and collapsed regions
+## Identity and mismatches
 
-#### Number of aligned regions
+The proportion of matches in the alignments is the percentage identity.  We call
+the proportion of mismatches in the alignments is the _percentage mismatch_.
 
-The number of aligned regions is low at highest similarities because their
-length increases, and is also low at lowest similarities because less and less
-regions can be aligned.  A peak can be imagined at around 80% or 85% identity.
+Both are computed on the aligned regions, which are shorter and shorter with
+evolutionary distance.  Thus, at higher evolutionary distance, the numbers are
+computed on a smaller fraction of the genome.  Therefore, even if somewhat
+correlate with evolutionary distance, their relationship is not linear.
 
-```{r plot_similarity_vs_nubmer_of_aligned_regions}
-library("ggplot2")
-ggplot(df) +
-  aes( x = similarity, y = aligned_regions) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Number of aligned regions") +
-  geom_point()
+We will use percent identity or percent mismatch on a case-by-case basis
+depending on how well they help to spred another variable on a pairwise plot.
+
+```{r percent_identity_and_mismatch}
+df$percent_identity_global   <- df$matches_numberTotal    / df$aligned_length_Total * 100
+df$percent_mismatches_global <- df$mismatches_numberTotal / df$aligned_length_Total * 100
+ggplot(df) + geom_point() + aes(percent_identity_global,  percent_mismatches_global)
 ```
 
-#### Number of aligned regions, normalised by alignment size
+## Fraction of the genome aligned
 
-The bell-shape may be seen broader when normalising by total alignment size as a
-proxy for genome size.
+The fraction of the genome aligned appears to negatively correlate with the
+proportion of mismatches in aligned regions.  On the other hand, with a percent
+identity lower than 65 %, there is very little correlation at all with the
+fraction of the genome aligned.
 
-```{r plot_similarity_vs_nubmer_of_aligned_regions_norm_by_total_align_size}
-library("ggplot2")
-ggplot(df) +
-  aes( x = similarity, y = aligned_regions / (aligned_total + unaligned_total)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Number of aligned regions / total alignment size") +
-  geom_point()
+```{r fraction_genome_aligned}
+df$fraction_genome_aligned_target <- df$aligned_target_Total / df$guessed_target_length * 100
+df$fraction_genome_aligned_query  <- df$aligned_query_Total  / df$guessed_query_length  * 100
+df$fraction_genome_aligned_avg    <- (df$fraction_genome_aligned_target + df$fraction_genome_aligned_query) / 2
+
+ggplot(df) + geom_point() + aes(percent_mismatches_global, fraction_genome_aligned_avg, col = percent_identity_global)
+ggplot(df) + geom_point() + aes(percent_identity_global,   fraction_genome_aligned_avg, col = percent_mismatches_global)
 ```
 
-#### Number of collapsed regions
+## Fraction of the genome chained
 
-Collapsing the colinear regions reduces the number to 5 to 10 thousands in a
-broad range of similarities.
 
-```{r plot_similarity_vs_nubmer_of_collapsed_regions}
-ggplot(df) +
-  aes( x = similarity, y = collapsed_regions) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Number of collapsed regions") +
-  geom_point()
+```{r fraction_genome_chained}
+df$fraction_genome_chained_target <- df$chain_target_Total / df$guessed_target_length * 100
+df$fraction_genome_chained_query  <- df$chain_query_Total  / df$guessed_query_length  * 100
+df$fraction_genome_chained_avg    <- (df$fraction_genome_chained_target + df$fraction_genome_chained_query) / 2
+
+ggplot(df) + geom_point() + aes(percent_mismatches_global, fraction_genome_chained_avg, col = percent_identity_global)
 ```
 
-#### Number of collapsed regions, normalised by collapsed alignment size.
+## Width of the aligned regions
 
-Normalisation by total (collapsed) alignment size gives the impression that
-Oikopleura alignments are more resistant to collapsing.
+Length of aligned regions quickly decreases with evolutionary distance and then
+sorts of plateaus.
 
-```{r plot_similarity_vs_nubmer_of_collapsed_regions_norm_by_total_align_size}
-ggplot(df) +
-  aes( x = similarity, y = collapsed_regions / (collapsed_total + uncollapsed_total)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Number of collapsed regions / total alignment size") +
-  geom_point()
+```{r aligned_width}
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_length_Mean, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_mismatches_global, aligned_length_Mean, col = percent_identity_global)
 ```
 
-### Fraction of the genome mapped
+Normalising length of aligned regions by genome size may be useful when
+comparing species pairs from distant clades.
 
-#### Fraction of the genome aligned
-
-At equal similarity, a larger proportion of the _Oikopleura_ genome is aligned
-to other genomes.  Is that because there are less repeats ?
-
-```{r plot_similarity_vs_fraction_of_aligned_genome}
-ggplot(df) +
-  aes( x = similarity, y = aligned_total / (aligned_total + unaligned_total)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Fraction of the genome aligned") +
-  geom_point()
+```{r aligned_width2}
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_target_Mean / guessed_target_length, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_query_Mean  / guessed_query_length, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_length_Mean  / (guessed_target_length + guessed_query_length) / 2, col = percent_mismatches_global)
 ```
 
-#### Fraction of the genome collapsed
+## Length of the chains
 
-In contrast with above, _Oikopleura_ genomes are within the general trend when
-considering collapsed regions.  Is that because this bridges over repeat
-regions ?
+```{r chained_width}
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_mismatches_global, chain_target_Mean, col = percent_identity_global)
 
-```{r plot_similarity_vs_fraction_of_collapsed_genome}
-ggplot(df) +
-  aes( x = similarity, y = collapsed_total / (collapsed_total + uncollapsed_total)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Fraction of the genome collapsed") +
-  geom_point()
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean / guessed_target_length, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_query_Mean  / guessed_query_length, col = percent_mismatches_global)
 ```
 
-### Width of aligned regions
+## Indices
 
-#### Mean
+The GOC and synteny indices correlate, therefore I will not use the GOC index,
+which makes little sense on nucleotide alignments anyway.
 
-```{r plot_similarity_vs_mean_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = similarity, y = aligned_mean_width) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("Mean width of aligned regions") +
-  scale_y_log10() +
-  geom_point()
-```
+```{r plot_similarity_vs_correlation_index}
+df$index_avg_synteny      <- ( df$index_synteny_target + df$index_synteny_query ) / 2
+df$index_avg_correlation  <- ( df$index_correlation_target + df$index_correlation_query ) / 2
+df$index_avg_GOCvicinity4 <- ( df$index_GOCvicinity4_target + df$index_GOCvicinity4_query ) / 2
+df$index_avg_strandRand   <- ( df$index_strandRand_target + df$index_strandRand_query ) / 2
 
-#### N50
-
-```{r plot_similarity_vs_N50_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = similarity, y = N50_part) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("N50 of width of aligned regions") +
-  scale_y_log10() +
-  geom_point()
-```
-
-#### N50 and mean width correlate
-
-As suggested by the similarity between the two plots above, N50 and mean width
-correlate.  Therefore I will only use N50 in the remaining plots below.
-
-```{r plot_mean_width_vs_N50_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = aligned_mean_width, y = N50_part) +
-  aes(color = speciesGroup) +
-  xlab("Mean width of aligned regions") +
-  ylab("N50 of width of aligned regions") +
-  scale_y_log10() +
-  scale_x_log10() +
-  geom_point()
-```
-
-#### N50 normalised by total alignment size.
-
-At equal similarity, the aligned regions in _Oikopleura_ are broader.
-
-On dot-plot they may look similar, but _Oikopleura_ genome is smaller…
-
-```{r plot_similarity_vs_normalised_N50_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = similarity, y = N50_part / (aligned_total + unaligned_total)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("N50 of width of aligned regions / aligned genome size") +
-  scale_y_log10() +
-  geom_point()
-```
-
-#### L50
-
-Smallest number of intervals containing at least 50 of the aligned regions.
-
-```{r plot_similarity_vs_L50_width_of_aligned_regions}
-ggplot(df) +
-  aes( x = similarity, y = L50_part) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("L50 of width of aligned regions") +
-  geom_point()
-```
-
-#### L50 normalised by alignment size
-
-Maybe the plot looks flat because this normalisation makes little sense ?
-
-```{r plot_similarity_vs_L50_width_of_aligned_regions_norm_by_number_of_regions}
-ggplot(df) +
-  aes( x = similarity, y = L50_part / aligned_regions) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("L50 of width of aligned regions / # aligned regions") +
-  scale_y_log10() +
-  geom_point()
-```
-
-### Width of collapsed regions
-
-#### N50
-
-```{r plot_similarity_vs_N50_width_of_collapsed_regions}
-ggplot(df) +
-  aes( x = similarity, y = N50_col) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("N50 of width of collapsed regions") +
-  scale_y_log10() +
-  geom_point()
-```
-
-#### N50, normalised
-
-```{r plot_similarity_vs_normalised_N50_width_of_collapsed_regions}
-ggplot(df) +
-  aes( x = similarity, y = N50_col / ((collapsed_total + uncollapsed_total))) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("N50 of width of collapsed regions / total alignment size") +
-  scale_y_log10() +
-  geom_point()
-```
-
-#### L50
-
-```{r plot_similarity_vs_L50_width_of_collapsed_regions}
-ggplot(df) +
-  aes( x = similarity, y = L50_col) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("L50 of width of collapsed regions") +
-  scale_y_log10() +
-  geom_point()
-```
-
-#### L50, normalised
-
-```{r plot_similarity_vs_L50_width_of_collapsed_regions_norm_by_number_of_regions}
-ggplot(df) +
-  aes( x = similarity, y = L50_col / collapsed_regions) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("L50 of width of collapsed regions / # collapsed regions") +
-  scale_y_log10() +
-  geom_point()
+df[,grepl("index_avg", colnames(df))] |> pairs()
 ```
 
 ### Synteny index
 
 The synteny index measures how little the homologous genomic regions move between chromosomes.
 
-Some of the dots are artefacts because of residual haplotypes.
+Some of the dots may be artefacts because of residual haplotypes.
 
 ```{r plot_similarity_vs_synteny_index}
-ggplot(df) +
-  aes( x = similarity, y = synteny_index) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
+ggplot(df) + theme_bw() +
+  aes(percent_identity_global, index_avg_synteny, col = percent_mismatches_global) +
+  xlab("Identity between aligned regions (%)") +
   ylab("Synteny index") +
   geom_point()
+```
+
+### Strand randomisation index
+
+See `?GenomicBreaks::strand_randomisation_index`.
+
+There appears to be a correlation between the strand randomisation index and
+the alignment distance.
+
+```{r plot_similarity_vs_correlation_index}
+ggplot(df) + theme_bw() +
+  aes(percent_identity_global, index_avg_strandRand, col = percent_mismatches_global) +
+  xlab("Identity between aligned regions (%)") +
+  ylab("Strand randomisation index") +
+  geom_point()
+
+cor(df$percent_identity_global, df$index_avg_strandRand)
+
+ggplot(df) + theme_bw() +
+  aes(percent_mismatches_global, index_avg_strandRand, col = percent_identity_global) +
+  xlab("Mismatch between aligned regions (%)") +
+  ylab("Strand randomisation index") +
+  geom_point()
+
+cor(df$percent_mismatches_global, df$index_avg_strandRand)
 ```
 
 ### Correlation index
@@ -335,78 +191,19 @@ ggplot(df) +
 The correlation index measures how "off the diagonal" the alignments are
 
 ```{r plot_similarity_vs_correlation_index}
-ggplot(df) +
-  aes( x = similarity, y = abs(correlation_index)) +
-  aes(color = speciesGroup) +
-  xlab("Similarity between aligned regions") +
-  ylab("abs(correlation index)") +
+ggplot(df) + theme_bw() +
+  aes(percent_identity_global, index_avg_correlation, col = percent_mismatches_global) +
+  xlab("Identity between aligned regions (%)") +
+  ylab("Strand randomisation index") +
   geom_point()
 ```
 
-### Nucleotide similarity, per genome pair
 
-```{r plot_similarity, fig.height=20}
-sim <- df[c("similarity", "species1", "species2")]
-sim <- sim[order(sim$similarity, decreasing = FALSE), ]
-ggplot(sim) +
-  aes(similarity, species2) +
-  geom_point() +
-  facet_grid(species1 ~ ., scales = "free", space = "free")
-
-# subsetAndLevel <- function (x, species) {
-#   x <- subset(x, species1 == species)
-#   x$species2 <- factor(x$species2, levels = x$species2)
-#   x
-# }
-```
-
-### Nucleotide similarity, per genome pair, for _Oikopleura_ and _C. robusta_.
-
-```{r}
-plotSortedSubset <- function (x, species) {
-  x <- subset(x, species1 == species)
-  x$species2 <- factor(x$species2, levels = x$species2)
-  x
-  ggplot(x) +
-    aes(similarity, species2) +
-    geom_point() +
-    facet_wrap(~species1) +
-    scale_y_discrete(position="right") +
-    ylab(NULL)
-}
-
-p_Bar <- plotSortedSubset(sim, "Bar2_p4")
-p_Oki <- plotSortedSubset(sim, "OKI2018_I69_1.0")
-p_Osa <- plotSortedSubset(sim, "OSKA2016v1.9")
-p_Cio <- plotSortedSubset(sim, "C_rob_HT")
-
-
-requireNamespace("ggpubr")
-ggpubr::ggarrange(p_Oki, p_Bar, p_Cio, p_Osa)
-```
-
-### Aligned proportion, per genome pair
-
-```{r plot_tot_align, fig.height=20}
-sim <- df[c("aligned_total", "unaligned_total", "species1", "species2")]
-sim$aligned_prop <- sim$aligned_total / (sim$aligned_total + sim$unaligned_total)
-sim
-sim <- sim[order(sim$aligned_prop, decreasing = FALSE), ]
-ggplot(sim) +
-  aes(aligned_prop, species2) +
-  geom_point() +
-  facet_grid(species1 ~ ., scales = "free", space = "free")
-```
-
-### Collapsed aligned proportion, per genome pair
-
-```{r plot_tot_collapsed, fig.height=20}
-sim <- df[c("collapsed_total", "uncollapsed_total", "species1", "species2")]
-sim$aligned_prop <- sim$collapsed_total / (sim$collapsed_total + sim$uncollapsed_total)
-sim
-sim <- sim[order(sim$aligned_prop, decreasing = FALSE), ]
-ggplot(sim) +
-  aes(aligned_prop, species2) +
-  geom_point() +
-  facet_grid(species1 ~ ., scales = "free", space = "free")
+```{r plot_similarity_vs_correlation_index}
+ggplot(df) +
+  aes(synteny_index, GOC_vicinity_4) +
+  aes(color = species2) +
+  xlab("Similarity between aligned regions") +
+  ylab("abs(correlation index)") +
+  geom_point()
 ```
