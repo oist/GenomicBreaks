@@ -150,7 +150,7 @@ customSummary <- function(x, pasteToNames=NULL) {
   s["Total"]   <- sum(x)
   s["N"]       <- length(x)
   s <- as.list(s)
-  names(s) <- paste0(pasteToNames, names(s))
+  names(s) <- paste0(pasteToNames, '_', names(s))
   s
 }
 
@@ -160,33 +160,33 @@ summaryWidth <- function(gb, pasteToNames=NULL)
 gb$mismatches <- (width(gb) + width(gb$query) - gb$aLength - gb$matches)
 
 report <- list() |>
-  c(customSummary(gb$aLength, "aligned_length_")) |>
-  c(customSummary(score(gb),  "aligned_scores_")) |>
+  c(customSummary(gb$aLength, "aligned_length")) |>
+  c(customSummary(score(gb),  "aligned_scores")) |>
   c(customSummary(gb$matches,                         "matches_number"))     |>
   c(customSummary(gb$mismatches,                      "mismatches_number"))  |>
-  c(customSummary(gb$aLength - width(gb),             "gaps_target_"))       |>
-  c(customSummary(gb$aLength - width(gb$query),       "gaps_query_"))        |>
+  c(customSummary(gb$aLength - width(gb),             "gaps_target"))       |>
+  c(customSummary(gb$aLength - width(gb$query),       "gaps_query"))        |>
   c(customSummary(100 * gb$matches / gb$aLength,      "percent_identity_") ) |>
   c(customSummary(100 * gb$matches / width(gb),       "matching_target"))    |>
   c(customSummary(100 * gb$matches / width(gb$query), "matching_query"))     |>
   c(percent_similarity_compat = 1 - sum(gb$mismatches) / sum(width(gb))) |>
-  c(customSummary(1 - gb$mismatches / width(gb), "percentSim_compat_"))  |> # To reproduce older figures
-  c(summaryWidth(gb,         "aligned_target_"))      |>
-  c(summaryWidth(gb$query,   "aligned_query_"))       |>
-  c(summaryWidth(coa,        "chain_target_"))        |>
-  c(summaryWidth(coa$query,  "chain_query_"))         |>
-  c(summaryWidth(coli,       "collinear_target_"))    |>
-  c(summaryWidth(coli$query, "collinear_query_"))     |>
-  c(summaryWidth(isol,       "isolated_target_"))     |>
-  c(summaryWidth(isol$query, "isolated_query_"))      |>
-  c(summaryWidth(bri,        "bridge_target_"))       |>
-  c(summaryWidth(bri$query,  "bridge_query_"))        |>
-  c(summaryWidth(brk,        "break_target_"))        |>
-  c(summaryWidth(brk_q,      "break_query_"))         |>
-  c(summaryWidth(inv,        "inverted_target_"))     |>
-  c(summaryWidth(inv$query,  "inverted_query_"))      |>
-  c(summaryWidth(tra,        "translocated_target_")) |>
-  c(summaryWidth(tra$query,  "translocated_query_"))  |>
+  c(customSummary(1 - gb$mismatches / width(gb), "percentSim_compat"))  |> # To reproduce older figures
+  c(summaryWidth(gb,         "aligned_target"))      |>
+  c(summaryWidth(gb$query,   "aligned_query"))       |>
+  c(summaryWidth(coa,        "chain_target"))        |>
+  c(summaryWidth(coa$query,  "chain_query"))         |>
+  c(summaryWidth(coli,       "collinear_target"))    |>
+  c(summaryWidth(coli$query, "collinear_query"))     |>
+  c(summaryWidth(isol,       "isolated_target"))     |>
+  c(summaryWidth(isol$query, "isolated_query"))      |>
+  c(summaryWidth(bri,        "bridge_target"))       |>
+  c(summaryWidth(bri$query,  "bridge_query"))        |>
+  c(summaryWidth(brk,        "break_target"))        |>
+  c(summaryWidth(brk_q,      "break_query"))         |>
+  c(summaryWidth(inv,        "inverted_target"))     |>
+  c(summaryWidth(inv$query,  "inverted_query"))      |>
+  c(summaryWidth(tra,        "translocated_target")) |>
+  c(summaryWidth(tra$query,  "translocated_query"))  |>
   c(guessed_target_length = sum(guessSeqLengths(gb))) |>
   c(guessed_query_length =  sum(guessSeqLengths(gb$query))) |>
   c(index_synteny_target = synteny_index(gb)) |>
