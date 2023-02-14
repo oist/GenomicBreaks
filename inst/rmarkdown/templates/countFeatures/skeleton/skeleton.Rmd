@@ -142,23 +142,26 @@ Calculate numbers and prepare them for export in a YAML file
 ------------------------------------------------------------
 
 ```{r count_features}
-L50width <- function(gb) weighted.mean(width(gb), as.numeric(width(gb))) # as.num to avoid integer overflow
-summaryWidth <- function(gb, pasteToNames=NULL) {
-  if(length(gb) == 0) return(NULL)
-  s <- summary(width(gb))
+customSummary <- function(x, pasteToNames=NULL) {
+  if(length(x) == 0) return(NULL)
+  s <- summary(x)
   names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
-  s["L50"]     <- L50width(gb)
-  s["Total"]   <- sum(width(gb))
-  s["N"]       <- length(gb)
+  s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
+  s["Total"]   <- sum(x)
+  s["N"]       <- length(x)
   s <- as.list(s)
   names(s) <- paste0(pasteToNames, names(s))
   s
 }
+
+summaryWidth <- function(gb, pasteToNames=NULL)
+  customSummary(width(gb), pasteToNames)
   
 report <- list() |>
-  c(aligned_length_total = sum(gb$aLength)) |>
-  c(matching_length_total = sum(gb$matches)) |>
-  c(percent_identity = 100 * sum(gb$matches) / sum(gb$aLength)) |>
+  c(customSummary(gb$aLength, "aligned_length_")) |>
+  c(customSummary(score(gb),  "aligned_scores_")) |>
+  c(customSummary(gb$matches, "matching_length_")) |>
+  c(customSummary(100 * gb$matches / gb$aLength, "percent_identity_")) |>
   c(summaryWidth(gb,         "aligned_target_"))      |>
   c(summaryWidth(gb$query,   "aligned_query_"))       |>
   c(summaryWidth(coa,        "chain_target_"))        |>
@@ -166,7 +169,7 @@ report <- list() |>
   c(summaryWidth(coli,       "collinear_target_"))    |>
   c(summaryWidth(coli$query, "collinear_query_"))     |>
   c(summaryWidth(isol,       "isolated_target_"))     |>
-  c(summaryWidth(isol$query,  "isolated_query_"))     |>
+  c(summaryWidth(isol$query, "isolated_query_"))      |>
   c(summaryWidth(bri,        "bridge_target_"))       |>
   c(summaryWidth(bri$query,  "bridge_query_"))        |>
   c(summaryWidth(brk,        "break_target_"))        |>
