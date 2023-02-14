@@ -156,12 +156,21 @@ customSummary <- function(x, pasteToNames=NULL) {
 
 summaryWidth <- function(gb, pasteToNames=NULL)
   customSummary(width(gb), pasteToNames)
-  
+
+gb$mismatches <- (width(gb) + width(gb$query) - gb$aLength - gb$matches)
+
 report <- list() |>
   c(customSummary(gb$aLength, "aligned_length_")) |>
   c(customSummary(score(gb),  "aligned_scores_")) |>
-  c(customSummary(gb$matches, "matching_length_")) |>
-  c(customSummary(100 * gb$matches / gb$aLength, "percent_identity_")) |>
+  c(customSummary(gb$matches,                         "matches_number"))     |>
+  c(customSummary(gb$mismatches,                      "mismatches_number"))  |>
+  c(customSummary(gb$aLength - width(gb),             "gaps_target_"))       |>
+  c(customSummary(gb$aLength - width(gb$query),       "gaps_query_"))        |>
+  c(customSummary(100 * gb$matches / gb$aLength,      "percent_identity_") ) |>
+  c(customSummary(100 * gb$matches / width(gb),       "matching_target"))    |>
+  c(customSummary(100 * gb$matches / width(gb$query), "matching_query"))     |>
+  c(percent_similarity_compat = 1 - sum(gb$mismatches) / sum(width(gb))) |>
+  c(customSummary(1 - gb$mismatches / width(gb), "percentSim_compat_"))  |> # To reproduce older figures
   c(summaryWidth(gb,         "aligned_target_"))      |>
   c(summaryWidth(gb$query,   "aligned_query_"))       |>
   c(summaryWidth(coa,        "chain_target_"))        |>
