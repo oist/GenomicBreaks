@@ -95,6 +95,23 @@ exampleDoubleInversion4                   <- GBreaks(exampleDoubleInversion4)
 seqlengths(exampleDoubleInversion4)       <- seqlengths(exampleDoubleInversion4$query) <- 600
 isSorted(exampleDoubleInversion4)
 
+# Nested inversions
+# ABCDE -> AdcbE -> AdCbE
+
+exampleNestedInversions                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleNestedInversions)           <- c(              "+",            "-",            "+",            "-",            "+")
+exampleNestedInversions$query             <- GRanges(c("chrA:100-190", "chrA:400-490", "chrA:300-390", "chrA:200-290", "chrA:500-590"))
+exampleNestedInversions                   <- GBreaks(exampleNestedInversions)
+seqlengths(exampleNestedInversions)       <- seqlengths(exampleNestedInversions$query) <- 600
+isSorted(exampleNestedInversions)
+
+exampleDoubleInversion4                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion4)           <- c(              "-",            "-",            "+",            "+",            "-")
+exampleDoubleInversion4$query             <- GRanges(c("chrB:500-590", "chrB:200-290", "chrB:400-490", "chrB:300-390", "chrB:100-190"))
+exampleDoubleInversion4                   <- GBreaks(exampleDoubleInversion4)
+seqlengths(exampleDoubleInversion4)       <- seqlengths(exampleDoubleInversion4$query) <- 600
+isSorted(exampleDoubleInversion4)
+
 # Translocation
 
 exampleTranslocation                      <- GRanges(c("chrA:100-200", "chrA:201-300", "chrA:301-400"))
@@ -154,6 +171,7 @@ usethis::use_data(
   exampleInversion,
   exampleInversion5uncollapsed,
   exampleDoubleInversion,
+  exampleNestedInversions,
   exampleTranslocation,
   exampleTranslocation2,
   exampleInsertion,
