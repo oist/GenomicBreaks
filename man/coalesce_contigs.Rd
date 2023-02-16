@@ -71,6 +71,7 @@ Other Colinearity functions:
 
 Other modifier functions: 
 \code{\link{bridgeRegions}()},
+\code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},

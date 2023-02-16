@@ -17,6 +17,7 @@
 #'
 #' @aliases exampleColinear exampleNotColinear exampleColinear3 exampleColinear5
 #' @aliases exampleInversion exampleDoubleInversion exampleInversion5uncollapsed
+#' @aliases exampleNestedInversions
 #' @aliases exampleTranslocation exampleTranslocation2
 #' @aliases exampleInsertion exampleDeletion
 #'
@@ -29,6 +30,7 @@
 #' exampleColinear5
 #' exampleInversion
 #' exampleInversion5uncollapsed
+#' exampleNestedInversions
 #' exampleDoubleInversion
 #' exampleTranslocation
 #' exampleTranslocation2

@@ -58,6 +58,7 @@ Other Inversion functions:
 \code{\link{filterInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},
+\code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{showInversions}()}
 

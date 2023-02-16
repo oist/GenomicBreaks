@@ -26,6 +26,7 @@ Other Inversion functions:
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},
+\code{\link{flipInversions}()},
 \code{\link{showInversions}()}
 }
 \concept{Inversion functions}

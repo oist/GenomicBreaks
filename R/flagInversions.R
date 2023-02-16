@@ -229,6 +229,34 @@ filterInversions <- function(gb, rename = TRUE) {
   gb[invContext]
 }
 
+#' Flip strand of inversions
+#'
+#' @param gb A [`GBreaks`] object processed with [`flagInversions`].
+#'
+#' @family Inversion functions
+#' @family modifier functions
+#'
+#' @returns Returns the `GBreaks` object in which all ranges that are the
+#' central part of an inversion triplet have their strand orientation flipped.
+#' The `inv` metadata column is then discarded as it is not valid anymore.  As
+#' the former inversion triplets are now collinear, new inversions may possibly
+#' found after the object is coalesced again.
+#'
+#' @examples
+#' exampleNestedInversions |> flagInversions()
+#' flipInversions(exampleNestedInversions |> flagInversions())
+#'
+#' @export
+
+flipInversions <- function(gb) {
+  if (length(gb) == 0) return(gb)
+  if (is.null(gb$inv)) return(gb[0])
+  invPos <- which(gb$inv) + 1
+  strand(gb)[invPos] <- ifelse(strand(gb)[invPos] == "+", "-", "+")
+  gb$inv <- NULL
+  gb
+}
+
 #' Isolate the left-side gaps in inversions
 #'
 #' @param gb A [`GBreaks`] object.

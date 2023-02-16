@@ -49,6 +49,7 @@ Other Colinearity functions:
 
 Other modifier functions: 
 \code{\link{coalesce_contigs}()},
+\code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},

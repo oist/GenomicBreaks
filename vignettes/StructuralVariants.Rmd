@@ -138,6 +138,19 @@ exampleInversion5uncollapsed |> coalesce_contigs() |> plotApairOfChrs()
 exampleDoubleInversion |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
+### Nested inversions
+
+The `?flagInversions` algorithm only detects the simplest cases.  In order to
+detect nested inversions, the inner ones have to be removed.
+
+```{r nestedInversions}
+exampleNestedInversions |> plotApairOfChrs()
+exampleNestedInversions |> flagInversions()
+(flipped <- (exampleNestedInversions |> flagInversions() |> flipInversions()))
+flipped |> plotApairOfChrs()
+flipped |> coalesce_contigs() |> flagInversions()
+```
+
 ## Transolocations
 
 If a region has moved, but is not an inversion, then it is a translocation.

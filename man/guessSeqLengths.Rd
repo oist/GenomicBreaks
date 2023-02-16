@@ -31,6 +31,7 @@ guessSeqLengths(gb2$query)
 Other modifier functions: 
 \code{\link{bridgeRegions}()},
 \code{\link{coalesce_contigs}()},
+\code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
