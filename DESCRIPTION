@@ -79,7 +79,6 @@ Collate:
     'longestMatchesInTarget.R'
     'makeInversions.R'
     'makeOxfordPlots.R'
-    'master_bp_analysis.R'
     'mergeSeqLevels.R'
     'orderQuerySeqLevels.R'
     'pairwiseAlignment.R'

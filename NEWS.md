@@ -1,3 +1,8 @@
+# GenomicBreaks Unreleased
+
+ * New `flipInversions()` function to remove detected inversions before
+   searching for nested ones.
+
 # GenomicBreaks 0.14.0
 
  * The `load_genomic_breaks()` function gains support for files in the

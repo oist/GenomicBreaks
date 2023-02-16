@@ -55,7 +55,6 @@ reference:
     - load_genomic_breaks
     - longestMatchesInTarget
     - makeInversion.chr
-    - master_bp_analysis
     - orderQuerySeqLevels
     - readMAF
     - scaf_align_plot
