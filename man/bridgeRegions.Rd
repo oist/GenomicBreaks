@@ -10,7 +10,8 @@ bridgeRegions(gb)
 \item{gb}{A \code{\link{GBreaks}} object.}
 }
 \value{
-Returns a new \code{GBreaks} object of shorter length.
+Returns a new \code{GBreaks} object of shorter length.  Its length will
+be zero if no bridge regions were found.
 }
 \description{
 Maps unaligned regions of the \emph{target} to the \emph{query} genome when they are
