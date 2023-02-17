@@ -1,5 +1,12 @@
 # GenomicBreaks Unreleased
 
+## Bug fixes
+
+ * `bridgeRegions()` now returns empty _GBreaks_ objects if no bridge region
+   was found.  Closes issue #20.
+
+## New functionalities
+
  * New `flipInversions()` function to remove detected inversions before
    searching for nested ones.
 

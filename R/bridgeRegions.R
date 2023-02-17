@@ -15,7 +15,8 @@
 #'
 #' @param gb A [`GBreaks`] object.
 #'
-#' @return Returns a new `GBreaks` object of shorter length.
+#' @return Returns a new `GBreaks` object of shorter length.  Its length will
+#' be zero if no bridge regions were found.
 #'
 #' @family Colinearity functions
 #' @family modifier functions
@@ -35,6 +36,7 @@
 bridgeRegions <- function(gb) {
   # Collect colinear regions and discard the rest
   colinearRegions <- filterColinearRegions(flagColinearAlignments(gb), rename = FALSE)
+  if (length(colinearRegions) == 0) return (colinearRegions)
   # Turn the runs of [(TRUE)n, FALSE]n into indices identifying each colinear region
   idx <- c(0, head(cumsum(!colinearRegions$colinear), -1))
   # Split into a GRangesList
