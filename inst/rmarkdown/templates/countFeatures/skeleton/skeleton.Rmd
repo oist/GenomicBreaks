@@ -149,7 +149,6 @@ Calculate numbers and prepare them for export in a YAML file
 
 ```{r count_features}
 customSummary <- function(x, pasteToNames=NULL) {
-  if(length(x) == 0) x <- 0
   s <- summary(x)
   names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
   s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
@@ -160,8 +159,14 @@ customSummary <- function(x, pasteToNames=NULL) {
   s
 }
 
-summaryWidth <- function(gb, pasteToNames=NULL)
-  customSummary(width(gb), pasteToNames)
+summaryWidth <- function(gb, pasteToNames=NULL) {
+  w <- if(length(gb) == 0) {
+      0
+    } else {
+      width(gb)
+    }
+  customSummary(w, pasteToNames)
+}
 
 gb$mismatches <- (width(gb) + width(gb$query) - gb$aLength - gb$matches)
 
