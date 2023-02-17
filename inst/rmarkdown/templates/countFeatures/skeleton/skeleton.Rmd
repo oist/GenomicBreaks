@@ -101,7 +101,7 @@ Patterns that can be described as translocations in the target genome.
 ```{r study_translocations}
 coa <- flagTranslocations(coa)
 sum(coa$tra)
-tra <- filterInversions(coa)
+tra <- filterTranslocations(coa)
 head(tra, 11)
 ```
 
