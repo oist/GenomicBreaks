@@ -72,7 +72,13 @@ function that removes them before returning the object.
 ```{r clean_gaps}
 isol <- gb[gb %in% coa]
 coli <- gb[!gb %in% coa]
-bri  <- bridgeRegions(gb)
+bri <- if (length(filterColinearRegions(flagColinearAlignments(gb), rename = FALSE)) == 0) {
+  GBreaks()
+} else {
+  bridgeRegions(gb)
+}
+# Can be reverted once #20 is fixed in the main branch
+# bri  <- bridgeRegions(gb)
 brk  <- cleanGaps(coa)
 brk_q <- cleanGaps(coa$query)
 ```
@@ -143,7 +149,7 @@ Calculate numbers and prepare them for export in a YAML file
 
 ```{r count_features}
 customSummary <- function(x, pasteToNames=NULL) {
-  if(length(x) == 0) return(NULL)
+  if(length(x) == 0) x <- 0
   s <- summary(x)
   names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
   s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
