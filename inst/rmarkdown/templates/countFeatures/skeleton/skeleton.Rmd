@@ -83,7 +83,31 @@ brk  <- cleanGaps(coa)
 brk_q <- cleanGaps(coa$query)
 ```
 
-```{r plot_widths, dev = c('svg', 'png')}
+Inversions
+----------
+
+```{r study_inversions}
+coa <- flagInversions(coa)
+sum(coa$inv)
+inv <- filterInversions(coa)
+head(inv, 11)
+```
+
+Translocations
+--------------
+
+Patterns that can be described as translocations in the target genome.
+
+```{r study_translocations}
+coa <- flagTranslocations(coa)
+sum(coa$tra)
+tra <- filterInversions(coa)
+head(tra, 11)
+```
+
+Width plot
+
+```{r plot_widths, fig.height=12, dev=c('svg', 'png')}
 # Need to wrap in a function to handle empty GRanges objects...
 width2df <- function(what, gr) {
   if (length(gr) == 0) {
@@ -98,7 +122,9 @@ rbind(
   width2df(what = "breakpoint_regions",   gr = brk),
   width2df(what = "colinear_aln", gr = coli),
   width2df(what = "colinear_region", gr = coa),
-  width2df(what = "bridge", gr = bri)
+  width2df(what = "bridge", gr = bri),
+  width2df(what = "translocations", gr = tra),
+  width2df(what = "inversions", gr = inv)
 ) |> ggplot() +
   aes(width) +
   geom_histogram() +
@@ -106,42 +132,6 @@ rbind(
   facet_wrap(~what, ncol = 1, scales = "free_y")
 ```
 
-Inversions
-----------
-
-```{r study_inversions}
-coa <- flagInversions(coa)
-sum(coa$inv)
-inv <- showInversions(coa)
-head(inv, 11)
-if (sum(coa$inv) > 10) {
-  # Histogram of the widths
-  ggplot(data.frame(width = width(filterInversions(coa)))) +
-    aes(width) +
-    geom_histogram() +
-    scale_x_log10()
-}
-```
-
-Translocations
---------------
-
-Patterns that can be described as translocations in the target genome.
-
-```{r study_translocations}
-coa <- flagTranslocations(coa)
-sum(coa$tra)
-tra <- showTranslocations(coa)
-head(tra, 11)
-
-if (sum(coa$tra) > 10) {
-  # Histogram of the widths
-  ggplot(data.frame(width = width(filterTranslocations(coa)))) +
-    aes(width) +
-    geom_histogram() +
-    scale_x_log10()
-}
-```
 
 
 Calculate numbers and prepare them for export in a YAML file
