@@ -105,7 +105,7 @@ load_genomic_breaks_MAF <- function (
   # Make minus-strand coordinates relative to the start of the sequence
   l$start2 <- ifelse(l$strand == "+",
                      l$start2,
-                     l$seqlengths2 - l$start2 - l$length2 + 1)
+                     l$seqlengths2 - l$start2 - l$length2)
   # Add 1 to the starts
   # http://genomewiki.ucsc.edu/index.php/Coordinate_Transforms
   l$start1 = l$start1 + 1;

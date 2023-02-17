@@ -2,6 +2,9 @@
 
 ## Bug fixes
 
+ * Correct a 1-nt shift in minus-strand coordinates o the _query_ genome of
+   _GBreaks_ objects loaded from MAF files.  This shift could cause overlapping
+   ranges that crashed the coalescing algorithm.
  * `bridgeRegions()` now returns empty _GBreaks_ objects if no bridge region
    was found.  Closes issue #20.
 
