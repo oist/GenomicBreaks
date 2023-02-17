@@ -46,7 +46,7 @@ seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) 
 isSorted(exampleInversion)
 
 # Inversion in a 5-bloc context with non-collapsed regions
-# This is an intermediary step towards `exampleDoubleInversion`
+# This is an intermediary step towards `exampleDoubleInversion1`
 
 # ABC/ABC -> ABC/AbC
 
@@ -60,12 +60,12 @@ isSorted(exampleInversion5uncollapsed)
 # Double inversions
 # ABC/ABC -> ABC/baC -> ABC/bcA => 3+, 1-, 2-
 
-exampleDoubleInversion                    <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
-strand(exampleDoubleInversion)            <- c(              "+",            "+",            "-",            "-",            "+")
-exampleDoubleInversion$query              <- GRanges(c("chrB:100-190", "chrB:400-490", "chrB:200-290", "chrB:300-390", "chrB:500-590"))
-exampleDoubleInversion                    <- GBreaks(exampleDoubleInversion)
-seqlengths(exampleDoubleInversion)        <- seqlengths(exampleDoubleInversion$query) <- 600
-isSorted(exampleDoubleInversion)
+exampleDoubleInversion1                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleDoubleInversion1)           <- c(              "+",            "+",            "-",            "-",            "+")
+exampleDoubleInversion1$query             <- GRanges(c("chrB:100-190", "chrB:400-490", "chrB:200-290", "chrB:300-390", "chrB:500-590"))
+exampleDoubleInversion1                   <- GBreaks(exampleDoubleInversion1)
+seqlengths(exampleDoubleInversion1)       <- seqlengths(exampleDoubleInversion1$query) <- 600
+isSorted(exampleDoubleInversion1)
 
 # Double inversions
 # ABC/ABC -> ABC/Acb -> ABC/Cab => 2-, 3-, 1+
@@ -163,7 +163,10 @@ usethis::use_data(
   exampleColinear5,
   exampleInversion,
   exampleInversion5uncollapsed,
-  exampleDoubleInversion,
+  exampleDoubleInversion1,
+  exampleDoubleInversion2,
+  exampleDoubleInversion3,
+  exampleDoubleInversion4,
   exampleNestedInversions,
   exampleTranslocation,
   exampleTranslocation2,

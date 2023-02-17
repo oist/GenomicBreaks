@@ -16,8 +16,9 @@
 #' @author Charles Plessy
 #'
 #' @aliases exampleColinear exampleNotColinear exampleColinear3 exampleColinear5
-#' @aliases exampleInversion exampleDoubleInversion exampleInversion5uncollapsed
-#' @aliases exampleNestedInversions
+#' @aliases exampleInversion exampleNestedInversions exampleInversion5uncollapsed
+#' @aliases exampleDoubleInversion1 exampleDoubleInversion2
+#' @aliases exampleDoubleInversion3 exampleDoubleInversion4
 #' @aliases exampleTranslocation exampleTranslocation2
 #' @aliases exampleInsertion exampleDeletion
 #'
@@ -31,7 +32,7 @@
 #' exampleInversion
 #' exampleInversion5uncollapsed
 #' exampleNestedInversions
-#' exampleDoubleInversion
+#' exampleDoubleInversion1
 #' exampleTranslocation
 #' exampleTranslocation2
 #'

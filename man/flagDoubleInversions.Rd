@@ -37,12 +37,12 @@ z2 <- GBreaks(target = GRanges(c(A="T:10-15:+", B="T:20-25:-", C="T:30-35:-")),
 
 # z2 has same topoloty as package example
 plotApairOfChrs(z2)
-plotApairOfChrs(exampleDoubleInversion)
+plotApairOfChrs(exampleDoubleInversion1)
 
-flagDoubleInversions(exampleDoubleInversion )
+flagDoubleInversions(exampleDoubleInversion1 )
 
-exampleDoubleInversionRev <- reverse(exampleDoubleInversion) |> sort(ignore.strand = TRUE)
-exampleDoubleInversionRev[2:4] |> plotApairOfChrs()
+exampleDoubleInversion1Rev <- reverse(exampleDoubleInversion1) |> sort(ignore.strand = TRUE)
+exampleDoubleInversion1Rev[2:4] |> plotApairOfChrs()
 
 }
 \seealso{

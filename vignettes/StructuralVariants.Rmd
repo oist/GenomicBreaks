@@ -122,7 +122,7 @@ exampleColinear5 |> plotApairOfChrs()
 exampleInversion5uncollapsed |> plotApairOfChrs()
 
 # Finally another inversion takes place around the new blocks 3 and 4
-exampleDoubleInversion |> plotApairOfChrs()
+exampleDoubleInversion1 |> plotApairOfChrs()
 ```
 
 Same story but showing coalesced alignments.
@@ -135,7 +135,7 @@ exampleColinear5 |> coalesce_contigs() |> plotApairOfChrs()
 exampleInversion5uncollapsed |> coalesce_contigs() |> plotApairOfChrs()
 
 # Finally another inversion takes place around the new blocks 3 and 4
-exampleDoubleInversion |> coalesce_contigs() |> plotApairOfChrs()
+exampleDoubleInversion1 |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
 ### Nested inversions

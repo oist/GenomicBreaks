@@ -7,9 +7,12 @@
 \alias{exampleColinear3}
 \alias{exampleColinear5}
 \alias{exampleInversion}
-\alias{exampleDoubleInversion}
-\alias{exampleInversion5uncollapsed}
 \alias{exampleNestedInversions}
+\alias{exampleInversion5uncollapsed}
+\alias{exampleDoubleInversion1}
+\alias{exampleDoubleInversion2}
+\alias{exampleDoubleInversion3}
+\alias{exampleDoubleInversion4}
 \alias{exampleTranslocation}
 \alias{exampleTranslocation2}
 \alias{exampleInsertion}
@@ -37,7 +40,7 @@ exampleColinear5
 exampleInversion
 exampleInversion5uncollapsed
 exampleNestedInversions
-exampleDoubleInversion
+exampleDoubleInversion1
 exampleTranslocation
 exampleTranslocation2
 
