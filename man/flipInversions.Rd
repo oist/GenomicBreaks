@@ -26,6 +26,7 @@ flipInversions(exampleNestedInversions |> flagInversions())
 }
 \seealso{
 Other Inversion functions: 
+\code{\link{filterDoubleInversions}()},
 \code{\link{filterInversions}()},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},

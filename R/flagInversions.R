@@ -229,6 +229,33 @@ filterInversions <- function(gb, rename = TRUE) {
   gb[invContext]
 }
 
+#' Extract central blocks in double inversions
+#'
+#' @param gb A [`GBreaks`] object processed with [`flagDoubleInversions`].
+#'
+#' @param rename Replace range names by their numeric order before subsetting.
+#'
+#' @family Inversion functions
+#'
+#' @returns Returns the `GBreaks` object in which all ranges that are not
+#' the central part of a double inversion quintuplet have been discarded.  If
+#' the object was missing the `Dbl` metadata column, return the object after
+#' discarding all of its ranges.
+#'
+#' @examples
+#' filterDoubleInversions(flagDoubleInversions(exampleDoubleInversion1))
+#'
+#' @export
+
+filterDoubleInversions <- function(gb, rename = TRUE) {
+  if (is.null(gb$Dbl)) return(gb[0])
+  if (isTRUE(rename))
+    names(gb) <- seq_along(gb)
+  invPos <- which(gb$Dbl) + 1
+  invContext <- c(invPos, invPos + 1, invPos +2) |> unique() |> sort()
+  gb[invContext]
+}
+
 #' Flip strand of inversions
 #'
 #' @param gb A [`GBreaks`] object processed with [`flagInversions`].

@@ -26,6 +26,7 @@ filterInversions(flagInversions(exampleInversion))
 }
 \seealso{
 Other Inversion functions: 
+\code{\link{filterDoubleInversions}()},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},

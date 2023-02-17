@@ -55,6 +55,7 @@ Other Flagging functions:
 \code{\link{flagTranslocations}()}
 
 Other Inversion functions: 
+\code{\link{filterDoubleInversions}()},
 \code{\link{filterInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},

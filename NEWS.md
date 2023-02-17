@@ -9,6 +9,7 @@
 
  * New `flipInversions()` function to remove detected inversions before
    searching for nested ones.
+ * New `filterDoubleInversions()` function for extracting double inversions.
 
 # GenomicBreaks 0.14.0
 
