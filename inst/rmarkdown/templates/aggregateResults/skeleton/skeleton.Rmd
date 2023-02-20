@@ -51,9 +51,12 @@ getStats <- function(file) {
 # }
 
 df <- do.call(rbind, lapply(yamlFiles, getStats)) |> as.data.frame()
-df <- df[,colSums(df) !=0] # Some ranges have always a minimum width of zero, and `cor()` does not like it.
+df <- df[,colSums(df, na.rm = TRUE) !=0] # Some ranges have always a minimum width of zero, and `cor()` does not like it.
 df$species1 <- strsplit(rownames(df), "__") |> lapply(\(.) .[1]) |> unlist()
 df$species2 <- strsplit(rownames(df), "__") |> lapply(\(.) .[2]) |> unlist()
+
+# Remove self-comparisons
+df <- df[df$species1 != df$species2,]
 ```
 
 # Results
@@ -72,9 +75,31 @@ We will use percent identity or percent mismatch on a case-by-case basis
 depending on how well they help to spred another variable on a pairwise plot.
 
 ```{r percent_identity_and_mismatch}
-df$percent_identity_global   <- df$matches_numberTotal    / df$aligned_length_Total * 100
-df$percent_mismatches_global <- df$mismatches_numberTotal / df$aligned_length_Total * 100
+df$percent_identity_global   <- df$matches_number_Total    / df$aligned_length_Total * 100
+df$percent_mismatches_global <- df$mismatches_number_Total / df$aligned_length_Total * 100
 ggplot(df) + geom_point() + aes(percent_identity_global,  percent_mismatches_global)
+```
+
+```{r}
+makeMatrix <- function(df, column, defaultDiagonal = 100, defaultValue = NA) {
+  species <- unique(df$species2)
+  m <- matrix(defaultValue, nrow=length(species), ncol=length(species))
+  colnames(m) <- rownames(m) <- species
+  for (i in 1:length(species)) {
+    m[i,i] <- defaultDiagonal
+  }
+  for (i in 1:nrow(df)) {
+    s1 <- df[i, "species1"]
+    s2 <- df[i, "species2"]
+    m[s1, s2] <- df[i, column]
+  }
+  m
+}
+# makeMatrix(df, "customGroup", NA) 
+m <- makeMatrix(df, "percent_identity_global")
+pheatmap::pheatmap(as.matrix(daisy(m)))
+m <- makeMatrix(df, "percent_identity_global", 100, 50)
+pheatmap::pheatmap(as.matrix(m), sym=T)
 ```
 
 ## Fraction of the genome aligned
@@ -118,19 +143,19 @@ Normalising length of aligned regions by genome size may be useful when
 comparing species pairs from distant clades.
 
 ```{r aligned_width2}
-ggplot(df) + geom_point() + aes(percent_identity_global, aligned_target_Mean / guessed_target_length, col = percent_mismatches_global)
-ggplot(df) + geom_point() + aes(percent_identity_global, aligned_query_Mean  / guessed_query_length, col = percent_mismatches_global)
-ggplot(df) + geom_point() + aes(percent_identity_global, aligned_length_Mean  / (guessed_target_length + guessed_query_length) / 2, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_target_Mean / guessed_target_length, col = percent_mismatches_global) + scale_y_log10()
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_query_Mean  / guessed_query_length, col = percent_mismatches_global) + scale_y_log10()
+ggplot(df) + geom_point() + aes(percent_identity_global, aligned_length_Mean  / (guessed_target_length + guessed_query_length) / 2, col = percent_mismatches_global)  + scale_y_log10()
 ```
 
 ## Length of the chains
 
 ```{r chained_width}
-ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean, col = percent_mismatches_global)
-ggplot(df) + geom_point() + aes(percent_mismatches_global, chain_target_Mean, col = percent_identity_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean, col = percent_mismatches_global) + scale_y_log10()
+ggplot(df) + geom_point() + aes(percent_mismatches_global, chain_target_Mean, col = percent_identity_global) + scale_y_log10()
 
-ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean / guessed_target_length, col = percent_mismatches_global)
-ggplot(df) + geom_point() + aes(percent_identity_global, chain_query_Mean  / guessed_query_length, col = percent_mismatches_global)
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_target_Mean / guessed_target_length, col = percent_mismatches_global) + scale_y_log10()
+ggplot(df) + geom_point() + aes(percent_identity_global, chain_query_Mean  / guessed_query_length, col = percent_mismatches_global) + scale_y_log10()
 ```
 
 ## Indices
@@ -173,7 +198,7 @@ ggplot(df) + theme_bw() +
   aes(percent_identity_global, index_avg_strandRand, col = percent_mismatches_global) +
   xlab("Identity between aligned regions (%)") +
   ylab("Strand randomisation index") +
-  geom_point()
+  geom_point() + geom_smooth()
 
 cor(df$percent_identity_global, df$index_avg_strandRand)
 
@@ -181,7 +206,7 @@ ggplot(df) + theme_bw() +
   aes(percent_mismatches_global, index_avg_strandRand, col = percent_identity_global) +
   xlab("Mismatch between aligned regions (%)") +
   ylab("Strand randomisation index") +
-  geom_point()
+  geom_point() + geom_smooth()
 
 cor(df$percent_mismatches_global, df$index_avg_strandRand)
 ```
@@ -192,17 +217,18 @@ The correlation index measures how "off the diagonal" the alignments are
 
 ```{r plot_similarity_vs_correlation_index}
 ggplot(df) + theme_bw() +
-  aes(percent_identity_global, index_avg_correlation, col = percent_mismatches_global) +
+  aes(percent_identity_global, index_avg_correlation, col = species1) +
   xlab("Identity between aligned regions (%)") +
   ylab("Strand randomisation index") +
   geom_point()
 ```
 
+### Gene order correlation
 
 ```{r plot_similarity_vs_correlation_index}
 ggplot(df) +
-  aes(synteny_index, GOC_vicinity_4) +
-  aes(color = species2) +
+  aes(percent_identity_global, index_avg_GOCvicinity4) +
+  aes(color = species1) +
   xlab("Similarity between aligned regions") +
   ylab("abs(correlation index)") +
   geom_point()
