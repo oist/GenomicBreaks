@@ -86,10 +86,33 @@ brk_q <- cleanGaps(coa$query)
 Inversions
 ----------
 
+### Simple inversions
+
 ```{r study_inversions}
 coa <- flagInversions(coa)
 sum(coa$inv)
 inv <- filterInversions(coa)
+head(inv, 11)
+```
+
+### Flip the simple inversions and coalesce
+
+```{r study_inversions}
+flipped <- flipInversions(coa) |> coalesce_contigs()
+
+coa <- flagInversions(coa)
+sum(coa$inv)
+inv <- filterInversions(coa)
+head(inv, 11)
+```
+
+
+### Double inversions
+
+```{r study_double_inversions}
+coa <- flagDoubleInversions(coa)
+sum(coa$Dbl)
+dbl <- filterDoubleInversions(coa)
 head(inv, 11)
 ```
 
@@ -105,7 +128,8 @@ tra <- filterTranslocations(coa)
 head(tra, 11)
 ```
 
-Width plot
+Width plots
+-----------
 
 ```{r plot_widths, fig.height=12, dev=c('svg', 'png')}
 # Need to wrap in a function to handle empty GRanges objects...
