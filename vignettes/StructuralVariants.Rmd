@@ -108,34 +108,40 @@ flagInversions(exampleInversion, tol = 10)
 
 ### Double inversions
 
-Double inversions are the result of two overlapping trivial inversions, and
-must be detected with a different approach.
+Double inversions are the result of two overlapping trivial inversions, and are
+detected with a different approach, implemented in the `flagDoubleInversions()`
+function.
 
-Here we show a triplet resulting from a double inversion, flanked by two
+Here we construct a double inversion in 3 steps:
+
+ 1) First, we start from 5 collinear ranges,
+ 2) then we invert ranges 2 and 3,
+ 3) then we invert ranges 3 an 4 (of step 2).
+ 
+ show a triplet resulting from a double inversion, flanked by two
 regions that did not move.
 
 ```{r doubleInversions}
-# Starting point: 5 colinear blocks
-exampleColinear5 |> plotApairOfChrs()
-
-# Then, lets have an inversion that encompasses blocks 1 and 2.
-exampleInversion5uncollapsed |> plotApairOfChrs()
-
-# Finally another inversion takes place around the new blocks 3 and 4
-exampleDoubleInversion1 |> plotApairOfChrs()
+exampleColinear5 |> plotApairOfChrs(main = "5 collinear ranges")
+exampleInversion5uncollapsed |> plotApairOfChrs(main = "Invert ranges 2 and 3")
+exampleDoubleInversion1 |> plotApairOfChrs(main = "Invert ranges 3 and 4 of the previous step")
 ```
 
 Same story but showing coalesced alignments.
 
 ```{r doubleInversions2}
-# Starting point: 5 colinear blocks
 exampleColinear5 |> coalesce_contigs() |> plotApairOfChrs()
-
-# Then, lets have an inversion that encompasses blocks 1 and 2.
 exampleInversion5uncollapsed |> coalesce_contigs() |> plotApairOfChrs()
-
-# Finally another inversion takes place around the new blocks 3 and 4
 exampleDoubleInversion1 |> coalesce_contigs() |> plotApairOfChrs()
+```
+
+Given the double inversion example above, but not its history, we can deduce
+the coordinates of the inversions (pairs of breakpoints), but not the order
+in which they took place.
+
+```{r doubleInversions2}
+
+
 ```
 
 ### Nested inversions
