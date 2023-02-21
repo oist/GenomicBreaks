@@ -97,13 +97,13 @@ head(inv, 11)
 
 ### Flip the simple inversions and coalesce
 
-```{r study_inversions}
-flipped <- flipInversions(coa) |> coalesce_contigs()
-
-coa <- flagInversions(coa)
-sum(coa$inv)
-inv <- filterInversions(coa)
-head(inv, 11)
+```{r study_inversions2}
+# flipped <- flipInversions(coa) |> coalesce_contigs()
+# 
+# coa <- flagInversions(coa)
+# sum(coa$inv)
+# inv <- filterInversions(coa)
+# head(inv, 11)
 ```
 
 
