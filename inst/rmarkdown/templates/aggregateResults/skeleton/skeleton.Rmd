@@ -13,7 +13,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library("ggplot2")
+library("ggplot2") |> suppressPackageStartupMessages()
 ```
 
 How to use this Rmarkdown template in a Singularity image:
@@ -91,13 +91,14 @@ makeMatrix <- function(df, column, defaultDiagonal = 100, defaultValue = NA) {
   for (i in 1:nrow(df)) {
     s1 <- df[i, "species1"]
     s2 <- df[i, "species2"]
-    m[s1, s2] <- df[i, column]
+    if(s1 %in% species)
+      m[s1, s2] <- df[i, column]
   }
   m
 }
 # makeMatrix(df, "customGroup", NA) 
 m <- makeMatrix(df, "percent_identity_global")
-pheatmap::pheatmap(as.matrix(daisy(m)))
+pheatmap::pheatmap(as.matrix(cluster::daisy(m)))
 m <- makeMatrix(df, "percent_identity_global", 100, 50)
 pheatmap::pheatmap(as.matrix(m), sym=T)
 ```
@@ -219,7 +220,7 @@ The correlation index measures how "off the diagonal" the alignments are
 ggplot(df) + theme_bw() +
   aes(percent_identity_global, index_avg_correlation, col = species1) +
   xlab("Identity between aligned regions (%)") +
-  ylab("Strand randomisation index") +
+  ylab("Correlation index") +
   geom_point()
 ```
 
