@@ -110,10 +110,10 @@ head(inv, 11)
 ### Double inversions
 
 ```{r study_double_inversions}
-coa <- flagDoubleInversions(coa)
-sum(coa$Dbl)
-dbl <- filterDoubleInversions(coa)
-head(inv, 11)
+#coa <- flagDoubleInversions(coa)
+#sum(coa$Dbl)
+#dbl <- filterDoubleInversions(coa)
+#head(inv, 11)
 ```
 
 Translocations
