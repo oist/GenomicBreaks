@@ -139,11 +139,6 @@ Given the double inversion example above, but not its history, we can deduce
 the coordinates of the inversions (pairs of breakpoints), but not the order
 in which they took place.
 
-```{r doubleInversions2}
-
-
-```
-
 ### Nested inversions
 
 The `?flagInversions` algorithm only detects the simplest cases.  In order to
