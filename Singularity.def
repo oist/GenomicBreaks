@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: debian:sid
+From: debian:bookworm
 
 %post
     apt update
@@ -23,7 +23,7 @@ From: debian:sid
     ./R -e 'install.packages("tidyverse")'
     ./R -e 'install.packages("devtools")' 
     ./R -e 'install.packages("remotes")'
-    ./R -e 'BiocManager::install(c("rmarkdown"))'
+    ./R -e 'install.packages("rmarkdown")'
     ./R -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library\n' | tee -a /etc/R/Renviron.site >/dev/null

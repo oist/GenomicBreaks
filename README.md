@@ -30,26 +30,12 @@ Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::rep
 
 Add `dependencies=TRUE` if you would like to install the packages needed to build the vignettes.
 
-### How to install R 4.1, Rstudio and Bioconductor.
+### How to create a Singularity container with GenomicBreaks installed.
 
-On a Debian/Ubuntu system, try this:
+See the [Singularity reciepe file](./Singularity.def)
 
 ```
-sudo apt install r-base
-sudo apt install pandoc qpdf texlive # For vignette builds and package checks
-sudo apt install libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev
-sudp atp install libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
-sudo apt install git bash-completion
-sudo apt install libgl1 libnss3 libasound2 libxdamage1
-sudo apt install libboost-iostreams-dev # To build GenomicBreaks
-wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.0-351-amd64.deb
-sudo apt --fix-broken -y install ./rstudio-2021.09.0-351-amd64.deb
-Rscript -e 'install.packages("BiocManager")'
-Rscript -e 'install.packages("tidyverse")'
-Rscript -e 'install.packages("devtools")' 
-Rscript -e 'install.packages("remotes")'
-Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
-
+sudo singularity build GenomicBreaks.sif Singularity.def
 ```
 
 GenomicBreaks in brief:
@@ -59,20 +45,22 @@ A pairwise alignment of two genomes is loaded in `GBreaks` objects wrapping
 the `GRanges` class.  Here is an example:
 
 ```
-GBreaks object with 11 ranges and 2 metadata columns:
-       seqnames            ranges strand |                  query     score
-          <Rle>         <IRanges>  <Rle> |              <GRanges> <integer>
-   [1]     chr1 11256821-11271214      - |   Chr1:7699877-7713142     14394
-   [2]     chr1 11271261-11272159      - |   Chr1:7975442-7976321       899
-   [3]     chr1 11272246-11274272      + |   Chr1:7686802-7688942      2027
-   [4]     chr1 11275227-11276200      - |   Chr1:7491169-7492136       974
-   [5]     chr1 11276902-11281111      - |   Chr1:7850371-7855204      4210
-   [6]     chr1 11281154-11281731      + |  PAR:10891068-10891635       578
-   [7]     chr1 11281946-11288799      + |   Chr2:9359434-9367027      6854
-   [8]     chr1 11288839-11299743      - | Chr1:10912857-10921537     10905
-   [9]     chr1 11300902-11301564      - |   Chr1:9597979-9599493       663
+GBreaks object with 505 ranges and 2 metadata columns:
+        seqnames      ranges strand |     score                   query
+           <Rle>   <IRanges>  <Rle> | <numeric>               <GRanges>
+    [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716
+    [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680
+    [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537
+    [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175
+    [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866
+    ...      ...         ...    ... .       ...                     ...
+  [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439
+  [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180
+  [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261
+  [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865
+  [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592
   -------
-  seqinfo: 19 sequences from OKI2018_I69 genome
+  seqinfo: 17 sequences (1 circular) from sacCer3 genome
 ```
 
 See “_Get started_” on <https://oist.github.io/GenomicBreaks> for further details.
