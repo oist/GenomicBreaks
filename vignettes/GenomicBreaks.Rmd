@@ -25,23 +25,21 @@ characteristics associated with _breakpoints_ between pairs of _genomes_.
 
 ## Load pacakges
 
-Core packages that provide functions we use a lot.
+By loading _GenomicBreaks_, the _GenomicRanges_ package is automatically
+loaded too.  But we have to load _ggplot2_ if we want to customise the output
+of the plotting functions of _GenomicBreaks_.
 
 ```{r loadlib, echo=T, results='hide'}
-suppressPackageStartupMessages({
-  library('GenomicBreaks')
-  library('BSgenome')
-  library('GenomicFeatures')
-  library('GenomicRanges')
-  library('ggplot2')
-})
+library('GenomicBreaks') |> suppressPackageStartupMessages()
+library('ggplot2')
 ```
 
-We will use yeast data as an example, so let's load the `Scerevisiae` BSgenome
-package.
+We will use yeast data as an example.  The genome of _Saccharomyces cerevisiae_
+is available in Bioconductor so let's load its BSgenome package.  After loading
+a `Scerevisiae` object is invisibly exported.
 
 ```{r load_BSgenome_packages}
-library("BSgenome.Scerevisiae.UCSC.sacCer3")
+library("BSgenome.Scerevisiae.UCSC.sacCer3") |> suppressPackageStartupMessages()
 ```
 
 ## Example data
@@ -59,9 +57,12 @@ and converted to [GFF3](https://github.com/The-Sequence-Ontology/Specifications/
 format with the `maf-convert gff -J 1000000` command of the
 [LAST](https://gitlab.com/mcfrith/last/-/blob/main/doc/maf-convert.rst) package.
 
+Note that the since _GenomicBreaks_ can also load alignments in MAF format
+directly, (see `load_genomic_breaks()`) you usually do not need to convert the
+pipeline output to GFF3 format.
+
 ```{r locate_example_data_Sac}
 exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
-rtracklayer::import(exdata_Sac)
 ```
 
 ### _Neurospora crassa_ chromosome III – _Podospora comata_ chromosome 7
@@ -101,10 +102,13 @@ gb_Neu <- load_genomic_breaks(exdata_Neu, type = "match")
 
 ## Maniuplation of GBreaks objects with plyranges
 
-With the _plyranges_ package it is easy to manipulate `GBreaks` objects, in
-particular when filtering on features of the _query_ genome.
+With the _plyranges_ Bioconductor package it is easy to manipulate `GBreaks`
+objects, in particular when filtering on features of the _query_ genome.
+This package is not automatically installed; so you may need to do it yourself.
 
 ```{r plyranges_example}
+# BiocManager::install('plyranges')
+
 # Subset for chrI on the target genome.
 gb |> plyranges::filter(seqnames == "chrI")
 
@@ -140,40 +144,6 @@ gb |> subsetByOverlaps(GRanges("chrI:200000-240000"))
 gb |> subsetByOverlaps(GBreaks( target = GRanges("chrI:200000-240000")
                               ,  query = GRanges("NC_047494.1:200000-800000")))
 ```
-
-
-## Breakpoints and alignment stops
-
-Let us define an **alignment stop** to be a position defined in either the
-_target_ or _query_ genome, where an alignment begins or ends.  Looking at the
-first line in the `gb` object above, `ChrI` positions 5860 and 10010 of the
-_target_ would be defined as alignment stops.  Correspondingly, we have
-positions 8723 and 12176 in `NC_047487.1` of the _query_ genome as alignment
-stops. 
-
-The function `get_bps()` takes in a `GBreaks` pairwise alignment or a simple
-`GRanges` object, and produces a `GRanges` object of it's associated alignment
-stops.  It has `direction`, `stranded` and `sorted` options to refind its
-output. 
-
-```{r get bps}
-get_bps(gb) |> head(3)
-get_bps(gb, direction = "left") |> head(3)
-get_bps(gb,                      stranded = TRUE) |> head(3)
-get_bps(gb,                      stranded = TRUE, sorted = FALSE) |> head(3)
-get_bps(gb, direction = "right", stranded = TRUE) |> head(3)
-get_bps(gb$query, sorted = FALSE) |> head(3)
-get_bps(gb$query) |> head(3)
-```
-
-Now, let us define a **genomic breakpoint** (or simply breakpoint) to be a
-genomic structural mutation, arising from breakage and repair of the chromosome.
-Such structural events include insertion, deletion, inversion and translocation,
-and often arise during recombination. 
-
-This package seeks to determine, of the group of alignment stops, which are
-likely genomic breakpoints and analyse them.  Thus, filtering out alignment
-stops that are a result of bioinformatic errors.
 
 ## Arms
 
@@ -248,34 +218,15 @@ strand_randomisation_index(gb)
 strand_randomisation_index(gb_Neu)
 ```
 
-## Visualising alignments
-
-We can use the function `scaf_align_plot` to see the alignment of query
-scaffolds/chromosomes onto a specific target scaffold/chromosome of interest.
-
-```{r echo=T, message=F, warning=F}
-scaf_align_plot(gb, scaf = "chrI")
-```
-
-Here we have plotted the alignments on the Okinawa genome (y-axis) onto the Osaka genome, scaffold 2 (x-axis). The coverage of the alignment is the bar along the top. 
-
-We can plot alignments for two of the target scaffolds side-by-side, using `align_scaf_plot-2`. This can be used in aid of superscaffolding. 
-
-```{r echo=T, message=F, warning=F}
-align_scaf_plot_2(gb, scaf = c("chrI","chrII"))
-```
-
-As you can see, scaffold 2 of the query genome aligns to the majority of both target scaffolds. This could be used as evidence to support the superscaffolding of these two scaffolds - in an effort toward chromosomal assembly. 
-
 ## Coalescing alignments
 
 Large syntenic regions can often appear cluttered with alignment breaks,
 spanning just a few basepairs.  They are either an artefact (for instance in
 case of incomplete purge of haplotypes) and or true breakpoint.  The algorithm
-in `coalesce_contigs` is used to produce a new GRanges object with fewer
+in `coalesce_contigs()` is used to produce a new GRanges object with fewer
 alignment breaks by coalescing alignments separated by short (user specified)
 distances.  This distance need be agreeable in both the target and query genome
-in order for the coalscion to happen. 
+in order for the coalescion to happen. 
 
 For example, coalescing gaps of less than 500 basepairs in the `gb` alignment:
 
@@ -415,9 +366,3 @@ showInversions(flagInversions(coa)) |> plyranges::slice(1:3)   |> plotApairOfChr
 showInversions(flagInversions(coa)) |> plyranges::slice(4:9)   |> plotApairOfChrs()
 showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChrs()
 ```
-
-
-# To do:
-
- - Generate a second pairwise alignment with a less syntenic yeast.
- - Use it to demonstrate `orderQuerySeqLevels()`.
