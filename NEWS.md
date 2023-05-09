@@ -1,12 +1,14 @@
-# GenomicBreaks Unreleased
+# GenomicBreaks 0.14.1
 
 ## Bug fixes
 
- * Correct a 1-nt shift in minus-strand coordinates o the _query_ genome of
+ * Correct a 1-nt shift in minus-strand coordinates of the _query_ genome of
    _GBreaks_ objects loaded from MAF files.  This shift could cause overlapping
    ranges that crashed the coalescing algorithm.
  * `bridgeRegions()` now returns empty _GBreaks_ objects if no bridge region
    was found.  Closes issue #20.
+ * Allow `makeOxfordPlots()` to work on genomes larger than the maximum
+   32-bit integer.  Closes issue #24.
 
 ## New functionalities
 
