@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,21 @@
       <small>Source: <a href="https://github.com/oist/GenomicBreaks/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.1" id="genomicbreaks-0141">GenomicBreaks 0.14.1<a class="anchor" aria-label="anchor" href="#genomicbreaks-0141"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-14-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-14-1"></a></h3>
+<ul><li>Correct a 1-nt shift in minus-strand coordinates of the <em>query</em> genome of <em>GBreaks</em> objects loaded from MAF files. This shift could cause overlapping ranges that crashed the coalescing algorithm.</li>
+<li>
+<code><a href="../reference/bridgeRegions.html">bridgeRegions()</a></code> now returns empty <em>GBreaks</em> objects if no bridge region was found. Closes issue <a href="https://github.com/oist/GenomicBreaks/issues/20" class="external-link">#20</a>.</li>
+<li>Allow <code><a href="../reference/makeOxfordPlots.html">makeOxfordPlots()</a></code> to work on genomes larger than the maximum 32-bit integer. Closes issue <a href="https://github.com/oist/GenomicBreaks/issues/24" class="external-link">#24</a>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-functionalities-0-14-1">New functionalities<a class="anchor" aria-label="anchor" href="#new-functionalities-0-14-1"></a></h3>
+<ul><li>New <code><a href="../reference/flipInversions.html">flipInversions()</a></code> function to remove detected inversions before searching for nested ones.</li>
+<li>New <code><a href="../reference/filterDoubleInversions.html">filterDoubleInversions()</a></code> function for extracting double inversions.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.0" id="genomicbreaks-0140">GenomicBreaks 0.14.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0140"></a></h2>
 <ul><li>The <code><a href="../reference/load_genomic_breaks.html">load_genomic_breaks()</a></code> function gains support for files in the <em>Multiple Alignment Format</em> (MAF).</li>
@@ -169,7 +184,7 @@
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
 <li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
 <li>New <code><a href="https://rdrr.io/r/base/range.html" class="external-link">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>seqnames</em>, ignoring strand information.</li>
-<li>New <code><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
+<li>New <code>subsetByOverlaps()</code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-9-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-0"></a></h3>

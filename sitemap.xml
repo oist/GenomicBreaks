@@ -73,6 +73,9 @@
     <loc>https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.html</loc>
   </url>
   <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.html</loc>
+  </url>
+  <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/filterInversions.html</loc>
   </url>
   <url>
@@ -98,6 +101,9 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flagTranslocations.html</loc>
+  </url>
+  <url>
+    <loc>https://oist.github.io/GenomicBreaks/reference/flipInversions.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc>
@@ -155,9 +161,6 @@
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/makeOxfordPlots.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/master_bp_analysis.html</loc>
   </url>
   <url>
     <loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc>

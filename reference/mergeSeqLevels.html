@@ -12,7 +12,7 @@ sequences into larger ones."><!-- mathjax --><script src="https://cdnjs.cloudfla
     
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,9 @@ sequences into larger ones.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gr</span>, <span class="va">seqs</span>, <span class="va">name</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mergeSeqLevels</span><span class="op">(</span><span class="va">gr</span>, <span class="va">seqs</span>, <span class="va">name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mergeSeqLevels_to_DF</span><span class="op">(</span><span class="va">gr</span>, <span class="va">seqs</span>, <span class="va">name</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -88,6 +90,16 @@ sequences into larger ones.</p>
 merged.  Its <code>seqinfo</code> has a new entry for the new level, and the old
 levels are not removed.  If no <code>seqlengths</code> were present in the original
 object, they are arbitrarily set as the maximal end value for each <code>seqlevel</code>.</p>
+
+
+<p>The <code>mergeSeqLevels_to_DF</code> function returns a <code>DataFrame</code> in which
+the <code>start</code> and <code>end</code> columns are in <code>numeric</code> mode.  This is to cirvumvent
+the fact that <code>GenomicRanges</code> object hardcode the mode of <em>start</em> and <em>end</em></p>
+
+
+<p>positions to <code>integer</code>, which does not allow values larger than
+2,147,483,647, which does not allow to merge sequence levels of mammalian
+or larger-scale genomes.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -100,6 +112,7 @@ with its reverse strand.</p>
     <div class="dont-index"><p>Other modifier functions: 
 <code><a href="bridgeRegions.html">bridgeRegions</a>()</code>,
 <code><a href="coalesce_contigs.html">coalesce_contigs</a>()</code>,
+<code><a href="flipInversions.html">flipInversions</a>()</code>,
 <code><a href="forceSeqLengths.html">forceSeqLengths</a>()</code>,
 <code><a href="guessSeqLengths.html">guessSeqLengths</a>()</code>,
 <code><a href="reverse.html">reverse</a>()</code>,

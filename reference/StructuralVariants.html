@@ -12,7 +12,7 @@ demonstration purpose"><!-- mathjax --><script src="https://cdnjs.cloudflare.com
     
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,7 +146,18 @@ aligned region, for instance as a gap, are not covered</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span><span class="va">exampleDoubleInversion</span></span></span>
+<span class="r-in"><span><span class="va">exampleNestedInversions</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrA:100-190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   200-290      - | chrA:400-490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   300-390      + | chrA:300-390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]     chrA   400-490      - | chrA:200-290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   500-590      + | chrA:500-590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="va">exampleDoubleInversion1</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
