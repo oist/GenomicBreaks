@@ -36,6 +36,8 @@
 #' passed as parameters are copied to the `GRanges` objects accordingly.
 #'
 #' @examples
+#' load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks"))
+#'
 #' \dontrun{
 #' library("BSgenome.Scerevisiae.UCSC.sacCer3")
 #' load_genomic_breaks(

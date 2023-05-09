@@ -52,6 +52,8 @@ the \emph{plus} strand.
 }
 }
 \examples{
+load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks"))
+
 \dontrun{
 library("BSgenome.Scerevisiae.UCSC.sacCer3")
 load_genomic_breaks(
