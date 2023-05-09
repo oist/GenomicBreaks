@@ -2,9 +2,12 @@
 % Please edit documentation in R/orderQuerySeqLevels.R
 \name{orderQuerySeqLevels}
 \alias{orderQuerySeqLevels}
+\alias{orderQuerySeqLevels_DF_GR}
 \title{Ordering permutation for \emph{query} relative to \emph{target}}
 \usage{
 orderQuerySeqLevels(gb)
+
+orderQuerySeqLevels_DF_GR(DF, gr)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object that has only one sequence level in use on the
@@ -27,7 +30,7 @@ spurious ordering due to short matches in the subtelomeric regions.
 }
 \note{
 The order only makes sense relative to a single sequence level of the
-\emph{taraget} genome, so the function will stop with erroro if there was more
+\emph{target} genome, so the function will stop with error if there was more
 than one.
 }
 \examples{

@@ -60,5 +60,7 @@ Other plot functions:
 }
 \author{
 Aleksandra Bliznina
+
+Charles Plessy
 }
 \concept{plot functions}

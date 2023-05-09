@@ -20,6 +20,7 @@
 #' layer.
 #'
 #' @author Aleksandra Bliznina
+#' @author Charles Plessy
 #'
 #' @family plot functions
 #'
@@ -58,19 +59,26 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   gb <- forceSeqLengths(gb)
 
   # Merge seq levels if needed.
-  mergeSeqLevelsIfMany <- function(gr, seqs, name) {
-    if (length(seqlevelsInUse(gr)) == 1) return(gr)
-    mergeSeqLevels(gr, seqs, name)
+  mergeSeqLevelsIfMany_and_convert_to_DF <- function(gr, seqs, name) {
+    if (length(seqlevelsInUse(gr)) == 1) {
+      DataFrame(
+        seqnames = seqnames(gr),
+        start = start(gr),
+        end = end(gr),
+        strand = strand(gr))
+    } else {
+      mergeSeqLevels_to_DF(gr, seqs, name)
+    }
   }
 
-  targetMerged <- mergeSeqLevelsIfMany(gb,       seqlevelsInUse(gb),       sp1Name)
+  targetMerged <- mergeSeqLevelsIfMany_and_convert_to_DF(gb,       seqlevelsInUse(gb),       sp1Name)
 
   if(isTRUE(diag)) {
-    newOrder <- orderQuerySeqLevels(GBreaks(target = targetMerged, query = gb$query))
+    newOrder <- orderQuerySeqLevels_DF_GR(targetMerged, gb$query)
     seqlevels(gb$query) <- seqlevels(gb$query)[newOrder]
   }
 
-  queryMerged  <- mergeSeqLevelsIfMany(gb$query, seqlevelsInUse(gb$query), sp2Name)
+  queryMerged  <- mergeSeqLevelsIfMany_and_convert_to_DF(gb$query, seqlevelsInUse(gb$query), sp2Name)
 
   breaks <- list()
   ticks  <- list()
@@ -81,11 +89,11 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
   ## This is needed to build the data frame below regardless a score exists.
   if (is.null(score(gb))) score(gb) <- NA
   ## plot main data
-  p <- ggplot(data.frame(      start = start(targetMerged),
-                                 end =   end(targetMerged),
-                              strand = strand(targetMerged),
-                         query.start = ifelse(strand (gb) == "+", start(queryMerged),   end(queryMerged)),
-                           query.end = ifelse(strand (gb) == "+",   end(queryMerged), start(queryMerged)),
+  p <- ggplot(data.frame(      start = targetMerged$start,
+                                 end = targetMerged$end,
+                              strand = targetMerged$strand,
+                         query.start = ifelse(strand (gb) == "+", queryMerged$start, queryMerged$end),
+                           query.end = ifelse(strand (gb) == "+", queryMerged$end,   queryMerged$start),
                             seqnames = seqnames(gb),
                                score = score(gb))) +
     aes(x = start, y = query.start, xend = end, yend = query.end)
@@ -103,8 +111,8 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
     theme(plot.title = element_text(hjust = 0.5))
 
   ## add x and y labels
-  p <- p + labs(x = seqlevelsInUse(targetMerged),
-                y = seqlevelsInUse(queryMerged))
+  p <- p + labs(x = unique(targetMerged$seqnames),
+                y = unique(queryMerged$seqnames))
 
   ## add breaks
   calcBreakPosition <- function(gr) {

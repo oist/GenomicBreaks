@@ -2,9 +2,12 @@
 % Please edit documentation in R/mergeSeqLevels.R
 \name{mergeSeqLevels}
 \alias{mergeSeqLevels}
+\alias{mergeSeqLevels_to_DF}
 \title{Merge seqlevels in a larger one}
 \usage{
 mergeSeqLevels(gr, seqs, name)
+
+mergeSeqLevels_to_DF(gr, seqs, name)
 }
 \arguments{
 \item{gr}{A \code{GRanges} object.}
@@ -18,6 +21,13 @@ Returns a modified \code{GRanges} object in which the sequences have been
 merged.  Its \code{\link{seqinfo}} has a new entry for the new level, and the old
 levels are not removed.  If no \code{seqlengths} were present in the original
 object, they are arbitrarily set as the maximal end value for each \code{seqlevel}.
+
+The \code{mergeSeqLevels_to_DF} function returns a \code{DataFrame} in which
+the \code{start} and \code{end} columns are in \code{numeric} mode.  This is to cirvumvent
+the fact that \code{GenomicRanges} object hardcode the mode of \emph{start} and \emph{end}
+positions to \code{integer}, which does not allow values larger than
+2,147,483,647, which does not allow to merge sequence levels of mammalian
+or larger-scale genomes.
 }
 \description{
 For scaffolding or plotting purposes, it may be useful to merge some

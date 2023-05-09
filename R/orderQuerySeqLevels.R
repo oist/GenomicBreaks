@@ -10,11 +10,13 @@
 #' spurious ordering due to short matches in the subtelomeric regions.
 #'
 #' @note The order only makes sense relative to a single sequence level of the
-#' _taraget_ genome, so the function will stop with erroro if there was more
+#' _target_ genome, so the function will stop with error if there was more
 #' than one.
 #'
 #' @param gb A [`GBreaks`] object that has only one sequence level in use on the
 #' _target_ genome.
+#' @param DF A [`DataFrame`] object representing the _target_ genome.
+#' @param gr A [`GRanges`] object representing the _query_ genome.
 #'
 #' @returns Returns an integer vector of order permutations for the sequence
 #' levels of the _query_ genome.
@@ -44,4 +46,16 @@ orderQuerySeqLevels <- function(gb) {
   gb$midpoint <- round(start(gb), end(gb))
   grl <- split(gb, seqnames(gb$query))
   lapply(grl, \(gr) weighted.mean(gr$midpoint, gr$weight)) |> unlist() |> order()
+}
+
+#' @rdname orderQuerySeqLevels
+#' @export
+
+orderQuerySeqLevels_DF_GR <- function(DF, gr) {
+  stopifnot (length(unique(DF$seqnames)) == 1) # Not ready for full objects
+  seqlevels(gr) <- seqlevelsInUse(gr)
+  DF$weight <- DF$end - DF$start + 1
+  DF$midpoint <- round(DF$start, DF$end)
+  DFL <- split(DF, seqnames(gr))
+  lapply(DFL, \(DF) weighted.mean(DF$midpoint, DF$weight)) |> unlist() |> order()
 }
