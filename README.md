@@ -22,13 +22,16 @@ Installation
 
 ### Install the package.
 
-The following should work:
+If you have [Bioconductor](https://www.bioconductor.org/install/) and the
+[remotes](https://remotes.r-lib.org/#installation) already installed, the
+following should work.
 
 ```
 Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'
 ```
 
-Add `dependencies=TRUE` if you would like to install the packages needed to build the vignettes.
+Add `dependencies=TRUE` if you would like to install the packages needed to
+build the vignettes.  
 
 ### How to create a Singularity container with GenomicBreaks installed.
 
