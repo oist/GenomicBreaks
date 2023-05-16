@@ -51,7 +51,7 @@ Coalesce contigs
 
 ```{r coalesce_contigs}
 coa <- coalesce_contigs(gb)
-#makeOxfordPlots(coa) + ggtitle(params$alnFile)
+makeOxfordPlots(coa) + ggtitle(params$alnFile)
 ```
 
 ### Extract information
