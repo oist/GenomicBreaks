@@ -51,7 +51,7 @@ Coalesce contigs
 
 ```{r coalesce_contigs}
 coa <- coalesce_contigs(gb)
-makeOxfordPlots(coa) + ggtitle(params$alnFile)
+makeOxfordPlots(coa, col = 'strand') + ggtitle(params$alnFile)
 ```
 
 ### Extract information
@@ -89,7 +89,10 @@ Inversions
 ### Simple inversions
 
 ```{r study_inversions}
-coa <- flagInversions(coa)
+# See https://github.com/oist/GenomicBreaks/issues/25
+# Not sure what the minimal length is; let's try 2
+if (length(coa) > 2)
+  coa <- flagInversions(coa)
 sum(coa$inv)
 inv <- filterInversions(coa)
 head(inv, 11)
@@ -122,7 +125,10 @@ Translocations
 Patterns that can be described as translocations in the target genome.
 
 ```{r study_translocations}
-coa <- flagTranslocations(coa)
+# See https://github.com/oist/GenomicBreaks/issues/25
+# Not sure what the minimal length is; let's try 2
+if (length(coa) > 2)
+  coa <- flagTranslocations(coa)
 sum(coa$tra)
 tra <- filterTranslocations(coa)
 head(tra, 11)
