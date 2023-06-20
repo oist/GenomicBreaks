@@ -5,6 +5,8 @@
 #'
 #' @return A [`matrix`] object.
 #'
+#' @family Converter functions
+#'
 #' @examples
 #' m <- GBreaksToMatrix(exampleColinear5, ntile = 10)
 #' m

@@ -24,3 +24,11 @@ image(m)
 makeOxfordPlots(exampleColinear5)
 
 }
+\seealso{
+Other Converter functions: 
+\code{\link{gb2comp}()},
+\code{\link{gb2dna_seg}()},
+\code{\link{gb2xlim}()},
+\code{\link{gr2dna_seg}()}
+}
+\concept{Converter functions}

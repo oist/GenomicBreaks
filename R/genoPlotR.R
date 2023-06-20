@@ -19,7 +19,7 @@
 #' gr2dna_seg(exampleInversion$query)
 #'
 #' @family genoPlotR functions
-#' @family converter functions
+#' @family Converter functions
 #'
 #' @export
 
@@ -55,7 +55,7 @@ gr2dna_seg <- function (gr, ...) {
 #' gb2dna_seg(exampleInversion)
 #'
 #' @family genoPlotR functions
-#' @family converter functions
+#' @family Converter functions
 #'
 #' @export
 
@@ -89,7 +89,7 @@ gb2dna_seg <- function(gb, ...) {
 #' gb2comp(exampleInversion)
 #'
 #' @family genoPlotR functions
-#' @family converter functions
+#' @family Converter functions
 #'
 #' @export
 
@@ -225,7 +225,7 @@ plotApairOfChrs <- function(gb, chrT=NULL, chrQ=NULL,
 #' @author Charles Plessy
 #'
 #' @family genoPlotR functions
-#' @family converter functions
+#' @family Converter functions
 #'
 #' @export
 

@@ -31,7 +31,8 @@ Other genoPlotR functions:
 \code{\link{gb2xlim}()},
 \code{\link{plotApairOfChrs}()}
 
-Other converter functions: 
+Other Converter functions: 
+\code{\link{GBreaksToMatrix}()},
 \code{\link{gb2comp}()},
 \code{\link{gb2dna_seg}()},
 \code{\link{gb2xlim}()}
@@ -39,5 +40,5 @@ Other converter functions:
 \author{
 Charles Plessy
 }
-\concept{converter functions}
+\concept{Converter functions}
 \concept{genoPlotR functions}

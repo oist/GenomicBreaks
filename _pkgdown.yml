@@ -40,6 +40,9 @@ reference:
     desc: Functions that take `GBreaks` objects and return simpler `GRanges` objects.
   - contents:
     - has_concept("Reducing functions")
+  - title: Converter functions
+  - contents:
+    - has_concept("Converter functions")
   - title: Other functions
   - contents:
     - StructuralVariants
