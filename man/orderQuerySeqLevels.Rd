@@ -12,6 +12,10 @@ orderQuerySeqLevels_DF_GR(DF, gr)
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object that has only one sequence level in use on the
 \emph{target} genome.}
+
+\item{DF}{A \code{\link{DataFrame}} object representing the \emph{target} genome.}
+
+\item{gr}{A \code{\link{GRanges}} object representing the \emph{query} genome.}
 }
 \value{
 Returns an integer vector of order permutations for the sequence
