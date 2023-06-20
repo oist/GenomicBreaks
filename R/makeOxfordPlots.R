@@ -29,6 +29,7 @@
 #' makeOxfordPlots(exampleTranslocation, type = "p")
 #'
 #' @import ggplot2
+#' @importFrom S4Vectors DataFrame
 #' @export
 
 makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
