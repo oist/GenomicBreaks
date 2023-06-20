@@ -1,3 +1,10 @@
+# GenomicBreaks in development
+
+## New functionalities
+
+ * New `GBreaksToMatrix` function to apply image processing approaches on
+   scrambling patterns.
+
 # GenomicBreaks 0.14.1
 
 ## Bug fixes

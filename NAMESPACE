@@ -3,6 +3,7 @@
 S3method(flipStrandNames,default)
 S3method(flipStrandNames,list)
 export(GBreaks)
+export(GBreaksToMatrix)
 export(GOC)
 export(align_scaf_plot_2)
 export(as)

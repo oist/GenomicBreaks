@@ -46,6 +46,7 @@ Suggests:
   rmarkdown
 VignetteBuilder: knitr
 Collate: 
+    'GBreaksToMatrix.R'
     'GOC.R'
     'GenomicBreaks.R'
     'RcppExports.R'
