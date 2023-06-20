@@ -50,7 +50,6 @@ reference:
     - bp_coverage
     - feature_coverage
     - flipStrandNames
-    - gr2dna_seg
     - int_frag
     - inv2UCSCData
     - isSorted
