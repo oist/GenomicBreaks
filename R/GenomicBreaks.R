@@ -29,7 +29,9 @@ setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query =
     gb <- GBreaks(gb)
     return(gb)
   }
-  callNextMethod(.Object, ...)
+  gb <- callNextMethod(.Object, ...)
+  if (length(gb) == 0) gb$query <- GRanges()
+  gb
 })
 
 #' Conversion from [`CNEr::Axt`] objects
