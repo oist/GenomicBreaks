@@ -83,7 +83,10 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
   gb <- gb[width(gb$query) >= minwidth]
 
   # Handle empty objects
-  if (length(gb) == 0) return(gb)
+  if(length(gb) == 0) {
+    gb$colinear <- logical(0)
+    return(gb)
+  }
 
   # Sort the ranges following the target genome.  The argument
   # ignore.strand = TRUE is set so that alignments on the opposite strand can

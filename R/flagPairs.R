@@ -70,6 +70,10 @@ allPossiblePairClasses <- with(allPossiblePairClasses, {
 #' @export
 
 flagPairs <- function (gb) {
+  if(length(gb) == 0) {
+    gb$pairs <- factor(character(0))
+    return(gb)
+  }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
 

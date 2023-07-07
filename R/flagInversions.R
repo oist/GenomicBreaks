@@ -37,6 +37,10 @@
 #' @export
 
 flagInversions <- function (gb, tol = Inf) {
+  if(length(gb) == 0) {
+    gb$inv <- Rle(logical(0))
+    return(gb)
+  }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
   gb <- dist2next(gb, ignore.strand = TRUE)
@@ -113,6 +117,10 @@ flagInversions <- function (gb, tol = Inf) {
 #' @export
 
 flagDoubleInversions <- function(gb, details = FALSE) {
+  if(length(gb) == 0) {
+    gb$Dbl <- Rle(logical(0))
+    return(gb)
+  }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
 
   gb.bak <- gb # Backup the object
@@ -194,6 +202,7 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 #' @export
 
 showInversions <- function(gb, rename = TRUE) {
+  if(length(gb) == 0) return(gb)
   if (is.null(gb$inv)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)

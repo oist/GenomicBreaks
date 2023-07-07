@@ -46,6 +46,10 @@
 #' @export
 
 flagTranslocations <- function (gb, tol = Inf, both = TRUE) {
+  if(length(gb) == 0) {
+    gb$tra <- Rle(logical(0))
+    return(gb)
+  }
   # Enforce sorting, to guarantee colinearity on the _target_ranges
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
