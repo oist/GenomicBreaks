@@ -82,9 +82,13 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
   gb <- gb[width(gb) >= minwidth]
   gb <- gb[width(gb$query) >= minwidth]
 
-  # Handle empty objects
+  # Handle empty and short objects
   if(length(gb) == 0) {
     gb$colinear <- logical(0)
+    return(gb)
+  }
+  if(length(gb) == 1) {
+    gb$colinear <- FALSE
     return(gb)
   }
 

@@ -41,6 +41,10 @@ flagInversions <- function (gb, tol = Inf) {
     gb$inv <- Rle(logical(0))
     return(gb)
   }
+  if(length(gb) == 1) {
+    gb$inv <- Rle(FALSE)
+    return(gb)
+  }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
   gb <- dist2next(gb, ignore.strand = TRUE)
@@ -119,6 +123,10 @@ flagInversions <- function (gb, tol = Inf) {
 flagDoubleInversions <- function(gb, details = FALSE) {
   if(length(gb) == 0) {
     gb$Dbl <- Rle(logical(0))
+    return(gb)
+  }
+  if(length(gb) == 1) {
+    gb$Dbl <- Rle(FALSE)
     return(gb)
   }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")

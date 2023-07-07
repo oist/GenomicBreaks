@@ -74,6 +74,10 @@ flagPairs <- function (gb) {
     gb$pairs <- factor(character(0))
     return(gb)
   }
+  if(length(gb) == 1) {
+    gb$pairs <- factor("Bnd")
+    return(gb)
+  }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
 

@@ -71,8 +71,17 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gb <- gb[width(gb) >= minwidth]
   gb <- gb[width(gb$query) >= minwidth]
 
-  if (length(gb) == 0)
+  if (length(gb) == 0) {
+    gb <- GBreaks()
+    gb$query <- GRanges()
+    score(gb) <- integer(0)
     return(gb)
+  }
+  if (length(gb) == 1) {
+    gb <- GBreaks(target = granges(gb), query = granges(gb$query))
+    score(gb) <- width(gb)
+    return(gb)
+  }
 
   # The rest of the algorithm assumes that the reference ranges are sorted
   gb <- sort(gb, ignore.strand = TRUE)
