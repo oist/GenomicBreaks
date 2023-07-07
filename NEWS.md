@@ -2,8 +2,10 @@
 
 ## New functionalities
 
- * New `GBreaksToMatrix` function to apply image processing approaches on
+ * New `GBreaksToMatrix()` function to apply image processing approaches on
    scrambling patterns.
+ * New `keepLongestPair()` function to focus on the longest sequence feature
+   in each genome.
 
 # GenomicBreaks 0.14.1
 

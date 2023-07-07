@@ -74,6 +74,7 @@ Other modifier functions:
 \code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
+\code{\link{keepLongestPair}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
 \code{\link{swap}()}

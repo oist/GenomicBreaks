@@ -76,6 +76,7 @@ Collate:
     'guessSeqLenghts.R'
     'int_frag.R'
     'inv2UCSCData.R'
+    'keepLongestPair.R'
     'load_genomic_breaks.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
