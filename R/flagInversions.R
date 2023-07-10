@@ -118,6 +118,8 @@ flagInversions <- function (gb, tol = Inf) {
 #'
 #' @author Charles Plessy
 #'
+#' @importFrom S4Vectors Rle
+#'
 #' @export
 
 flagDoubleInversions <- function(gb, details = FALSE) {
