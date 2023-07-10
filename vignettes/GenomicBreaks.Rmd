@@ -366,3 +366,16 @@ showInversions(flagInversions(coa)) |> plyranges::slice(1:3)   |> plotApairOfChr
 showInversions(flagInversions(coa)) |> plyranges::slice(4:9)   |> plotApairOfChrs()
 showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChrs()
 ```
+
+# Classification of the genomic regions of a genome by alignment properties.
+
+We can classify aligned genomic regions as _isolated_ or _collinear_, and
+unaligned regions as _breakpoint_ or _bridge_ regions.  The _bridge_ regions
+are always flanked by _collinear alignments_ and the _isolated alignments_
+are always flanked by _breakpoint regions_.
+
+```{r wholeGenomeClassification}
+wgo <- wholeGenomeClassification(gb, coa)
+wgo
+table(wgo$type)
+```

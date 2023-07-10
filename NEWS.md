@@ -6,6 +6,8 @@
    scrambling patterns.
  * New `keepLongestPair()` function to focus on the longest sequence feature
    in each genome.
+ * New `wholeGenomeClassification()` function to classify _isolated alignments_,
+   _collinear alignments_, _bridge regions_ and _breakpoint regions_.
 
 # GenomicBreaks 0.14.1
 

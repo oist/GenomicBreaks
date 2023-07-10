@@ -92,3 +92,4 @@ Collate:
     'swap.R'
     'synteny_index.R'
     'tan_bp.R'
+    'wholeGenomeClassification.R'

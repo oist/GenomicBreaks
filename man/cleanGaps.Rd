@@ -31,7 +31,8 @@ cleanGaps(exampleInversion)
 }
 \seealso{
 Other Reducing functions: 
-\code{\link{get_bps}()}
+\code{\link{get_bps}()},
+\code{\link{wholeGenomeClassification}()}
 }
 \author{
 Charles Plessy

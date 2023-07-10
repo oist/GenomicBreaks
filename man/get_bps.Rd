@@ -39,6 +39,7 @@ get_bps(exampleInversion, direction = "mid")
 }
 \seealso{
 Other Reducing functions: 
-\code{\link{cleanGaps}()}
+\code{\link{cleanGaps}()},
+\code{\link{wholeGenomeClassification}()}
 }
 \concept{Reducing functions}
