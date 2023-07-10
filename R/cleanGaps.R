@@ -25,6 +25,7 @@
 #' @export
 
 cleanGaps <- function(gr) {
+  if(length(gr) == 0) return(granges(gr))
   # Drop all seq info, otherwise gaps() adds artificial results on unused strands
   gr.strandless <- GRanges(seqnames = seqnames(gr), ranges = ranges(gr), strand = "*")
   gps <- gaps(gr.strandless)
