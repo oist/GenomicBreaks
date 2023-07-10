@@ -5,10 +5,15 @@
 #' are always flanked by _collinear alignments_ and the _isolated alignments_
 #' are always flanked by _breakpoint regions_.
 #'
+#' The strand of _bridge regions_ is the one of their flanking _collinear
+#' alignment_ regions.  _Breakpoint_ and _end_ regions are unstranded.
+#'
 #' @param gb A [`GBreaks`] object representing a one-to-one whole genome
 #'        alignment.
 #' @param coa The coalesced one-to-one alignment.  If not provided, it will be\
 #'        computed on-the-fly with the [`coalesce_contigs`] function.
+#' @param ends Add a a _end region_ type for the extremities of the _sequence
+#'        features_ not covered by the original alignment.
 #'
 #' @returns A [`GenomicRanges::GRanges`] object representing the _target_
 #' genome, inheriting its _sequence information_ ([`GenomeInfoDb::Seqinfo`]).
@@ -21,11 +26,11 @@
 #' @family Reducing functions
 #'
 #' @examples
-#' exampleColinear5 |> wholeGenomeClassification()
+#' exampleColinear5 |> wholeGenomeClassification(ends = TRUE)
 #'
 #' @export
 
-wholeGenomeClassification <- function(gb, coa = coalesce_contigs(gb)) {
+wholeGenomeClassification <- function(gb, coa = coalesce_contigs(gb), ends = FALSE) {
   # Isolated regions are found identical in the gb and coa objects.
   isol        <- granges(gb[gb %in% coa])
   if(length(isol) != 0)
@@ -57,5 +62,26 @@ wholeGenomeClassification <- function(gb, coa = coalesce_contigs(gb)) {
   wholeGenome$type <- factor(wholeGenome$type,
                              levels = c("isolated alignment", "collinear alignment",
                                         "breakpoint region", "bridge region"))
+  # Make sure there are no NAs in seqlengths
+  wholeGenome <- forceSeqLengths(wholeGenome)
+
+  if(isTRUE(ends)) {
+    seqfeats <- GRanges(seqinfo(wholeGenome))
+    wgo_red  <- reduce(wholeGenome, min.gapwidth = 1L, ignore.strand = TRUE)
+    dj <- disjoin(c(seqfeats,wgo_red ))
+    ends <- dj[!dj %in% wgo_red]
+    if(length(ends) != 0)
+      ends$type  <- "end region"
+    wholeGenome <- c(ends, wholeGenome) |> sort(ignore.strand = TRUE)
+    wholeGenome$type <- factor(wholeGenome$type,
+                               levels = c("isolated alignment", "collinear alignment",
+                                          "breakpoint region", "bridge region",
+                                          "end region"))
+  }
+
+  # Fix bridge region strand using next region
+  strand(wholeGenome[which(wholeGenome$type == "bridge region")]) <-
+    strand(wholeGenome[which(wholeGenome$type == "bridge region") + 1])
+
   wholeGenome
 }

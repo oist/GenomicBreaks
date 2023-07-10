@@ -4,7 +4,7 @@
 \alias{wholeGenomeClassification}
 \title{Whole-genome classification object}
 \usage{
-wholeGenomeClassification(gb, coa = coalesce_contigs(gb))
+wholeGenomeClassification(gb, coa = coalesce_contigs(gb), ends = FALSE)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object representing a one-to-one whole genome
@@ -12,6 +12,9 @@ alignment.}
 
 \item{coa}{The coalesced one-to-one alignment.  If not provided, it will be\
 computed on-the-fly with the \code{\link{coalesce_contigs}} function.}
+
+\item{ends}{Add a a \emph{end region} type for the extremities of the \emph{sequence
+features} not covered by the original alignment.}
 }
 \value{
 A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the \emph{target}
@@ -25,8 +28,12 @@ unaligned regions as \emph{breakpoint} or \emph{bridge} regions.  The \emph{brid
 are always flanked by \emph{collinear alignments} and the \emph{isolated alignments}
 are always flanked by \emph{breakpoint regions}.
 }
+\details{
+The strand of \emph{bridge regions} is the one of their flanking \emph{collinear
+alignment} regions.  \emph{Breakpoint} and \emph{end} regions are unstranded.
+}
 \examples{
-exampleColinear5 |> wholeGenomeClassification()
+exampleColinear5 |> wholeGenomeClassification(ends = TRUE)
 
 }
 \seealso{
