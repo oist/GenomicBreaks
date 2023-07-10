@@ -41,7 +41,8 @@
 #' @export
 
 GOC <- function(gb, vicinity = 4, debug = FALSE) {
-  if(length(gb) == 0) stop("Can not compute GOC on zero-length objects.")
+  if(length(gb) == 0) return(numeric(0))
+  if(length(gb) == 1) return(    1     )
 
   # Re-sort the object just to be sure
   gb <- sort(gb, ignore.strand = TRUE)
