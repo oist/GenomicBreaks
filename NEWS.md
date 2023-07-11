@@ -1,4 +1,4 @@
-# GenomicBreaks in development
+# GenomicBreaks 0.14.2
 
 ## New functionalities
 
