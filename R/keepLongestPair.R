@@ -6,6 +6,7 @@
 #' alignment between the pair of main chromosomes only.
 #'
 #' @param gb A [`GBreaks`] object
+#' @param drop Drop unused sequence levels.
 #'
 #' @returns A `GBreaks` object with only one sequence feature in use per genome.
 #'
@@ -19,10 +20,15 @@
 #'
 #' @export
 
-keepLongestPair <- function(gb) {
+keepLongestPair <- function(gb, drop = FALSE) {
   longestSeqFeature <- function(gr)
     seqlengths(gr) |> sort(decreasing = TRUE) |> head(1) |> names()
   gb <- forceSeqLengths(gb)
-  gb[seqnames(gb)       == longestSeqFeature(gb)  &
-     seqnames(gb$query) == longestSeqFeature(gb$query)]
+  gb <- gb[seqnames(gb      ) == longestSeqFeature(gb      )  &
+           seqnames(gb$query) == longestSeqFeature(gb$query)]
+  if (isTRUE(drop)) {
+    seqlevels(gb      ) <- seqlevelsInUse(gb      )
+    seqlevels(gb$query) <- seqlevelsInUse(gb$query)
+  }
+  gb
 }

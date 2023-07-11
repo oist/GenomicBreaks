@@ -4,10 +4,12 @@
 \alias{keepLongestPair}
 \title{Keep the longest pair of features}
 \usage{
-keepLongestPair(gb)
+keepLongestPair(gb, drop = FALSE)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object}
+
+\item{drop}{Drop unused sequence levels.}
 }
 \value{
 A \code{GBreaks} object with only one sequence feature in use per genome.
