@@ -38,7 +38,7 @@ build the vignettes.
 See the [Singularity reciepe file](./Singularity.def)
 
 ```
-sudo singularity build GenomicBreaks.sif Singularity.def
+singularity build --fakeroot GenomicBreaks.sif Singularity.def
 ```
 
 GenomicBreaks in brief:
