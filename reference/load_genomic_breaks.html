@@ -134,23 +134,15 @@ from the <em>Sequence Ontology</em> group.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">load_genomic_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/contigs.genome.maf.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 6 ranges and 4 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         seqnames      ranges strand |     score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] MT192765.1     25-8673      + |     53031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2] MT192765.1      60-403      + |      2104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3] MT192765.1   5738-5757      - |       124</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4] MT192765.1  8882-29829      - |    128566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5] MT192765.1 12929-13055      + |       776</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] MT192765.1 25273-25385      + |       709</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 4 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         seqnames     ranges strand |     score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] MT192765.1    25-8666      + |     52990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2] MT192765.1 8882-29829      - |    128566</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                             query   aLength   matches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                         &lt;GRanges&gt; &lt;integer&gt; &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]    NODE_2_length_8774_cov_178.827802:6-8654      8649      8649</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]      NODE_5_length_446_cov_1.078370:103-446       344       341</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3] NODE_2_length_8774_cov_178.827802:5719-5738        20        20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4] NODE_1_length_20973_cov_191.628754:26-20973     20948     20945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5] NODE_2_length_8774_cov_178.827802:8648-8774       127       127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6]        NODE_5_length_446_cov_1.078370:1-113       113       113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]    NODE_2_length_8774_cov_178.827802:6-8647      8642      8642</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2] NODE_1_length_20973_cov_191.628754:26-20973     20948     20945</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"><span></span></span>

@@ -69,7 +69,7 @@ are always flanked by <em>breakpoint regions</em>.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wholeGenomeClassification</span><span class="op">(</span><span class="va">gb</span>, coa <span class="op">=</span> <span class="fu"><a href="coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wholeGenomeClassification</span><span class="op">(</span><span class="va">gb</span>, coa <span class="op">=</span> <span class="fu"><a href="coalesce_contigs.html">coalesce_contigs</a></span><span class="op">(</span><span class="va">gb</span><span class="op">)</span>, ends <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,6 +83,11 @@ alignment.</p></dd>
 <dd><p>The coalesced one-to-one alignment.  If not provided, it will be\
 computed on-the-fly with the <code><a href="coalesce_contigs.html">coalesce_contigs</a></code> function.</p></dd>
 
+
+<dt>ends</dt>
+<dd><p>Add a a <em>end region</em> type for the extremities of the <em>sequence
+features</em> not covered by the original alignment.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -94,6 +99,11 @@ computed on-the-fly with the <code><a href="coalesce_contigs.html">coalesce_cont
 <p>genome, inheriting its <em>sequence information</em> (<code><a href="https://rdrr.io/pkg/GenomeInfoDb/man/Seqinfo-class.html" class="external-link">GenomeInfoDb::Seqinfo</a></code>).
 The class of each region is indicated by a factor in the <code>type</code> metadata
 column.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The strand of <em>bridge regions</em> is the one of their flanking <em>collinear
+alignment</em> regions.  <em>Breakpoint</em> and <em>end</em> regions are unstranded.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -109,19 +119,21 @@ column.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleColinear5</span> <span class="op">|&gt;</span> <span class="fu">wholeGenomeClassification</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 9 ranges and 1 metadata column:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |                type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | collinear alignment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   191-199      * | bridge region      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   200-290      + | collinear alignment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]     chrA   291-299      * | bridge region      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   300-390      + | collinear alignment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6]     chrA   391-399      * | bridge region      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7]     chrA   400-490      + | collinear alignment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [8]     chrA   491-499      * | bridge region      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [9]     chrA   500-590      + | collinear alignment</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleColinear5</span> <span class="op">|&gt;</span> <span class="fu">wholeGenomeClassification</span><span class="op">(</span>ends <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 11 ranges and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |                type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]     chrA      1-99      * | end region         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]     chrA   100-190      + | collinear alignment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]     chrA   191-199      + | bridge region      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]     chrA   200-290      + | collinear alignment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]     chrA   291-299      + | bridge region      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [6]     chrA   300-390      + | collinear alignment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [7]     chrA   391-399      + | bridge region      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [8]     chrA   400-490      + | collinear alignment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [9]     chrA   491-499      + | bridge region      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     chrA   500-590      + | collinear alignment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [11]     chrA   591-600      * | end region         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"><span></span></span>
