@@ -134,7 +134,9 @@ plotRegionWidths <- function(wgol, coa) {
     facet_wrap(~what, ncol = 1, scales = "free_y")
 }
 plotRegionWidths(wgol, coa) + ggtitle("Whole object")
-plotRegionWidths(wgol_p, coa_p) + ggtitle("Longest 2 matching sequences")
+if (length(wgol_p > 0) & length(coa_p) > 0) {
+  plotRegionWidths(wgol_p, coa_p) + ggtitle("Longest 2 matching sequences")
+}
 ```
 
 
@@ -143,11 +145,15 @@ Calculate numbers and prepare them for export in a YAML file
 
 ```{r count_features}
 customSummary <- function(x, pasteToNames=NULL, suffix = NULL) {
-  s <- summary(x)
-  names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
-  s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
-  s["Total"]   <- sum(x)
-  s["N"]       <- length(x)
+  if (length(x) == 0) {
+    s <- c(Min = NA, Q1 = NA, Median = NA, Mean = NA, Q3 = NA, Max = NA, L50 = NA, Total = NA, N = NA)
+  } else {
+    s <- summary(x)
+    names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
+    s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
+    s["Total"]   <- sum(x)
+    s["N"]       <- length(x)
+  }
   s <- as.list(s)
   if (!is.null(suffix)) pasteToNames <- paste(pasteToNames, suffix, sep = "_")
   names(s) <- paste(pasteToNames, names(s), sep = "_")
@@ -196,18 +202,19 @@ makeRreport <- function(gb, coa, wgol, suffix = NULL) {
   c(customSummary(width(coa[coa$flag == "Tra"]),         "translocated_width_target" , suffix)) |>
   c(customSummary(guessSeqLengths(gb),                   "guessed_target_length"     , suffix)) |>
   c(customSummary(guessSeqLengths(gb$query),             "guessed_query_length"      , suffix)) |>
-  c(index_synteny_target      = synteny_index(gb)                    |> pasteif(suffix)) |>
-  c(index_synteny_query       = synteny_index(swap(gb))              |> pasteif(suffix)) |>
-  c(index_correlation_target  = correlation_index(gb)                |> pasteif(suffix)) |>
-  c(index_correlation_query   = correlation_index(swap(gb))          |> pasteif(suffix)) |>
-  c(index_GOCvicinity4_target = GOC(gb, vicinity = 4)                |> pasteif(suffix)) |> 
-  c(index_GOCvicinity4_query  = GOC(swap(gb), vicinity = 4)          |> pasteif(suffix)) |>
-  c(index_strandRand_target   = strand_randomisation_index(gb)       |> pasteif(suffix)) |>
-  c(index_strandRand_query    = strand_randomisation_index(swap(gb)) |> pasteif(suffix))
+  c(list(index_synteny_target      = synteny_index(gb)                    ) |> pasteif(suffix)) |>
+  c(list(index_synteny_query       = synteny_index(swap(gb))              ) |> pasteif(suffix)) |>
+  c(list(index_correlation_target  = correlation_index(gb)                ) |> pasteif(suffix)) |>
+  c(list(index_correlation_query   = correlation_index(swap(gb))          ) |> pasteif(suffix)) |>
+  c(list(index_GOCvicinity4_target = GOC(gb, vicinity = 4)                ) |> pasteif(suffix)) |> 
+  c(list(index_GOCvicinity4_query  = GOC(swap(gb), vicinity = 4)          ) |> pasteif(suffix)) |>
+  c(list(index_strandRand_target   = strand_randomisation_index(gb)       ) |> pasteif(suffix)) |>
+  c(list(index_strandRand_query    = strand_randomisation_index(swap(gb)) ) |> pasteif(suffix))
 }
 report <- c(
   makeRreport(gb,   coa,   wgol),
   makeRreport(gb_p, coa_p, wgol_p, suffix = "bestpair"))
+report[sapply(report, length) == 0] <- NA
 ```
 
  - `aligned_length`: length of the alignments (including gaps on each genome).
