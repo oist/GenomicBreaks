@@ -24,6 +24,7 @@ From: debian:bookworm
     ./R -e 'install.packages("devtools")' 
     ./R -e 'install.packages("remotes")'
     ./R -e 'install.packages("rmarkdown")'
+    ./R -e 'BiocManager::install("GenomicRanges")'
     ./R -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library\n' | tee -a /etc/R/Renviron.site >/dev/null
