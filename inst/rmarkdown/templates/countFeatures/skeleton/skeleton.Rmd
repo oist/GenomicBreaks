@@ -1,7 +1,7 @@
 ---
 title: "Count features"
 author: "Charles Plessy"
-date: "02/07/2023"
+date: "07/07/2023"
 output: 
   html_document: 
     keep_md: yes
@@ -38,23 +38,35 @@ R_LIBS_USER='' R -e 'rmarkdown::render("thisTemplate.Rmd", output_file = "./outF
 Load data
 ---------
 
+```{r defaults}
+if (params$alnFile == "/absolute/path/to/your/file") {
+  alnFile <- system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks")
+  matchType <- "match_part"
+} else {
+  alnFile <- params$alnFile
+  matchType <- params$matchType
+}
+```
+
 ```{r load_data}
 # Display parameters
 params
 
 # Load the alignment in a GBreaks object
-gb <-load_genomic_breaks(params$alnFile, type = params$matchType)
+gb <-load_genomic_breaks(alnFile, type = params$matchType)
+gb_p <- keepLongestPair(gb, drop = TRUE)
 ```
 
 Coalesce contigs
 ----------------
 
 ```{r coalesce_contigs}
-coa <- coalesce_contigs(gb)
+coa   <- coalesce_contigs(gb)
+coa_p <- coalesce_contigs(gb_p)
 makeOxfordPlots(coa, col = 'strand') + ggtitle(params$alnFile)
 ```
 
-### Extract information
+## Classify regions
 
 We divide the genome into four categories: _isolated alignments_, _breakpoint
 regions_, _colinear alignments_ and _bridge regions_.
@@ -62,40 +74,24 @@ regions_, _colinear alignments_ and _bridge regions_.
 _Colinear alignments_ are defined by the colinearity relationship computed
 in `?flagColinearAlignments`.  _Bridge regions_ separate alignments that are
 colinear to each other.  _Isolated alignments_ have no colinear counterparts
-and _breakpoint regions_ are the remaining intervals.  _Colinear regions_ 
-(or _chains_) are the union of _colinear alignments_ and _bridge regions_.
-
-As Bioconductor's `gaps()` function returns also the unaligned sequences between
-the start/end of chromosome and the first/last block, we use the `?cleanGaps`
-function that removes them before returning the object.
+and _breakpoint regions_ are the remaining intervals.
    
 ```{r clean_gaps}
-isol <- gb[gb %in% coa]
-coli <- gb[!gb %in% coa]
-bri <- if (length(filterColinearRegions(flagColinearAlignments(gb), rename = FALSE)) == 0) {
-  GBreaks()
-} else {
-  bridgeRegions(gb)
-}
-# Can be reverted once #20 is fixed in the main branch
-# bri  <- bridgeRegions(gb)
-brk  <- cleanGaps(coa)
-brk_q <- cleanGaps(coa$query)
+wgo    <- wholeGenomeClassification(gb,   coa)
+wgol   <- split(wgo, wgo$type)
+wgo_p  <- wholeGenomeClassification(gb_p, coa_p)
+wgol_p <- split(wgo_p, wgo_p$type)
 ```
 
-Inversions
-----------
-
-### Simple inversions
+Flag all structural variants that we can detect
+-----------------------------------------------
 
 ```{r study_inversions}
-# See https://github.com/oist/GenomicBreaks/issues/25
-# Not sure what the minimal length is; let's try 2
-if (length(coa) > 2)
-  coa <- flagInversions(coa)
-sum(coa$inv)
-inv <- filterInversions(coa)
-head(inv, 11)
+coa   <- coa   |> flagColinearAlignments() |> flagInversions() |> flagDoubleInversions() |> flagTranslocations() |> flagAll()
+coa$flag[is.na(coa$flag)] <- "" # for easier subsetting later.
+coa_p <- coa_p |> flagColinearAlignments() |> flagInversions() |> flagDoubleInversions() |> flagTranslocations() |> flagAll()
+coa_p$flag[is.na(coa_p$flag)] <- ""
+
 ```
 
 ### Flip the simple inversions and coalesce
@@ -110,30 +106,6 @@ head(inv, 11)
 ```
 
 
-### Double inversions
-
-```{r study_double_inversions}
-#coa <- flagDoubleInversions(coa)
-#sum(coa$Dbl)
-#dbl <- filterDoubleInversions(coa)
-#head(inv, 11)
-```
-
-Translocations
---------------
-
-Patterns that can be described as translocations in the target genome.
-
-```{r study_translocations}
-# See https://github.com/oist/GenomicBreaks/issues/25
-# Not sure what the minimal length is; let's try 2
-if (length(coa) > 2)
-  coa <- flagTranslocations(coa)
-sum(coa$tra)
-tra <- filterTranslocations(coa)
-head(tra, 11)
-```
-
 Width plots
 -----------
 
@@ -146,36 +118,39 @@ width2df <- function(what, gr) {
     data.frame(what = what, width = width(gr))
   }
 }
-
-rbind(
-  width2df(what = "isol_aln", gr = isol),
-  width2df(what = "breakpoint_regions",   gr = brk),
-  width2df(what = "colinear_aln", gr = coli),
-  width2df(what = "colinear_region", gr = coa),
-  width2df(what = "bridge", gr = bri),
-  width2df(what = "translocations", gr = tra),
-  width2df(what = "inversions", gr = inv)
-) |> ggplot() +
-  aes(width) +
-  geom_histogram() +
-  scale_x_log10() +
-  facet_wrap(~what, ncol = 1, scales = "free_y")
+plotRegionWidths <- function(wgol, coa) {
+  rbind(
+    width2df(what = "isol_aln", gr = wgol$`isolated alignment`),
+    width2df(what = "breakpoint_regions",   gr = wgol$`breakpoint region`),
+    width2df(what = "colinear_aln", gr = wgol$`collinear alignment`),
+    width2df(what = "colinear_region", gr = coa),
+    width2df(what = "bridge", gr = wgol$`bridge region`),
+    width2df(what = "translocations", gr = coa[coa$flag == "Tra"]),
+    width2df(what = "inversions", gr = coa[coa$flag == "Inv"])
+  ) |> ggplot() +
+    aes(width) +
+    geom_histogram() +
+    scale_x_log10() +
+    facet_wrap(~what, ncol = 1, scales = "free_y")
+}
+plotRegionWidths(wgol, coa) + ggtitle("Whole object")
+plotRegionWidths(wgol_p, coa_p) + ggtitle("Longest 2 matching sequences")
 ```
-
 
 
 Calculate numbers and prepare them for export in a YAML file
 ------------------------------------------------------------
 
 ```{r count_features}
-customSummary <- function(x, pasteToNames=NULL) {
+customSummary <- function(x, pasteToNames=NULL, suffix = NULL) {
   s <- summary(x)
   names(s) <- c("Min", "Q1", "Median", "Mean", "Q3", "Max")
   s["L50"]     <- weighted.mean(x, as.numeric(x)) # as.num to avoid integer overflow
   s["Total"]   <- sum(x)
   s["N"]       <- length(x)
   s <- as.list(s)
-  names(s) <- paste0(pasteToNames, '_', names(s))
+  if (!is.null(suffix)) pasteToNames <- paste(pasteToNames, suffix, sep = "_")
+  names(s) <- paste(pasteToNames, names(s), sep = "_")
   s
 }
 
@@ -188,47 +163,85 @@ summaryWidth <- function(gb, pasteToNames=NULL) {
   customSummary(w, pasteToNames)
 }
 
-gb$mismatches <- (width(gb) + width(gb$query) - gb$aLength - gb$matches)
+pasteif <- function(x, suffix) {
+  if (! is.null(suffix))
+    names(x) <- paste(names(x), suffix, sep = "_")
+  x
+}
 
-report <- list() |>
-  c(customSummary(gb$aLength, "aligned_length")) |>
-  c(customSummary(score(gb),  "aligned_scores")) |>
-  c(customSummary(gb$matches,                         "matches_number"))     |>
-  c(customSummary(gb$mismatches,                      "mismatches_number"))  |>
-  c(customSummary(gb$aLength - width(gb),             "gaps_target"))       |>
-  c(customSummary(gb$aLength - width(gb$query),       "gaps_query"))        |>
-  c(customSummary(100 * gb$matches / gb$aLength,      "percent_identity_") ) |>
-  c(customSummary(100 * gb$matches / width(gb),       "matching_target"))    |>
-  c(customSummary(100 * gb$matches / width(gb$query), "matching_query"))     |>
-  c(percent_similarity_compat = 1 - sum(gb$mismatches) / sum(width(gb))) |>
-  c(customSummary(1 - gb$mismatches / width(gb), "percentSim_compat"))  |> # To reproduce older figures
-  c(summaryWidth(gb,         "aligned_target"))      |>
-  c(summaryWidth(gb$query,   "aligned_query"))       |>
-  c(summaryWidth(coa,        "chain_target"))        |>
-  c(summaryWidth(coa$query,  "chain_query"))         |>
-  c(summaryWidth(coli,       "collinear_target"))    |>
-  c(summaryWidth(coli$query, "collinear_query"))     |>
-  c(summaryWidth(isol,       "isolated_target"))     |>
-  c(summaryWidth(isol$query, "isolated_query"))      |>
-  c(summaryWidth(bri,        "bridge_target"))       |>
-  c(summaryWidth(bri$query,  "bridge_query"))        |>
-  c(summaryWidth(brk,        "break_target"))        |>
-  c(summaryWidth(brk_q,      "break_query"))         |>
-  c(summaryWidth(inv,        "inverted_target"))     |>
-  c(summaryWidth(inv$query,  "inverted_query"))      |>
-  c(summaryWidth(tra,        "translocated_target")) |>
-  c(summaryWidth(tra$query,  "translocated_query"))  |>
-  c(guessed_target_length = sum(guessSeqLengths(gb))) |>
-  c(guessed_query_length =  sum(guessSeqLengths(gb$query))) |>
-  c(index_synteny_target = synteny_index(gb)) |>
-  c(index_synteny_query  = synteny_index(swap(gb))) |>
-  c(index_correlation_target = correlation_index(gb)) |>
-  c(index_correlation_query = correlation_index(swap(gb))) |>
-  c(index_GOCvicinity4_target = GOC(gb, vicinity = 4)) |> # Default as of today.  Does not make much sense on nucleotide sequences?
-  c(index_GOCvicinity4_query = GOC(swap(gb), vicinity = 4)) |> # Default as of today.  Does not make much sense on nucleotide sequences?
-  c(index_strandRand_target = strand_randomisation_index(gb)) |>
-  c(index_strandRand_query = strand_randomisation_index(swap(gb)))
+makeRreport <- function(gb, coa, wgol, suffix = NULL) {
+  gb$mismatches <- (width(gb) + width(gb$query) - gb$aLength - gb$matches)
+  list() |>
+  c(customSummary(gb$aLength,                            "aligned_length"            , suffix)) |>
+  c(customSummary(score(gb),                             "aligned_score"             , suffix)) |>
+  c(customSummary(gb$matches,                            "aligned_matches"           , suffix)) |>
+  c(customSummary(gb$mismatches,                         "aligned_mismatches"        , suffix)) |>
+  c(customSummary(gb$aLength - width(gb),                "aligned_gaps_target"       , suffix)) |>
+  c(customSummary(gb$aLength - width(gb$query),          "aligned_gaps_query"        , suffix)) |>
+  c(customSummary(100 * gb$matches / gb$aLength,         "matching_aligned"          , suffix)) |>
+  c(customSummary(100 * gb$matches / width(gb),          "matching_target"           , suffix)) |>
+  c(customSummary(100 * gb$matches / width(gb$query),    "matching_query"            , suffix)) |>
+  c(customSummary(100 * gb$mismatches / gb$aLength,      "mismatching_aligned"       , suffix)) |>
+  c(customSummary(100 * gb$mismatches / width(gb),       "mismatching_target"        , suffix)) |>
+  c(customSummary(100 * gb$mismatches / width(gb$query), "mismatching_query"         , suffix)) |>
+  c(customSummary(width(gb),                             "aligned_width_target"      , suffix)) |>
+  c(customSummary(width(gb$query),                       "aligned_width_query"       , suffix)) |>
+  c(customSummary(width(coa),                            "chain_width_target"        , suffix)) |>
+  c(customSummary(width(coa$query),                      "chain_width_query"         , suffix)) |>
+  c(customSummary(width(wgol$`collinear alignment`),     "collinear_width_target"    , suffix)) |>
+  c(customSummary(width(wgol$`isolated alignment`),      "isolated_width_target"     , suffix)) |>
+  c(customSummary(width(wgol$`bridge region`),           "bridge_width_target"       , suffix)) |>
+  c(customSummary(width(wgol$`breakpoint region`),       "breakpoint_width_target"   , suffix)) |>
+  c(customSummary(width(coa[coa$flag == "Inv"]),         "inverted_width_target"     , suffix)) |>
+  c(customSummary(width(coa[coa$flag == "Tra"]),         "translocated_width_target" , suffix)) |>
+  c(customSummary(guessSeqLengths(gb),                   "guessed_target_length"     , suffix)) |>
+  c(customSummary(guessSeqLengths(gb$query),             "guessed_query_length"      , suffix)) |>
+  c(index_synteny_target      = synteny_index(gb)                    |> pasteif(suffix)) |>
+  c(index_synteny_query       = synteny_index(swap(gb))              |> pasteif(suffix)) |>
+  c(index_correlation_target  = correlation_index(gb)                |> pasteif(suffix)) |>
+  c(index_correlation_query   = correlation_index(swap(gb))          |> pasteif(suffix)) |>
+  c(index_GOCvicinity4_target = GOC(gb, vicinity = 4)                |> pasteif(suffix)) |> 
+  c(index_GOCvicinity4_query  = GOC(swap(gb), vicinity = 4)          |> pasteif(suffix)) |>
+  c(index_strandRand_target   = strand_randomisation_index(gb)       |> pasteif(suffix)) |>
+  c(index_strandRand_query    = strand_randomisation_index(swap(gb)) |> pasteif(suffix))
+}
+report <- c(
+  makeRreport(gb,   coa,   wgol),
+  makeRreport(gb_p, coa_p, wgol_p, suffix = "bestpair"))
 ```
+
+ - `aligned_length`: length of the alignments (including gaps on each genome).
+ - `aligned_score`: score of the alignments (as computed by the aligner).
+ - `aligned_matches`: number of identical bases in the alignment.
+ - `aligned_mismatches`: number of bases aligned to each other but mismatching.
+ - `aligned_gaps_target`: number of alignment gaps on the _target_ side.
+ - `aligned_gaps_query`: number of alignment gaps on the _query_ side.
+ - `matching_aligned`: number of identical bases divided by alignment length (%).
+ - `matching_target`: number of identical bases divided by _target_ sequence length (%).
+ - `matching_query`: number of identical bases divided by _query_ sequence length (%).
+ - `mismatching_aligned`: number of mismatching bases divided by alignment length (%).
+ - `mismatching_target`: number of mismatching bases divided by _target_ sequence length (%).
+ - `mismatching_query`: number of mismatching bases divided by _query_ sequence length (%).
+ - `aligned_width_target`: width of the aligned sequence on the _target_ genome (excluding gaps).
+ - `aligned_width_query`: width of the aligned sequence on the _query_ genome (excluding gaps).
+ - `chained_width_target`: width of the coalesced regions on the _target_ genome.
+ - `chained_width_query`: width of the coalesced regions on the _query_ genome.
+ - `isolated_width_target`: width of the isolated aligned regions on the _target_ genome.
+ - `collinear_width_target`: width of the collinear aligned regions on the _target_ genome.
+ - `bridge_width_target`: width of the bridge regions on the _target_ genome.
+ - `breakpoint_width_target`: width of the breakpoint regions on the _target_ genome.
+ - `inverted_width_target`: width of the inverted regions on the _target_ genome.
+ - `translocated_width_target`: width of the translocated regions on the _target_ genome.
+ - `guessed_target_length`: guessed width of the sequence features on the _target_ genome.
+ - `guessed_query_length`: guessed width of the sequence features on the _query_ genome.
+ - `index_synteny_target`: synteny index.
+ - `index_synteny_query`: synteny index after flipping _target_ and _query_.
+ - `index_correlation_target`: correlation index.
+ - `index_correlation_query`: correlation index after flipping _target_ and _query_.
+ - `index_GOCvicinity4_target`: GOC index (vicinity = 4).
+ - `index_GOCvicinity4_query`: GOC index (vicinity = 4) after flipping _target_ and _query_.
+ - `index_strandRand_target`: strand randomisation index.
+ - `index_strandRand_query`: strand randomisation index after flipping _target_ and _query_.
 
 Export the results to a YAML file.
 
