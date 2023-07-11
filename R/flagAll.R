@@ -17,6 +17,10 @@
 #' @export
 
 flagAll <- function (gb) {
+  if (length(gb) == 0) {
+    gb$flag <- logical(0)
+    return(gb)
+  }
   gb$flag <- NA
 
   Col <- flagColinearAlignments(gb)$colinear |> decode()
