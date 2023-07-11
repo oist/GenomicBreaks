@@ -134,7 +134,7 @@ plotRegionWidths <- function(wgol, coa) {
     facet_wrap(~what, ncol = 1, scales = "free_y")
 }
 plotRegionWidths(wgol, coa) + ggtitle("Whole object")
-if (length(wgol_p > 0) & length(coa_p) > 0) {
+if (length(wgo_p > 0) & length(coa_p) > 0) {
   plotRegionWidths(wgol_p, coa_p) + ggtitle("Longest 2 matching sequences")
 }
 ```
