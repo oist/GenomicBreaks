@@ -302,7 +302,7 @@ provided that a `BSgenome` packages are available and were indicated at load
 time.
 
 ```{r getSeqs}
-BSgenome::getSeq(BSgenome::getBSgenome(gb |> genome() |> unique()), gb)
+getSeq(gb)
 ```
 
 ## Trivial translocations
