@@ -34,7 +34,7 @@ Imports:
   Rcpp,
   weights
 LinkingTo: Rcpp, BH
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
@@ -86,6 +86,7 @@ Collate:
     'pairwiseAlignment.R'
     'reverse.R'
     'scaf_align_plot.R'
+    'scaffoldByFlipAndMerge.R'
     'serviceFunctions.R'
     'strandNames.R'
     'strand_randomisation_index.R'
