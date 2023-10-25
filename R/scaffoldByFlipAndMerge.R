@@ -2,14 +2,22 @@
 #'
 #' @param gr A [GenomicRanges::GRanges] object.
 #' @param guide A named list of data frames of contig names and orientations.
-#' @param drop Drop the contigs that were not included in the guide.
+#' @param drop Drop the contigs that were not included in the guide.  The new
+#'        sequence levels will be in the same order as in the `guide`.
 #'
-#' @family family scaffolding functions
+#' @family scaffolding functions
+#'
+#' @author Michael Mansfield
+#' @author Charles Plessy
 #'
 #' @examples
-#' (gr <- exampleTranslocation |> swap())
-#' (g <- list(chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
-#' scaffoldByFlipAndMerge(g, gr)
+#' (gr <- GRanges(c("chrB:100-200:+", "chrC:201-300:+",
+#'                  "chrB:301-400:+", "chrD:100-200:+")) |> forceSeqLengths())
+#' (g <- list(
+#'   chrD = data.frame(contig = "chrD", orientation = 1),
+#'   chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
+#'
+#' scaffoldByFlipAndMerge(gr, g, drop = T)
 #'
 #' @importFrom dplyr bind_rows filter pull
 #'
@@ -29,7 +37,7 @@ scaffoldByFlipAndMerge <- function(gr, guide, drop = FALSE) {
   }
   if (isTRUE(drop)) {
     gr <- gr[seqnames(gr) %in% names(guide)]
-    seqlevels(gr) <- seqlevelsInUse(gr)
+    seqlevels(gr) <- names(guide)
   }
   sort(gr, ignore.strand = T)
 }
