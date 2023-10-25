@@ -63,8 +63,14 @@ Other modifier functions:
 \code{\link{keepLongestPair}()},
 \code{\link{reverse}()},
 \code{\link{swap}()}
+
+Other scaffolding functions: 
+\code{\link{longestMatchesInTarget}()},
+\code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{strandNames}()}
 }
 \author{
 Charles Plessy
 }
 \concept{modifier functions}
+\concept{scaffolding functions}

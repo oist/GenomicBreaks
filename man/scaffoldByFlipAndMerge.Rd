@@ -11,15 +11,31 @@ scaffoldByFlipAndMerge(gr, guide, drop = FALSE)
 
 \item{guide}{A named list of data frames of contig names and orientations.}
 
-\item{drop}{Drop the contigs that were not included in the guide.}
+\item{drop}{Drop the contigs that were not included in the guide.  The new
+sequence levels will be in the same order as in the \code{guide}.}
 }
 \description{
 Guided scaffolding
 }
 \examples{
-(gr <- exampleTranslocation |> swap())
-(g <- list(chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
-scaffoldByFlipAndMerge(g, gr)
+(gr <- GRanges(c("chrB:100-200:+", "chrC:201-300:+",
+                 "chrB:301-400:+", "chrD:100-200:+")) |> forceSeqLengths())
+(g <- list(
+  chrD = data.frame(contig = "chrD", orientation = 1),
+  chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
+
+scaffoldByFlipAndMerge(gr, g, drop = T)
 
 }
-\concept{family scaffolding functions}
+\seealso{
+Other scaffolding functions: 
+\code{\link{longestMatchesInTarget}()},
+\code{\link{mergeSeqLevels}()},
+\code{\link{strandNames}()}
+}
+\author{
+Michael Mansfield
+
+Charles Plessy
+}
+\concept{scaffolding functions}

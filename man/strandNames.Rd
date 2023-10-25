@@ -28,7 +28,9 @@ strandNames(exampleColinear, query = TRUE)
 }
 \seealso{
 Other scaffolding functions: 
-\code{\link{longestMatchesInTarget}()}
+\code{\link{longestMatchesInTarget}()},
+\code{\link{mergeSeqLevels}()},
+\code{\link{scaffoldByFlipAndMerge}()}
 }
 \author{
 Charles Plessy

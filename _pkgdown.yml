@@ -43,23 +43,24 @@ reference:
   - title: Converter functions
   - contents:
     - has_concept("Converter functions")
+  - title: Scaffolding functions
+    desc: Functions to aid trivial scaffolding
+  - contents:
+    - has_concept("scaffolding functions")
   - title: Other functions
   - contents:
     - StructuralVariants
     - align_scaf_plot_2
     - bp_coverage
     - feature_coverage
-    - flipStrandNames
     - int_frag
     - inv2UCSCData
     - isSorted
     - leftInversionGaps
     - load_genomic_breaks
-    - longestMatchesInTarget
     - makeInversion.chr
     - orderQuerySeqLevels
     - readMAF
     - scaf_align_plot
-    - strandNames
     - tan_bp
     - zipWithNext
