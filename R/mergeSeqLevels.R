@@ -38,6 +38,7 @@
 #' mergeSeqLevels(gb, seqlevelsInUse(gb), "AllMerged")
 #'
 #' @family modifier functions
+#' @family scaffolding functions
 #'
 #' @author Charles Plessy
 #'
@@ -46,6 +47,7 @@
 #' @export
 
 mergeSeqLevels <- function(gr, seqs, name) {
+  if (identical(seqs, name)) return(gr)
 
   # Calculate how much to add to the coordinates of each seqlevel before merging
   if (all(is.na(seqlengths(gr))))
