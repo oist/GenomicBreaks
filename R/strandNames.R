@@ -45,6 +45,8 @@ strandNames <- function(gb, flip = FALSE, query = FALSE) {
 #'
 #' @param x A vector of strand names.
 #'
+#' @family scaffolding functions
+#'
 #' @export
 
 flipStrandNames <- function (x) {
