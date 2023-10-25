@@ -43,6 +43,7 @@ exampleColinear3 |> longestMatchesInTarget(min.width = 0, min.matches = 1)
 }
 \seealso{
 Other scaffolding functions: 
+\code{\link{flipStrandNames}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{scaffoldByFlipAndMerge}()},
 \code{\link{strandNames}()}

@@ -29,6 +29,7 @@ scaffoldByFlipAndMerge(gr, g, drop = T)
 }
 \seealso{
 Other scaffolding functions: 
+\code{\link{flipStrandNames}()},
 \code{\link{longestMatchesInTarget}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{strandNames}()}

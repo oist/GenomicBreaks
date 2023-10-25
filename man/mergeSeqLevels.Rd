@@ -65,6 +65,7 @@ Other modifier functions:
 \code{\link{swap}()}
 
 Other scaffolding functions: 
+\code{\link{flipStrandNames}()},
 \code{\link{longestMatchesInTarget}()},
 \code{\link{scaffoldByFlipAndMerge}()},
 \code{\link{strandNames}()}

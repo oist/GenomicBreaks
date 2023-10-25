@@ -16,3 +16,11 @@ Returns the same class as its input.
 Takes a character vector of "strand names", reverses the order of its
 elements and flips the strand.
 }
+\seealso{
+Other scaffolding functions: 
+\code{\link{longestMatchesInTarget}()},
+\code{\link{mergeSeqLevels}()},
+\code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{strandNames}()}
+}
+\concept{scaffolding functions}
