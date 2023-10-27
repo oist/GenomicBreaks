@@ -21,8 +21,10 @@
 #' @export
 
 keepLongestPair <- function(gb, drop = FALSE) {
-  longestSeqFeature <- function(gr)
+  longestSeqFeature <- function(gr) {
+    seqlevels(gr) <- seqlevelsInUse(gr)
     seqlengths(gr) |> sort(decreasing = TRUE) |> head(1) |> names()
+  }
   gb <- forceSeqLengths(gb)
   gb <- gb[seqnames(gb      ) == longestSeqFeature(gb      )  &
            seqnames(gb$query) == longestSeqFeature(gb$query)]
