@@ -48,7 +48,7 @@ longestMatchesInTarget <- function(gb, min.width = 1e4, min.matches = 2) {
   # Swap query and target and sort
   gb2 <- sort(ignore.strand=TRUE, swap(unlist(gbl)))
   # Remove unused seqlevels
-  seqlevels(gb2) <- levels(droplevels(seqnames(gb2)))
+  seqlevels(gb2) <- seqlevelsInUse(gb2)
   # Split by contig/scaffold/...
   gbl2 <- split(gb2, seqnames(gb2))
   # Remove query sequences with less than min.matches
