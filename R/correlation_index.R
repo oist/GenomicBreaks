@@ -30,7 +30,7 @@
 correlation_index <- function(gb) {
   if(length(gb) == 0) return(numeric(0))
   if(length(gb) == 1) return(    1     )
-  gbl <- split(gb, droplevels(seqnames(gb)))
+  gbl <- split(gb, seqnames(gb), drop = TRUE)
   # Calculate an index for each sequence feature
   corIdx <- sapply(gbl, \(x) {
     # Keep only matches to the best query

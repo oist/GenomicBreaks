@@ -33,7 +33,7 @@
 synteny_index <- function(gb) {
   if(length(gb) == 0) return(numeric(0))
   if(length(gb) == 1) return(    1     )
-  gbl <- split(gb, droplevels(seqnames(gb)))
+  gbl <- split(gb, seqnames(gb), drop = TRUE)
   # Calculate an index for each sequence feature
   synIdx <- sapply(gbl, \(x) {
     # Largest sum of all widths
