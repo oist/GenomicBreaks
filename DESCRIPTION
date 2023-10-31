@@ -88,6 +88,7 @@ Collate:
     'scaf_align_plot.R'
     'scaffoldByFlipAndMerge.R'
     'serviceFunctions.R'
+    'splitSeqLevels.R'
     'strandNames.R'
     'strand_randomisation_index.R'
     'swap.R'
