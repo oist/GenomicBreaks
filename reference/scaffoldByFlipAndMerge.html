@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,7 @@ sequence levels will be in the same order as in the <code>guide</code>.</p></dd>
 <code><a href="flipStrandNames.html">flipStrandNames</a>()</code>,
 <code><a href="longestMatchesInTarget.html">longestMatchesInTarget</a>()</code>,
 <code><a href="mergeSeqLevels.html">mergeSeqLevels</a>()</code>,
+<code><a href="splitSeqLevel.html">splitSeqLevel</a>()</code>,
 <code><a href="strandNames.html">strandNames</a>()</code></p></div>
     </div>
     <div class="section level2">
@@ -118,7 +119,7 @@ sequence levels will be in the same order as in the <code>guide</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   chrC          -1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">scaffoldByFlipAndMerge</span><span class="op">(</span><span class="va">gr</span>, <span class="va">g</span>, drop <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">scaffoldByFlipAndMerge</span><span class="op">(</span><span class="va">gr</span>, <span class="va">g</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 4 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
