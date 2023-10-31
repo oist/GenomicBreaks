@@ -24,7 +24,7 @@ Guided scaffolding
   chrD = data.frame(contig = "chrD", orientation = 1),
   chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
 
-scaffoldByFlipAndMerge(gr, g, drop = T)
+scaffoldByFlipAndMerge(gr, g, drop = TRUE)
 
 }
 \seealso{
@@ -32,6 +32,7 @@ Other scaffolding functions:
 \code{\link{flipStrandNames}()},
 \code{\link{longestMatchesInTarget}()},
 \code{\link{mergeSeqLevels}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{strandNames}()}
 }
 \author{

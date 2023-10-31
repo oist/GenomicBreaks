@@ -17,18 +17,14 @@
 #'   chrD = data.frame(contig = "chrD", orientation = 1),
 #'   chrBC = data.frame(contig = c("chrB", "chrC"), orientation = c(1,-1))))
 #'
-#' scaffoldByFlipAndMerge(gr, g, drop = T)
-#'
-#' @importFrom dplyr bind_rows filter pull
+#' scaffoldByFlipAndMerge(gr, g, drop = TRUE)
 #'
 #' @export
 
 scaffoldByFlipAndMerge <- function(gr, guide, drop = FALSE) {
   # First, flip what should be flipped
-  which.flip <- guide |>
-    dplyr::bind_rows(.id='chromosome') |>
-    dplyr::filter(orientation == -1) |>
-    dplyr::pull(contig)
+  which.flip <- do.call(rbind, guide)
+  which.flip <- which.flip[which.flip$orientation == -1, "contig", drop = TRUE]
   gr <- flipContigs(gr, which.flip)
 
   # Then, merge what should be merged
