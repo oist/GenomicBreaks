@@ -21,6 +21,7 @@ Other scaffolding functions:
 \code{\link{longestMatchesInTarget}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{strandNames}()}
 }
 \concept{scaffolding functions}

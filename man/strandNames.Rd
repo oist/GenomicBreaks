@@ -31,7 +31,8 @@ Other scaffolding functions:
 \code{\link{flipStrandNames}()},
 \code{\link{longestMatchesInTarget}()},
 \code{\link{mergeSeqLevels}()},
-\code{\link{scaffoldByFlipAndMerge}()}
+\code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{splitSeqLevel}()}
 }
 \author{
 Charles Plessy

@@ -34,6 +34,7 @@ Other modifier functions:
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{swap}()}
 }
 \author{

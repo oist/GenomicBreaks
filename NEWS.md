@@ -1,8 +1,9 @@
-# GenomicBreaks devel
+# GenomicBreaks 0.14.3
 
 ## New functionalities
 
- * New `scaffoldByFlipAndMerge()` function for trivial scaffolding by hand.
+ * New `scaffoldByFlipAndMerge()` and `splitSeqLevel()` functions for trivial
+   scaffolding by hand.
 
 # GenomicBreaks 0.14.2
 

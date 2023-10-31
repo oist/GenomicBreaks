@@ -46,6 +46,7 @@ Other scaffolding functions:
 \code{\link{flipStrandNames}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{strandNames}()}
 }
 \author{

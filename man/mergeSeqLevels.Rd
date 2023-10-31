@@ -62,12 +62,14 @@ Other modifier functions:
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
 \code{\link{reverse}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{swap}()}
 
 Other scaffolding functions: 
 \code{\link{flipStrandNames}()},
 \code{\link{longestMatchesInTarget}()},
 \code{\link{scaffoldByFlipAndMerge}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{strandNames}()}
 }
 \author{

@@ -36,6 +36,7 @@ Other modifier functions:
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
 \code{\link{mergeSeqLevels}()},
-\code{\link{reverse}()}
+\code{\link{reverse}()},
+\code{\link{splitSeqLevel}()}
 }
 \concept{modifier functions}

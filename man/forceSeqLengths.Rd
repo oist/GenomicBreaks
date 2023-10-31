@@ -51,6 +51,7 @@ Other modifier functions:
 \code{\link{keepLongestPair}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{reverse}()},
+\code{\link{splitSeqLevel}()},
 \code{\link{swap}()}
 }
 \concept{modifier functions}
