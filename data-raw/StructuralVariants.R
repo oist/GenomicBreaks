@@ -6,7 +6,7 @@ exampleColinear                           <- GRanges(c("chrA:100-150", "chrA:251
 strand(exampleColinear)                   <- c(              "+",            "+")
 exampleColinear$query                     <- GRanges(c("chrB:100-150", "chrB:251-300"))
 exampleColinear                           <- GBreaks(exampleColinear)
-seqlengths(exampleColinear)               <- seqlengths(exampleColinear$query) <- 300
+seqlengths(exampleColinear)               <- seqlengths(exampleColinear$query) <- 600
 isSorted(exampleColinear)
 
 # And a counter-example
@@ -15,7 +15,7 @@ exampleNotColinear                        <- GRanges(c("chrA:100-150", "chrA:251
 strand(exampleNotColinear)                <- c(              "+",            "+")
 exampleNotColinear$query                  <- GRanges(c("chrB:201-251",  "chrB:50-100"))
 exampleNotColinear                        <- GBreaks(exampleNotColinear)
-seqlengths(exampleNotColinear)            <- seqlengths(exampleNotColinear$query) <- 300
+seqlengths(exampleNotColinear)            <- seqlengths(exampleNotColinear$query) <- 600
 isSorted(exampleNotColinear)
 
 # A colinear triplet for sanity checks
@@ -24,7 +24,7 @@ exampleColinear3                          <- GRanges(c("chrA:100-200", "chrA:201
 strand(exampleColinear3)                  <- c(              "+",            "+",            "+")
 exampleColinear3$query                    <- GRanges(c("chrB:100-200", "chrB:201-300", "chrB:301-400"))
 exampleColinear3                          <- GBreaks(exampleColinear3)
-seqlengths(exampleColinear3)              <- seqlengths(exampleColinear3$query) <- 500
+seqlengths(exampleColinear3)              <- seqlengths(exampleColinear3$query) <- 600
 isSorted(exampleColinear3)
 
 # A colinear 5-uplet for later example of double inversion
@@ -42,7 +42,7 @@ exampleInversion                          <- GRanges(c("chrA:100-190", "chrA:210
 strand(exampleInversion)                  <- c(              "+",            "-",            "+")
 exampleInversion$query                    <- GRanges(c("chrB:100-190", "chrB:210-291", "chrB:301-400"))
 exampleInversion                          <- GBreaks(exampleInversion)
-seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) <- 500
+seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) <- 600
 isSorted(exampleInversion)
 
 # Inversion in a 5-bloc context with non-collapsed regions
@@ -111,8 +111,8 @@ exampleTranslocation                      <- GRanges(c("chrA:100-200", "chrA:201
 strand(exampleTranslocation)              <- c(              "+",            "+",            "+")
 exampleTranslocation$query                <- GRanges(c("chrB:100-200", "chrC:201-300", "chrB:301-400"))
 exampleTranslocation                      <- GBreaks(exampleTranslocation)
-seqlengths(exampleTranslocation)          <- 500
-seqlengths(exampleTranslocation$query)    <- c(500,500)
+seqlengths(exampleTranslocation)          <- 600
+seqlengths(exampleTranslocation$query)    <- c(600,600)
 isSorted(exampleTranslocation)
 
 # Translocation with minus strand
@@ -121,8 +121,8 @@ exampleTranslocation2                     <- GRanges(c("chrA:100-200", "chrA:201
 strand(exampleTranslocation2)             <- c(              "+",            "-",            "+")
 exampleTranslocation2$query               <- GRanges(c("chrB:100-200", "chrC:201-300", "chrB:301-400"))
 exampleTranslocation2                     <- GBreaks(exampleTranslocation2)
-seqlengths(exampleTranslocation2)         <- 500
-seqlengths(exampleTranslocation2$query)   <- c(500,500)
+seqlengths(exampleTranslocation2)         <- 600
+seqlengths(exampleTranslocation2$query)   <- c(600,600)
 isSorted(exampleTranslocation2)
 
 # Translocation downstream
@@ -131,7 +131,7 @@ exampleTranslocation3                     <- GRanges(c("chrA:100-200", "chrA:201
 strand(exampleTranslocation3)             <- c(              "+",            "+",            "+")
 exampleTranslocation3$query               <- GRanges(c("chrB:100-200", "chrB:301-400", "chrB:201-300"))
 exampleTranslocation3                     <- GBreaks(exampleTranslocation3)
-seqlengths(exampleTranslocation3)         <- seqlengths(exampleTranslocation3$query) <- 500
+seqlengths(exampleTranslocation3)         <- seqlengths(exampleTranslocation3$query) <- 600
 isSorted(exampleTranslocation3)
 
 # Insertion on the target
@@ -140,8 +140,8 @@ exampleInsertion                          <- GRanges(c("chrA:100-200", "chrC:401
 strand(exampleInsertion)                  <- c(              "+",            "+",            "+")
 exampleInsertion$query                    <- GRanges(c("chrB:100-200", "chrB:201-300", "chrB:301-400"))
 exampleInsertion                          <- GBreaks(exampleInsertion)
-seqlengths(exampleInsertion)              <- c(500,500)
-seqlengths(exampleInsertion$query)        <- 500
+seqlengths(exampleInsertion)              <- c(600,600)
+seqlengths(exampleInsertion$query)        <- 600
 exampleInsertion                          <- sort(exampleInsertion, ignore.strand = TRUE)
 isSorted(exampleInsertion)
 
@@ -151,8 +151,8 @@ exampleDeletion                           <- GRanges(c("chrA:100-200", "chrA:201
 strand(exampleDeletion)                   <- c(              "+",            "+",            "+")
 exampleDeletion$query                     <- GRanges(c("chrB:100-200", "chrC:401-500", "chrB:201-300"))
 exampleDeletion                           <- GBreaks(exampleDeletion)
-seqlengths(exampleDeletion)               <- 500
-seqlengths(exampleDeletion$query)         <- c(500,500)
+seqlengths(exampleDeletion)               <- 600
+seqlengths(exampleDeletion$query)         <- c(600,600)
 isSorted(exampleDeletion)
 
 
