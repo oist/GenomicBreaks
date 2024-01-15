@@ -101,6 +101,9 @@ m <- makeMatrix(df, "percent_identity_global")
 pheatmap::pheatmap(as.matrix(cluster::daisy(m)))
 m <- makeMatrix(df, "percent_identity_global", 100, 50)
 pheatmap::pheatmap(as.matrix(m), sym=T)
+
+m <- makeMatrix(df, "percent_mismatches_global", 0, 50)
+pheatmap::pheatmap(100 - as.matrix(m), sym=T)
 ```
 
 ## Fraction of the genome aligned
@@ -117,6 +120,11 @@ df$fraction_genome_aligned_avg    <- (df$fraction_genome_aligned_target + df$fra
 
 ggplot(df) + geom_point() + aes(percent_mismatches_global, fraction_genome_aligned_avg, col = percent_identity_global)
 ggplot(df) + geom_point() + aes(percent_identity_global,   fraction_genome_aligned_avg, col = percent_mismatches_global)
+
+ggplot(df) + geom_point() + aes(percent_identity_global,   fraction_genome_aligned_avg) + theme_bw() +
+  scale_x_continuous("Percent identity") +
+  scale_y_continuous("Fraction of the genome aligned")
+
 ```
 
 ## Fraction of the genome chained
@@ -210,6 +218,12 @@ ggplot(df) + theme_bw() +
   geom_point() + geom_smooth()
 
 cor(df$percent_mismatches_global, df$index_avg_strandRand)
+
+ggplot(df) + theme_bw() +
+  aes(index_avg_synteny, index_avg_strandRand, col = percent_identity_global) +
+  xlab("Synteny index") +
+  ylab("Strand randomisation index") +
+  geom_point() + geom_smooth()
 ```
 
 ### Correlation index
