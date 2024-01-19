@@ -1,1 +1,1 @@
-PKG_LIBS= -lz -lboost_iostreams -lstdc++
+PKG_LIBS= -lz -lstdc++

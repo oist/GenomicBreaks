@@ -2,10 +2,9 @@
 
 #include <fstream>
 #include <iostream>
-
-#include <boost/algorithm/string.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
+#include "mcf_zstream.hh"
+#include <string>
+#include <cctype> // for std::toupper
 
 using namespace Rcpp;
 
@@ -25,8 +24,15 @@ using namespace Rcpp;
 //' genomes and other information such as alignment width and number of matches.
 //' @importFrom Rcpp evalCpp
 //' @useDynLib GenomicBreaks, .registration = TRUE
-// [[Rcpp::export]]
 
+// ChatGPT answer for replacing boost::to_upper for ASCII input.
+void toUpperAscii(std::string &str) {
+  for (char &c : str) {
+    c = std::toupper(static_cast<unsigned char>(c));
+  }
+}
+
+// [[Rcpp::export]]
 Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::CharacterVector seqnames1;
   Rcpp::CharacterVector seqnames2;
@@ -50,13 +56,12 @@ Rcpp::List readMAF (std::string inputFileName) {
   std::string seq1;
   std::string seq2;
 
-  std::ifstream file(inputFileName, std::ios_base::in | std::ios_base::binary);
-  boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
-  if(inputFileName.substr(inputFileName.find_last_of(".") + 1) == "gz") {
-    in.push(boost::iostreams::gzip_decompressor());
+  mcf::izstream incoming(inputFileName.c_str());
+
+  if (!incoming.is_open()) {
+    std::cerr << "Failed to open file" << std::endl;
+    return 1;
   }
-  in.push(file);
-  std::istream incoming(&in);
 
   std::string line;
   while(getline(incoming, line)) {
@@ -89,8 +94,8 @@ Rcpp::List readMAF (std::string inputFileName) {
       length2.push_back(length);
       strands.push_back(strand); // Assume that the strand of seq1 is always '+'
       // Compute the number of matches in the alignment
-      boost::to_upper(seq1); // Probably slow as it can also upper-case Unicode strings
-      boost::to_upper(seq2);
+      toUpperAscii(seq1);
+      toUpperAscii(seq2);
       Rcpp::CharacterVector seq1Vec(seq1.begin(),seq1.end());
       Rcpp::CharacterVector seq2Vec(seq2.begin(),seq2.end());
       auto matchesVec(seq1Vec == seq2Vec);
