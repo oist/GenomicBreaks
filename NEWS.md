@@ -1,3 +1,8 @@
+# GenomicBreaks 0.14.4
+
+ * Remove dependency on BOOST thanks to C++ code taken from LAST
+   (M. Frith / GPLv3+).
+
 # GenomicBreaks 0.14.3
 
 ## New functionalities
