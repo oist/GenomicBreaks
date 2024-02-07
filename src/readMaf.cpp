@@ -38,7 +38,8 @@ Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::CharacterVector seqnames2;
   Rcpp::IntegerVector seqlengths1;
   Rcpp::IntegerVector seqlengths2;
-  Rcpp::CharacterVector strands;
+  Rcpp::CharacterVector strand1;
+  Rcpp::CharacterVector strand2;
   Rcpp::IntegerVector scores;
   Rcpp::IntegerVector start1;
   Rcpp::IntegerVector start2;
@@ -85,6 +86,7 @@ Rcpp::List readMAF (std::string inputFileName) {
       seqlengths1.push_back(seqlength);
       start1.push_back(startpos);
       length1.push_back(length);
+      strand1.push_back(strand);
       // Assume that there are always two 's' lines in a row
       getline(incoming, line);
       std::stringstream(line) >> linetype >> seqname >> startpos >> length >> strand >> seqlength >> seq2;
@@ -92,7 +94,7 @@ Rcpp::List readMAF (std::string inputFileName) {
       seqlengths2.push_back(seqlength);
       start2.push_back(startpos);
       length2.push_back(length);
-      strands.push_back(strand); // Assume that the strand of seq1 is always '+'
+      strand2.push_back(strand);
       // Compute the number of matches in the alignment
       toUpperAscii(seq1);
       toUpperAscii(seq2);
@@ -112,7 +114,8 @@ Rcpp::List readMAF (std::string inputFileName) {
                                              Named("seqlengths2") = seqlengths2,
                                              Named("start2") = start2,
                                              Named("length2") = length2,
-                                             Named("strand") = strands,
+                                             Named("strand1") = strand1,
+                                             Named("strand2") = strand2,
                                              Named("scores") = scores,
                                              Named("matches") = matches,
                                              Named("aLength") = aLength);
