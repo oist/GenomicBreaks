@@ -105,7 +105,10 @@ load_genomic_breaks_MAF <- function (
   # Convert coordinates to GenomicRanges system
   # http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5
   # Make minus-strand coordinates relative to the start of the sequence
-  l$start2 <- ifelse(l$strand == "+",
+  l$start1 <- ifelse(l$strand1 == "+",
+                     l$start1,
+                     l$seqlengths1 - l$start1 - l$length1)
+  l$start2 <- ifelse(l$strand2 == "+",
                      l$start2,
                      l$seqlengths2 - l$start2 - l$length2)
   # Add 1 to the starts
@@ -113,7 +116,8 @@ load_genomic_breaks_MAF <- function (
   l$start1 = l$start1 + 1;
   l$start2 = l$start2 + 1;
   # Build GBreaks object
-  gb <- GRanges(l$seqnames1, IRanges(l$start1, width = l$length1), strand = l$strand)
+  # Note that GRanges(...,strand=FALSE) gives +, and strand=TRUE gives -.
+  gb <- GRanges(l$seqnames1, IRanges(l$start1, width = l$length1), strand = l$strand1 != l$strand2)
   score(gb) <- l$scores
   seqlengths1        <- l $ seqlengths1 [!duplicated(l$seqnames1)]
   names(seqlengths1) <- l $ seqnames1   [!duplicated(l$seqnames1)]

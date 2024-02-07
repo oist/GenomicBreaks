@@ -1,3 +1,8 @@
+# GenomicBreaks 0.14.5
+
+ * Support loading MAF files where alignment sign is on the query.
+ * Correct example data to make it really one-to-one.
+
 # GenomicBreaks 0.14.4
 
  * Remove dependency on BOOST thanks to C++ code taken from LAST
