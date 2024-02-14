@@ -57,6 +57,7 @@ Collate:
     'bp_coverage.R'
     'bp_heatmap.R'
     'bp_pair_analysis.R'
+    'breakpointGraph.R'
     'bridgeRegions.R'
     'chain_contigs.R'
     'cleanGaps.R'
