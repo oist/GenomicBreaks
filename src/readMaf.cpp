@@ -8,7 +8,12 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::depends(BH)]]
+// ChatGPT answer for replacing boost::to_upper for ASCII input.
+void toUpperAscii(std::string &str) {
+  for (char &c : str) {
+    c = std::toupper(static_cast<unsigned char>(c));
+  }
+}
 
 //' Read a MAF file
 //'
@@ -24,14 +29,6 @@ using namespace Rcpp;
 //' genomes and other information such as alignment width and number of matches.
 //' @importFrom Rcpp evalCpp
 //' @useDynLib GenomicBreaks, .registration = TRUE
-
-// ChatGPT answer for replacing boost::to_upper for ASCII input.
-void toUpperAscii(std::string &str) {
-  for (char &c : str) {
-    c = std::toupper(static_cast<unsigned char>(c));
-  }
-}
-
 // [[Rcpp::export]]
 Rcpp::List readMAF (std::string inputFileName) {
   Rcpp::CharacterVector seqnames1;

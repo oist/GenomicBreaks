@@ -15,8 +15,6 @@
 #' genomes and other information such as alignment width and number of matches.
 #' @importFrom Rcpp evalCpp
 #' @useDynLib GenomicBreaks, .registration = TRUE
-NULL
-
 readMAF <- function(inputFileName) {
     .Call(`_GenomicBreaks_readMAF`, inputFileName)
 }
