@@ -105,6 +105,7 @@ components_graph <- function(g, query_sequence_unsig){
     h <- add_vertices(h, 1,
                       cycle_index=i,
                       unoriented=all(E(cycle)$unoriented == 1), #if it is true, the node is unoriented
+                      color=ifelse(all(E(cycle)$unoriented == 1), "lightblue", "lightsalmon"),
                       min_extent=min(match(vertices, query_sequence_unsig)),
                       max_extent=max(match(vertices, query_sequence_unsig)))
   }
@@ -254,39 +255,44 @@ hurdles_count <- function(g, query_sequence_unsig){
         return(info)
       }
 
+      greatest_check <- FALSE
+
       for (i in idx) {
 
-        #get edges of that component
-        edges_to_analyze <- E(g)[components(g)$membership == i & E(g)$color=="gray"]
+        if(!(greatest_check)){
 
-        #get all pairs of another hurdles
+          #get edges of that component
+          edges_to_analyze <- E(g)[components(g)$membership == i & E(g)$color=="gray"]
 
-        for (j in info_smallest[1:(length(info_smallest)-1)]) {
-          for (k in info_smallest[2:(length(info_smallest))]) {
+          #get all pairs of another hurdles
 
-            min_j <- info[j, "min_extent"]  # extent(U')[1]
-            max_j <- info[j, "max_extent"]  # extent(U')[2]
+          for (j in info_smallest[1:(length(info_smallest)-1)]) {
+            for (k in info_smallest[2:(length(info_smallest))]) {
 
-            min_k <- info[k, "min_extent"]  # extent(U")[1]
-            max_k <- info[k, "max_extent"]  # extent(U")[2]
+              min_j <- info[j, "min_extent"]  # extent(U')[1]
+              max_j <- info[j, "max_extent"]  # extent(U')[2]
 
-            for (edge in edges_to_analyze){
+              min_k <- info[k, "min_extent"]  # extent(U")[1]
+              max_k <- info[k, "max_extent"]  # extent(U")[2]
 
-              # gray edge from U
-              edge_extent <- sort(match(c(ends(g, edge)[1], ends(g, edge)[2]), query_sequence_unsig))
+              for (edge in edges_to_analyze){
 
-              # U separates U' and U'' if there is a gray edge in U containing extent(U'),
-              # but without intersection with extent(U") (and vice versa)
+                # gray edge from U
+                edge_extent <- sort(match(c(ends(g, edge)[1], ends(g, edge)[2]), query_sequence_unsig))
 
-              condition_1 <- ((edge_extent[1] < min_j & edge_extent[2] > max_j) &
-                                (edge_extent[1] > max_k || edge_extent[2] < min_k))
+                # U separates U' and U'' if there is a gray edge in U containing extent(U'),
+                # but without intersection with extent(U") (and vice versa)
 
-              condition_2 <- ((edge_extent[1] < min_k & edge_extent[2] > max_k) &
-                                (edge_extent[1] > max_j || edge_extent[2] < min_j))
+                condition_1 <- ((edge_extent[1] < min_j & edge_extent[2] > max_j) &
+                                  (edge_extent[1] > max_k || edge_extent[2] < min_k))
 
-              if (condition_1 || condition_2){
-                info[greatest, "hurdle"] <- 0
-                #break in for (i in idx)
+                condition_2 <- ((edge_extent[1] < min_k & edge_extent[2] > max_k) &
+                                  (edge_extent[1] > max_j || edge_extent[2] < min_j))
+
+                if (condition_1 || condition_2){
+                  info[greatest, "hurdle"] <- 0
+                  greatest_check <- TRUE
+                }
               }
             }
           }
@@ -403,38 +409,44 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
           return(info)
         }
 
+        greatest_check <- FALSE
+
         for (i in idx) {
 
-          #get edges of that component
-          edges_to_analyze <- E(g)[components(g)$membership == i & E(g)$color=="gray"]
+          if(!(greatest_check)){
 
-          #get all pairs of another hurdles
+            #get edges of that component
+            edges_to_analyze <- E(g)[components(g)$membership == i & E(g)$color=="gray"]
 
-          for (j in info_smallest[1:(length(info_smallest)-1)]) {
-            for (k in info_smallest[2:(length(info_smallest))]) {
+            #get all pairs of another hurdles
 
-              min_j <- info2[j, "min_extent"]  # extent(U')[1]
-              max_j <- info2[j, "max_extent"]  # extent(U')[2]
+            for (j in info_smallest[1:(length(info_smallest)-1)]) {
+              for (k in info_smallest[2:(length(info_smallest))]) {
 
-              min_k <- info2[k, "min_extent"]  # extent(U")[1]
-              max_k <- info2[k, "max_extent"]  # extent(U")[2]
+                min_j <- info2[j, "min_extent"]  # extent(U')[1]
+                max_j <- info2[j, "max_extent"]  # extent(U')[2]
 
-              for (edge in edges_to_analyze){
+                min_k <- info2[k, "min_extent"]  # extent(U")[1]
+                max_k <- info2[k, "max_extent"]  # extent(U")[2]
 
-                # gray edge from U
-                edge_extent <- sort(match(c(ends(g, edge)[1], ends(g, edge)[2]), query_sequence_unsig))
+                for (edge in edges_to_analyze){
 
-                # U separates U' and U'' if there is a gray edge in U containing extent(U'),
-                # but without intersection with extent(U") (and vice versa)
+                  # gray edge from U
+                  edge_extent <- sort(match(c(ends(g, edge)[1], ends(g, edge)[2]), query_sequence_unsig))
 
-                condition_1 <- ((edge_extent[1] < min_j & edge_extent[2] > max_j) &
-                                  (edge_extent[1] > max_k || edge_extent[2] < min_k))
+                  # U separates U' and U'' if there is a gray edge in U containing extent(U'),
+                  # but without intersection with extent(U") (and vice versa)
 
-                condition_2 <- ((edge_extent[1] < min_k & edge_extent[2] > max_k) &
-                                  (edge_extent[1] > max_j || edge_extent[2] < min_j))
+                  condition_1 <- ((edge_extent[1] < min_j & edge_extent[2] > max_j) &
+                                    (edge_extent[1] > max_k || edge_extent[2] < min_k))
 
-                if (condition_1 || condition_2){
-                  info2[greatest, "hurdle"] <- 0
+                  condition_2 <- ((edge_extent[1] < min_k & edge_extent[2] > max_k) &
+                                    (edge_extent[1] > max_j || edge_extent[2] < min_j))
+
+                  if (condition_1 || condition_2){
+                    info2[greatest, "hurdle"] <- 0
+                    greatest_check <- TRUE
+                  }
                 }
               }
             }
@@ -490,7 +502,7 @@ inversions_rearrangement <- function(seq, unsigned=TRUE){
 
   inversions <- matrix(NA, nrow=0, ncol=2)
 
-  loops <- len_qsu
+  loops <- len_qs
 
   for (loop in 1:loops){
 
@@ -518,6 +530,8 @@ inversions_rearrangement <- function(seq, unsigned=TRUE){
               hurdles <- new_hurdles
               superhurdles <- new_superhurdles
               inversions <- rbind(inversions, c(k, l))
+              #print(c(k, l))
+              #print(seq)
             }
 
           }
