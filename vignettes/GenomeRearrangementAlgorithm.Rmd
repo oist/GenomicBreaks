@@ -57,7 +57,7 @@ If we perform some inversion operations, we can sort the genome:
 inversion(query_sequence_unsig, 2, 17) |> inversion(4, 19) |> inversion(10, 15) |> inversion(14, 17) |> inversion(22, 23) |> inversion(2, 5) |> inversion(8, 11)
 ```
 
-Our problem is finding these sequence of rearrangements with a minimal number of movements, called *reversal distance*.
+Our problem is finding these sequence of rearrangements with a minimal number of movements, called *reversal distance*, noted by $d(\pi)$.
 
 In order to get a sequence of inversions, it is sufficient to type
 
@@ -102,13 +102,11 @@ A gray edge is created when two fragments are consecutive but not adjacent,
 
 $$ |i-j|= 1, ~~~~~~ |\pi_i - \pi_j|\neq 1  $$.
 
-Gray edges indicates "what we should have", or which fragment comes next. In the unsigned permutation, we create a gray edge between $2i+1$ and $2j$ if these conditions are satisfied.
-
-### Cycles
-
-define cycles
+Gray edges indicates "what we should have", or which fragment should come next. In the unsigned permutation, we create a gray edge between $2i+1$ and $2j$ if these conditions are satisfied.
 
 ### Counting breakpoints and cycles in the breakpoint graph
+
+We can define by cycles all connected components with more than one node on the breakpoint graph. Lets write $b(\pi)$ for the number of breakpoints and $c(\pi)$ for the number of cycles in the breakpoint graph.
 
 ```{r Count breakpoints and cycles}
 
@@ -118,16 +116,34 @@ bp_count(query_sequence_unsig)
 #count the number of cycles excluding single nodes
 cycle_count(g)
 ```
+In our example, $b(\pi)=12$ and $c(\pi)=6$. 
+
+In 1996, Bafna and Pevzner showed that every inversion can change the parameter $b(\pi) - c(\pi)$ by at most 1. Therefore, we can have a lower bound for the reversal distance
+
+$$d(\pi) \geq b(\pi) - c(\pi)$$
+Closing the gap between the reversal distance and this lower bound relies on a graph structure called *hurdle*. It doesn't look there is an intuition or an interpretation for this type of structure. The idea is related to identifying structures that make the rearrangement problem more difficult to solve and in which type of structure we are allowed to perform movements or not. The way these structures are defined depends on the convenience for the solution of specific problems. There is a lot of sightly different definitions for hurdles, but here we are going to explain the structure used by Hannenhalli and Pevzner.
+
+Identifying hurdles depends on some characteristics for gray edges, cycles and how this characteristics are related.
 
 ### Orientation of edges and cycles
 
-define orientation (edge and cycle)
+A gray edge is called oriented when the sum of the positions of the nodes in the permutation vector is even. Otherwise, the edge is unoriented.
+
+Cycles having at least one oriented gray edge are oriented, and unoriented if all gray edges are unoriented.
+
+Unoriented cycles doesn't have a proper inversion, i.e., an inversion that helps to reach the solution of our problem.
 
 ### Extension of gray edges
 
-We need to find a characteristic called "interleaving" between gray nodes, which essentially says if two gray nodes overlap, but none of them contains the another one. With this, we can establish interactions in the graph of connected components.
+An extension of an edge is the interval given by the positions of its nodes in the permutation vector.
+
+We need to find a characteristic called "interleaving" between gray nodes, which essentially says if two gray nodes overlap (i.e., their extensions overlap), but none of them contains the another one. If $e_1 \in C_1$ and $e_2 \in C_2$ are two gray edges interleaving, we can say $C_1$ and $C_2$ are two cycles interleaving.
+
+At this point, we need to create another structure to save the required information to decide our inversions. This structure is a graph constructed from our cycles.
 
 ## Components graph
+
+Lets create a new graph where each node represents a cycle on our breakpoint graph. If two cycles interleaves, we create a link between them:
 
 ```{r}
 h <- components_graph(g, query_sequence_unsig)
@@ -135,7 +151,15 @@ h <- components_graph(g, query_sequence_unsig)
 plot(h)
 ```
 
+Each cycle can be oriented or unoriented. So this is a node attribute. Here, blue nodes are unoriented cycles, while orange nodes are oriented cycles.
+
+Now, we need analyze the connected components of this graph. A connected component is oriented if it has at least one oriented node, and unoriented otherwise.
+
+For each component, lets define its extension as the union of the extension of all gray edges.
+
 ## Hurdles
+
+
 
 ```{r Counting hurdles and superhurdles}
 
