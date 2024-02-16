@@ -123,13 +123,18 @@ components_graph <- function(g, query_sequence_unsig){
         cycle_j <- induced_subgraph(g, vids = vertices_j)
         V(cycle_j)$name <- vertices_j
 
+        exit_loop <- FALSE
+
         #compare all pairs of gray edges of each cycle
         for (k in 1:length(E(cycle_i)[E(cycle_i)$color=="gray"])) {
+          if (exit_loop) break
           for (l in 1:length(E(cycle_j)[E(cycle_j)$color=="gray"])){
             if (is_interleaving(query_sequence_unsig, cycle_i, cycle_j,
                                 E(cycle_i)[E(cycle_i)$color=="gray"][k],
                                 E(cycle_j)[E(cycle_j)$color=="gray"][l])){
               h <- add_edges(h, c(i, j))
+              exit_loop <- TRUE
+              break
             }
           }
         }
