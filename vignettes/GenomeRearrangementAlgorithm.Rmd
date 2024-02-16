@@ -16,7 +16,7 @@ This vignette explains how the algorithm for rearranging by inversions was writt
 All required functions to sort by reversals are implemented on the following R script:
 
 ```{r}
-source("InversionAlgorithm.R")
+source("InversionsAlgorithm.R")
 ```
 
 ## Genome representation
@@ -31,28 +31,14 @@ A largely used structure in the case of a signed permutation (which means we hav
 
 ```{r Defining the genome structure}
 
-p <- c(1, -5, 4, -3, 2)
+query_sequence <- c(3, -5, 8, -6, 4, -7, 9, 2, 1, 10, -11)
 
 #transforming a signed permutation into an unsigned permutation to construct the breakpoint graph
 
-p_unsig <- sig2unsig(p)
+query_sequence_unsig <- sig2unsig(query_sequence)
 
-p_unsig
+query_sequence_unsig
 ```
-In order to get a sequence of inversions, it is sufficient to type
-
-```{r}
-inversions_rearrangement(p_unsig)
-```
-
-or
-
-```{r}
-inversions_rearrangement(p, unsigned=FALSE)
-```
-Each line represents the positions of the inversion in the unsigned sequence. 
-
-If you want to check the steps of the algorithm, read the topics below.
 
 ### Implementing the inversion operation
 
@@ -61,50 +47,87 @@ Some carry is required when applying operations in this type of representation a
 ```{r}
 
 #perform an inversion of the third fragment
-inversion(p_unsig, 6, 7)
+inversion(query_sequence_unsig, 2, 17)
 
 ```
 
 If we perform some inversion operations, we can sort the genome:
 
 ```{r}
-inversion(p_unsig, 6, 7) |> inversion(10, 11) |> inversion(4, 11)
+inversion(query_sequence_unsig, 2, 17) |> inversion(4, 19) |> inversion(10, 15) |> inversion(14, 17) |> inversion(22, 23) |> inversion(2, 5) |> inversion(8, 11)
 ```
 
 Our problem is finding these sequence of rearrangements with a minimal number of movements, called *reversal distance*.
 
+In order to get a sequence of inversions, it is sufficient to type
+
+```{r}
+inversions_rearrangement(query_sequence_unsig)
+```
+
+or
+
+```{r}
+inversions_rearrangement(query_sequence, unsigned=FALSE)
+```
+
+Each line represents the positions of the inversion in the unsigned sequence.
+
+If you want to check the steps of the algorithm, read the topics below.
+
 ## Creating a breakpoint graph
-
-
 
 ```{r Creating and visualizing a breakpoint graph}
 
 g <- breakpoint_graph(query_sequence_unsig)
 
-E(g)$color <- ifelse(E(g)$color == "black", "black", "gray")
+layout_matrix <- matrix(ncol = 2, nrow = vcount(g))
+layout_matrix[, 2] <- 0
+layout_matrix[, 1] <- query_sequence_unsig
 
-plot(g, edge.color=E(g)$color)
+#plot(g, layout = layout_matrix, rescale = FALSE, xlab = "", ylab = "", main = "Custom Node Order")
+
+plot(g, edge.color = E(g)$color, edge.width = 4, vertex.size = 20, vertex.color="lightgreen")
 ```
 
-We need to find an attribute called "interleaving" between gray nodes, which essentially says if two gray nodes overlap, but none of them contains the another one. With this, we can establish interactions in the graph of connected components.
+Each number in a node represents an extremity of a fragment (remember that we have created a unsigned permutation, where each fragment $i$ was replaced by $2i, 2i+1$ and we add the extremities $1$ and $2n+2$, where $n$ is the number of fragments).
 
-```{r Interleaving}
+A black edge is created when two fragments are adjacent but not consecutive, i.e., we have
 
-#check if two edges interleaves
-is_interleaving(query_sequence_unsig, graph_1, graph_2, edge_1, edge_2)
+$$ |i-j|\neq 1, ~~~~~~ |\pi_i - \pi_j|=1  $$.
 
-```
+Hence, they indicate the presence of a breakpoint. In the unsigned permutation, we create a black edge between $2i+1$ and $2j$ if these conditions are satisfied.
 
-# Counting breakpoints and cycles in the breakpoint graph
+A gray edge is created when two fragments are consecutive but not adjacent,
+
+$$ |i-j|= 1, ~~~~~~ |\pi_i - \pi_j|\neq 1  $$.
+
+Gray edges indicates "what we should have", or which fragment comes next. In the unsigned permutation, we create a gray edge between $2i+1$ and $2j$ if these conditions are satisfied.
+
+### Cycles
+
+define cycles
+
+### Counting breakpoints and cycles in the breakpoint graph
 
 ```{r Count breakpoints and cycles}
 
 #count the number of breakpoints (including artificial extremities)
-bp_count(seq)
+bp_count(query_sequence_unsig)
 
 #count the number of cycles excluding single nodes
 cycle_count(g)
 ```
+
+### Orientation of edges and cycles
+
+define orientation (edge and cycle)
+
+### Extension of gray edges
+
+We need to find a characteristic called "interleaving" between gray nodes, which essentially says if two gray nodes overlap, but none of them contains the another one. With this, we can establish interactions in the graph of connected components.
+
+## Components graph
 
 ```{r}
 h <- components_graph(g, query_sequence_unsig)
@@ -112,14 +135,14 @@ h <- components_graph(g, query_sequence_unsig)
 plot(h)
 ```
 
-# Counting hurdles and superhurdles
+## Hurdles
 
 ```{r Counting hurdles and superhurdles}
 
 info <- hurdles_count(g, query_sequence_unsig)
 ```
 
-# Finding superhurdles
+## Superhurdles
 
 ```{r}
 
@@ -127,25 +150,18 @@ superhurdles_count(info, g, query_sequence_unsig)
 
 ```
 
-# Checking if the permutation is a fortress
+## Fortress
 
 ```{r Is it fortress?}
 #analyze if the permutation is a fortress
-is_fortress <- function(superhurdles){
-  
-  if(sum(superhurdles$hurdles)%%2 == 0){
-    return(0)
-  }
-  if(sum(superhurdles$superhurdle) == sum(superhurdles$hurdle)){
-    return(1)
-  }
-  return(0)
+is_fortress(superhurdles)
+
   
   #a permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles
   #return 1 if it is fortress
   #return 0 otherwise
   
-}
+
 ```
 
 # Performing the rearrangement
