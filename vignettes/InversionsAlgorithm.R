@@ -549,3 +549,19 @@ inversions_rearrangement <- function(seq, unsigned=TRUE){
   }
   return(inversions)
 }
+
+#if you want to calculate just the reversal distance and not solve the problem:
+inversions_minimal <- function(seq, unsigned=TRUE){
+
+  if (!(unsigned)){
+    seq <- sig2unsig(seq)
+  }
+
+  bp_graph <- breakpoint_graph(seq)
+  hurdles <- hurdles_count(bp_graph, seq)
+  superhurdles <- superhurdles_count(hurdles, bp_graph, seq)
+
+  minimal <- bp_count(seq) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
+
+  return(minimal)
+}
