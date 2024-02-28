@@ -102,7 +102,7 @@ Is it possible to compare two genomes having their order. But permutation vector
 
 ## Transforming a signed sequence into an unsigned sequence
 
-A largely used structure in the case of a signed permutation (which means we have inversions) is representing a fragment as a pair of numbers removing the signal, where we replace each positive element $i$ of $\pi$ by $(2i, 2i+1)$ and each negative element $-i$ of $\pi$ by $(2i+1, 2i)$. We also add two elements $\pi(0)=1$ and $\pi(n+1) = 2n+2$, where $n$ is the number of DNA fragments - these numbers will be useful to identify breakpoints at the beggining and end of the strand. The reason to use this structure is the fact that it is way much better to apply graph approaches for solving the genome rearrangement problem, instead of using signals to represent an inversion. Let's represent our example:
+A largely used structure in the case of a signed permutation (which means we have inversions) is representing a fragment as a pair of numbers removing the signal, where we replace each positive element $i$ of $\pi$ by $(2i, 2i+1)$ and each negative element $-i$ of $\pi$ by $(2i+1, 2i)$. We also add two elements $\pi(0)=1$ and $\pi(n+1) = 2n+2$, where $n$ is the number of DNA fragments - these numbers will be useful to identify breakpoints at the beginning and end of the strand. The reason to use this structure is the fact that it is way much better to apply graph approaches for solving the genome rearrangement problem, instead of using signals to represent an inversion. Let's represent our example:
 
 ```{r # transform the input in an unsigned mapping and add two extremities 1 and 2n+2, where n is the number of dna fragments}
 
@@ -232,11 +232,18 @@ s_unsig |> inversion(4,9)  |> diff()
 s_unsig |> inversion(4,11)  |> diff()
 ```
 
+The values for $a$ can vary according to the fragment size being inverted. So, how could we have always the same values?
+
+The solution for this is getting the coalescent sequence, which means turning several colinear fragments into a single fragment. Then we can know exactly the value for the breakpoints and be able to know if the pattern is a genuine combination of inversion. 
+
+From now one, lets consider we are dealing with coalescent sequences.
+
 ### Overlapping double inversions
 
 Lets perform inversions in order to have an overlapping between them. What a lagged difference can tell about the signature of a double inversion?
 
 ```{r}
+s_unsig <- 1:12
 s_unsig |> inversion(4, 7) |> inversion(6, 9) |> diff() #first on the left
 s_unsig |> inversion(6, 9) |> inversion(4, 7) |> diff() #first on the right
 ```
@@ -244,13 +251,13 @@ s_unsig |> inversion(6, 9) |> inversion(4, 7) |> diff() #first on the right
 Negative break-points in this case can tell us that such region has been moved at least twice. Hence, a double inversion signature is described by
 
 $$
-[a_{i}, ~~~~ -1, ~~~~ a_{i+1}, ~~~~ -1,  ~~~~ -a_{i+2}, ~~~~ 1, ~~~~ a_{i+3}]
+[4, ~~~~ -1, ~~~~ 3, ~~~~ -1,  ~~~~ -4, ~~~~ 1, ~~~~ 5]
 $$
 
 or
 
 $$
-[a_{i}, ~~~~ 1, ~~~~ -a_{i+1}, ~~~~ -1,  ~~~~ a_{i+2}, ~~~~ -1, ~~~~ a_{i+3}]
+[5, ~~~~ 1, ~~~~ -4, ~~~~ -1,  ~~~~ 3, ~~~~ -1, ~~~~ 4]
 $$
 
 depending on the order that the inversions happens.
@@ -258,20 +265,20 @@ depending on the order that the inversions happens.
 Now lets find the same patterns in a total inverted sequence.
 
 ```{r}
-sig2unsig(-7:-1) |> inversion(4, 7) |> inversion(6, 9) |> diff() #first on the left
-sig2unsig(-7:-1) |> inversion(6, 9) |> inversion(4, 7) |> diff() #first on the right
+sig2unsig(-5:-1) |> inversion(4, 7) |> inversion(6, 9) |> diff() #first on the left
+sig2unsig(-5:-1) |> inversion(6, 9) |> inversion(4, 7) |> diff() #first on the right
 ```
 
 Note that the breakpoints at the extremities are from the entire inversion at the beginning. The found patterns for double inversions are:
 
 $$
-[-a_{i}, ~~~~ 1, ~~~~ -a_{i+1}, ~~~~ 1,  ~~~~ a_{i+2}, ~~~~ -1, ~~~~ -a_{i+3}]
+[-4, ~~~~ 1, ~~~~ -3, ~~~~ 1,  ~~~~ 4, ~~~~ -1, ~~~~ -5]
 $$
 
 or
 
 $$
-[-a_{i}, ~~~~ -1, ~~~~ a_{i+1}, ~~~~ 1,  ~~~~ -a_{i+2}, ~~~~ 1, ~~~~ -a_{i+3}]
+[-5, ~~~~ -1, ~~~~ 4, ~~~~ 1,  ~~~~ -3, ~~~~ 1, ~~~~ -4]
 $$
 
 Which are exactly the same as before, but with opposite signals.
@@ -293,25 +300,38 @@ s_inv_nested2
 A nested inversion has the following pattern in the plus strand:
 
 $$
-[a_i, ~~~~ -1, ~~~~ -a_{i+1}, ~~~~ 1,  ~~~~ -a_{i+2}, ~~~~ -1, ~~~~ a_{i+3}]
+[6, ~~~~ -1, ~~~~ -2, ~~~~ 1,  ~~~~ -2, ~~~~ -1, ~~~~ 6]
 $$
 
 As we saw on the double inversion case, the pattern on the minus strand is the same, but with opposite signals:
 
 $$
-[-a_i, ~~~~ 1, ~~~~ a_{i+1}, ~~~~ -1,  ~~~~ a_{i+2}, ~~~~ 1, ~~~~ -a_{i+3}]
+[-6, ~~~~ 1, ~~~~ 2, ~~~~ -1,  ~~~~ 2, ~~~~ 1, ~~~~ -6]
 $$
+
+We also can have two more cases of nested inversion, when the inversions are aligned on the left or right side:
+
+```{r}
+s_unsig <- 1:10
+
+inversion(s_unsig, 4, 7) |> inversion(4, 5) |> diff()
+inversion(s_unsig, 4, 5) |> inversion(4, 7) |> diff()
+inversion(s_unsig, 4, 7) |> inversion(6, 7) |> diff()
+inversion(s_unsig, 6, 7) |> inversion(4, 7) |> diff()
+
+s_unsig <- sig2unsig(-4:-1)
+
+inversion(s_unsig, 4, 7) |> inversion(4, 5) |> diff()
+inversion(s_unsig, 4, 5) |> inversion(4, 7) |> diff()
+inversion(s_unsig, 4, 7) |> inversion(6, 7) |> diff()
+inversion(s_unsig, 6, 7) |> inversion(4, 7) |> diff()
+
+```
 
 ## Searching for patterns
 
-In order to standardize the break-points, we can replace them by a single number (not 1 or zero), which can be positive or negative.
-
 ```{r}
 diff_s_inv_nested <- diff(s_inv_nested)
-diff_s_inv_nested[diff_s_inv_nested > 1] <- 2
-diff_s_inv_nested[diff_s_inv_nested < -1] <- -2
-
-nested_pattern <- c(2, -1, -2, 1, -2, -1, 2) #just works if the sequence is coalescent - but there is a function to do it on gb objects
 ```
 
 ```{r}
@@ -326,16 +346,11 @@ rearrangement_search <- function(seq, pattern) {
 Double inversion example from GBreaks
 
 ```{r}
-seq <- asSignedPermutation(exampleGB)
-seq_unsig <- sig2unsig(seq)
-diff_seq <- diff(seq_unsig)
+diff_seq <- exampleDoubleInversion1 |> bpGraph() |> diff()
 
-diff_seq[diff_seq > 1] <- 2
-diff_seq[diff_seq < -1] <- -2
+double1 <- c(5, 1, -4, -1, 3, -1, 4)
+double2 <- c(4, -1, 3, -1, -4, 1, 5)
 
-double_inv_pattern1 <- c(2, -1, 2, -1, -2, 1, 2)
-double_inv_pattern2 <- c(2, 1, -2, -1, 2, -1, 2)
-
-rearrangement_search(diff_seq, double_inv_pattern1)
-rearrangement_search(diff_seq, double_inv_pattern2) #found it
+rearrangement_search(diff_seq, double1)
+rearrangement_search(diff_seq, double2)
 ```
