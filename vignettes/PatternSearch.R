@@ -1,4 +1,5 @@
-library(zoo)
+#install.packages("zoo")
+#library(zoo)
 
 pattern_search <- function(seq){
 
@@ -10,6 +11,8 @@ pattern_search <- function(seq){
   nested <- c(6, -1, -2, 1, -2, -1, 6)
   nested2 <- c(3,  1, -2, -1,  4)
   nested3 <- c(4, -1, -2,  1,  3)
+  sequential <- c(2, -1, 3, -1, 2)
+  sequential2 <- c(2, -1, 3, -1, 3, -1, 2)
 
   inversions <- matrix(NA, nrow=0, ncol=2)
 
@@ -97,12 +100,42 @@ pattern_search <- function(seq){
     inversions <- rbind(inversions, c(i+1, i+4)) |> rbind(c(i+1, i+2)) #all first, then left
   }
 
+  pattern <- sequential
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2)) |> rbind(c(i+3, i+4))
+  }
+
+  pattern <- sequential*(-1)
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2)) |> rbind(c(i+3, i+4))
+  }
+
+  pattern <- sequential2
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2)) |> rbind(c(i+3, i+4)) |> rbind(c(i+5, i+6))
+  }
+
+  pattern <- sequential2*(-1)
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2)) |> rbind(c(i+3, i+4)) |> rbind(c(i+5, i+6))
+  }
+
 return(inversions)
 }
 
 find_unique_sequences <- function(numbers) {
 
   #generate k-length sequences and their frequencies
+
+  numbers <- diff(numbers)
 
   generate_and_count_sequences <- function(numbers, k) {
     numbers_as_str <- sapply(numbers, as.character)
@@ -129,7 +162,7 @@ find_unique_sequences <- function(numbers) {
   }
 
   patterns_different_from_one <- lapply(all_patterns, function(f) {
-    f[f != 1]
+    f[f > 5]
   })
 
   return(patterns_different_from_one)
