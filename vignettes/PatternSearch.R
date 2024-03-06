@@ -1,13 +1,13 @@
 #install.packages("zoo")
-#library(zoo)
+library(zoo)
 
 pattern_search <- function(seq){
 
   diff_seq <- diff(seq)
 
   simple <- c(2, -1, 2)
-  double <- c(5, 1, -4, -1, 3, -1, 4)
-  double2 <- c(4, -1, 3, -1, -4, 1, 5)
+  double <- c(1, -4, -1, 3, -1)
+  double2 <- c(-1, 3, -1, -4, 1)
   nested <- c(6, -1, -2, 1, -2, -1, 6)
   nested2 <- c(3,  1, -2, -1,  4)
   nested3 <- c(4, -1, -2,  1,  3)
