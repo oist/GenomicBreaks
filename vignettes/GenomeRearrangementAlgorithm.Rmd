@@ -9,57 +9,108 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Genome Rearrangement Algorithm - Sorting by Reversals
-
-This vignette explains how the algorithm for rearranging by inversions was written, based on Hannenhalli and Pevzner work "Transforming Cabbage into Turnip: Polynomial Algorithm for Sorting Signed Permutations by Reversals", from 1999.
-
-All required functions to sort by reversals are implemented on the following R script:
-
 ```{r}
 source("InversionsAlgorithm.R")
 ```
 
-## Genome representation
+# Genome Rearrangement Problem
 
-The algorithm works in order to rearrange a numeric sequence by inversions in order to obtain the sorted sequence $1, 2, ..., n$, where $n$ is the number of DNA fragments from a one-to-one relationship of two genomes.
+Genome rearrangement is an important area in computational biology that looks at how the genetic makeup of organisms has changed over time. The main question is: given two genomes and a list of ways that genomes can evolve, how can we transform one genome into another through a series of changes?
 
-Therefore, to transform a genome into another, we have to define one genome as a sorted sequence $1, 2, ..., n$ (the identity permutation), and the second one as a signed permutation $\pi$ from the first one - Genome Breaks package is able to do this job. A negative number in the sequence means an inverted DNA fragment.
+There are two fundamental questions to formulate our solution to this problem:
 
-### Transforming a signed sequence into an unsigned sequence
+1) What is a genome? The term 'genome' can refer to DNA that is either in a long line or in a circle. It can be made up of one or many chromosomes. Understanding the structure of genomes is crucial because different organisms have different genome structures.
 
-A largely used structure in the case of a signed permutation (which means we have inversions) is representing a fragment as a pair of numbers removing the signal, where we replace each positive element $i$ of $\pi$ by $(2i, 2i+1)$ and each negative element $-i$ of $\pi$ by $(2i+1, 2i)$. We also add two elements $\pi(0)=1$ and $\pi(n+1) = 2n+2$ - these numbers will be useful to identify breakpoints at the beginning and end of the strand. The reason to use this structure is the fact that it is way much better to apply graph approaches. Lets use an example given by the paper:
+2) Types of changes: There are many ways genomes can change, including moving parts of the DNA to different places, swapping large sections between chromosomes, reversing sections of a chromosome, changing small parts of the DNA sequence, adding or removing DNA, and moving DNA segments either by cutting and pasting or copying and pasting. These changes can happen within a chromosome or between chromosomes, adding layers of complexity.
+Finding solutions to the genome rearrangement problem means creating algorithms (sets of rules for solving problems) that can identify the best series of changes to explain how one genome evolved into another. This isn't just puzzle solving; it can have practical applications in understanding genetic dynamics, the history of life's evolution, and how genetic diversity occurs.
 
-```{r Defining the genome structure}
+## How to relate two genomes
 
-query_sequence <- c(3, -5, 8, -6, 4, -7, 9, 2, 1, 10, -11)
+The starting point is define a relation between two genomes. Dealing with mathematics implies on having well defined structures to work with. In our case, they are *permutations*.
 
-#transforming a signed permutation into an unsigned permutation to construct the breakpoint graph
+Suppose we have a DNA sequence which we consider as standard (target), where each DNA fragment is represent by a number. Lets get a toy sequence with 7 DNA fragments.
 
+$$
+target ~~~ \rightarrow~~~  1~~~  2~~~  3~~~  4~~~  5~~~  6~~~  7
+$$
+
+```{r}
+target_sequence <- c(1, 2, 3, 4, 5, 6, 7)
+```
+
+A signed permutation vector $\pi$ can be represented, for example, by
+
+$$
+\pi = [2, 3, -5, -4, -6, 7, 1],
+$$
+
+where a negative number means an inversion.
+
+But how can we interpret the permutation?
+
+Our target is the identity sequence. For the first DNA fragment of the query our permutation says
+
+$$
+\pi_1 = 2,
+$$
+
+which means the first element in the new sequence should be the second element of the original vector. Similarly, we have $\pi_2=3$, which means the fragment 3 of the target is located on the second position of the query. Hence, the vector representing the genome sequence is the same as the permutation vector (note that this just happens because we assume the target sequence is the identity, but this is not true in general).
+
+```{r}
+query_sequence = c(2, 3, -5, -4, -6, 7, 1)
+```
+
+## Transforming a signed sequence into an unsigned sequence
+
+It doesn't take much time to get in trouble dealing with the minus signal in the permutation. We are doing math, but the minus signal is not about negative numbers, it is about the orientation of a fragment.
+
+To have more interpretability in our structure, we can think every fragment has a beginning and an ending. Therefore, we can represent a fragment as a pair of consecutive numbers, where we replace each positive element $i$ of $\pi$ by $(2i, 2i+1)$ and each negative element $-i$ of $\pi$ by $(2i+1, 2i)$. We also add two elements $\pi(0)=1$ and $\pi(n+1) = 2n+2$, where $n$ is the number of DNA fragments - these numbers will be useful to identify breakpoints at the beginning and end of the strand. The reason to use this structure is the fact that it is way much better to apply graph approaches for solving the genome rearrangement problem, instead of using signals to represent an inversion. Let's represent our example:
+
+```{r}
 query_sequence_unsig <- sig2unsig(query_sequence)
-
 query_sequence_unsig
 ```
 
-### Implementing the inversion operation
+# Genome Rearrangement Algorithm - Sorting by Reversals
 
-Some carry is required when applying operations in this type of representation above. A fragment n will be represented by $2n$ and $2n+1$, hence, numbers in these forms cannot be separated, i.e., an operation needs to start in an even index and finish in an odd index, once we added two extremities in the vector, so any DNA fragment starts in an even index and finishes in an odd index.
+In 1999, Hannenhalli and Pevzner stablished an approach to sort a genome by inversions in their work "Transforming Cabbage into Turnip: Polynomial Algorithm for Sorting Signed Permutations by Reversals", published on Journal of the ACM. The terms "inversions" and "reversals" are synonymous and are used here interchangeably.
 
-The terms "inversions" and "reversals" are synonymous and are used here interchangeably. 
+Although the algorithm can calculate the exact minimal number of inversions required to sort the genome and find them, its complexity is quite high: $O(n^5)$, where $n$ is the number of DNA fragments. It takes around 3 hours to sort 100 fragments and it gets very slow for larger permutations.
+
+Here, we are going to explore how to decrease this time. But first, lets learn some lessons with Hannenhalli and Pevzner, understanding the core elements of their algorithm: breakpoints, cycles and hurdles.
+
+## Genome representation
+
+The algorithm works in order to rearrange a numeric sequence by inversions in order to obtain the sorted sequence $1, 2, ..., n$, where $n$ is the number of DNA fragments from a one-to-one relationship of two genomes (actually, we are going to get the sorted unsigned sequence $1, 2, ..., 2n+1, 2n+2$).
+
+Therefore, to transform a genome into another, we have to define one genome as an identity sequence, and the second one as the unsigned permutation from the first one - Genome Breaks package is able to do give you this vector. For instance, 
 
 ```{r}
+system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> coalesce_contigs() |> head(100) |> bpGraph()
+```
 
-#perform an inversion of the third fragment
-inversion(query_sequence_unsig, 2, 17)
+## The inversion operation
 
+Some carry is required when applying operations in this type of representation above. A fragment $i$ will be represented by $2|i|$ and $2|i|+1$ (not necessarily in this order), hence, they cannot be separated - imagine these numbers are flanking a DNA fragment, a molecule. You don't want to break it, right? 
+
+Hence, an inversion operation needs to start in an even index and finish in an odd index, because any DNA fragment starts in an even index and finishes in an odd index - by index we mean the position on the vector, not the value itself.
+
+DRAW HERE VALID AND INVALID OPERATIONS
+
+
+```{r}
+print(query_sequence_unsig)
+
+inversion(query_sequence_unsig, 2, 13)
 ```
 
 If we perform some inversion operations, we can sort the genome:
 
 ```{r}
-inversion(query_sequence_unsig, 2, 17) |> inversion(4, 19) |> inversion(10, 15) |> inversion(14, 17) |> inversion(22, 23) |> inversion(2, 5) |> inversion(8, 11)
+inversion(query_sequence_unsig, 2, 13) |> inversion(2, 15) |> inversion(8, 11) |> inversion(12, 13) |> inversion(2, 3)
 ```
 
-Our problem is finding these sequence of rearrangements with a minimal number of movements, called *reversal distance*, noted by $d(\pi)$.
+Our problem is finding these sequence of rearrangements with a minimal number of movements, called *reversal distance*, written as $d(\pi)$.
 
 In order to get a sequence of inversions, it is sufficient to type
 
@@ -67,7 +118,7 @@ In order to get a sequence of inversions, it is sufficient to type
 inversions_rearrangement(query_sequence_unsig)
 ```
 
-or
+or, if you don't have the unsigned permutation,
 
 ```{r}
 inversions_rearrangement(query_sequence, unsigned=FALSE)
@@ -75,9 +126,13 @@ inversions_rearrangement(query_sequence, unsigned=FALSE)
 
 Each line represents the positions of the inversion in the unsigned sequence.
 
-If you want to check the steps of the algorithm, read the topics below.
-
 ## Creating a breakpoint graph
+
+With the unsigned permutation vector we have to create a structure called *breakpoint graph*. Each element of our vector is a node, so for every DNA fragment, we have a node representing its beginning and a node representing its ending.
+
+#add black edges between seq[2i+2] and seq[2i+1] if they are not consecutive
+
+#add gray edges between 2i+2 and 2i+1 if they are not adjacent
 
 ```{r Creating and visualizing a breakpoint graph}
 
@@ -236,23 +291,8 @@ $$t(\pi_2) - t(\pi) = -1$$.
 
 To sort the DNA sequence by inversions, therefore, we search iterativelly along all possible inversions and calculate the parameter above. If some permutation reduces the reversal distance, we perform this reversal. We do this until have our sequence sorted.
 
-```{r Generating simulated scrambling}
+```{r Examples from the paper}
 
-# dna_blocks <- 8
-# number_inversions <- 5
-# 
-# #simulating a number of random inversions given by "simulations" in an unsigned sequence s
-# simulate_inversion(s, simulations)
-# 
-# target_sequence <- 1:(2*dna_blocks + 2)
-# 
-# simulate_inversion_res <- simulate_inversion(target_sequence_unsig, number_inversions)
-# 
-# positions <- simulate_inversion_res$positions
-# query_sequence_unsig <- simulate_inversion_res$sequence 
-```
-
-```{r Another cases from the paper}
 # #query_sequence <- c(5, 7, 6, 8, 1, 3, 2, 4)
 # 
 # #query_sequence <- c(2, 4, 3, 5, 7, 6, 8, 1)
@@ -275,17 +315,35 @@ end_time <- Sys.time()
 print(result)
 
 end_time - start_time
-
 ```
+
+
+
+
+
 ```{r Sequence from GenomicBreaks}
-query_sequence_unsig <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> head(100) |> bpGraph()
+query_sequence_unsig <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> coalesce_contigs() |> head(100) |> bpGraph()
 
 start_time <- Sys.time()
-result <- inversions_rearrangement(query_sequence_unsig)
+result <- inversions_rearrangement(new_nema)
 end_time <- Sys.time()
 
 print(result)
 
 end_time - start_time
+```
+
+```{r}
+
+for (i in 1:length(result[,1])){
+    result2[i, 1:2] <- c(query_sequence_unsig[result[i, 1]], query_sequence_unsig[result[i, 2]])     
+    query_sequence_unsig <- inversion(query_sequence_unsig, result[i, 1], result[i, 2])}
+
+my_vector <- as.vector(result2)
+frequencies <- table(my_vector)
+
+hist(my_vector, breaks = query_sequence_unsig, main="Frequency Histogram", xlab="Values", ylab="Frequency")
+
+
 ```
 
