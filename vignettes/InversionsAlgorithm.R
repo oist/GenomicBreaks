@@ -24,7 +24,7 @@ sample_ <- function(x, size) {
   sample(x, size)
 }
 
-#simulate a number of random inversions given by "simulations" in an unsigned sequence s
+#simulate a number of random inversions given by the parameter "simulations" in an unsigned sequence s
 simulate_inversion <- function(s, simulations){
   n <- length(s)/2 - 2 #length of original sequence
   positions <- matrix(NA, nrow=simulations, ncol=2)
@@ -564,4 +564,63 @@ inversions_minimal <- function(seq, unsigned=TRUE){
   minimal <- bp_count(seq) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
 
   return(minimal)
+}
+
+#in the following function the breakpoint graph is created without get the orientation, so it is faster
+
+cycle_count_simpler <- function(query_sequence_unsig){
+
+  len_qsu <- length(query_sequence_unsig)
+  len_qs <- len_qsu/2 -1
+
+  #create an empty graph
+  g <- graph.empty(n = len_qsu, directed = FALSE)
+
+  for(i in 0:len_qs) {
+    g <- add_edges(g, c(query_sequence_unsig[2*i + 2],
+                        query_sequence_unsig[2*i +1]))
+
+    g <- add_edges(g, c(2*i+1, 2*i+2))
+  }
+  sum(components(g)$csize > 2)
+}
+
+#fixing inversions assuming hurdles = 0
+
+inversions_rearrangement_simpler <- function(seq){
+
+  inversions <- matrix(NA, nrow=0, ncol=2)
+
+  len <- length(seq)/2 -1
+
+  seq_new <- seq
+  cycle_new <- cycle_count_simpler(seq_new)
+  bp_new <- bp_count(seq_new)
+
+  inversions_count <- 1 #to enter in the loop
+
+  while (inversions_count > 0){
+
+    inversions_count <- nrow(inversions)
+
+    for (i in 1:(len-1)){
+      for (j in i:len){
+        seq_temp <- inversion(seq_new, 2*i, 2*j+1)
+        cycle_temp <- cycle_count_simpler(seq_temp)
+        bp_temp <- bp_count(seq_temp)
+
+        if (bp_temp - bp_new - cycle_temp + cycle_new == -1) {
+          seq_new <- seq_temp
+          cycle_new <- cycle_temp
+          bp_new <- bp_temp
+          inversions <- rbind(inversions, c(2*i, 2*j+1))
+
+        }
+      }
+    }
+
+    inversions_count <- nrow(inversions) - inversions_count
+
+  }
+  return(inversions)
 }
