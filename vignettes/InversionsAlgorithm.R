@@ -604,23 +604,85 @@ inversions_rearrangement_simpler <- function(seq){
     inversions_count <- nrow(inversions)
 
     for (i in 1:(len-1)){
-      for (j in i:len){
-        seq_temp <- inversion(seq_new, 2*i, 2*j+1)
-        cycle_temp <- cycle_count_simpler(seq_temp)
-        bp_temp <- bp_count(seq_temp)
+      if (abs(diff(seq_new)[2*i-1])!=1){
+        print(i)
+        for (j in i:len){
+          if (abs(diff(seq_new)[2*j+1])!=1){
+            seq_temp <- inversion(seq_new, 2*i, 2*j+1)
+            cycle_temp <- cycle_count_simpler(seq_temp)
+            bp_temp <- bp_count(seq_temp)
 
-        if (bp_temp - bp_new - cycle_temp + cycle_new == -1) {
-          seq_new <- seq_temp
-          cycle_new <- cycle_temp
-          bp_new <- bp_temp
-          inversions <- rbind(inversions, c(2*i, 2*j+1))
-
+            if (bp_temp - bp_new - cycle_temp + cycle_new == -1) {
+              seq_new <- seq_temp
+              cycle_new <- cycle_temp
+              bp_new <- bp_temp
+              inversions <- rbind(inversions, c(2*i, 2*j+1))
+              print(c(2*i, 2*j+1))
+            }
+          }
         }
       }
     }
 
     inversions_count <- nrow(inversions) - inversions_count
 
+  }
+  return(inversions)
+}
+
+fix_simple_and_sequential <- function(seq){
+
+  inversions <- matrix(NA, nrow=0, ncol=2)
+
+  simple <- c(2, -1, 2)
+  sequential <- c(2, -1, 3, -1, 2)
+
+  diff_seq <- diff(seq)
+
+  pattern <- simple
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2))
+    seq <- inversion(seq, i+1, i+2)
+    diff_seq <- diff(seq)
+  }
+
+  pattern <- simple*(-1)
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2))
+    seq <- inversion(seq, i+1, i+2)
+    diff_seq <- diff(seq)
+  }
+
+  pattern <- sequential
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2), c(i+3, i+4))
+    seq <- inversion(seq, i+1, i+2) |> inversion(i+3, i+4)
+    diff_seq <- diff(seq)
+  }
+
+  pattern <- sequential*(-1)
+  pattern_length <- length(pattern)
+  matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+  for (i in matches){
+    inversions <- rbind(inversions, c(i+1, i+2), c(i+3, i+4))
+    seq <- inversion(seq, i+1, i+2) |> inversion(i+3, i+4)
+    diff_seq <- diff(seq)
+  }
+
+  for (i in seq(from = 4, to = 50, by = 2)){
+    pattern <- c(i, rep(-1, i-1), i)
+    pattern_length <- length(pattern)
+    matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
+    for (j in matches){
+      seq <- inversion(seq, j+1, j+i)
+      inversions <- rbind(inversions, c(j+1, j+i))
+    }
   }
   return(inversions)
 }
