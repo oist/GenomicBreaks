@@ -325,7 +325,7 @@ end_time - start_time
 ```
 
 ```{r Sequence from GenomicBreaks}
-# query_sequence_unsig <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> coalesce_contigs() |> head(100) |> bpGraph()
+query_sequence_unsig <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> coalesce_contigs() |> head(100) |> bpGraph()
 # 
 # start_time <- Sys.time()
 # result <- inversions_rearrangement(new_nema)
@@ -366,6 +366,24 @@ Or in the opposite strand:
 inversion(1:8, 4, 5) |> inversions(2,7) |> diff()
 ```
 
+### Sequential inversions
+
+The lagged difference for sequential inversion will look like:
+
+```{r}
+inversion(1:10, 4, 5) |> inversion(6, 7) |> diff()
+```
+
+Or in the opposite strand:
+
+```{r}
+inversion(1:10, 4, 5) |> inversion(6, 7) |> inversions(2,9) |> diff()
+```
+
+We can also search even for more than two fragments inverted sequentially.
+
+Simple and sequential inversions seems to be the most common type of inversions that we can find doing a simple search.
+
 ## Searching for proper inversions without calculating hurdles
 
 As I mentioned in the explanation about edge orientation, something good happens with real data: the probability to having hurdles decreases as long as the data gets bigger. If we take this into consideration, we save a lot of time. A vector with 100 pieces of DNA taking 3,5 hours to be rearranged by the algorithm before, now can be done in 5 minutes.
@@ -379,4 +397,32 @@ As we saw before, a permutation must be done in order to have
 $$t(\pi_2) - t(\pi) = -1$$.
 
 After fixing simple inversions with the pattern search, we are going to pass through the sequence until solving the problem or "get stuck" on a permutation vector (which means we made an entire loop on the sequence and did not perform any rearrangement). But at this point, we can check if it is possible to break our permutation into smaller permutations and solve them using the original algorithm. 
+
+Lets come back to the example from Genomic Breaks and apply this approach:
+
+```{r}
+#return the list of required inversions to fix simple and sequential inversions, given by the lag difference search
+inversions_result <- fix_simple_and_sequential(query_sequence_unsig)
+
+seq_new <- query_sequence_unsig
+
+len <- length(inversions_result[,1])
+
+#update the vector with the inversions we found above
+for (i in 1:len){
+  seq_new <- inversion(seq_new, inversions_result[i,1], inversions_result[i,2])
+}
+
+#perform the simplified version of the algorithm
+inversions_result <- rbind(inversions_result, inversions_rearrangement_simpler(new_seq))
+
+#update the vector with the inversions we found above
+for (i in (len+1):(length(inversions_result[,1]))){
+  seq_new <- inversion(seq_new, inversions_result[i,1], inversions_result[i,2])
+}
+
+diff(seq_new)
+
+```
+
 

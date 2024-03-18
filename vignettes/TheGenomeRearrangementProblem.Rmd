@@ -16,8 +16,6 @@ The diversity of this problem is given by two fundamental questions:
 
 Finding a solution for the genome rearrangement problem , i.e., the best algorithms, relies on the answer of these questions. But before starting to think about it, we need to have a reasonable data structure to work with.
 
-## How to relate two genomes
-
 The starting point is define a relation between two genomes. Suppose we have a DNA sequence $s$ which we consider as standard (target), where each DNA fragment is represent by a number. Here the toy sequence has 7 DNA fragments
 
 $$
@@ -35,66 +33,6 @@ $$
 $$
 
 where a negative number means an inversion.
-
-But how can we interpret the permutation?
-
-Our target is the standard sequence. For the first DNA fragment of the query our permutation says
-
-$$
-\pi_1 = 2,
-$$
-
-which means the first element in the new sequence should be the second element of the original vector
-
-Our example has seven DNA fragments:
-
-$$
-\_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_
-$$
-
-As we saw above, the second fragment is located on the first position of the query:
-
-$$
-2 ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_
-$$
-
-Similarly, we have $\pi_2=3$, which means the fragment 3 of the target is located on the second position of the query:
-
-$$
-2 ~~~ 3 ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_ ~~~ \_
-$$
-
-Doing this for all positions, we get:
-
-$$
-\pi(s) ~~~ \rightarrow ~~~ 2~~~  3~~~  -5~~~  -4~~~  -6~~~  7~~~  1
-$$
-
-which is what we have on the query sequence when we make an alignment if we assume the target is a standard sequence. In this case, it is exactly the same as the permutation itself. But this only happens if we are permuting a standard sequence.
-
-R has a function called *order*, which receives a vector and, for each position, tells where is the number that should be in that position. This is useful to get the permutation vector given the query sequence in order to obtain the target sequence. However, this function does not work in a signed permutation, once it sees inversions as negative numbers.
-
-This could be solved taking the numbers as positives,
-
-$$
-\pi_{seq}(s) ~~~ \rightarrow ~~~ 2~~~  3~~~  5~~~  4~~~  6~~~  7~~~  1 \\
-$$
-
-```{r}
-pi_s <-  c(2, 3, -5, -4, -6, 7, 1)
-pi_seq_s <- abs(pi_s)
-pi <- order(pi_seq_s)
-pi
-```
-
-and putting the signal back on the numbers relative to negative indexes - in this case, 4, 5, and 6 are negative indexes on $\pi(s)$, so these number will be negative on $\pi$.
-
-```{r}
-neg_indices <- which(pi_s < 0)
-neg_elements <- pi %in% neg_indices
-pi = pi* ifelse(neg_elements, -1, 1)
-pi
-```
 
 we got the permutation vector that transforms the query on the target.
 
@@ -116,30 +54,9 @@ sig2unsig <- function(p){
 
 ```
 
-```{r}
-pi_s_unsig=sig2unsig(pi_s)
-pi_s_unsig
-```
-
 Some carry is required when applying operations in this type of representation. A fragment n will be represented by $2n$ and $2n+1$, hence, numbers in these forms cannot be separated, i.e., an operation needs to start in an even index and finish in an odd index, once we added two extremities in the vector, so any DNA fragment starts in an even index and finishes in an odd index.
 
-How do we get now if we ask the order?
-
-```{r}
-order(pi_s_unsig)
-```
-
-which is exactly the same thing if we construct an unsigned permutation.
-
-```{r}
-sig2unsig(pi)
-```
-
-No surprises. But things get easy when we don't need to worry about signals.
-
 Another reason to get unsigned sequences is the analysis of lagged differences between them, which able us to identify patterns like double inversions overlapping and nested inversions.
-
-## Genomic Rearrangements
 
 Lets implement some operations:
 
@@ -234,7 +151,7 @@ s_unsig |> inversion(4,11)  |> diff()
 
 The values for $a$ can vary according to the fragment size being inverted. So, how could we have always the same values?
 
-The solution for this is getting the coalescent sequence, which means turning several colinear fragments into a single fragment. Then we can know exactly the value for the breakpoints and be able to know if the pattern is a genuine combination of inversion. 
+The solution for this is getting the **coalescent sequence**, which means turning several colinear fragments into a single fragment. Then we can know exactly the value for the breakpoints and be able to know if the pattern is a combination of inversions. 
 
 From now one, lets consider we are dealing with coalescent sequences.
 
