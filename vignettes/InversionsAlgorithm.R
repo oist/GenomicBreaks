@@ -720,11 +720,24 @@ fix_non_sorted <- function(seq){
   if (length(non_sorted) == 0){
     return(inversions)
   }
-  breaks <- c(0, which(diff(non_sorted) != 1), length(non_sorted))
+  possible_breaks <- c(which(diff(non_sorted) != 1), length(non_sorted))
+  breaks <- c(0)
+
+  for (b in possible_breaks){
+
+    i <- breaks[length(breaks)]
+
+    index <- (non_sorted[i+1]-1):(non_sorted[b]+1)
+    subseq <- seq[index]
+
+    if(all(index - sort(subseq) == 0)){
+      breaks <- c(breaks, b)
+    }
+  }
 
   for (i in 1:(length(breaks)-1)){
     subseq <- seq[(non_sorted[breaks[i]+1]-1):(non_sorted[breaks[i+1]]+1)] - (non_sorted[breaks[i]+1]-2)
-    inversions <- rbind(inversions, inversions_rearrangement(subseq) + (non_sorted[breaks[i]+1]-1))
+    inversions <- rbind(inversions, inversions_rearrangement(subseq) + (non_sorted[breaks[i]+1]-2))
   }
   return(inversions)
 }
