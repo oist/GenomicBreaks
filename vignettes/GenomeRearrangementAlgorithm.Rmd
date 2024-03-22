@@ -2,7 +2,9 @@
 title: "GenomeRearrangementAlgorithm"
 author: "Bruna Fistarol"
 date: "2024-02-06"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -10,12 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-source("InversionsAlgorithm.R")
+source("vignettes/InversionsAlgorithm.R")
+#install.packages("GenomicBreaks")
+library(GenomicBreaks)
+library(zoo)
 ```
 
 # Genome Rearrangement Problem
 
-Genome rearrangement is an important area in computational biology that looks at how the genetic makeup of organisms has changed over time. The main question is: given two genomes and a list of ways that genomes can evolve, how can we transform one genome into another through a series of changes?
+The study of genome rearrangements is an important area in computational biology that looks at how the genetic makeup of organisms has changed over time. The main question is: given two genomes and a list of ways that genomes can evolve, how can we transform one genome into another through a series of changes?
 
 There are two fundamental questions to formulate our solution to this problem:
 
@@ -157,7 +162,7 @@ $$ |i-j|= 1, ~~~~~~ |\pi_i - \pi_j|\neq 1  $$.
 
 Gray edges indicates "what we should have", or which fragment should come next. In the unsigned permutation, we create a gray edge between $2i+1$ and $2j$ if these conditions are satisfied.
 
-![Figure 3: representation of a breakpoint graph. Note that $1, 2$ and $2n+1, 2n+2$ could be connected by black and gray nodes, but by definition, the links are not created because these numbers are both consecutive and adjacents.](breakpoint_graph.jpeg)
+![Figure 3: representation of a breakpoint graph. Note that $1, 2$ and $2n+1, 2n+2$ could be connected by black and gray nodes, but by definition, the links are not created because these numbers are both consecutive and adjacent (they are being represented here, but faded) . ](breakpoint_graph.jpeg)
 
 ### Counting breakpoints and cycles in the breakpoint graph
 
@@ -180,30 +185,27 @@ $$d(\pi) \geq b(\pi) - c(\pi)$$ $b(\pi)$ and $c(\pi)$ are the first two of four 
 
 Closing the gap between the reversal distance and this lower bound relies on a graph structure called **hurdle**. It doesn't look there is an intuition or an interpretation for this type of structure. The idea is related to identifying structures that make the rearrangement problem more difficult to solve and in which type of structure we are allowed to perform movements or not. The way these structures are defined depends on the convenience for the solution of specific problems. There is a lot of sightly different definitions for hurdles, but here we are going to explain the structure used by Hannenhalli and Pevzner.
 
-In a nutshel, hurdle is a denomination to a sets of cycles which has certain characteristics on their edges. There is another concept, **superhurdle**, the way you call a hurdle $h$ if a new hurdle is created when $h$ is removed from the graph. Then, with the number of superhurdles we can calculate a binary parameter called 
-**fortress**. Together with the number of breakpoints and cycles, it is possible to calculate the minimal number of inversions if you have the number of hurdles and the value of fortress.
+In a nutshel, hurdle is a denomination to a sets of cycles which has certain characteristics on their edges. There is another concept, **superhurdle**, the way you call a hurdle $h$ if a new hurdle is created when $h$ is removed from the graph. Then, with the number of superhurdles we can calculate a binary parameter called **fortress**. Together with the number of breakpoints and cycles, it is possible to calculate the minimal number of inversions if you have the number of hurdles and the value of fortress.
 
 At this point, you can go directly for the section "Reversal distance", once I mentioned all the required pieces to calculate it. But if you want to read more about hurdles, I am trying to give a quick idea about how to find them below.
 
 ### Orientation of edges and cycles
 
-Identifying hurdles depends on some characteristics for gray edges, cycles and how this characteristics are related. 
+Identifying hurdles depends on some characteristics for gray edges, cycles and how this characteristics are related.
 
 A gray edge is called oriented when the sum of the positions (index) of the nodes in the permutation vector is even. Otherwise, the edge is unoriented.
 
 Cycles having at least one oriented gray edge are oriented, and unoriented if all gray edges are unoriented.
 
-Unoriented cycles doesn't have a proper inversion, i.e., an inversion that helps to reach the solution of our problem. And unoriented cycles are the pieces that can form hurdles. 
+Unoriented cycles doesn't have a proper inversion, i.e., an inversion that helps to reach the solution of our problem. And unoriented cycles are the pieces that can form hurdles.
 
-Here it comes a very interesting thought: lets think about probability. If we have a very large structure, it becomes less likely to have a cycle with all edges being unoriented. In fact, what happens at the end of the day is, for real data, we barely observe hurdles. And this is what will save our lives later.
+Here it comes a very interesting thought: lets think about probability. If we have a very large structure, it becomes less likely to have a cycle with all edges being unoriented. In fact, what happens at the end of the day is, for real data, we barely observe hurdles, because huge cycles have both unoriented and oriented edges, hence, they are oriented by definition. And this is what will save our lives later.
 
 ### Extension of gray edges
 
 An extension of an edge is the interval given by the positions of its nodes in the permutation vector. So a match function in R finds the extension of an edge, given the permutation vector.
 
-We need to find if two gray nodes overlap (i.e., their extensions overlap), but none of them contains the another one.
-When this happens, we say that the two gray nodes are "interleaving".
-If $e_1 \in C_1$ and $e_2 \in C_2$ are two gray edges interleaving, we can say $C_1$ and $C_2$ are two cycles interleaving.
+We need to find if two gray nodes overlap (i.e., their extensions overlap), but none of them contains the another one. When this happens, we say that the two gray nodes are "interleaving". If $e_1 \in C_1$ and $e_2 \in C_2$ are two gray edges interleaving, we can say $C_1$ and $C_2$ are two cycles interleaving.
 
 At this point, we need to create another structure to save the required information to decide our inversions. This structure is a graph constructed from our cycles.
 
@@ -363,7 +365,7 @@ inversion(1:8, 4, 5) |> diff()
 Or in the opposite strand:
 
 ```{r}
-inversion(1:8, 4, 5) |> inversions(2,7) |> diff()
+inversion(1:8, 4, 5) |> inversion(2,7) |> diff()
 ```
 
 ### Sequential inversions
@@ -377,7 +379,7 @@ inversion(1:10, 4, 5) |> inversion(6, 7) |> diff()
 Or in the opposite strand:
 
 ```{r}
-inversion(1:10, 4, 5) |> inversion(6, 7) |> inversions(2,9) |> diff()
+inversion(1:10, 4, 5) |> inversion(6, 7) |> inversion(2,9) |> diff()
 ```
 
 We can also search even for more than two fragments inverted sequentially.
@@ -396,33 +398,60 @@ As we saw before, a permutation must be done in order to have
 
 $$t(\pi_2) - t(\pi) = -1$$.
 
-After fixing simple inversions with the pattern search, we are going to pass through the sequence until solving the problem or "get stuck" on a permutation vector (which means we made an entire loop on the sequence and did not perform any rearrangement). But at this point, we can check if it is possible to break our permutation into smaller permutations and solve them using the original algorithm. 
+After fixing simple inversions with the pattern search, we are going to pass through the sequence until solving the problem or "get stuck" on a permutation vector (which means we made an entire loop on the sequence and did not perform any rearrangement). But at this point, we can check if it is possible to break our permutation into smaller permutations and solve them using the original algorithm.
 
 Lets come back to the example from Genomic Breaks and apply this approach:
 
 ```{r}
-#return the list of required inversions to fix simple and sequential inversions, given by the lag difference search
-inversions_result <- fix_simple_and_sequential(query_sequence_unsig)
+inversions_result <- inversion_algorithm_faster(query_sequence_unsig)
+new_seq <- apply_inversions(query_sequence_unsig, inversions_result)
+```
 
-seq_new <- query_sequence_unsig
+This function above essentially fix simple and sequential inversions and applies the simpler version of the algorithm, which relies just on breakpoints and cycles.
 
-len <- length(inversions_result[,1])
+Fixing non-sorted regions with the original algorithm
 
-#update the vector with the inversions we found above
-for (i in 1:len){
-  seq_new <- inversion(seq_new, inversions_result[i,1], inversions_result[i,2])
-}
+Some times the simpler algorithm doesn't manage to sort the entire sequence and we have to apply the original version of the algorithm from Hannenhali and Pevzner.
 
-#perform the simplified version of the algorithm
-inversions_result <- rbind(inversions_result, inversions_rearrangement_simpler(new_seq))
+Lets see how the sequence looks like:
 
-#update the vector with the inversions we found above
-for (i in (len+1):(length(inversions_result[,1]))){
-  seq_new <- inversion(seq_new, inversions_result[i,1], inversions_result[i,2])
-}
+```{r}
+new_seq
+```
 
-diff(seq_new)
 
+```{r}
+#analyse sequence to find non sorted regions
+new_seq - 1:202 
+```
+We have a non sorted region starting on 34 and finishing on 52, and another one starting on 128 and finishing on 141. We are going to take these regions, plus two extra extremities (like our unsigned permutation vector) and subtract a number in order to have the sequence starting on 1. Then, se apply the original algorithm and, to correct the results for the right index on the original sequence, we just have to sum the number we subtracted before.
+
+```{r}
+#these regions must start in an odd index and finish in an even index
+
+#subtract the value of the first number to normalize the sequence
+
+subseq_1 <- new_seq[33:52] - 32
+
+subseq_2 <- new_seq[127:142] - 126
+
+#then add the rearrangements to the matrix summing the subtracted value to correct the index
+
+inversions_result <- rbind(inversions_result, (inversions_rearrangement(subseq_1) + 32))
+
+inversions_result <- rbind(inversions_result, (inversions_rearrangement(subseq_2) + 126))
+
+```
+
+Now lets apply our inversions to the original sequence:
+
+```{r}
+#lets apply the rearrangements to finish the sorting
+
+new_seq <- apply_inversions(query_sequence_unsig, inversions_result)
+
+#is it sorted?
+all(diff(new_seq))
 ```
 
 
