@@ -112,6 +112,10 @@ Sanity check:
 ```{r}
 all(diff(apply_inversions(oiko_par, inversions_oiko_par)) == 1)
 ```
+```{r}
+saveRDS(inversions_oiko_par, "~/Documents/GitHub/GenomicBreaks/vignettes/inversions_oiko_par")
+```
+
 
 Done! c:
 
