@@ -71,6 +71,8 @@ These positions of `non_sorted` give indexes for `new_seq` to find the non sorte
 
 But we have to take each subsequence of `seq_new` with one more value on each extremities. Do you remember when we put an extra number at the beginning and ending of the unsigned permutation vector? That is why we are doing this.
 
+We still have to check if each block is "self contained". Fortunately, the function \`fix_non_sorted\` seems to work well to do this and sort everything. Here is what it does:
+
 ```{r}
 subseq1 <- new_seq[(non_sorted[1]-1):(non_sorted[4]+1)] - non_sorted[1] + 2
 subseq2 <-  new_seq[(non_sorted[5]-1):(non_sorted[24]+1)]  - non_sorted[5] + 2
@@ -112,10 +114,10 @@ Sanity check:
 ```{r}
 all(diff(apply_inversions(oiko_par, inversions_oiko_par)) == 1)
 ```
+
 ```{r}
 saveRDS(inversions_oiko_par, "~/Documents/GitHub/GenomicBreaks/vignettes/inversions_oiko_par")
 ```
-
 
 Done! c:
 
@@ -127,7 +129,9 @@ First, get the unsigned permutation vector `seq`. Then, run:
 
 `new_seq <- apply_inversions(seq, inversions)`
 
-`inversions <- rbind(inversions, fix_non_sorted(new_seq))`
+`new_inversions <- fix_non_sorted(new_seq))`
+
+`inversions <- rbind(inversions, new_inversions`
 
 Check if it is sorted:
 
