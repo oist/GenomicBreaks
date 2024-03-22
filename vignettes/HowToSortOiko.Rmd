@@ -1,0 +1,93 @@
+---
+title: "HowToSortOiko"
+author: "Bruna"
+date: "2024-03-21"
+output: html_document
+---
+
+# How to sort Oiko Chromosomes
+
+```{r}
+library(GenomicBreaks)
+library(plyranges)
+library(zoo)
+source("vignettes/InversionsAlgorithm.R")
+```
+
+Lets start loading the GB object and each chromosome:
+
+```{r}
+oiko_gb <- readRDS("~/Documents/GitHub/GenomicBreaks/Bar2_p4__OSKA2016v1.9.rds")
+
+oiko_chr1 <- oiko_gb |> plyranges::filter(seqnames == "Chr1") |> plyranges::filter(seqnames(query) == "Chr1") |> bpGraph()
+#oiko_chr2 <- oiko_gb |> plyranges::filter(seqnames == "Chr2") |> plyranges::filter(seqnames(query) == "Chr2") |> bpGraph()
+#oiko_par <- oiko_gb |> plyranges::filter(seqnames == "PAR") |> plyranges::filter(seqnames(query) == "PAR") |> bpGraph()
+#oiko_xsr <- oiko_gb |> plyranges::filter(seqnames == "XSR") |> plyranges::filter(seqnames(query) == "XSR") |> bpGraph()
+```
+
+We are going to sort chromosome 1 of Bar2_p4\_\_OSKA2016v1.9 alignment.
+
+## Fixing simple inversions and applying simpler version of algorithm
+
+This step can be done with:
+
+```{r}
+inversions_oiko_chr1 <- inversion_algorithm_faster(oiko_chr1)
+new_seq <- apply_inversions(oiko_chr1, inversions_oiko_chr1)
+```
+
+and will take around one day to run.
+
+This function essentially fix simple and sequential inversions and applies the simpler version of the algorithm, which relies just on breakpoints and cycles.
+
+## Fixing non-sorted regions with the original algorithm
+
+Some times the simpler algorithm doesn't manage to sort the entire sequence and we have to apply the original version of the algorithm from Hannenhali and Pevzner.
+
+Lets find the non sorted regions taking the difference between a sorted sequence and our sequence and map positions different than zero:
+
+```{r}
+non_sorted <- which((1:(length(new_seq)) - new_seq) != 0)
+```
+
+`non_sorted` is giving all indexes where the sequence is not sorted. Sets of sequential indexes indicate it is relative to a single region. We need to fix each one of these regions separately.
+
+Here we can map the breaks between the regions so we can know where each one begins and finishes
+
+```{r}
+which(diff(non_sorted) != 1)
+```
+
+It gives 4, 24 and 28. Hence, we have to take `non_sorted`:
+
+-   1 to 4
+-   5 to 24
+-   25 to 28
+-   29 to end
+
+These positions of `non_sorted` give indexes for `new_seq` to find the non sorted regions.
+
+But we have to take each subsequence of `seq_new` with one more value on each extremities. Do you remember when we put an extra number at the beginning and ending of the unsigned permutation vector? That is why we are doing this.
+
+```{r}
+subseq1 <- new_seq[(non_sorted[1]-1):(non_sorted[4]+1)] - non_sorted[1] + 2
+subseq2 <-  new_seq[(non_sorted[5]-1):(non_sorted[24]+1)]  - non_sorted[5] + 2
+subseq3 <- new_seq[(non_sorted[25]-1):(non_sorted[28]+1)] - non_sorted[25] + 2
+subseq4 <- new_seq[(non_sorted[29]-1):(non_sorted[length(non_sorted)]+1)] - non_sorted[29] + 2
+```
+
+Then, we rearrange each one of these regions and fix the index summing again the value we subtracted before:
+
+```{r}
+inversions_oiko_chr1 <- rbind(inversions_oiko_chr1, 
+                              inversions_rearrangement(subseq1) + (non_sorted[1] - 2),
+                              inversions_rearrangement(subseq2) + (non_sorted[5] - 2),
+                              inversions_rearrangement(subseq3) + (non_sorted[25] - 2),
+                              inversions_rearrangement(subseq4) + (non_sorted[29] - 2))
+```
+
+```{r}
+saveRDS(inversions_oiko_chr1, "~/Documents/GitHub/GenomicBreaks/vignettes/inversions_oiko_chr1")
+```
+
+Done! c:
