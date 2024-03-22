@@ -25,6 +25,8 @@ oiko_chr1 <- oiko_gb |> plyranges::filter(seqnames == "Chr1") |> plyranges::filt
 #oiko_xsr <- oiko_gb |> plyranges::filter(seqnames == "XSR") |> plyranges::filter(seqnames(query) == "XSR") |> bpGraph()
 ```
 
+# Chr1
+
 We are going to sort chromosome 1 of Bar2_p4\_\_OSKA2016v1.9 alignment.
 
 ## Fixing simple inversions and applying simpler version of algorithm
@@ -90,4 +92,39 @@ inversions_oiko_chr1 <- rbind(inversions_oiko_chr1,
 saveRDS(inversions_oiko_chr1, "~/Documents/GitHub/GenomicBreaks/vignettes/inversions_oiko_chr1")
 ```
 
+# Chr par
+
+Same process for Chr par:
+
+```{r}
+inversions_oiko_par <- inversion_algorithm_faster(oiko_par)
+new_seq <- apply_inversions(oiko_par, inversions_oiko_par)
+```
+
+The function `fix_non_sorted` seems to be working well:
+
+```{r}
+inversions_oiko_par <- rbind(inversions_oiko_par, fix_non_sorted(new_seq))
+```
+
+Sanity check:
+
+```{r}
+all(diff(apply_inversions(oiko_par, inversions_oiko_par)) == 1)
+```
+
 Done! c:
+
+# Summary
+
+First, get the unsigned permutation vector `seq`. Then, run:
+
+`inversions <- inversion_algorithm_faster(seq)`
+
+`new_seq <- apply_inversions(seq, inversions)`
+
+`inversions <- rbind(inversions, fix_non_sorted(new_seq))`
+
+Check if it is sorted:
+
+`all(diff(apply_inversions(seq, inversions)) == 1)`
