@@ -5,7 +5,7 @@ editor_options:
   chunk_output_type: inline
 ---
 
-# The Genome Rearrangement Problem
+# The Genome Rearrangement Problem - Analysing lag difference of unsigned permutation
 
 General formulation: given two genomes and a set of possible evolutionary events, find a sequence of rearrangements transforming a genome into another.
 
