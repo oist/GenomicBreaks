@@ -603,9 +603,9 @@ inversions_rearrangement_simpler <- function(seq){
 
     inversions_count <- nrow(inversions)
 
-    for (i in 1:(len-1)){
+    for (i in 1:(len)){
       if (abs(diff(seq_new)[2*i-1])!=1){
-        print(i)
+        #print(i)
         for (j in i:len){
           if (abs(diff(seq_new)[2*j+1])!=1){
             seq_temp <- inversion(seq_new, 2*i, 2*j+1)
@@ -683,6 +683,48 @@ fix_simple_and_sequential <- function(seq){
       seq <- inversion(seq, j+1, j+i)
       inversions <- rbind(inversions, c(j+1, j+i))
     }
+  }
+  return(inversions)
+}
+
+
+apply_inversions <- function(seq, inv){
+  len <- length(inv[,1])
+  for (i in 1:len){
+    seq <- inversion(seq, inv[i,1], inv[i,2])
+  }
+  return(seq)
+}
+
+#putting fix_simple_and_sequentials and inversion_algorithm_simpler in a single function
+
+inversion_algorithm_faster <- function(seq){
+
+  #1) fix simple and sequential inversions
+  inversions_part1 <- fix_simple_and_sequential(seq)
+
+  #update the sequence
+  seq_new <- apply_inversions(seq, inversions_part1)
+
+  #2) apply the simpler version of the algorithm
+  inversions_part2 <- inversions_rearrangement_simpler(seq_new)
+
+  #matrix to return
+  rbind(inversions_part1, inversions_part2)
+}
+
+fix_non_sorted <- function(seq){
+
+  inversions <- matrix(NA, nrow=0, ncol=2)
+  non_sorted <- which((1:(length(seq)) - seq) != 0)
+  if (length(non_sorted) == 0){
+    return(inversions)
+  }
+  breaks <- c(0, which(diff(non_sorted) != 1), length(non_sorted))
+
+  for (i in 1:(length(breaks)-1)){
+    subseq <- seq[(non_sorted[breaks[i]+1]-1):(non_sorted[breaks[i+1]]+1)] - (non_sorted[breaks[i]+1]-2)
+    inversions <- rbind(inversions, inversions_rearrangement(subseq) + (non_sorted[breaks[i]+1]-1))
   }
   return(inversions)
 }
