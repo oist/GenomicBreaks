@@ -424,7 +424,7 @@ new_seq
 #analyse sequence to find non sorted regions
 new_seq - 1:202 
 ```
-We have a non sorted region starting on 34 and finishing on 52, and another one starting on 128 and finishing on 141. We are going to take these regions, plus two extra extremities (like our unsigned permutation vector) and subtract a number in order to have the sequence starting on 1. Then, se apply the original algorithm and, to correct the results for the right index on the original sequence, we just have to sum the number we subtracted before.
+We have a non sorted region starting on 34 and finishing on 52, and another one starting on 128 and finishing on 141. We are going to take these regions, plus two extra extremities (like our unsigned permutation vector) and subtract a number in order to have the sequence starting on 1. Then, apply the original algorithm and, to correct the results for the right index on the original sequence, we just have to sum the number we subtracted before.
 
 ```{r}
 #these regions must start in an odd index and finish in an even index
@@ -453,5 +453,21 @@ new_seq <- apply_inversions(query_sequence_unsig, inversions_result)
 #is it sorted?
 all(diff(new_seq))
 ```
+The function `fix_non_sorted(seq)` is able to fix these isolated regions applying the original algorithm using the logic above.
 
+# Summary
+
+First, get the unsigned permutation vector `seq`. Then, run:
+
+`inversions <- inversion_algorithm_faster(seq)`
+
+`new_seq <- apply_inversions(seq, inversions)`
+
+`new_inversions <- fix_non_sorted(new_seq)`
+
+`inversions <- rbind(inversions, new_inversions)`
+
+Check if it is sorted:
+
+`all(diff(apply_inversions(seq, inversions)) == 1)`
 
