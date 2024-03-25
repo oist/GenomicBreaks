@@ -11,18 +11,18 @@ output: html_document
 library(GenomicBreaks)
 library(plyranges)
 library(zoo)
-source("vignettes/InversionsAlgorithm.R")
+source("~/Documents/GitHub/GenomicBreaks/vignettes/InversionsAlgorithm.R")
 ```
 
 Lets start loading the GB object and each chromosome:
 
 ```{r}
-oiko_gb <- readRDS("~/Documents/GitHub/GenomicBreaks/Bar2_p4__OSKA2016v1.9.rds")
+oiko_gb <- readRDS("~/Documents/GitHub/GenomicBreaks/vignettes/Bar2_p4__OSKA2016v1.9.rds")
 
 oiko_chr1 <- oiko_gb |> plyranges::filter(seqnames == "Chr1") |> plyranges::filter(seqnames(query) == "Chr1") |> bpGraph()
-#oiko_chr2 <- oiko_gb |> plyranges::filter(seqnames == "Chr2") |> plyranges::filter(seqnames(query) == "Chr2") |> bpGraph()
-#oiko_par <- oiko_gb |> plyranges::filter(seqnames == "PAR") |> plyranges::filter(seqnames(query) == "PAR") |> bpGraph()
-#oiko_xsr <- oiko_gb |> plyranges::filter(seqnames == "XSR") |> plyranges::filter(seqnames(query) == "XSR") |> bpGraph()
+oiko_chr2 <- oiko_gb |> plyranges::filter(seqnames == "Chr2") |> plyranges::filter(seqnames(query) == "Chr2") |> bpGraph()
+oiko_par <- oiko_gb |> plyranges::filter(seqnames == "PAR") |> plyranges::filter(seqnames(query) == "PAR") |> bpGraph()
+oiko_xsr <- oiko_gb |> plyranges::filter(seqnames == "XSR") |> plyranges::filter(seqnames(query) == "XSR") |> bpGraph()
 ```
 
 # Chr1
@@ -129,9 +129,9 @@ First, get the unsigned permutation vector `seq`. Then, run:
 
 `new_seq <- apply_inversions(seq, inversions)`
 
-`new_inversions <- fix_non_sorted(new_seq))`
+`new_inversions <- fix_non_sorted(new_seq)`
 
-`inversions <- rbind(inversions, new_inversions`
+`inversions <- rbind(inversions, new_inversions)`
 
 Check if it is sorted:
 
