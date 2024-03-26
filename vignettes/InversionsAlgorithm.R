@@ -492,7 +492,6 @@ is_fortress <- function(superhurdles){
 
 ##### Performing the rearrangement by inversions #####
 
-
 inversions_rearrangement <- function(seq, unsigned=TRUE){
 
   if(!(unsigned))
@@ -509,40 +508,48 @@ inversions_rearrangement <- function(seq, unsigned=TRUE){
 
   loops <- len_qs
 
+  new_seq <- seq
+
   for (loop in 1:loops){
 
     if (!(all(diff(seq)==1))) {
 
       for (i in 1:len_qs){
-        for (j in i:len_qs){
-          k <- 2*i
-          l <- 2*j+1
+        if (abs(diff(new_seq)[2*i-1])!=1){
+          for (j in i:len_qs){
+            if (abs(diff(new_seq)[2*j+1])!=1){
 
-          new_seq <- inversion(seq, k, l)
+              k <- 2*i
+              l <- 2*j+1
 
-          if (!(all(diff(new_seq)==1))) {
-
-            new_graph <- breakpoint_graph(new_seq)
-            new_hurdles <- hurdles_count(new_graph, new_seq)
-            new_superhurdles <- superhurdles_count(new_hurdles, new_graph, new_seq)
-
-            delta = bp_count(new_seq) - cycle_count(new_graph) + sum(new_hurdles$hurdle) + is_fortress(new_superhurdles)                    - (bp_count(seq) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles))
-
-            if (delta == -1){
-
-              seq <- new_seq
-              bp_graph <- new_graph
-              hurdles <- new_hurdles
-              superhurdles <- new_superhurdles
-              inversions <- rbind(inversions, c(k, l))
               #print(c(k, l))
-              #print(seq)
-            }
 
+              new_seq <- inversion(seq, k, l)
+
+              if (!(all(diff(new_seq)==1))) {
+
+                new_graph <- breakpoint_graph(new_seq)
+                new_hurdles <- hurdles_count(new_graph, new_seq)
+                new_superhurdles <- superhurdles_count(new_hurdles, new_graph, new_seq)
+
+                delta = bp_count(new_seq) - cycle_count(new_graph) + sum(new_hurdles$hurdle) + is_fortress(new_superhurdles)                    - (bp_count(seq) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles))
+
+                if (delta == -1){
+
+                  seq <- new_seq
+                  bp_graph <- new_graph
+                  hurdles <- new_hurdles
+                  superhurdles <- new_superhurdles
+                  inversions <- rbind(inversions, c(k, l))
+                  print(c(k, l))
+                  #print(seq)
+                }
+
+              }
+              else {
+                inversions <- rbind(inversions, c(k, l))
+                seq <- new_seq}}
           }
-          else {
-            inversions <- rbind(inversions, c(k, l))
-            seq <- new_seq}
         }
       }
     }
@@ -674,19 +681,8 @@ fix_simple_and_sequential <- function(seq){
     seq <- inversion(seq, i+1, i+2) |> inversion(i+3, i+4)
     diff_seq <- diff(seq)
   }
-
-  for (i in seq(from = 4, to = 50, by = 2)){
-    pattern <- c(i, rep(-1, i-1), i)
-    pattern_length <- length(pattern)
-    matches <- which(rollapply(diff_seq, pattern_length, function(window) all(window == pattern), align = "left"))
-    for (j in matches){
-      seq <- inversion(seq, j+1, j+i)
-      inversions <- rbind(inversions, c(j+1, j+i))
-    }
-  }
   return(inversions)
 }
-
 
 apply_inversions <- function(seq, inv){
   len <- length(inv[,1])
@@ -705,6 +701,8 @@ inversion_algorithm_faster <- function(seq){
 
   #update the sequence
   seq_new <- apply_inversions(seq, inversions_part1)
+
+  ### CHECK THE SEQUENCE HERE! It may be not good apply the following sorting if it looks translocation
 
   #2) apply the simpler version of the algorithm
   inversions_part2 <- inversions_rearrangement_simpler(seq_new)
