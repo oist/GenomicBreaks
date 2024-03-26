@@ -135,7 +135,7 @@ or, if you don't have the unsigned permutation,
 inversions_rearrangement(query_sequence, unsigned=FALSE)
 ```
 
-Each line represents the positions of the inversion in the unsigned sequence.
+**Each line represents the positions of the inversion in the unsigned sequence.**
 
 ## Creating a breakpoint graph
 
@@ -330,10 +330,9 @@ end_time - start_time
 query_sequence_unsig <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks") |> load_genomic_breaks(type = 'match') |> coalesce_contigs() |> head(100) |> bpGraph()
 # 
 # start_time <- Sys.time()
-# result <- inversions_rearrangement(new_nema)
+# result <- inversions_rearrangement(query_sequence_unsig)
 # end_time <- Sys.time()
-# 
-# print(result)
+#  
 # 
 # end_time - start_time
 ```
@@ -453,7 +452,7 @@ new_seq <- apply_inversions(query_sequence_unsig, inversions_result)
 #is it sorted?
 all(diff(new_seq))
 ```
-The function `fix_non_sorted(seq)` is able to fix these isolated regions applying the original algorithm using the logic above.
+The function `fix_non_sorted(seq)`, so far, is able to fix these isolated regions applying the original algorithm using the logic above.
 
 # Summary
 
@@ -462,6 +461,8 @@ First, get the unsigned permutation vector `seq`. Then, run:
 `inversions <- inversion_algorithm_faster(seq)`
 
 `new_seq <- apply_inversions(seq, inversions)`
+
+Check your sequence at this point. Sometimes you can see structures looking like translocations and running the next step maybe is not representative. 
 
 `new_inversions <- fix_non_sorted(new_seq)`
 
