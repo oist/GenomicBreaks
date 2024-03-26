@@ -129,6 +129,10 @@ First, get the unsigned permutation vector `seq`. Then, run:
 
 `new_seq <- apply_inversions(seq, inversions)`
 
+Check your sequence at this point. Sometimes you can see structures looking like translocations and running the next step maybe is not representative. 
+
+The chromosome 2 finished the previous step with large regions translocated (at least it seems to be). For some reason the original algorithm had a problem dealing with it.
+
 `new_inversions <- fix_non_sorted(new_seq)`
 
 `inversions <- rbind(inversions, new_inversions)`
