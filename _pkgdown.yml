@@ -23,6 +23,11 @@ reference:
   - contents:
     - has_concept("Colinearity functions")
   - title: Flags and filters
+    - title: Synteny functions
+    desc: Functions to analyse synteny.
+  - contents:
+    - has_concept("Synteny functions")
+  - title: Flags and filters
     desc: Functions to flag patterns of alignments and filter them.
   - contents:
     - starts_with("flag")

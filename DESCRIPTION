@@ -34,7 +34,7 @@ Imports:
   Rcpp,
   weights
 LinkingTo: Rcpp
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
@@ -92,6 +92,7 @@ Collate:
     'strandNames.R'
     'strand_randomisation_index.R'
     'swap.R'
+    'syntenicMatches.R'
     'synteny_index.R'
     'tan_bp.R'
     'wholeGenomeClassification.R'

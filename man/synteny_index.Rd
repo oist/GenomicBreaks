@@ -43,5 +43,9 @@ Other Similarity indexes:
 \code{\link{GOC}()},
 \code{\link{correlation_index}()},
 \code{\link{strand_randomisation_index}()}
+
+Other Synteny functions: 
+\code{\link{syntenicProportions}()}
 }
 \concept{Similarity indexes}
+\concept{Synteny functions}
