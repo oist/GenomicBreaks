@@ -18,8 +18,8 @@
 #'
 #' @param file Path to a file in GFF3 or MAF format.  The file can be compressed
 #'        with _gzip_.
-#' @param target_bsgenome A `BSgenome` object representing the _target_ genome.
-#' @param query_bsgenome A `BSgenome` object representing the _query_ genome.
+#' @param target_bsgenome A `BSgenome` object or path to a FASTA file representing the _target_ genome.
+#' @param query_bsgenome A `BSgenome` object or path to a FASTA file representing the _query_ genome.
 #' @param sort Returns the object sorted, ignoring strand information.
 #' @param type In GFF3 files, _Sequence Ontology_ term representing an alignment
 #'        block (default: `match_part`).
@@ -78,17 +78,29 @@ load_genomic_breaks_GFF <- function (
   type = "match_part")
 {
   gb <- import.gff3(file)
-  if (! is.null(target_bsgenome))
-    gb <- GRanges(gb, seqinfo = seqinfo(target_bsgenome))
+  if (!is.null(target_bsgenome)) {
+    if (is.character(target_bsgenome)) {
+      target_seqinfo <- seqinfo(readDNAStringSet(target_bsgenome))
+    } else {
+      target_seqinfo <- seqinfo(target_bsgenome)
+    }
+    gb <- GRanges(gb, seqinfo = target_seqinfo)
+  }
   # Discard cross_genome_match parent (used for block display in Zenbu)
   gb <- gb[gb$type == type]
   # Discard unused information
   gb$phase <- gb$Parent <- gb$Target <- gb$ID <- gb$source <- gb$type <- NULL
   # Convert query coordinates to GRanges
-  if (! is.null(query_bsgenome))
-    gb$query <- GRanges(gb$Name, seqinfo = seqinfo(query_bsgenome))
-  else
+  if (!is.null(query_bsgenome)) {
+    if (is.character(query_bsgenome)) {
+      query_seqinfo <- Seqinfo(readDNAStringSet(query_bsgenome))
+    } else {
+      query_seqinfo <- seqinfo(query_bsgenome)
+    }
+    gb$query <- GRanges(gb$Name, seqinfo = query_seqinfo)
+  } else {
     gb$query <- GRanges(gb$Name)
+  }
   gb$Name <- NULL
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   as(gb, "GBreaks")
