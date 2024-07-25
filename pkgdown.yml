@@ -1,11 +1,10 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   GenomicBreaks: GenomicBreaks.html
   StructuralVariants: StructuralVariants.html
-last_built: 2024-02-14T06:08Z
+last_built: 2024-07-25T06:54Z
 urls:
   reference: https://oist.github.io/GenomicBreaks/reference
   article: https://oist.github.io/GenomicBreaks/articles
-

@@ -1,231 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/404.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/articles/StructuralVariants.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/GBreaks-class.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/GBreaksToMatrix.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/GOC.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/StructuralVariants.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/as.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/bp_coverage.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/bp_heatmap.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/bp_pair_analysis.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/bridgeRegions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/chain_contigs.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/cleanGaps.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/correlation_index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/dist2next.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/feature_coverage.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/filterInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/filterTranslocations.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagAll.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagLongShort.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagPairs.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flagTranslocations.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flipInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/forceSeqLengths.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/gb2comp.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/gb2xlim.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/getRefGenome.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/getSeq.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/get_bps.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/guessSeqLengths.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/keepLongestPair.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/load_genomic_breaks.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/longestMatchesInTarget.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/makeInversion.chr.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/makeOxfordPlots.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/reverse.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/showInversions.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/showTranslocations.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/splitSeqLevel.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/strandNames.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/strand_randomisation_index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/subsetByOverlaps.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/swap.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/synteny_index.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/tan_bp.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/wholeGenomeClassification.html</loc>
-  </url>
-  <url>
-    <loc>https://oist.github.io/GenomicBreaks/reference/zipWithNext.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://oist.github.io/GenomicBreaks/404.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/LICENSE-text.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/articles/StructuralVariants.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/articles/index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/authors.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/news/index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/GBreaks-class.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/GBreaksToMatrix.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/GOC.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/StructuralVariants.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/as.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/bp_coverage.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/bp_heatmap.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/bp_pair_analysis.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/bridgeRegions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/chain_contigs.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/cleanGaps.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/correlation_index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/dist2next.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/feature_coverage.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/filterInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/filterTranslocations.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagAll.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagLongShort.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagPairs.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flagTranslocations.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flipInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/flipStrandNames.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/forceSeqLengths.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/gb2comp.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/gb2xlim.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/getRefGenome.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/getSeq.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/get_bps.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/guessSeqLengths.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/keepLongestPair.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/load_genomic_breaks.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/longestMatchesInTarget.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/makeInversion.chr.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/makeOxfordPlots.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/reverse.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/showInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/showTranslocations.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/splitSeqLevel.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/strandNames.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/strand_randomisation_index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/subsetByOverlaps.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/swap.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/synteny_index.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/tan_bp.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/wholeGenomeClassification.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/zipWithNext.html</loc></url>
 </urlset>
+
