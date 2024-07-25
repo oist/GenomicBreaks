@@ -93,7 +93,7 @@ load_genomic_breaks_GFF <- function (
   # Convert query coordinates to GRanges
   if (!is.null(query_bsgenome)) {
     if (is.character(query_bsgenome)) {
-      query_seqinfo <- Seqinfo(readDNAStringSet(query_bsgenome))
+      query_seqinfo <- seqinfo(readDNAStringSet(query_bsgenome))
     } else {
       query_seqinfo <- seqinfo(query_bsgenome)
     }
