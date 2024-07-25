@@ -1,3 +1,7 @@
+# GenomicBreaks 0.14.6
+
+ * Experimental support for loading sequence information from FASTA files.
+
 # GenomicBreaks 0.14.5
 
  * Support loading MAF files where alignment sign is on the query.
