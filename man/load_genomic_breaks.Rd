@@ -16,9 +16,9 @@ load_genomic_breaks(
 \item{file}{Path to a file in GFF3 or MAF format.  The file can be compressed
 with \emph{gzip}.}
 
-\item{target_bsgenome}{A \code{BSgenome} object representing the \emph{target} genome.}
+\item{target_bsgenome}{A \code{BSgenome} object or path to a FASTA file representing the \emph{target} genome.}
 
-\item{query_bsgenome}{A \code{BSgenome} object representing the \emph{query} genome.}
+\item{query_bsgenome}{A \code{BSgenome} object or path to a FASTA file representing the \emph{query} genome.}
 
 \item{sort}{Returns the object sorted, ignoring strand information.}
 
