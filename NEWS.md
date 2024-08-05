@@ -1,3 +1,8 @@
+# GenomicBreaks 0.14.7
+
+ * Correct a bug in `load_genomic_breaks()` where sequence lengths would be
+   too long of 1 nucleotide when loaded from MAF files.
+
 # GenomicBreaks 0.14.6
 
  * Experimental support for loading sequence information from FASTA files.
