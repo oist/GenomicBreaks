@@ -18,10 +18,10 @@
 # T92 model (Tamura 1992)
 T92_distance <- function(list) {
 
-  theta <- prob_matrix[["G_G"]] + prob_matrix[["C_C"]]
+  theta <- prob_matrix[["probability_G_G"]] + prob_matrix[["probability_C_C"]]
   h <- 2 * theta * (1 - theta)
-  p <- prob_matrix[["A_G"]] + prob_matrix[["G_A"]] + prob_matrix[["T_C"]] + prob_matrix[["C_T"]]
-  q <- prob_matrix[["A_C"]] + prob_matrix[["C_A"]] + prob_matrix[["G_T"]] + prob_matrix[["T_G"]] + prob_matrix[["A_T"]] + prob_matrix[["T_A"]] + prob_matrix[["C_G"]] + prob_matrix[["G_C"]]
+  p <- prob_matrix[["probability_A_G"]] + prob_matrix[["probability_G_A"]] + prob_matrix[["probability_T_C"]] + prob_matrix[["probability_C_T"]]
+  q <- prob_matrix[["probability_A_C"]] + prob_matrix[["probability_C_A"]] + prob_matrix[["probability_G_T"]] + prob_matrix[["probability_T_G"]] + prob_matrix[["probability_A_T"]] + prob_matrix[["probability_T_A"]] + prob_matrix[["probability_C_G"]] + prob_matrix[["probability_G_C"]]
   d <- - h * log(1 - p / h - q) - 0.5 * (1 - h) * log(1 - 2 * q)
   return(d)
 
