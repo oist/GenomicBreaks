@@ -183,7 +183,7 @@ hurdles_count <- function(g, query_sequence_unsig){
 
   comps <- components(h)
 
-  # calculate the extent for each unoriented component of h
+  # Calculate the extent for each unoriented component of h
   line <- 0
   for (i in 1:max(comps$membership)) {
     comp_vertices <- which(comps$membership == i)
@@ -202,7 +202,7 @@ hurdles_count <- function(g, query_sequence_unsig){
     return(info)
   }
 
-  # check pairwise containment between components
+  # Check pairwise containment between components
   for (i in 1:(line - 1)) {
     for (j in (i + 1):line) {
       min_i <- info[i, "min_extent"]
@@ -221,13 +221,13 @@ hurdles_count <- function(g, query_sequence_unsig){
     }
   }
 
-  # determine which are hurdles (contain but not contained, or contained but not contain)
+  # Determine which are hurdles (contain but not contained, or contained but not contain)
   for (i in 1:line) {
     if (info[i, "contains"] == 0) {
       info[i, "hurdle"] <- 1
     }
     if (info[i, "contained"] == 0 && info[i, "contains"] == 1) {
-      info[i, "hurdle"] <- 2  # possible greatest hurdle; analyze further
+      info[i, "hurdle"] <- 2  # Possible greatest hurdle; analyze later
     }
   }
 
@@ -249,7 +249,7 @@ hurdles_count <- function(g, query_sequence_unsig){
       cycle_indices <- V(h)$cycle_index[comp_vertices]
       info_smallest <- which(info$hurdle == 1)
 
-      # assume it's a hurdle unless proven otherwise
+      # Assume it's a hurdle unless proven otherwise
       info[idx_row, "hurdle"] <- 1
       if (length(info_smallest) == 1) return(info)
 
@@ -290,7 +290,7 @@ hurdles_count <- function(g, query_sequence_unsig){
 
 
 
-##### Identifying superhurdles #####
+##### Identifying Superhurdles #####
 
 superhurdles_count <- function(info, g, query_sequence_unsig){
 
@@ -301,156 +301,38 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
   if (sum(info$hurdle) == length(info$hurdle)) {return(info)}
 
   # For all hurdles: remove one by one and check if some non hurdle turned into a hurdle; if it is the case, then the removed hurdle is a superhurdle
-  for (ignored in info$membership[info$hurdle == 1]){
+  for (ignored in info$membership[info$hurdle == 1]) {
 
-    # Remove "ignored" to calculate hurdles
-    info2 <- subset(info, membership != ignored)
+    # Remove the component from g
+    comps <- components(g)
+    ignore_vertices <- which(comps$membership == ignored)
+    g_reduced <- delete_vertices(g, ignore_vertices)
 
-    line <- length(info2$membership)
+    # Recompute hurdle info without this component
+    info2 <- hurdles_count(g_reduced, p_extended)
 
-    if (line == 1){
-      info["superhurdle"][info["membership"] == ignored] <- 1
-      return(info)
-    }
+    # Compare: did any non-hurdle become a hurdle?
+    orig_non_hurdles <- subset(info, hurdle == 0 & membership != ignored)
+    new_hurdles <- subset(info2, hurdle == 1)
 
-    for (i in 1:line){
-      info2[i, c("contained", "contains", "hurdle", "superhurdle")] <- c(0, 0, 0, 0)
-    }
+    if (nrow(new_hurdles) == 0 || nrow(orig_non_hurdles) == 0) next
 
-    for (i in 1:(line-1)) {
-      for (j in 2:line) {
+    overlap <- intersect(orig_non_hurdles$membership, new_hurdles$membership)
 
-        min_i <- info2[i, "min_extent"]
-        max_i <- info2[i, "max_extent"]
-
-        min_j <- info2[j, "min_extent"]
-        max_j <- info2[j, "max_extent"]
-
-        if ((min_i < min_j) & (min_j < max_j) & (max_j < max_i)) {
-          info2[i, "contains"] <- 1
-          info2[j, "contained"] <- 1
-        }
-
-        if ((min_j < min_i) & (min_i < max_i) & (max_i< max_j)) {
-          info2[j, "contains"] <- 1
-          info2[i, "contained"] <- 1
-        }
-      }
-    }
-
-    #hurdles never are in "the middle". They need to contain and not being contained,
-    # or being contained and not contain
-
-    for (i in 1:line) {
-      if ((info2[i, "contained"] == 0 || info2[i, "contained"] == 1) && info2[i, "contains"] == 0){
-        info2[i, "hurdle"] <- 1
-      }
-      if (info2[i, "contained"] == 0 && info2[i, "contains"] == 1){
-        info2[i, "hurdle"] <- 2 #we need to analyze this case
-      }
-    }
-
-    if (any(info2$hurdle == 2)) {
-
-      #first, check if it covers all other hurdles, otherwise it is not a (greatest) hurdle
-
-      possible_greatest <- which(info2$hurdle == 2)
-
-      min_hurdles <-  min(info2[info2$hurdle == 1, ]["min_extent"])
-      max_hurdles <-  max(info2[info2$hurdle == 1, ]["max_extent"])
-
-      for (i in possible_greatest){
-
-        if (info2[i, "min_extent"] > min_hurdles || info2[i, "max_extent"] < max_hurdles){
-          info2[i, "hurdle"] <- 0
-        }
-      }
-
-      #if there is still someone where hurdle == 2 (it is unique), check the steps below
-
-      if (any(info2$hurdle == 2)) {
-
-        #attribute cycle_index from vertices in h allows to access the correspondent cycle in g
-
-        greatest <- which(info2$hurdle == 2)
-        greatest <- info2[greatest, "membership"]
-
-        comp_vertices <- which(comps$membership == greatest)
-
-        idx = V(h)$cycle_index[comp_vertices] #get the memberships of the cycles which compose that component
-
-        info_smallest <- which(info2$hurdle == 1)
-
-        #we start assuming it is a hurdle; if we find it dividing two hurdles, we put a zero.
-
-        info2[greatest, "hurdle"] <- 1
-
-        #if info_smallest has only 1 hurdle, it means the great can't separate two hurdles
-
-        if (length(info_smallest) == 1){
-          return(info)
-        }
-
-        greatest_check <- FALSE
-
-        for (i in idx) {
-
-          if(!(greatest_check)){
-
-            #get edges of that component
-            edges_to_analyze <- E(g)[components(g)$membership == i & E(g)$color=="gray"]
-
-            #get all pairs of another hurdles
-
-            for (j in info_smallest[1:(length(info_smallest)-1)]) {
-              for (k in info_smallest[2:(length(info_smallest))]) {
-
-                min_j <- info2[j, "min_extent"]  # extent(U')[1]
-                max_j <- info2[j, "max_extent"]  # extent(U')[2]
-
-                min_k <- info2[k, "min_extent"]  # extent(U")[1]
-                max_k <- info2[k, "max_extent"]  # extent(U")[2]
-
-                for (edge in edges_to_analyze){
-
-                  # gray edge from U
-                  edge_extent <- sort(match(c(ends(g, edge)[1], ends(g, edge)[2]), query_sequence_unsig))
-
-                  # U separates U' and U'' if there is a gray edge in U containing extent(U'),
-                  # but without intersection with extent(U") (and vice versa)
-
-                  condition_1 <- ((edge_extent[1] < min_j & edge_extent[2] > max_j) &
-                                    (edge_extent[1] > max_k || edge_extent[2] < min_k))
-
-                  condition_2 <- ((edge_extent[1] < min_k & edge_extent[2] > max_k) &
-                                    (edge_extent[1] > max_j || edge_extent[2] < min_j))
-
-                  if (condition_1 || condition_2){
-                    info2[greatest, "hurdle"] <- 0
-                    greatest_check <- TRUE
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    #compare info and info2 to see if some nonhurdle turned into a hurdle
-
-    if (any(((subset(info, membership != ignored)$hurdle) - (info2$hurdle)) == -1)){
-
-      #ignored is a superhurdle
-
-      info["superhurdle"][info["membership"] == ignored] <- 1
+    if (length(overlap) > 0) {
+      info$superhurdle[info$membership == ignored] <- 1
     }
   }
 
   return(info)
 }
 
-#analyze if the permutation is a fortress
+
+
+
+
+##### Identifying Fortress #####
+
 is_fortress <- function(superhurdles){
 
   if(sum(superhurdles$hurdles)%%2 == 0){
@@ -461,11 +343,13 @@ is_fortress <- function(superhurdles){
   }
   return(0)
 
-  #a permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles
-  #return 1 if it is fortress
-  #return 0 otherwise
+  # A permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles
+  # Return 1 if it is fortress
+  # Return 0 otherwise
 
 }
+
+
 
 
 
