@@ -32,7 +32,8 @@ Imports:
   Biostrings,
   BSgenome,
   Rcpp,
-  weights
+  weights,
+  igraph
 LinkingTo: Rcpp
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
