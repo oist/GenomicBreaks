@@ -24,7 +24,16 @@ From: debian:bookworm
     ./R -e 'BiocManager::install("GenomicRanges")'
     ./R -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 
+    # Unfortunately Nextflow can not access $HOME so let's install more packages.
+
+    ./R -e 'devtools::install_github("brennern/ScrambledTreeBuilder", repos=BiocManager::repositories())'
+    ./R -e 'install.packages(c("uwot", "cluster", "factoextra"))'
+    ./R -e 'install.packages(c("SingleCellExperiment", "zellkonverter"))'
+    ./R -e 'install.packages(c("cowplot", "ggplot2", "patchwork", "ComplexHeatmap", "pheatmap", "RColorBrewer"))'
+
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library\n' | tee -a /etc/R/Renviron.site >/dev/null
     printf 'R_LIBS_USER="~/R/library/GBreaks_singularity_0.14\n'             | tee -a /etc/R/Renviron.site >/dev/null
-    
+
+    ./apt clean
+
     rm ./apt ./R
