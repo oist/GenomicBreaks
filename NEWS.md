@@ -1,3 +1,7 @@
+# GenomicBreaks unreleased
+
+ * Guard agains empty `GBreaks` objects in `makeOxfordPlots()`.
+
 # GenomicBreaks 0.14.7
 
  * Correct a bug in `load_genomic_breaks()` where sequence lengths would be
