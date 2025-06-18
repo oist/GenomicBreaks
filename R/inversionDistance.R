@@ -1,17 +1,25 @@
-#' Inversion distance
+#' Inversion Distance
 #'
-#' Implementation of Hannenhalli and Pevzner algorithm
+#' Computes the minimal number of inversions required to sort a signed permutation
+#' using the Hannenhalli and Pevzner algorithm.
 #'
-#' @param p A permutation vector
+#' This function uses several internal helper functions (e.g., `extendedPermutation`,
+#' `breakpoint_graph`, `hurdles_count`, `superhurdles_count`, and others) to
+#' compute properties of the breakpoint graph and identify cycles, hurdles and superhurdles.
+#' It also depends on `permutationVector()`, which is defined in another .R file.
 #'
-#' @returns The minimal number of inversions required to sort the given permutation vector
+#' @param gb_object A GBreaks object containing genome data from which a permutation vector can be extracted
+#' using the \code{permutationVector()} function.
+#'
+#' @return An integer: the minimal number of inversions needed to sort the permutation.
+#'
+#' @seealso \code{\link{permutationVector}} for generating the permutation vector.
+#'
+#' @import igraph
+#'
+#' @author Bruna Fistarol
 #'
 #' @export
-
-# Defining all required functions for the inversion distance
-
-install.packages("igraph")
-library(igraph)
 
 
 
@@ -26,6 +34,9 @@ extendedPermutation <- function(p){
   })
   c(1L, p_extended, 2L * length(p) + 2L)
 }
+
+
+
 
 
 ##### Breakpoint Graph #####
@@ -355,7 +366,9 @@ is_fortress <- function(superhurdles){
 
 ##### Inversion Distance #####
 
-inversionDistance <- function(p){
+inversionDistance <- function(gb_object){
+
+  p <- permutationVector(gb_object)
 
   p_extended <- extendedPermutation(p)
 
