@@ -437,12 +437,12 @@ is_fortress <- function(superhurdles){
 #' compute properties of the breakpoint graph and identify cycles, hurdles and superhurdles.
 #' It also depends on `permutationVector()`, which is defined in another .R file.
 #'
-#' This algorithm was designed to work in *a single chromosome alignment*.
+#' This algorithm was designed to work in *a single, linear chromosome alignment*.
 #' Although the function still works if the GBreaks object involves more than one chromosome,
 #' the returned value for the minimal number of inversions will imply in non-usual inversions
 #' if different chromosomes have orthologous regions.
 #'
-#' @param gb_object A GBreaks object containing genome data from which a permutation vector can be extracted
+#' @param gb A GBreaks object containing genome data from which a permutation vector can be extracted
 #' using the \code{permutationVector()} function.
 #'
 #' @return An integer: the minimal number of inversions needed to sort the permutation.
@@ -455,9 +455,9 @@ is_fortress <- function(superhurdles){
 #'
 #' @export
 
-inversionDistance <- function(gb_object){
+inversionDistance <- function(gb){
 
-  p <- permutationVector(gb_object)
+  p <- permutationVector(gb)
 
   p_extended <- extendedPermutation(p)
 
