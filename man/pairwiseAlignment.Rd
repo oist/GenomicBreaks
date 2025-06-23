@@ -40,7 +40,6 @@ See also the \code{\link[Biostrings:pairwiseAlignment]{Biostrings::pairwiseAlign
 
 Other Bioconductor API functions: 
 \code{\link{GBreaks-class}},
-\code{\link{as}()},
 \code{\link{getSeq}()},
 \code{\link{range_GBreaks}()},
 \code{\link{reverse}()},

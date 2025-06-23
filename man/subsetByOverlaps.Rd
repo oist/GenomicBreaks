@@ -57,7 +57,6 @@ subsetByOverlaps(exampleColinear3, exampleColinear3)
 \seealso{
 Other Bioconductor API functions: 
 \code{\link{GBreaks-class}},
-\code{\link{as}()},
 \code{\link{getSeq}()},
 \code{\link{pairwiseAlignment}()},
 \code{\link{range_GBreaks}()},
