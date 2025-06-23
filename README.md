@@ -27,7 +27,7 @@ If you have [Bioconductor](https://www.bioconductor.org/install/) and the
 following should work.
 
 ```
-Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'
+Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 ```
 
 Add `dependencies=TRUE` if you would like to install the packages needed to
