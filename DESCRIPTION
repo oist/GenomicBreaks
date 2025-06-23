@@ -30,6 +30,7 @@ Imports:
   graphics,
   Biostrings,
   BSgenome,
+  pwalign,
   Rcpp,
   weights
 LinkingTo: Rcpp
