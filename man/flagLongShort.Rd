@@ -7,7 +7,7 @@
 flagLongShort(gr, annot, select = c("first", "last", "arbitrary"))
 }
 \arguments{
-\item{gr}{A \code{\link{GBreaks}} or a simple \code{\link{GRanges}} object}
+\item{gr}{A \code{\link{GBreaks}} or a simple \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object}
 
 \item{annot}{A \code{GRanges} file containing the coordinate of arms and their
 nature (such as \code{long}, \code{short}, \code{XSR} or \code{YSR}) in a \code{Type}

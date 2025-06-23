@@ -23,7 +23,7 @@ pairwiseAlignment(pattern, subject, ...)
 Returns a \code{\link[pwalign:PairwiseAlignments-class]{pwalign::PairwiseAlignments}} object.
 }
 \description{
-Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link{GRanges}} objects that are
+Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} objects that are
 properly related to a \code{BSgenome} package, and aligns them with the
 \code{\link[pwalign:pairwiseAlignment]{pwalign::pairwiseAlignment()}} function.
 }

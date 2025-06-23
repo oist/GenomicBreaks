@@ -16,7 +16,7 @@ bp_pair_analysis(gb1, gb2, window, label)
 \item{label}{string which will be the label on the graph}
 }
 \value{
-Returns a \code{\link{Heatmap}} object of \code{pattern} that can be piped into
+Returns a \code{\link[heatmaps:Heatmap]{heatmaps::Heatmap}} object of \code{pattern} that can be piped into
 \code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
 \code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}.
 }

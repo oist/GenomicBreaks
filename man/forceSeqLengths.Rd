@@ -22,7 +22,7 @@ did not exist.  For \code{GBreaks} objects it handles both the \emph{target} and
 \emph{query} ranges at the same time.
 }
 \description{
-Takes a \code{\link{GBreaks}} or a \code{\link{GRanges}} object and if \code{seqlengths} are not
+Takes a \code{\link{GBreaks}} or a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object and if \code{seqlengths} are not
 available, sets them using the output of the \code{\link{guessSeqLengths}} function.
 }
 \examples{

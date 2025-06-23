@@ -18,7 +18,7 @@ plotted on heatmap.}
 \item{...}{Pass other arguments to \code{\link{get_bps}}.}
 }
 \value{
-Returns a \code{\link{Heatmap}} object of \code{pattern} around centred breakpoints.
+Returns a \code{\link[heatmaps:Heatmap]{heatmaps::Heatmap}} object of \code{pattern} around centred breakpoints.
 }
 \description{
 This function generates a heatmap of the specified pattern, over breakpoints
@@ -28,7 +28,7 @@ aligned at the centre of the plot. The result can be piped into
 }
 \note{
 The \code{GRanges} object is expected to have a \emph{sequence information}
-(see \code{\link{seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
+(see \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
 object via the \code{\link[BSgenome:available.genomes]{BSgenome::getBSgenome}} function.
 }
 \examples{

@@ -8,7 +8,7 @@
 #' @param query Work on the query genome.
 #'
 #' @return Returns a character vector, or a list of character vectors if the
-#' input was a [`GRangesList`].
+#' input was a [`GenomicRanges::GRangesList`].
 #'
 #' @author Charles Plessy
 #'

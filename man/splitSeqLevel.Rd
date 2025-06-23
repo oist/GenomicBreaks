@@ -15,7 +15,7 @@ splitSeqLevel(gb, seq, bp)
 }
 \value{
 Returns a modified \code{GRanges} object in which the sequence has been
-split  Its \code{\link{seqinfo}} has a new entry for the new levels, and the old
+split  Its \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqinfo}} has a new entry for the new levels, and the old
 level is not removed.  If no \code{seqlengths} were present in the original
 object, they are arbitrarily set as the maximal end value for each \code{seqlevel}.
 }

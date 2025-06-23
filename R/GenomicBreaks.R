@@ -1,6 +1,6 @@
 #' The GenomicBreaks class
 #'
-#' The `GBreaks` class is a simple wrapper to the [`GRanges`] class.
+#' The `GBreaks` class is a simple wrapper to the [`GenomicRanges::GRanges`] class.
 #'
 #' @details Aligned sequences of the _target_ genome are represented as the main
 #' ranges of the `GRanges` object, and their counterparts in the _query_ genome

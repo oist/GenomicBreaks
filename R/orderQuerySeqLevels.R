@@ -15,8 +15,8 @@
 #'
 #' @param gb A [`GBreaks`] object that has only one sequence level in use on the
 #' _target_ genome.
-#' @param DF A [`DataFrame`] object representing the _target_ genome.
-#' @param gr A [`GRanges`] object representing the _query_ genome.
+#' @param DF A [`S4Vectors::DataFrame`] object representing the _target_ genome.
+#' @param gr A [`GenomicRanges::GRanges`] object representing the _query_ genome.
 #'
 #' @returns Returns an integer vector of order permutations for the sequence
 #' levels of the _query_ genome.

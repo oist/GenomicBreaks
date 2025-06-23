@@ -1,6 +1,6 @@
 #' Make an inversion
 #'
-#' @param gr [`GenomicRanges`] object
+#' @param gr [`GenomicRanges::GRanges`] object
 #' @param dist Distribution function for new breakpoints on `gr`'s sequence levels.
 #'
 #'

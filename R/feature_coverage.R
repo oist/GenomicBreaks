@@ -4,14 +4,14 @@
 #' on the boundaries of _genomic ranges_.  Assuming that these ranges are a
 #' [`GBreaks`] object, then the boundaries approximate breakpoints.
 #'
-#' @param gr A [`GRanges`] object.
+#' @param gr A [`GenomicRanges::GRanges`] object.
 #' @param feat A `GRanges` object representing the feature of interest.
 #' @param window Window over which to observe feature coverage.
 #' @param label Label for the plot.
 #' @param ... Other arguments passed to [`get_bps`] in order to select the
 #'        boundaries, their order and their orientation.
 #'
-#' @return Returns a [`Heatmap`] object that can be piped into
+#' @return Returns a [`heatmaps::Heatmap`] object that can be piped into
 #' [`heatmaps::smoothHeatmap`] and then [`heatmaps::plotHeatmapList`] or
 #' [`heatmaps::plotHeatmapMeta`].
 #'

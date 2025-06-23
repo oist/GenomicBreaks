@@ -6,7 +6,7 @@
 #' that because the last range has not next neighbor, the last value is set
 #' to `Inf` arbitrarily.
 #'
-#' @param x A [`GRanges`] or a [`GBreaks`] object.
+#' @param x A [`GenomicRanges::GRanges`] or a [`GBreaks`] object.
 #' @param step Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
 #'        block (default: first).
 #' @param ignore.strand Calculate distance for ranges on different strands.

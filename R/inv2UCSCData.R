@@ -8,6 +8,7 @@
 #'
 #' @returns Returns a `UCSCData` object.
 #'
+#' @importFrom methods as
 #' @export
 
 inv2UCSCData <- function(gb) {

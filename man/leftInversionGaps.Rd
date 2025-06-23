@@ -10,7 +10,7 @@ leftInversionGaps(gb)
 \item{gb}{A \code{\link{GBreaks}} object.}
 }
 \value{
-Returns a \code{\link{GRanges}} object representing the left-side gaps in the
+Returns a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the left-side gaps in the
 \code{GBreaks} object.
 }
 \description{

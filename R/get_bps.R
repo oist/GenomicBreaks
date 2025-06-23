@@ -1,6 +1,6 @@
 #' Get breakpoints
 #'
-#' Given a [`GBreaks`] or [`GRanges`] object, the function produces a `GRanges`
+#' Given a [`GBreaks`] or [`GenomicRanges::GRanges`] object, the function produces a `GRanges`
 #' object detailing the breakpoints only.
 #'
 #' @param gr `GRanges` object containing pairwise alignment

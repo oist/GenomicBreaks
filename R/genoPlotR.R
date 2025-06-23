@@ -3,7 +3,7 @@
 #' The [`genoPlotR::dna_seg`] class represents _DNA segments_ using
 #' a `data.frame` format.
 #'
-#' @param gr A [`GRanges`] object.
+#' @param gr A [`GenomicRanges::GRanges`] object.
 #'
 #' @param ... Extra arguments passed to `dna_seg()`.
 #'
@@ -43,7 +43,7 @@ gr2dna_seg <- function (gr, ...) {
 #' @returns Returns a `list` of two [`genoPlotR::dna_seg`] objects, respectively
 #' for the _target_ ranges the _query_ ranges.
 #'
-#' @param gb A [`GRanges`] or a [`GBreaks`] object.
+#' @param gb A [`GenomicRanges::GRanges`] or a [`GBreaks`] object.
 #'
 #' @param ... Extra arguments passed to `dna_seg()`.
 #'
