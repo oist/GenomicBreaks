@@ -57,11 +57,11 @@ sequences into larger ones.</p>
 
 
 <dl><dt id="arg-gr">gr<a class="anchor" aria-label="anchor" href="#arg-gr"></a></dt>
-<dd><p>A <code>GRanges</code> object.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GenomicRanges::GRanges</a></code> object.</p></dd>
 
 
 <dt id="arg-seqs">seqs<a class="anchor" aria-label="anchor" href="#arg-seqs"></a></dt>
-<dd><p>A character vector of <code>seqlevels</code> from <code>gr</code></p></dd>
+<dd><p>A character vector of <code><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">GenomeInfoDb::seqlevels</a></code> from <code>gr</code></p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
@@ -71,7 +71,7 @@ sequences into larger ones.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns a modified <code>GRanges</code> object in which the sequences have been
-merged.  Its <code>seqinfo</code> has a new entry for the new level, and the old
+merged.  Its <code><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">GenomeInfoDb::seqinfo</a></code> has a new entry for the new level, and the old
 levels are not removed.  If no <code>seqlengths</code> were present in the original
 object, they are arbitrarily set as the maximal end value for each <code>seqlevel</code>.</p>
 <p>The <code>mergeSeqLevels_to_DF</code> function returns a <code>DataFrame</code> in which
