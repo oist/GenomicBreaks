@@ -45,7 +45,6 @@ setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query =
 #' they are stored in a _GRanges_ object, they do not represent genomic ranges.
 #' In order to do so, there is a [`CNEr::fixCoordinates`] function.
 #'
-#' @importFrom CNEr first second
 #' @importFrom methods as setAs
 #'
 #' @family Bioconductor API functions
@@ -55,9 +54,13 @@ setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query =
 
 setAs("Axt", "GBreaks", function(from) {
 
+  if (!requireNamespace("CNEr", quietly = TRUE)) {
+    stop("Package 'CNEr' is required for this function. Please install it with BiocManager::install('CNEr').")
+  }
+
   # First genome of axt object is target genome, second is query.
-  gb       <- granges(first(from))
-  gb$query <- granges(second(from))
+  gb       <- granges(CNEr::first(from))
+  gb$query <- granges(CNEr::second(from))
 
   # In GBreaks object, strand information is carried by the target genome ranges
   strand(gb) <- strand(gb$query)

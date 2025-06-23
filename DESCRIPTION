@@ -18,7 +18,6 @@ Depends: R (>= 4.1),
 Imports:
   BiocGenerics,
   BiocParallel,
-  CNEr,
   genoPlotR,
   ggplot2,
   methods,
@@ -34,10 +33,11 @@ Imports:
   Rcpp,
   weights
 LinkingTo: Rcpp
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
+  CNEr,
   GenomicFeatures,
   gridExtra,
   Gviz,
