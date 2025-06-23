@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <iostream>
-#include "mcf_zstream.hpp"
+#include "mcf_zstream.h"
 #include <string>
 #include <cctype> // for std::toupper
 
