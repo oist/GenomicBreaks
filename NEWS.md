@@ -1,6 +1,13 @@
-# GenomicBreaks unreleased
+# GenomicBreaks 0.14.8
 
- * Guard agains empty `GBreaks` objects in `makeOxfordPlots()`.
+ * Update for Bioc 3.21 and R 4.5.
+ * Namespace and documentation fixes.
+ * Guard against empty `GBreaks` objects in `makeOxfordPlots()`.
+ 
+## Dropped features
+
+ * Removed `bp_coverage`, not used anymore.
+ * Removed support for Axt files as CNEr is broken for the moment.
 
 # GenomicBreaks 0.14.7
 
