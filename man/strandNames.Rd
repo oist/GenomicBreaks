@@ -7,7 +7,7 @@
 strandNames(gb, flip = FALSE, query = FALSE)
 }
 \arguments{
-\item{gb}{A \code{GBreaks} object or a \code{\link{GRangesList}} of \code{GBreaks}
+\item{gb}{A \code{GBreaks} object or a \code{\link[GenomicRanges:GRangesList-class]{GenomicRanges::GRangesList}} of \code{GBreaks}
 objects.}
 
 \item{flip}{Flip the strand names.}
