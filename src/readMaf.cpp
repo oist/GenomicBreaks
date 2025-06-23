@@ -57,7 +57,7 @@ Rcpp::List readMAF (std::string inputFileName) {
   mcf::izstream incoming(inputFileName.c_str());
 
   if (!incoming.is_open()) {
-    std::cerr << "Failed to open file" << std::endl;
+    Rcpp::Rcerr << "Failed to open file" << std::endl;
     return 1;
   }
 
