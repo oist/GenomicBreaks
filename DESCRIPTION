@@ -53,7 +53,6 @@ Collate:
     'dist2next.R'
     'Translocations.R'
     'align_scaf_plot_2.R'
-    'bp_coverage.R'
     'bp_heatmap.R'
     'bp_pair_analysis.R'
     'bridgeRegions.R'
