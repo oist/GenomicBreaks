@@ -13,6 +13,7 @@
 #' "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb"
 #'
 #' @examples
+#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 #'
 #' @export
 
