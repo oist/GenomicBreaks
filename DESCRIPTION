@@ -95,3 +95,7 @@ Collate:
     'synteny_index.R'
     'tan_bp.R'
     'wholeGenomeClassification.R'
+    'readTrainFile.R'
+    'JC69_distance.R'
+    'K80_distance.R'
+    'T92_distance.R'
