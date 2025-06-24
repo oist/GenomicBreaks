@@ -10,7 +10,10 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/GBreaks-class.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/GBreaksToMatrix.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/GOC.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/JC69_distance.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/K80_distance.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/StructuralVariants.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/T92_distance.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/bp_heatmap.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/bp_pair_analysis.html</loc></url>
@@ -47,6 +50,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/karyotype_change_index.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/keepLongestPair.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/load_genomic_breaks.html</loc></url>
@@ -59,6 +63,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/readTrainFile.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/reverse.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.html</loc></url>
