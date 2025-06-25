@@ -32,7 +32,8 @@ Imports:
   BSgenome,
   pwalign,
   Rcpp,
-  weights
+  weights,
+  igraph
 LinkingTo: Rcpp
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
@@ -79,6 +80,7 @@ Collate:
     'int_frag.R'
     'inv2UCSCData.R'
     'karyotype_chromosome_number_index.R'
+    'inversionDistance.R'
     'keepLongestPair.R'
     'load_genomic_breaks.R'
     'longestMatchesInTarget.R'
@@ -88,6 +90,7 @@ Collate:
     'orderQuerySeqLevels.R'
     'pairwiseAlignment.R'
     'readTrainFile.R'
+    'permutationVector.R'
     'reverse.R'
     'scaf_align_plot.R'
     'scaffoldByFlipAndMerge.R'
