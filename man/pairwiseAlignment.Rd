@@ -20,12 +20,12 @@ pairwiseAlignment(pattern, subject, ...)
 \item{...}{Additional arguments passed to \code{pairwiseAlignment}.}
 }
 \value{
-Returns a \code{\link[Biostrings:PairwiseAlignments-class]{Biostrings::PairwiseAlignments}} object.
+Returns a \code{\link[pwalign:PairwiseAlignments-class]{pwalign::PairwiseAlignments}} object.
 }
 \description{
-Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link{GRanges}} objects that are
+Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} objects that are
 properly related to a \code{BSgenome} package, and aligns them with the
-\code{\link[Biostrings:pairwiseAlignment]{Biostrings::pairwiseAlignment}} function.
+\code{\link[pwalign:pairwiseAlignment]{pwalign::pairwiseAlignment()}} function.
 }
 \examples{
 Scerevisiae <- BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae
@@ -36,11 +36,8 @@ pairwiseAlignment(gb)
 
 }
 \seealso{
-See also the \code{\link[Biostrings:pairwiseAlignment]{Biostrings::pairwiseAlignment}} function.
-
 Other Bioconductor API functions: 
 \code{\link{GBreaks-class}},
-\code{\link{as}()},
 \code{\link{getSeq}()},
 \code{\link{range_GBreaks}()},
 \code{\link{reverse}()},

@@ -2,13 +2,13 @@
 #'
 #' Extract sequence names and pastes strand information to it.
 #'
-#' @param gb A `GBreaks` object or a [`GRangesList`] of `GBreaks`
+#' @param gb A `GBreaks` object or a [`GenomicRanges::GRangesList`] of `GBreaks`
 #'           objects.
 #' @param flip Flip the strand names.
 #' @param query Work on the query genome.
 #'
 #' @return Returns a character vector, or a list of character vectors if the
-#' input was a [`GRangesList`].
+#' input was a [`GenomicRanges::GRangesList`].
 #'
 #' @author Charles Plessy
 #'

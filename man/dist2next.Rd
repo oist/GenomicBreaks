@@ -13,7 +13,7 @@ dist2next(x, step = 1, ignore.strand = FALSE)
 \S4method{dist2next}{GBreaks}(x, step = 1, ignore.strand = FALSE)
 }
 \arguments{
-\item{x}{A \code{\link{GRanges}} or a \code{\link{GBreaks}} object.}
+\item{x}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} or a \code{\link{GBreaks}} object.}
 
 \item{step}{Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
 block (default: first).}

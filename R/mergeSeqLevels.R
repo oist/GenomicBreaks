@@ -7,12 +7,12 @@
 #' feature with [`reverse`] before merging, for instance when colinearity is
 #' with its reverse strand.
 #'
-#' @param gr A `GRanges` object.
-#' @param seqs A character vector of [`seqlevels`] from `gr`
+#' @param gr A [`GenomicRanges::GRanges`] object.
+#' @param seqs A character vector of [`GenomeInfoDb::seqlevels`] from `gr`
 #' @param name The name of the new sequence level to be added
 #'
 #' @returns Returns a modified `GRanges` object in which the sequences have been
-#' merged.  Its [`seqinfo`] has a new entry for the new level, and the old
+#' merged.  Its [`GenomeInfoDb::seqinfo`] has a new entry for the new level, and the old
 #' levels are not removed.  If no `seqlengths` were present in the original
 #' object, they are arbitrarily set as the maximal end value for each `seqlevel`.
 #'

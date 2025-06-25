@@ -4,7 +4,7 @@
 #' chromosomes have different properties such as `GC` or repeat content.  It
 #' can be useful to know if genomic region belongs to long or a short arm.
 #'
-#' @param gr A [`GBreaks`] or a simple [`GRanges`] object
+#' @param gr A [`GBreaks`] or a simple [`GenomicRanges::GRanges`] object
 #'
 #' @param annot A `GRanges` file containing the coordinate of arms and their
 #'        nature (such as `long`, `short`, `XSR` or `YSR`) in a `Type`

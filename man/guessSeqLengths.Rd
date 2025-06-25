@@ -7,16 +7,16 @@
 guessSeqLengths(gr)
 }
 \arguments{
-\item{gr}{A \code{\link{GRanges}} object}
+\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object}
 }
 \value{
-\code{\link{guessSeqLengths}} returns sequence lengths that have been guessed
-as the maximal end coordinates found in the object, or the object's
-\code{seqlengths} if if they did already exist.
+Returns sequence lengths that have been guessed as the maximal end
+coordinates found in the \code{gr}, or the \code{gr}'s \code{seqlengths} if if they did
+already exist.
 }
 \description{
-When no \code{\link{seqlengths}} are available, one can resort to set them as to the
-maximal end coordinate found in the object.
+When no \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqlengths}} are available, one can resort to set
+them as to the maximal end coordinate found in the object.
 }
 \examples{
 exampleTranslocation

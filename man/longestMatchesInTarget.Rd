@@ -17,7 +17,7 @@ considered.}
 to chaining genomes are kept.}
 }
 \value{
-Returns a \code{\link{GRangesList}} object containing one \code{\link{GBreaks}} object per
+Returns a \code{\link[GenomicRanges:GRangesList-class]{GenomicRanges::GRangesList}} object containing one \code{\link{GBreaks}} object per
 sequence on the query genome.
 }
 \description{

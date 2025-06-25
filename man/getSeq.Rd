@@ -35,7 +35,6 @@ See also the \code{\link[Biostrings:getSeq]{Biostrings::getSeq}} function.
 
 Other Bioconductor API functions: 
 \code{\link{GBreaks-class}},
-\code{\link{as}()},
 \code{\link{pairwiseAlignment}()},
 \code{\link{range_GBreaks}()},
 \code{\link{reverse}()},

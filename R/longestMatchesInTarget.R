@@ -21,7 +21,7 @@
 #'        `min.matches` on the target.  Default is 2, so that only results relevant
 #'        to chaining genomes are kept.
 #'
-#' @return Returns a [`GRangesList`] object containing one [`GBreaks`] object per
+#' @return Returns a [`GenomicRanges::GRangesList`] object containing one [`GBreaks`] object per
 #' sequence on the query genome.
 #'
 #' @examples

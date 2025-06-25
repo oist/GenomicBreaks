@@ -61,6 +61,7 @@
 #' @importFrom GenomicRanges GRanges
 #' @import IRanges
 #' @import GenomeInfoDb
+#' @importFrom S4Vectors first second
 #' @importFrom stats na.omit
 #' @include dist2next.R
 

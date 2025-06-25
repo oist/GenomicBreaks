@@ -7,7 +7,7 @@
 strandNames(gb, flip = FALSE, query = FALSE)
 }
 \arguments{
-\item{gb}{A \code{GBreaks} object or a \code{\link{GRangesList}} of \code{GBreaks}
+\item{gb}{A \code{GBreaks} object or a \code{\link[GenomicRanges:GRangesList-class]{GenomicRanges::GRangesList}} of \code{GBreaks}
 objects.}
 
 \item{flip}{Flip the strand names.}
@@ -16,7 +16,7 @@ objects.}
 }
 \value{
 Returns a character vector, or a list of character vectors if the
-input was a \code{\link{GRangesList}}.
+input was a \code{\link[GenomicRanges:GRangesList-class]{GenomicRanges::GRangesList}}.
 }
 \description{
 Extract sequence names and pastes strand information to it.

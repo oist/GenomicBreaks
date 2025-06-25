@@ -1,10 +1,10 @@
 #' Pairwise alignment of genomic ranges
 #'
-#' Retrieves DNA sequence from [`GBreaks`] or [`GRanges`] objects that are
+#' Retrieves DNA sequence from [`GBreaks`] or [`GenomicRanges::GRanges`] objects that are
 #' properly related to a `BSgenome` package, and aligns them with the
-#' [`Biostrings::pairwiseAlignment`] function.
+#' [`pwalign::pairwiseAlignment()`] function.
 #'
-#' @returns Returns a [`Biostrings::PairwiseAlignments`] object.
+#' @returns Returns a [`pwalign::PairwiseAlignments`] object.
 #'
 #' @param pattern A `GBreaks` or a `GRanges` object
 #' @param subject A `GBreaks` or a `GRanges` object
@@ -20,10 +20,9 @@
 #' pairwiseAlignment(gb)
 #'
 #' @family Bioconductor API functions
-#' @seealso See also the [`Biostrings::pairwiseAlignment`] function.
 #'
-#' @importFrom Biostrings pairwiseAlignment
-#' @importMethodsFrom Biostrings pairwiseAlignment
+#' @importFrom pwalign pairwiseAlignment
+#' @importMethodsFrom pwalign pairwiseAlignment
 
 setGeneric("pairwiseAlignment", function(pattern, subject, ...) standardGeneric("pairwiseAlignment"))
 

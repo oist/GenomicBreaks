@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.14.7
+Version: 0.14.8
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role = "aut"),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",
@@ -18,7 +18,6 @@ Depends: R (>= 4.1),
 Imports:
   BiocGenerics,
   BiocParallel,
-  CNEr,
   genoPlotR,
   ggplot2,
   methods,
@@ -31,11 +30,12 @@ Imports:
   graphics,
   Biostrings,
   BSgenome,
+  pwalign,
   Rcpp,
   weights,
   igraph
 LinkingTo: Rcpp
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
@@ -50,12 +50,14 @@ Collate:
     'GBreaksToMatrix.R'
     'GOC.R'
     'GenomicBreaks.R'
+    'JC69_distance.R'
+    'K80_distance.R'
     'RcppExports.R'
     'StructuralVariants.R'
+    'T92_distance.R'
     'dist2next.R'
     'Translocations.R'
     'align_scaf_plot_2.R'
-    'bp_coverage.R'
     'bp_heatmap.R'
     'bp_pair_analysis.R'
     'bridgeRegions.R'
@@ -77,6 +79,7 @@ Collate:
     'guessSeqLenghts.R'
     'int_frag.R'
     'inv2UCSCData.R'
+    'karyotype_chromosome_number_index.R'
     'inversionDistance.R'
     'keepLongestPair.R'
     'load_genomic_breaks.R'
@@ -86,6 +89,7 @@ Collate:
     'mergeSeqLevels.R'
     'orderQuerySeqLevels.R'
     'pairwiseAlignment.R'
+    'readTrainFile.R'
     'permutationVector.R'
     'reverse.R'
     'scaf_align_plot.R'

@@ -5,10 +5,10 @@
 #' sequence between the end of the input object and the end of its sequence
 #' levels.
 #'
-#' @returns Returns a strandless [`GRanges`] object representing the gaps
+#' @returns Returns a strandless [`GenomicRanges::GRanges`] object representing the gaps
 #' between the ranges of the input.
 #'
-#' @param gr A [`GBreaks`] or a [`GRanges`] object.
+#' @param gr A [`GBreaks`] or a [`GenomicRanges::GRanges`] object.
 #'
 #' @note If you find replacement provided by a package that we already import,
 #' please let me know in a GitHub issue or pull request.

@@ -1,6 +1,6 @@
 #' The GenomicBreaks class
 #'
-#' The `GBreaks` class is a simple wrapper to the [`GRanges`] class.
+#' The `GBreaks` class is a simple wrapper to the [`GenomicRanges::GRanges`] class.
 #'
 #' @details Aligned sequences of the _target_ genome are represented as the main
 #' ranges of the `GRanges` object, and their counterparts in the _query_ genome
@@ -35,36 +35,41 @@ setMethod("initialize", "GBreaks", function(.Object, ..., target = NULL, query =
   # gb
 })
 
-#' Conversion from [`CNEr::Axt`] objects
-#'
-#' @note By default, in the _Axt_ objects produced by the [`CNEr::readAxt`]
-#' function, the coordinates of the query genome are represented with the same
-#' numerical value as in the original file.  In _Axt_ files, when the alignment
-#' is on the minus strand, the query genome coordinates have their origin on
-#' the reverse-complement strand.  Therefore, although in the _CNEr_ object
-#' they are stored in a _GRanges_ object, they do not represent genomic ranges.
-#' In order to do so, there is a [`CNEr::fixCoordinates`] function.
-#'
-#' @importFrom CNEr first second
-#' @importFrom methods as setAs
-#'
-#' @family Bioconductor API functions
-#'
-#' @name as
-#' @export
+# CNEr has bitrotten: https://github.com/ge11232002/CNEr/issues/28
+#
+# #' Conversion from [`CNEr::Axt`] objects
+# #'
+# #' @note By default, in the _Axt_ objects produced by the [`CNEr::readAxt`]
+# #' function, the coordinates of the query genome are represented with the same
+# #' numerical value as in the original file.  In _Axt_ files, when the alignment
+# #' is on the minus strand, the query genome coordinates have their origin on
+# #' the reverse-complement strand.  Therefore, although in the _CNEr_ object
+# #' they are stored in a _GRanges_ object, they do not represent genomic ranges.
+# #' In order to do so, there is a [`CNEr::fixCoordinates`] function.
+# #'
+# #' @importFrom methods as setAs
+# #'
+# #' @family Bioconductor API functions
+# #'
+# #' @name as
+# #' @export
 
-setAs("Axt", "GBreaks", function(from) {
-
-  # First genome of axt object is target genome, second is query.
-  gb       <- granges(first(from))
-  gb$query <- granges(second(from))
-
-  # In GBreaks object, strand information is carried by the target genome ranges
-  strand(gb) <- strand(gb$query)
-  strand(gb$query) <- "+"
-
-  GBreaks(gb)
-})
+# setAs("Axt", "GBreaks", function(from) {
+#
+#   if (!requireNamespace("CNEr", quietly = TRUE)) {
+#     stop("Package 'CNEr' is required for this function. Please install it with BiocManager::install('CNEr').")
+#   }
+#
+#   # First genome of axt object is target genome, second is query.
+#   gb       <- granges(CNEr::first(from))
+#   gb$query <- granges(CNEr::second(from))
+#
+#   # In GBreaks object, strand information is carried by the target genome ranges
+#   strand(gb) <- strand(gb$query)
+#   strand(gb$query) <- "+"
+#
+#   GBreaks(gb)
+# })
 
 #' Test if a `GBreaks` object is sorted
 #'

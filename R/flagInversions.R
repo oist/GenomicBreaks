@@ -307,7 +307,7 @@ flipInversions <- function(gb) {
 #'
 #' @param gb A [`GBreaks`] object.
 #'
-#' @return Returns a [`GRanges`] object representing the left-side gaps in the
+#' @return Returns a [`GenomicRanges::GRanges`] object representing the left-side gaps in the
 #' `GBreaks` object.
 #'
 #' @family Inversion functions

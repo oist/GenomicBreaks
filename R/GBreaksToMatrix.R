@@ -13,6 +13,7 @@
 #' image(m)
 #' makeOxfordPlots(exampleColinear5)
 #'
+#' @importFrom S4Vectors queryHits
 #' @export
 
 GBreaksToMatrix <- function(gb, ntile = 1000) {

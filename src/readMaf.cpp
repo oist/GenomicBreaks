@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <iostream>
-#include "mcf_zstream.hh"
+#include "mcf_zstream.h"
 #include <string>
 #include <cctype> // for std::toupper
 
@@ -57,7 +57,7 @@ Rcpp::List readMAF (std::string inputFileName) {
   mcf::izstream incoming(inputFileName.c_str());
 
   if (!incoming.is_open()) {
-    std::cerr << "Failed to open file" << std::endl;
+    Rcpp::Rcerr << "Failed to open file" << std::endl;
     return 1;
   }
 
