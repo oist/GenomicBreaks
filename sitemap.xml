@@ -49,6 +49,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/index.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inversionDistance.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/karyotype_change_index.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/keepLongestPair.html</loc></url>
@@ -60,6 +61,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/permutationVector.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc></url>
