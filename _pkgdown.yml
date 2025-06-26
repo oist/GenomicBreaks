@@ -63,3 +63,5 @@ reference:
     - scaf_align_plot
     - tan_bp
     - zipWithNext
+    - inversionDistance
+    - permutationVector
