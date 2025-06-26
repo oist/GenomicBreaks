@@ -19,7 +19,7 @@ The T92 distance is calculated as -h * log(1 - p / h - q) - 0.5 * (1 - h) * log(
 Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
 }
 \examples{
-parameters <- readTrainFile("train.txt")
+parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 T92_distance(parameters)
 
 }
@@ -29,7 +29,7 @@ Other Similarity indexes:
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{correlation_index}()},
-\code{\link{karyotype_change_index}()},
+\code{\link{karyotype_index}()},
 \code{\link{readTrainFile}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}

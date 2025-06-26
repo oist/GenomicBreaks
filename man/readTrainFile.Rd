@@ -18,6 +18,7 @@ This function is used to read the train file from LAST and extract the final par
 }
 \examples{
 parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
+parameters
 
 }
 \seealso{
@@ -27,7 +28,7 @@ Other Similarity indexes:
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
-\code{\link{karyotype_change_index}()},
+\code{\link{karyotype_index}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }

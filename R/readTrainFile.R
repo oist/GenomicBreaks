@@ -13,6 +13,7 @@
 #'
 #' @examples
 #' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
+#' parameters
 #'
 #' @export
 
@@ -41,7 +42,7 @@ readTrainFile <- function(input_file) {
   extract_matrix <- function(records, prefix) {
     matrix <- list()
     header <- strsplit(records[1], "\\s+")[[1]]
-    print(header)
+    # print(header)
     for (i in 2:5) {
       row <- strsplit(records[i], "\\s+")[[1]]
       row_name <- row[1]
@@ -104,5 +105,7 @@ for (line in lines) {
   keywords <- c("PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
                 "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb")
   filtered_parameters <- parameters[grepl(paste(keywords, collapse = "|"), names(parameters))]
+
+  filtered_parameters
 
 }
