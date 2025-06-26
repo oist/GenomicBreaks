@@ -7,7 +7,7 @@
 feature_coverage(gr, feat, window, label, ...)
 }
 \arguments{
-\item{gr}{A \code{\link{GRanges}} object.}
+\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
 
 \item{feat}{A \code{GRanges} object representing the feature of interest.}
 
@@ -19,7 +19,7 @@ feature_coverage(gr, feat, window, label, ...)
 boundaries, their order and their orientation.}
 }
 \value{
-Returns a \code{\link{Heatmap}} object that can be piped into
+Returns a \code{\link[heatmaps:Heatmap]{heatmaps::Heatmap}} object that can be piped into
 \code{\link[heatmaps:smoothHeatmap]{heatmaps::smoothHeatmap}} and then \code{\link[heatmaps:plotHeatmapList]{heatmaps::plotHeatmapList}} or
 \code{\link[heatmaps:plotHeatmapMeta]{heatmaps::plotHeatmapMeta}}.
 }

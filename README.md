@@ -13,9 +13,8 @@ _N. crassa_ (chrIII) and _P. comata_ (chr7).
 <center><img src="man/figures/plotApairOfChrs_Neu-2.png" alt="Comparison between Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)" width = "40%"/></center>
 
 This package is especially designed to parse and process the alignment files
-produced by the our [pairwise genome alignment
-pipeline](https://github.com/oist/plessy_pairwiseGenomeComparison), but should
-be capable to import output of other pipelines as well.
+produced by _nf-core_'s [pairwise genome alignment pipeline](https://nf-co.re/pairgenomealign/),
+but should be capable to import output of other pipelines as well.
 
 Installation
 ------------
@@ -27,7 +26,7 @@ If you have [Bioconductor](https://www.bioconductor.org/install/) and the
 following should work.
 
 ```
-Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories())'
+Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 ```
 
 Add `dependencies=TRUE` if you would like to install the packages needed to

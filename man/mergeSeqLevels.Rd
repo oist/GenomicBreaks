@@ -10,15 +10,15 @@ mergeSeqLevels(gr, seqs, name)
 mergeSeqLevels_to_DF(gr, seqs, name)
 }
 \arguments{
-\item{gr}{A \code{GRanges} object.}
+\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
 
-\item{seqs}{A character vector of \code{\link{seqlevels}} from \code{gr}}
+\item{seqs}{A character vector of \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqlevels}} from \code{gr}}
 
 \item{name}{The name of the new sequence level to be added}
 }
 \value{
 Returns a modified \code{GRanges} object in which the sequences have been
-merged.  Its \code{\link{seqinfo}} has a new entry for the new level, and the old
+merged.  Its \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqinfo}} has a new entry for the new level, and the old
 levels are not removed.  If no \code{seqlengths} were present in the original
 object, they are arbitrarily set as the maximal end value for each \code{seqlevel}.
 

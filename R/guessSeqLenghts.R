@@ -1,13 +1,13 @@
 #' Guesstimate seqlevel lengths
 #'
-#' When no [`seqlengths`] are available, one can resort to set them as to the
-#' maximal end coordinate found in the object.
+#' When no [`GenomeInfoDb::seqlengths`] are available, one can resort to set
+#' them as to the maximal end coordinate found in the object.
 #'
-#' @param gr A [`GRanges`] object
+#' @param gr A [`GenomicRanges::GRanges`] object
 #'
-#' @returns [`guessSeqLengths`] returns sequence lengths that have been guessed
-#' as the maximal end coordinates found in the object, or the object's
-#' `seqlengths` if if they did already exist.
+#' @returns Returns sequence lengths that have been guessed as the maximal end
+#' coordinates found in the `gr`, or the `gr`'s `seqlengths` if if they did
+#' already exist.
 #'
 #' @author Charles Plessy
 #'
@@ -30,7 +30,7 @@ guessSeqLengths <- function(gr) {
 
 #' Set sequence lengths if there were none
 #'
-#' Takes a [`GBreaks`] or a [`GRanges`] object and if `seqlengths` are not
+#' Takes a [`GBreaks`] or a [`GenomicRanges::GRanges`] object and if `seqlengths` are not
 #' available, sets them using the output of the [`guessSeqLengths`] function.
 #'
 #' @param x A `GBreaks` or a `GRanges` object.

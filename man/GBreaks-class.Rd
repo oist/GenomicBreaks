@@ -6,7 +6,7 @@
 \alias{GBreaks}
 \title{The GenomicBreaks class}
 \description{
-The \code{GBreaks} class is a simple wrapper to the \code{\link{GRanges}} class.
+The \code{GBreaks} class is a simple wrapper to the \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} class.
 }
 \details{
 Aligned sequences of the \emph{target} genome are represented as the main
@@ -22,7 +22,6 @@ gb$query
 }
 \seealso{
 Other Bioconductor API functions: 
-\code{\link{as}()},
 \code{\link{getSeq}()},
 \code{\link{pairwiseAlignment}()},
 \code{\link{range_GBreaks}()},

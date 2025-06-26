@@ -37,6 +37,8 @@ makeOxfordPlots <- function (gb, sp1Name = "target", sp2Name = "query",
                              type = c("line", "point", "none"), size = 1,
                              diag = TRUE, col = c("seqnames", "strand", "score")) {
 
+  if (length(gb) == 0) return(ggplot())
+
   col  <- match.arg(col)
   type <- match.arg(type)
 

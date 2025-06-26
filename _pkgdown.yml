@@ -51,7 +51,6 @@ reference:
   - contents:
     - StructuralVariants
     - align_scaf_plot_2
-    - bp_coverage
     - feature_coverage
     - int_frag
     - inv2UCSCData

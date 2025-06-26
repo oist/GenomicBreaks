@@ -10,7 +10,7 @@
 #' @param window range around query1 breakpoints of which query2 breakpoints are projected on to. Should be even number
 #' @param label string which will be the label on the graph
 #'
-#' @return Returns a [`Heatmap`] object of `pattern` that can be piped into
+#' @return Returns a [`heatmaps::Heatmap`] object of `pattern` that can be piped into
 #' [`heatmaps::smoothHeatmap`] and then [`heatmaps::plotHeatmapList`] or
 #' [`heatmaps::plotHeatmapMeta`].
 #'

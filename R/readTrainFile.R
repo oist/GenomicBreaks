@@ -1,15 +1,14 @@
 #' Index representing how the karyotype changes between chromosomes of two genomes
 #'
 #' This function is used to read the train file from LAST and extract the final parameters.
-#' 
+#'
 #'
 #' @param input_file A string of the path to the train file from LAST.
 #'
-#' @note
-#' 
+#'
 #' @family Similarity indexes
 #'
-#' @returns Returns a list of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability", 
+#' @returns Returns a list of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
 #' "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb"
 #'
 #' @examples
@@ -102,7 +101,7 @@ for (line in lines) {
     i <- i + 1
   }
 
-  keywords <- c("PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability", 
+  keywords <- c("PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
                 "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb")
   filtered_parameters <- parameters[grepl(paste(keywords, collapse = "|"), names(parameters))]
 

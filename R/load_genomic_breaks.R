@@ -47,6 +47,7 @@
 #' }
 #'
 #' @importFrom rtracklayer import.gff3
+#' @importFrom Biostrings readDNAStringSet
 #' @export
 
 load_genomic_breaks <- function (

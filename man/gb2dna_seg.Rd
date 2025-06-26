@@ -7,7 +7,7 @@
 gb2dna_seg(gb, ...)
 }
 \arguments{
-\item{gb}{A \code{\link{GRanges}} or a \code{\link{GBreaks}} object.}
+\item{gb}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} or a \code{\link{GBreaks}} object.}
 
 \item{...}{Extra arguments passed to \code{dna_seg()}.}
 }

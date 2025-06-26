@@ -10,7 +10,7 @@
 #' @param bp The breakpoint where to split.
 #'
 #' @returns Returns a modified `GRanges` object in which the sequence has been
-#' split  Its [`seqinfo`] has a new entry for the new levels, and the old
+#' split  Its [`GenomeInfoDb::seqinfo`] has a new entry for the new levels, and the old
 #' level is not removed.  If no `seqlengths` were present in the original
 #' object, they are arbitrarily set as the maximal end value for each `seqlevel`.
 #'

@@ -7,9 +7,7 @@ From: debian:bookworm
     apt install -y eatmydata # https://manpages.debian.org/eatmydata
     ln -s /usr/bin/eatmydata ./apt
     ln -s /usr/bin/eatmydata ./R
-    ./apt install -y locales
-    sed -i /etc/locale.gen -e '/en_[UG].*.UTF-8/s/# //'
-    locale-gen
+    ./apt install -y locales-all
     ./apt install -y pandoc qpdf texlive # For vignette builds and package checks
     ./apt install -y cmake libxml2-dev libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev
     ./apt install -y libfontconfig1-dev libharfbuzz-dev libfribidi-dev # For pkgdown
@@ -26,7 +24,16 @@ From: debian:bookworm
     ./R -e 'BiocManager::install("GenomicRanges")'
     ./R -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
 
+    # Unfortunately Nextflow can not access $HOME so let's install more packages.
+
+    ./R -e 'devtools::install_github("brennern/ScrambledTreeBuilder", repos=BiocManager::repositories())'
+    ./R -e 'install.packages(c("uwot", "cluster", "factoextra"))'
+    ./R -e 'install.packages(c("SingleCellExperiment", "zellkonverter"))'
+    ./R -e 'install.packages(c("cowplot", "ggplot2", "patchwork", "ComplexHeatmap", "pheatmap", "RColorBrewer"))'
+
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library\n' | tee -a /etc/R/Renviron.site >/dev/null
     printf 'R_LIBS_USER="~/R/library/GBreaks_singularity_0.14\n'             | tee -a /etc/R/Renviron.site >/dev/null
-    
+
+    ./apt clean
+
     rm ./apt ./R

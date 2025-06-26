@@ -22,7 +22,7 @@
 #'
 #' @export
 
-karyotype_change_index <- function(gb) {
+karyotype_index <- function(gb) {
 
   if(length(gb) == 0) return(numeric(1))
   if(length(gb) == 1) return(    0     )

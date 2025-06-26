@@ -7,7 +7,7 @@
 makeInversion.chr(gr, dist = runif)
 }
 \arguments{
-\item{gr}{\code{\link{GenomicRanges}} object}
+\item{gr}{\code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object}
 
 \item{dist}{Distribution function for new breakpoints on \code{gr}'s sequence levels.}
 }

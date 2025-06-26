@@ -26,7 +26,7 @@ breakpoints and a \code{-} strand to the right-side ones.}
 \code{GRanges} object of the breakpoints
 }
 \description{
-Given a \code{\link{GBreaks}} or \code{\link{GRanges}} object, the function produces a \code{GRanges}
+Given a \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object, the function produces a \code{GRanges}
 object detailing the breakpoints only.
 }
 \examples{
