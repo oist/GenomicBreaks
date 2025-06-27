@@ -19,7 +19,7 @@ The JC69 distance is calculated as -0.75 * log(1 - 4 * p / 3), where p is the su
 Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
 }
 \examples{
-parameters <- readTrainFile("train.txt")
+parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 JC69_distance(parameters)
 
 }
@@ -29,7 +29,7 @@ Other Similarity indexes:
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
-\code{\link{karyotype_change_index}()},
+\code{\link{karyotype_index}()},
 \code{\link{readTrainFile}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
