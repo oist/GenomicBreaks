@@ -70,7 +70,7 @@
 <code><a href="K80_distance.html">K80_distance</a>()</code>,
 <code><a href="T92_distance.html">T92_distance</a>()</code>,
 <code><a href="correlation_index.html">correlation_index</a>()</code>,
-<code><a href="karyotype_change_index.html">karyotype_change_index</a>()</code>,
+<code><a href="karyotype_index.html">karyotype_index</a>()</code>,
 <code><a href="readTrainFile.html">readTrainFile</a>()</code>,
 <code><a href="strand_randomisation_index.html">strand_randomisation_index</a>()</code>,
 <code><a href="synteny_index.html">synteny_index</a>()</code></p></div>
@@ -78,10 +78,9 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="readTrainFile.html">readTrainFile</a></span><span class="op">(</span><span class="st">"train.txt"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in readTrainFile("train.txt"):</span> File does not exist</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="readTrainFile.html">readTrainFile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example.train"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">JC69_distance</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'parameters' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0161481</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

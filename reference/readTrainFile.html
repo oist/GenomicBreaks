@@ -68,7 +68,7 @@
 <code><a href="K80_distance.html">K80_distance</a>()</code>,
 <code><a href="T92_distance.html">T92_distance</a>()</code>,
 <code><a href="correlation_index.html">correlation_index</a>()</code>,
-<code><a href="karyotype_change_index.html">karyotype_change_index</a>()</code>,
+<code><a href="karyotype_index.html">karyotype_index</a>()</code>,
 <code><a href="strand_randomisation_index.html">strand_randomisation_index</a>()</code>,
 <code><a href="synteny_index.html">synteny_index</a>()</code></p></div>
     </div>
@@ -76,9 +76,82 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu">readTrainFile</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example.train"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""  "A" "C" "G" "T"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""  "A" "C" "G" "T"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""  "A" "C" "G" "T"</span>
+<span class="r-in"><span><span class="va">parameters</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_delete_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6.25287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_insert_size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6.80408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $substitution_percent_identity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 98.4025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_A_A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.289718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_A_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000727394</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_A_G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00253215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_A_T</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000611873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_C_A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000689766</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_C_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.202294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_C_G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000810395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_C_T</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00261617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_G_A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00261617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_G_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000810395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_G_G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.202294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_G_T</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000689766</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_T_A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000611873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_T_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.00253215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_T_G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000727394</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $probability_T_T</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.289718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $matchProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.997811</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $delOpenProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000895537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $insOpenProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.000766701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $delExtendProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.795939</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $insExtendProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.795939</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $endProb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.999737</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
