@@ -2,6 +2,10 @@ url: https://oist.github.io/GenomicBreaks
 template:
   bootstrap: 5
 reference:
+  - title: Data loading functions
+    desc: Functions to load data
+  - contents:
+    - has_concept("Data loading functions")
   - title: Plotting functions
     desc: Graphical display of pairwise alignments
   - contents:
