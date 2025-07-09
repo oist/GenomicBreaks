@@ -2,18 +2,18 @@
 % Please edit documentation in R/T92_distance.R
 \name{T92_distance}
 \alias{T92_distance}
-\title{Index representing the evolutionary distance between two genomes.}
+\title{Tamura 1992 distance}
 \usage{
 T92_distance(train_parameters)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment.}
+\item{train_parameters}{A list containing the probabilities of the alignment, produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
 }
 \value{
 Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
 }
 \description{
-The T92 distance is calculated as -h * log(1 - p / h - q) - 0.5 * (1 - h) * log(1 - 2 * q). See \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#T92_model_(Tamura_1992)}{WIKI} for more details.
+The Tamura 1993 (T92) distance extends the K80 distance by taking \code{GC} content into account.  It is calculated as \eqn{-h \ln \left(1 - \frac{p}{h} - q\right) - \frac{1}{2} \times (1 - h) \ln\left(1 - 2 q\right)}, where \eqn{p} is the probability of transition, \eqn{q} the probability of transversion, \eqn{h = 2\theta (1 - \theta)} and \eqn{\theta} is the \code{GC} content. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#T92_model_(Tamura_1992)}{Wikipedia} for more details.
 }
 \note{
 Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
@@ -23,6 +23,9 @@ parameters <- readTrainFile(system.file("extdata/example.train", package = "Geno
 T92_distance(parameters)
 
 }
+\references{
+Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." \emph{Molecular Biology and Evolution}, 9(4), 678–687. DOI: \href{https://doi.org/10.1093/oxfordjournals.molbev.a040752}{10.1093/oxfordjournals.molbev.a040752}#'
+}
 \seealso{
 Other Similarity indexes: 
 \code{\link{GOC}()},
@@ -30,8 +33,10 @@ Other Similarity indexes:
 \code{\link{K80_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
-\code{\link{readTrainFile}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
+}
+\author{
+Zikun Yang
 }
 \concept{Similarity indexes}
