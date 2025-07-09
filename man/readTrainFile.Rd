@@ -2,7 +2,7 @@
 % Please edit documentation in R/readTrainFile.R
 \name{readTrainFile}
 \alias{readTrainFile}
-\title{Index representing how the karyotype changes between chromosomes of two genomes}
+\title{Extract values from \code{last-train} parameter file}
 \usage{
 readTrainFile(input_file)
 }
@@ -10,26 +10,17 @@ readTrainFile(input_file)
 \item{input_file}{A string of the path to the train file from LAST.}
 }
 \value{
-Returns a list of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
+Returns a \code{list} of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
 "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb"
 }
 \description{
 This function is used to read the train file from LAST and extract the final parameters.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-parameters
+readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 
 }
-\seealso{
-Other Similarity indexes: 
-\code{\link{GOC}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()}
+\author{
+Zikun Yang
 }
-\concept{Similarity indexes}
+\concept{Data loading functions}
