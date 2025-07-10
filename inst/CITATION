@@ -1,0 +1,36 @@
+citHeader("To cite the publication related to this package, please use:")
+
+bibentry(
+  "Article",
+  title = "Extreme genome scrambling in marine planktonic \\emph{Oikopleura dioica} cryptic species",
+  author = c(
+    person("Charles", "Plessy"),
+    person("Michael J.", "Mansfield"),
+    person("Aleksandra", "Bliznina"),
+    person("Aki", "Masunaga"),
+    person("Charlotte", "West"),
+    person("Yongkai", "Tan"),
+    person("Andrew W.", "Liu"),
+    person("Jan", "Grasic"),
+    person("María Sara", "del Río Pisula"),
+    person("Gaspar", "Sánchez-Serna"),
+    person("Marc", "Fabrega-Torrus"),
+    person("Alfonso", "Ferrández-Roldán"),
+    person("Vittoria", "Roncalli"),
+    person("Pavla", "Navratilova"),
+    person("Eric M.", "Thompson"),
+    person("Takeshi", "Onuma"),
+    person("Hiroki", "Nishida"),
+    person("Cristian", "Cañestro"),
+    person("Nicholas M.", "Luscombe")
+  ),
+  journal = "Genome Research",
+  year = 2024,
+  volume = 34,
+  number = 3,
+  pages = "426--440",
+  doi = "10.1101/gr.278295.123",
+  url = "http://genome.cshlp.org/content/34/3/426.abstract",
+  note = "Genome structural variation study in \\emph{Oikopleura dioica}"
+)
+
