@@ -1,6 +1,7 @@
 url: https://oist.github.io/GenomicBreaks
 template:
   bootstrap: 5
+  math-rendering: mathjax
 reference:
   - title: Data loading functions
     desc: Functions to load data
