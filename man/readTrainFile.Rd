@@ -20,6 +20,11 @@ This function is used to read the train file from LAST and extract the final par
 readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 
 }
+\seealso{
+Other Data loading functions: 
+\code{\link{load_genomic_breaks}()},
+\code{\link{readMAF}()}
+}
 \author{
 Zikun Yang
 }

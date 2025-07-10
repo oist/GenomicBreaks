@@ -22,3 +22,9 @@ Known limitations: Does not expand shell metacharacters.  Trusts blindly
 file extension to determine compression.  Does not perform any validation on
 the file format.  Assumes that the score comes first in the 'a' lines.
 }
+\seealso{
+Other Data loading functions: 
+\code{\link{load_genomic_breaks}()},
+\code{\link{readTrainFile}()}
+}
+\concept{Data loading functions}
