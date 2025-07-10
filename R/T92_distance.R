@@ -4,8 +4,6 @@
 #'
 #' @param train_parameters A list containing the probabilities of the alignment, produced by the [`readTrainFile()`] function.
 #'
-#' @note Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
-#'
 #' @family Similarity indexes
 #'
 #' @author Zikun Yang

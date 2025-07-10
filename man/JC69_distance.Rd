@@ -15,9 +15,6 @@ Returns a numeric value show the evolutionary distance between two genomes. the 
 \description{
 The Jukes and Cantor 1969 (JC69) distance is calculated as \eqn{-\frac{3}{4} \ln(1 - \frac{4}{3} p )}, where \eqn{p} is the sum of the probabilities of the alignment. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#JC69_model_(Jukes_and_Cantor_1969)}{Wikipedia} for more details.
 }
-\note{
-Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
-}
 \examples{
 parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 JC69_distance(parameters)
