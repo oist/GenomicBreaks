@@ -2,18 +2,18 @@
 % Please edit documentation in R/JC69_distance.R
 \name{JC69_distance}
 \alias{JC69_distance}
-\title{Index representing the evolutionary distance between two genomes.}
+\title{Jukes-Cantor 1969 distance}
 \usage{
 JC69_distance(train_parameters)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment.}
+\item{train_parameters}{A list containing the probabilities of the alignment, produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
 }
 \value{
 Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
 }
 \description{
-The JC69 distance is calculated as -0.75 * log(1 - 4 * p / 3), where p is the sum of the probabilities of the alignment. See \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#JC69_model_(Jukes_and_Cantor_1969)}{WIKI} for more details.
+The Jukes and Cantor 1969 (JC69) distance is calculated as \eqn{-\frac{3}{4} \ln(1 - \frac{4}{3} p )}, where \eqn{p} is the sum of the probabilities of the alignment. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#JC69_model_(Jukes_and_Cantor_1969)}{Wikipedia} for more details.
 }
 \note{
 Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
@@ -23,6 +23,9 @@ parameters <- readTrainFile(system.file("extdata/example.train", package = "Geno
 JC69_distance(parameters)
 
 }
+\references{
+Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In \emph{Mammalian Protein Metabolism} (pp. 21–132). Academic Press.
+}
 \seealso{
 Other Similarity indexes: 
 \code{\link{GOC}()},
@@ -30,8 +33,10 @@ Other Similarity indexes:
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
-\code{\link{readTrainFile}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
+}
+\author{
+Zikun Yang
 }
 \concept{Similarity indexes}

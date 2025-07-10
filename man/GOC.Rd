@@ -63,7 +63,6 @@ Other Similarity indexes:
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
-\code{\link{readTrainFile}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }
