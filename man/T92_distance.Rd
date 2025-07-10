@@ -21,7 +21,7 @@ T92_distance(parameters)
 
 }
 \references{
-Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." \emph{Molecular Biology and Evolution}, 9(4), 678–687. DOI: \href{https://doi.org/10.1093/oxfordjournals.molbev.a040752}{10.1093/oxfordjournals.molbev.a040752}#'
+Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." \emph{Molecular Biology and Evolution}, 9(4), 678–687. DOI: \href{https://doi.org/10.1093/oxfordjournals.molbev.a040752}{10.1093/oxfordjournals.molbev.a040752}
 }
 \seealso{
 Other Similarity indexes: 

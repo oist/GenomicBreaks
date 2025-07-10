@@ -8,7 +8,8 @@
 #'
 #' @author Zikun Yang
 #'
-#' @references Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." *Molecular Biology and Evolution*, 9(4), 678–687. DOI: [10.1093/oxfordjournals.molbev.a040752](https://doi.org/10.1093/oxfordjournals.molbev.a040752)#'
+#' @references Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." *Molecular Biology and Evolution*, 9(4), 678–687. DOI: [10.1093/oxfordjournals.molbev.a040752](https://doi.org/10.1093/oxfordjournals.molbev.a040752)
+#'
 #' @returns Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
 #'
 #' @examples
