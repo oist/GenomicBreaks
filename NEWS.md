@@ -1,3 +1,8 @@
+# GenomicBreaks (in development)
+
+ * New `slidingWindow()` function to compute similarity indices on windowed 
+   intervals.
+
 # GenomicBreaks 0.14.9
 
  * New distance functions written by Zikun Yang.
