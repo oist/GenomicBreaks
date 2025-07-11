@@ -49,21 +49,8 @@ slidingWindow <- function(gb,
     if (!is.null(stepSize) && stepSize %% 1 != 0 || stepSize <= 0) stop("stepSize must be a positive integer")
   }
 
-  makeSlidingWindows <- function(seqlengths_vec, windowSize, stepSize) {
-    gr_list <- lapply(names(seqlengths_vec), function(chr) {
-      chr_len <- as.numeric(seqlengths_vec[[chr]])
-      if (chr_len < windowSize) {
-        return(GRanges(seqnames = chr, ranges = IRanges(start = 1, end = chr_len)))
-      }
-      starts <- seq(1, chr_len - windowSize + 1, by = stepSize)
-      ends <- pmin(starts + windowSize - 1, chr_len)
-      GRanges(seqnames = chr, ranges = IRanges(start = starts, end = ends))
-    })
-    do.call(c, gr_list)
-  }
-
-  seqlengths_vec <- seqlengths(gb)
-  tiles <- makeSlidingWindows(seqlengths_vec, windowSize, stepSize)
+  tiles <- seqinfo(gb) |> as("GRanges") |> slidingWindows(windowSize, stepSize) |> unlist(use.names = FALSE)
+  tiles <- tiles[width(tiles) == windowSize] # Discard the last tile if too short.
 
   if (is.null(tiles)) {
     return(list())
