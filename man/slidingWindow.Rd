@@ -40,3 +40,18 @@ slided_gb <- slidingWindow_by_bp(gb, windowSize = 1e5, stepSize = 5e4)
 slided_gb[[1]]
 
 }
+\seealso{
+Other Similarity indexes: 
+\code{\link{GOC}()},
+\code{\link{JC69_distance}()},
+\code{\link{K80_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{correlation_index}()},
+\code{\link{karyotype_index}()},
+\code{\link{strand_randomisation_index}()},
+\code{\link{synteny_index}()}
+}
+\author{
+Zhang Kun
+}
+\concept{Similarity indexes}

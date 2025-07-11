@@ -12,6 +12,10 @@
 #'
 #' @returns Returns a list of `GBreaks` objects, one for each window.
 #'
+#' @family Similarity indexes
+#'
+#' @author Zhang Kun
+#'
 #' @examples
 #' exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
 #' gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)

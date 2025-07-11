@@ -30,6 +30,7 @@ Other Similarity indexes:
 \code{\link{K80_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }
