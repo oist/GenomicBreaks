@@ -53,7 +53,7 @@ slidingWindow <- function(gb,
   tiles <- tiles[width(tiles) == windowSize] # Discard the last tile if too short.
 
   if (is.null(tiles)) {
-    return(list())
+    return(GRangesList())
   }
 
   hits <- GenomicRanges::findOverlaps(gb, tiles)
@@ -123,5 +123,5 @@ slidingWindow <- function(gb,
     gr_ref_cut
   }
 
-  lapply(gb_list, trim_func)
+  lapply(gb_list, trim_func) |> GRangesList()
 }
