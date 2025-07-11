@@ -137,8 +137,5 @@ slidingWindow <- function(gb,
     gr_ref_cut
   }
 
-
-  gb_list <- lapply(gb_list, trim_func)
-
-  return(gb_list)
+  lapply(gb_list, trim_func)
 }
