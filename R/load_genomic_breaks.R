@@ -24,6 +24,8 @@
 #' @param type In GFF3 files, _Sequence Ontology_ term representing an alignment
 #'        block (default: `match_part`).
 #'
+#' @family Data loading functions
+#'
 #' @seealso The [MAF format](http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5)
 #' documentation on the UCSC genome browser website, and the
 #' [GFF3 specification](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)

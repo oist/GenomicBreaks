@@ -68,4 +68,9 @@ The \href{http://www.genome.ucsc.edu/FAQ/FAQformat.html#format5}{MAF format}
 documentation on the UCSC genome browser website, and the
 \href{https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md}{GFF3 specification}
 from the \emph{Sequence Ontology} group.
+
+Other Data loading functions: 
+\code{\link{readMAF}()},
+\code{\link{readTrainFile}()}
 }
+\concept{Data loading functions}
