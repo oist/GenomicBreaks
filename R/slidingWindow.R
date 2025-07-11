@@ -58,24 +58,16 @@ slidingWindow <- function(gb,
 
   hits <- GenomicRanges::findOverlaps(gb, tiles)
   gb_hits <- gb[queryHits(hits)]
-  overlapping_windows <- tiles[subjectHits(hits)]
-
-  mcols(gb_hits)$window_id     <- subjectHits(hits)
-  mcols(gb_hits)$window_seqname <- as.character(seqnames(overlapping_windows))
-  mcols(gb_hits)$window_start   <- start(overlapping_windows)
-  mcols(gb_hits)$window_end     <- end(overlapping_windows)
+  gb_hits$overlapping_window <- tiles[subjectHits(hits)]
+  gb_hits$window_id          <-       subjectHits(hits)
 
   if (merged) return(gb_hits)
 
-  gb_list <- split(gb_hits, mcols(gb_hits)$window_id)
+  gb_list <- split(gb_hits, gb_hits$window_id)
   if (!cut) return(gb_list)
 
   trim_func <- function(gr) {
-    window <- GRanges(
-      seqnames = unique(gr$window_seqname),
-      ranges = IRanges(start = unique(gr$window_start),
-                       end   = unique(gr$window_end))
-    )
+    window <- unique(gr$overlapping_window)
 
     gr_ref_cut <- GenomicRanges::pintersect(gr, window)
 
