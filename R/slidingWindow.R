@@ -19,7 +19,7 @@
 #' @examples
 #' exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
 #' gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
-#' slided_gb <- slidingWindow_by_bp(gb, windowSize = 1e5, stepSize = 5e4)
+#' slided_gb <- slidingWindow(gb, windowSize = 1e5, stepSize = 5e4)
 #' slided_gb[[1]]
 #'
 #' @export
