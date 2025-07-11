@@ -35,8 +35,7 @@ slidingWindow <- function(gb,
   gb <- forceSeqLengths(gb)
 
   if (is.null(windowSize) && is.null(stepSize)) {
-    seqlens   <- seqlengths(gb)
-    total_len <- sum(seqlens, na.rm = TRUE)
+    total_len <- sum(seqlengths(gb), na.rm = TRUE)
     # window size ≈ genome length / # windows
     windowSize <- floor(
       total_len * 2 / (factor + 1)
