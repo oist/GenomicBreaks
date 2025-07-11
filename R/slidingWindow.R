@@ -32,23 +32,7 @@ slidingWindow <- function(gb,
                           cut = TRUE
 ) {
 
-  has_seqlengths <- function(gr) {
-    any(!is.na(seqlengths(gr)))
-  }
-  assign_seqlengths_from_max <- function(gr) {
-    # Ensure input is a GRanges or GBreaks object
-    if (!inherits(gr, "GRanges") && !inherits(gr, "GBreaks")) {
-      stop("Input must be a GRanges or GBreaks object")
-    }
-    # Compute maximum end per chromosome
-    max_ends <- tapply(end(gr), as.character(seqnames(gr)), max, na.rm = TRUE)
-    # Assign as seqlengths
-    seqlengths(gr)[names(max_ends)] <- max_ends
-    return(gr)
-  }
-  if (!has_seqlengths(gb)) {
-    gb <- assign_seqlengths_from_max(gb)
-  }
+  gb <- forceSeqLengths(gb)
 
   if (is.null(windowSize) && is.null(stepSize)) {
     seqlens   <- seqlengths(gb)
