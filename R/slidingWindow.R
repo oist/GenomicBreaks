@@ -67,7 +67,7 @@ slidingWindow <- function(gb,
   tiles <- makeSlidingWindows(seqlengths_vec, windowSize, stepSize)
 
   if (is.null(tiles)) {
-    return(NULL)
+    return(list())
   }
 
   hits <- GenomicRanges::findOverlaps(gb, tiles)
