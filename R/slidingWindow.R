@@ -20,20 +20,51 @@
 #'
 #' @export
 
-slidingWindow_by_bp <- function(gb, windowSize = 1e6, stepSize = 5e5,
-                                    type = "reference",
-                                    merged = FALSE,
-                                    cut = TRUE,
-                                    parallel = FALSE,
-                                    n_cores = 2) {
+slidingWindow <- function(gb,
+                          factor = 100,
+                          windowSize = NULL,
+                          stepSize = NULL,
+                          merged = FALSE,
+                          cut = TRUE
+) {
 
-  if (windowSize %% 1 != 0 || windowSize <= 0) stop("windowSize must be a positive integer")
-  if (stepSize %% 1 != 0 || stepSize <= 0) stop("stepSize must be a positive integer")
-  if (!type %in% c("reference", "query")) stop("type must be reference or query")
+  has_seqlengths <- function(gr) {
+    any(!is.na(seqlengths(gr)))
+  }
+  assign_seqlengths_from_max <- function(gr) {
+    # Ensure input is a GRanges or GBreaks object
+    if (!inherits(gr, "GRanges") && !inherits(gr, "GBreaks")) {
+      stop("Input must be a GRanges or GBreaks object")
+    }
+    # Compute maximum end per chromosome
+    max_ends <- tapply(end(gr), as.character(seqnames(gr)), max, na.rm = TRUE)
+    # Assign as seqlengths
+    seqlengths(gr)[names(max_ends)] <- max_ends
+    return(gr)
+  }
+  if (!has_seqlengths(gb)) {
+    gb <- assign_seqlengths_from_max(gb)
+  }
+
+  if (is.null(windowSize) && is.null(stepSize)) {
+    seqlens   <- seqlengths(gb)
+    total_len <- sum(seqlens, na.rm = TRUE)
+    # window size ≈ genome length / # windows
+    windowSize <- floor(
+      total_len * 2 / (factor + 1)
+    )
+    stepSize <- floor(windowSize / 2)
+    message("Computed windowSize = ", windowSize,
+            "  stepSize = ", stepSize,
+            " to get ~", factor, " windows.")
+  } else {
+    if (!is.null(windowSize) && windowSize %% 1 != 0 || windowSize <= 0) stop("windowSize must be a positive integer")
+    if (!is.null(stepSize) && stepSize %% 1 != 0 || stepSize <= 0) stop("stepSize must be a positive integer")
+  }
 
   makeSlidingWindows <- function(seqlengths_vec, windowSize, stepSize) {
     gr_list <- lapply(names(seqlengths_vec), function(chr) {
-      chr_len <- seqlengths_vec[[chr]]
+      chr_len <- as.numeric(seqlengths_vec[[chr]])
       if (chr_len < windowSize) {
         return(GRanges(seqnames = chr, ranges = IRanges(start = 1, end = chr_len)))
       }
@@ -46,6 +77,10 @@ slidingWindow_by_bp <- function(gb, windowSize = 1e6, stepSize = 5e5,
 
   seqlengths_vec <- seqlengths(gb)
   tiles <- makeSlidingWindows(seqlengths_vec, windowSize, stepSize)
+
+  if (is.null(tiles)) {
+    return(NULL)
+  }
 
   hits <- GenomicRanges::findOverlaps(gb, tiles)
   gb_hits <- gb[queryHits(hits)]
@@ -114,12 +149,8 @@ slidingWindow_by_bp <- function(gb, windowSize = 1e6, stepSize = 5e5,
     gr_ref_cut
   }
 
-  if (parallel) {
-    requireNamespace("BiocParallel")
-    gb_list <- BiocParallel::bplapply(gb_list, trim_func, BPPARAM = BiocParallel::MulticoreParam(n_cores))
-  } else {
-    gb_list <- lapply(gb_list, trim_func)
-  }
+
+  gb_list <- lapply(gb_list, trim_func)
 
   return(gb_list)
 }
