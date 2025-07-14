@@ -1,7 +1,9 @@
-# GenomicBreaks (in development)
+# GenomicBreaks 0.14.10
 
  * New `slidingWindow()` function to compute similarity indices on windowed 
    intervals.
+ * Experimental `tile` argument in `strand_randomisation_index()`.  It will be
+   removed once `slidingWindow()` can be applied to `strand_randomisation_index`.
 
 # GenomicBreaks 0.14.9
 

@@ -20,6 +20,7 @@
 #' are mapped on pairs of homologous chromosomes.
 #'
 #' @param gb A [`GBreaks`] object.
+#' @param tiles A number of tiles
 #'
 #' @family Similarity indexes
 #'
@@ -30,10 +31,23 @@
 #'
 #' @export
 
-strand_randomisation_index <- function(gb) {
+strand_randomisation_index <- function(gb, tiles=NULL) {
   if(length(gb) == 0) return(numeric(0))
   if(length(gb) == 1) return(    1     )
-  gbl <- split(gb, seqnames(gb), drop = TRUE)
+  # Use the original sequence features if `tiles` is `NULL`
+  if (is.null(tiles)) {
+    gbl <- split(gb, seqnames(gb), drop = TRUE)
+  } else {
+    gb <- forceSeqLengths(gb)
+    # Else, tile the genome
+    tiles <- tile( GRanges(seqinfo(gb)), n=tiles) |> unlist() |> unname()
+    # Create an object representing boundaries between tiles on both strands
+    boundaries  <- narrow(tiles, 2) |> gaps() |> rep(2) |> sort()
+    strand(boundaries) <- c("+", "-")
+    # Cut the target genome sequences at each boundary
+    cutByTiles <- setdiff(gb, boundaries) |> sort(ignore.strand = TRUE)
+    gbl <- split(cutByTiles, subjectHits(findOverlaps(cutByTiles, tiles)))
+  }
   # Calculate an index for each sequence feature
   idx <- sapply(gbl, \(x) {
     onPlus  <- sum(width(x[strand(x) == '+']))

@@ -4,10 +4,12 @@
 \alias{strand_randomisation_index}
 \title{Index measuring how 'random' the alignment strand has become.}
 \usage{
-strand_randomisation_index(gb)
+strand_randomisation_index(gb, tiles = NULL)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{tiles}{A number of tiles}
 }
 \value{
 Returns a numeric value between 0 and 1.
