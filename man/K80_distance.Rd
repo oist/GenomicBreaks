@@ -2,26 +2,26 @@
 % Please edit documentation in R/K80_distance.R
 \name{K80_distance}
 \alias{K80_distance}
-\title{Index representing the evolutionary distance between two genomes.}
+\title{Kimura's 2-parameter distance}
 \usage{
 K80_distance(train_parameters)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment.}
+\item{train_parameters}{A list containing the probabilities of the alignment, produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
 }
 \value{
-Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.ss
+Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
 }
 \description{
-The K80 distance is calculated as -0.5 * log((1 - 2 * p - q) * sqrt(1 - 2 * q)). See \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#K80_model_(Kimura_1980)}{WIKI} for more details.
-}
-\note{
-Here, the probability ranges from 0 to 1. The list input can contain other information, but the function will only use the name in this format probability_{REF}_{ALT}
+The Kimura's 2-parameter (K80) distance distinguishes between transitions and transversions.  It is calculated as \eqn{-\frac{1}{2} \ln\left(\left(1 - 2p - q\right) \times \sqrt{1 - 2q}\right)}, where \eqn{p} is the probability of transition and \eqn{q} is the probability of transversion. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#K80_model_(Kimura_1980)}{Wikipedia} for more details.
 }
 \examples{
-parameters <- readTrainFile("train.txt")
+parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 K80_distance(parameters)
 
+}
+\references{
+Kimura, M. (1980). "A simple method for estimating evolutionary rates of base substitutions through comparative studies of nucleotide sequences." \emph{Journal of Molecular Evolution}, 16, 111–120. DOI: \href{https://doi.org/10.1007/BF01731581}{10.1007/BF01731581}
 }
 \seealso{
 Other Similarity indexes: 
@@ -29,9 +29,12 @@ Other Similarity indexes:
 \code{\link{JC69_distance}()},
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
-\code{\link{karyotype_change_index}()},
-\code{\link{readTrainFile}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
+}
+\author{
+Zikun Yang
 }
 \concept{Similarity indexes}

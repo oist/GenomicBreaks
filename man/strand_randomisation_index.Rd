@@ -4,10 +4,12 @@
 \alias{strand_randomisation_index}
 \title{Index measuring how 'random' the alignment strand has become.}
 \usage{
-strand_randomisation_index(gb)
+strand_randomisation_index(gb, tiles = NULL)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{tiles}{A number of tiles}
 }
 \value{
 Returns a numeric value between 0 and 1.
@@ -45,8 +47,8 @@ Other Similarity indexes:
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
 \code{\link{correlation_index}()},
-\code{\link{karyotype_change_index}()},
-\code{\link{readTrainFile}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
 \code{\link{synteny_index}()}
 }
 \concept{Similarity indexes}

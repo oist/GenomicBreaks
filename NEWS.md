@@ -1,6 +1,18 @@
+# GenomicBreaks 0.14.10
+
+ * New `slidingWindow()` function to compute similarity indices on windowed 
+   intervals.
+ * Experimental `tile` argument in `strand_randomisation_index()`.  It will be
+   removed once `slidingWindow()` can be applied to `strand_randomisation_index`.
+
+# GenomicBreaks 0.14.9
+
+ * New distance functions written by Zikun Yang.
+
 # GenomicBreaks 0.14.8
 
  * Update for Bioc 3.21 and R 4.5.
+ * New experimental inversion analysis functions written by Bruna Fistarol.
  * Namespace and documentation fixes.
  * Guard against empty `GBreaks` objects in `makeOxfordPlots()`.
  

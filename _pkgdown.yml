@@ -1,7 +1,12 @@
 url: https://oist.github.io/GenomicBreaks
 template:
   bootstrap: 5
+  math-rendering: mathjax
 reference:
+  - title: Data loading functions
+    desc: Functions to load data
+  - contents:
+    - has_concept("Data loading functions")
   - title: Plotting functions
     desc: Graphical display of pairwise alignments
   - contents:
@@ -56,10 +61,10 @@ reference:
     - inv2UCSCData
     - isSorted
     - leftInversionGaps
-    - load_genomic_breaks
     - makeInversion.chr
     - orderQuerySeqLevels
-    - readMAF
     - scaf_align_plot
     - tan_bp
     - zipWithNext
+    - inversionDistance
+    - permutationVector

@@ -37,8 +37,8 @@ Other Similarity indexes:
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
-\code{\link{karyotype_change_index}()},
-\code{\link{readTrainFile}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()}
 }

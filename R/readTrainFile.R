@@ -1,18 +1,18 @@
-#' Index representing how the karyotype changes between chromosomes of two genomes
+#' Extract values from `last-train` parameter file
 #'
 #' This function is used to read the train file from LAST and extract the final parameters.
 #'
-#'
 #' @param input_file A string of the path to the train file from LAST.
 #'
+#' @family Data loading functions
 #'
-#' @family Similarity indexes
+#' @author Zikun Yang
 #'
-#' @returns Returns a list of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
+#' @returns Returns a `list` of parameters from LAST train file. "PercentSimilarity", "PercentSimilarityNogaps", "mean_delete_size", "mean_insert_size", "substitution_percent_identity", "probability",
 #' "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb"
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
+#' readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 #'
 #' @export
 
@@ -41,7 +41,7 @@ readTrainFile <- function(input_file) {
   extract_matrix <- function(records, prefix) {
     matrix <- list()
     header <- strsplit(records[1], "\\s+")[[1]]
-    print(header)
+    # print(header)
     for (i in 2:5) {
       row <- strsplit(records[i], "\\s+")[[1]]
       row_name <- row[1]
@@ -105,4 +105,26 @@ for (line in lines) {
                 "matchProb", "delOpenProb", "insOpenProb", "delExtendProb", "insExtendProb", "endProb")
   filtered_parameters <- parameters[grepl(paste(keywords, collapse = "|"), names(parameters))]
 
+  m <- matrix(data = NA, nrow =4, ncol=4)
+  colnames(m) <- rownames(m) <- c('A', 'C', 'G', 'T')
+  m['A', 'A'] <- filtered_parameters$probability_A_A
+  m['A', 'C'] <- filtered_parameters$probability_A_C
+  m['A', 'G'] <- filtered_parameters$probability_A_G
+  m['A', 'T'] <- filtered_parameters$probability_A_T
+  m['C', 'A'] <- filtered_parameters$probability_C_A
+  m['C', 'C'] <- filtered_parameters$probability_C_C
+  m['C', 'G'] <- filtered_parameters$probability_C_G
+  m['C', 'T'] <- filtered_parameters$probability_C_T
+  m['G', 'A'] <- filtered_parameters$probability_G_A
+  m['G', 'C'] <- filtered_parameters$probability_G_C
+  m['G', 'G'] <- filtered_parameters$probability_G_G
+  m['G', 'T'] <- filtered_parameters$probability_G_T
+  m['T', 'A'] <- filtered_parameters$probability_T_A
+  m['T', 'C'] <- filtered_parameters$probability_T_C
+  m['T', 'G'] <- filtered_parameters$probability_T_G
+  m['T', 'T'] <- filtered_parameters$probability_T_T
+
+  filtered_parameters$probability_matrix <- m
+
+  filtered_parameters
 }
