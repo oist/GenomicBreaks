@@ -442,22 +442,56 @@ is_fortress <- function(superhurdles){
 #' the returned value for the minimal number of inversions will imply in non-usual inversions
 #' if different chromosomes have orthologous regions.
 #'
-#' @param gb A GBreaks object containing genome data from which a permutation vector can be extracted
-#' using the \code{permutationVector()} function.
+#' @param x Either a GBreaks object or a signed permutation vector.
+#'   If \code{x} is a GBreaks object, a permutation vector will be extracted
+#'   using \code{\link{permutationVector}}.
 #'
 #' @return An integer: the minimal number of inversions needed to sort the permutation.
 #'
+#' @examples
+#' \dontrun{
+#' # Example using a permutation vector directly
+#' # Suppose we want to sort the permutation p = c(1, 3, -2, 4)
+#' inversionDistance(c(1, 3, -2, 4))
+#'
+#' # Example using a GBreaks object
+#' example         <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690"))
+#' strand(example) <- c(              "+",            "-",            "-",            "-",            "+",            "+"      )
+#' example$query   <- GRanges(c("chrA:100-190", "chrA:300-390", "chrA:200-290", "chrA:400-490", "chrA:600-690", "chrA:500-590"))
+#' gb_example      <- GBreaks(example)
+#' inversionDistance(gb_example)}
+#'
 #' @seealso \code{\link{permutationVector}} for generating the permutation vector.
 #'
-#' @importFrom igraph make_empty_graph add_edges E V components induced_subgraph ends delete_vertices
+#' @importFrom igraph make_empty_graph add_edges E V E<- V<- components induced_subgraph ends delete_vertices
 #'
 #' @author Bruna Fistarol
 #'
 #' @export
 
-inversionDistance <- function(gb){
+inversionDistance <- function(x){
 
-  p <- permutationVector(gb)
+  if (inherits(x, "GBreaks")) {
+    p <- permutationVector(x)
+
+  } else if (is.numeric(x) && is.vector(x)) {
+    if (any(x != as.integer(x))) {
+      stop("Permutation vector must contain only integers.")
+    }
+    p <- as.integer(x)
+
+    n <- length(p)
+    if (!identical(sort(abs(p)), 1:n)) {
+      stop("Permutation vector must contain each of 1 to n exactly once (up to sign).")
+    }
+
+  } else {
+    stop("Input must be either a GBreaks object or a signed permutation vector.")
+  }
+
+  if (identical(p, seq_len(length(p)))) {
+    return(0L)
+  }
 
   p_extended <- extendedPermutation(p)
 
@@ -465,7 +499,6 @@ inversionDistance <- function(gb){
   hurdles <- hurdles_count(bp_graph, p_extended)
   superhurdles <- superhurdles_count(hurdles, bp_graph, p_extended)
 
-  minimal <- bp_count(p_extended) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
+  bp_count(p_extended) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
 
-  return(minimal)
 }
