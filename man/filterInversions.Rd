@@ -4,12 +4,15 @@
 \alias{filterInversions}
 \title{Extract central blocks in inversions}
 \usage{
-filterInversions(gb, rename = TRUE)
+filterInversions(gb, rename = TRUE, detect = TRUE)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} object processed with \code{\link{flagInversions}}.}
+\item{gb}{A \code{\link{GBreaks}}.}
 
 \item{rename}{Replace range names by their numeric order before subsetting.}
+
+\item{detect}{Run again \code{flagInversions()} if \code{TRUE}, else reuse the \code{inv}
+flag or fail if it is absent.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are not
@@ -21,7 +24,7 @@ of its ranges.
 Extract central blocks in inversions
 }
 \examples{
-filterInversions(flagInversions(exampleInversion))
+filterInversions(exampleInversion)
 
 }
 \seealso{

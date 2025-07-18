@@ -94,9 +94,10 @@ flagTranslocations <- function (gb, tol = Inf, both = TRUE) {
 
 #' Show translocations and their flanking blocks.
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagTranslocations`].
-#'
+#' @param gb A [`GBreaks`] object.
 #' @param rename Replace range names by their numeric order before subsetting.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
+#'        flag or fail if it is absent.
 #'
 #' @family Translocation functions
 #'
@@ -106,11 +107,12 @@ flagTranslocations <- function (gb, tol = Inf, both = TRUE) {
 #' ranges.
 #'
 #' @examples
-#' showTranslocations(flagTranslocations(exampleTranslocation))
+#' showTranslocations(exampleTranslocation)
 #'
 #' @export
 
-showTranslocations <- function(gb, rename = TRUE) {
+showTranslocations <- function(gb, rename = TRUE, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagTranslocations(gb)
   if (is.null(gb$tra)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
@@ -121,11 +123,11 @@ showTranslocations <- function(gb, rename = TRUE) {
 
 #' Extract central blocks in translocations
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagTranslocations`].
-#'
+#' @param gb A [`GBreaks`] object.
 #' @param rename Replace range names by their numeric order before subsetting.
-#'
 #' @param remove Filter out instead of filtering in.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
+#'        flag or fail if it is absent.
 #'
 #' @family Translocation functions
 #'
@@ -135,12 +137,13 @@ showTranslocations <- function(gb, rename = TRUE) {
 #' of its ranges.
 #'
 #' @examples
-#' filterTranslocations(flagTranslocations(exampleTranslocation))
-#' filterTranslocations(remove = TRUE, flagTranslocations(exampleTranslocation))
+#' filterTranslocations(exampleTranslocation)
+#' filterTranslocations(remove = TRUE, exampleTranslocation)
 #'
 #' @export
 
-filterTranslocations <- function(gb, rename = TRUE, remove = FALSE) {
+filterTranslocations <- function(gb, rename = TRUE, remove = FALSE, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagTranslocations(gb)
   if (is.null(gb$tra)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)

@@ -4,10 +4,13 @@
 \alias{flipInversions}
 \title{Flip strand of inversions}
 \usage{
-flipInversions(gb)
+flipInversions(gb, detect = TRUE)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} object processed with \code{\link{flagInversions}}.}
+\item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{detect}{Run again \code{flagInversions()} if \code{TRUE}, else reuse the \code{inv}
+flag or fail if it is absent.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are the
@@ -21,7 +24,7 @@ Flip strand of inversions
 }
 \examples{
 exampleNestedInversions |> flagInversions()
-flipInversions(exampleNestedInversions |> flagInversions())
+flipInversions(exampleNestedInversions)
 
 }
 \seealso{

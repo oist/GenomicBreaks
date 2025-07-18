@@ -4,12 +4,15 @@
 \alias{showTranslocations}
 \title{Show translocations and their flanking blocks.}
 \usage{
-showTranslocations(gb, rename = TRUE)
+showTranslocations(gb, rename = TRUE, detect = TRUE)
 }
 \arguments{
-\item{gb}{A \code{\link{GBreaks}} object processed with \code{\link{flagTranslocations}}.}
+\item{gb}{A \code{\link{GBreaks}} object.}
 
 \item{rename}{Replace range names by their numeric order before subsetting.}
+
+\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the \code{tra}
+flag or fail if it is absent.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are not
@@ -21,7 +24,7 @@ ranges.
 Show translocations and their flanking blocks.
 }
 \examples{
-showTranslocations(flagTranslocations(exampleTranslocation))
+showTranslocations(exampleTranslocation)
 
 }
 \seealso{

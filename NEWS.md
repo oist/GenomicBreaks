@@ -1,3 +1,9 @@
+# GenomicBreaks 0.15.0
+
+ * New `detect` option in the show and filter functions for inversions and
+   translocations, to re-compute flags automatically and simplify interactive
+   use.  Set to `FALSE` and flag manually when performance is an issue.
+
 # GenomicBreaks 0.14.10
 
  * New `slidingWindow()` function to compute similarity indices on windowed 

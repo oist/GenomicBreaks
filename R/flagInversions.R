@@ -195,9 +195,10 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 
 #' Show inversions and their flanking blocks.
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagInversions`].
-#'
+#' @param gb A [`GBreaks`].
 #' @param rename Replace range names by their numeric order before subsetting.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag or fail if it is absent.
 #'
 #' @family Inversion functions
 #'
@@ -207,11 +208,12 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 #' ranges.
 #'
 #' @examples
-#' showInversions(flagInversions(exampleInversion))
+#' showInversions(exampleInversion)
 #'
 #' @export
 
-showInversions <- function(gb, rename = TRUE) {
+showInversions <- function(gb, rename = TRUE, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagInversions(gb)
   if(length(gb) == 0) return(gb)
   if (is.null(gb$inv)) return(gb[0])
   if (isTRUE(rename))
@@ -223,9 +225,10 @@ showInversions <- function(gb, rename = TRUE) {
 
 #' Extract central blocks in inversions
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagInversions`].
-#'
+#' @param gb A [`GBreaks`].
 #' @param rename Replace range names by their numeric order before subsetting.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag or fail if it is absent.
 #'
 #' @family Inversion functions
 #'
@@ -235,11 +238,12 @@ showInversions <- function(gb, rename = TRUE) {
 #' of its ranges.
 #'
 #' @examples
-#' filterInversions(flagInversions(exampleInversion))
+#' filterInversions(exampleInversion)
 #'
 #' @export
 
-filterInversions <- function(gb, rename = TRUE) {
+filterInversions <- function(gb, rename = TRUE, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagInversions(gb)
   if (is.null(gb$inv)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
@@ -250,9 +254,10 @@ filterInversions <- function(gb, rename = TRUE) {
 
 #' Extract central blocks in double inversions
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagDoubleInversions`].
-#'
+#' @param gb A [`GBreaks`] object.
 #' @param rename Replace range names by their numeric order before subsetting.
+#' @param detect Run again `flagDoubleInversions()` if `TRUE`, else reuse the `Dbl`
+#'        flag or fail if it is absent.
 #'
 #' @family Inversion functions
 #'
@@ -262,11 +267,12 @@ filterInversions <- function(gb, rename = TRUE) {
 #' discarding all of its ranges.
 #'
 #' @examples
-#' filterDoubleInversions(flagDoubleInversions(exampleDoubleInversion1))
+#' filterDoubleInversions(exampleDoubleInversion1)
 #'
 #' @export
 
-filterDoubleInversions <- function(gb, rename = TRUE) {
+filterDoubleInversions <- function(gb, rename = TRUE, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagDoubleInversions(gb)
   if (is.null(gb$Dbl)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
@@ -277,7 +283,9 @@ filterDoubleInversions <- function(gb, rename = TRUE) {
 
 #' Flip strand of inversions
 #'
-#' @param gb A [`GBreaks`] object processed with [`flagInversions`].
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag or fail if it is absent.
 #'
 #' @family Inversion functions
 #' @family modifier functions
@@ -290,11 +298,12 @@ filterDoubleInversions <- function(gb, rename = TRUE) {
 #'
 #' @examples
 #' exampleNestedInversions |> flagInversions()
-#' flipInversions(exampleNestedInversions |> flagInversions())
+#' flipInversions(exampleNestedInversions)
 #'
 #' @export
 
-flipInversions <- function(gb) {
+flipInversions <- function(gb, detect = TRUE) {
+  if(isTRUE(detect)) gb <- flagInversions(gb)
   if (length(gb) == 0) return(gb)
   if (is.null(gb$inv)) return(gb[0])
   invPos <- which(gb$inv) + 1
