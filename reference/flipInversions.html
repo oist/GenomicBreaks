@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flipInversions</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flipInversions</span><span class="op">(</span><span class="va">gb</span>, detect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,7 +58,12 @@
 
 
 <dl><dt id="arg-gb">gb<a class="anchor" aria-label="anchor" href="#arg-gb"></a></dt>
-<dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object processed with <code><a href="flagInversions.html">flagInversions</a></code>.</p></dd>
+<dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
+
+
+<dt id="arg-detect">detect<a class="anchor" aria-label="anchor" href="#arg-detect"></a></dt>
+<dd><p>Run again <code><a href="flagInversions.html">flagInversions()</a></code> if <code>TRUE</code>, else reuse the <code>inv</code>
+flag or fail if it is absent.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -104,7 +109,7 @@ found after the object is coalesced again.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   500-590      + | chrA:500-590 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span><span class="fu">flipInversions</span><span class="op">(</span><span class="va">exampleNestedInversions</span> <span class="op">|&gt;</span> <span class="fu"><a href="flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">flipInversions</span><span class="op">(</span><span class="va">exampleNestedInversions</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 5 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>

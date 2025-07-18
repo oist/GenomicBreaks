@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filterInversions</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filterInversions</span><span class="op">(</span><span class="va">gb</span>, rename <span class="op">=</span> <span class="cn">TRUE</span>, detect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,11 +58,16 @@
 
 
 <dl><dt id="arg-gb">gb<a class="anchor" aria-label="anchor" href="#arg-gb"></a></dt>
-<dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object processed with <code><a href="flagInversions.html">flagInversions</a></code>.</p></dd>
+<dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code>.</p></dd>
 
 
 <dt id="arg-rename">rename<a class="anchor" aria-label="anchor" href="#arg-rename"></a></dt>
 <dd><p>Replace range names by their numeric order before subsetting.</p></dd>
+
+
+<dt id="arg-detect">detect<a class="anchor" aria-label="anchor" href="#arg-detect"></a></dt>
+<dd><p>Run again <code><a href="flagInversions.html">flagInversions()</a></code> if <code>TRUE</code>, else reuse the <code>inv</code>
+flag or fail if it is absent.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -86,7 +91,7 @@ of its ranges.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">filterInversions</span><span class="op">(</span><span class="fu"><a href="flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">filterInversions</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     seqnames    ranges strand |        query   inv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
