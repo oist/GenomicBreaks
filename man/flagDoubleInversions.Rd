@@ -61,6 +61,7 @@ Other Inversion functions:
 \code{\link{flagPairs}()},
 \code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
+\code{\link{removeInversions}()},
 \code{\link{showInversions}()}
 
 Other Structural variants: 

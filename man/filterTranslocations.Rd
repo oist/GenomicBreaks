@@ -33,6 +33,7 @@ filterTranslocations(remove = TRUE, exampleTranslocation)
 \seealso{
 Other Translocation functions: 
 \code{\link{flagTranslocations}()},
+\code{\link{removeTranslocations}()},
 \code{\link{showTranslocations}()}
 }
 \concept{Translocation functions}

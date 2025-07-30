@@ -152,3 +152,28 @@ filterTranslocations <- function(gb, rename = TRUE, remove = FALSE, detect = TRU
     flagPos <- -(flagPos)
   gb[flagPos]
 }
+
+#' Remove translocations
+#'
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
+#'        flag or fail if it is absent.
+#'
+#' @family Translocation functions
+#' @family modifier functions
+#'
+#' @returns Returns the `GBreaks` object after removing the ranges that are
+#' translocated and coalescing the resulting collinear ranges.
+#'
+#' @examples
+#' removeTranslocations(exampleTranslocation)
+#'
+#' @export
+
+removeTranslocations <- function(gb, detect = TRUE) {
+  if (length(gb) < 3) return(gb)
+  if (isTRUE(detect)) gb <- flagTranslocations(gb)
+  if (is.null(gb$tra)) return(gb[0])
+  traPos <- which(gb$tra) + 1
+  coalesce_contigs(gb[-traPos])
+}

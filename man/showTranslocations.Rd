@@ -30,6 +30,7 @@ showTranslocations(exampleTranslocation)
 \seealso{
 Other Translocation functions: 
 \code{\link{filterTranslocations}()},
-\code{\link{flagTranslocations}()}
+\code{\link{flagTranslocations}()},
+\code{\link{removeTranslocations}()}
 }
 \concept{Translocation functions}

@@ -252,6 +252,31 @@ filterInversions <- function(gb, rename = TRUE, detect = TRUE) {
   gb[invContext]
 }
 
+#' Remove inversions
+#'
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag or fail if it is absent.
+#'
+#' @family Inversion functions
+#' @family modifier functions
+#'
+#' @returns Returns the `GBreaks` object after removing the ranges that are
+#' inverted and coalescing the resulting collinear ranges.
+#'
+#' @examples
+#' removeInversions(exampleInversion)
+#'
+#' @export
+
+removeInversions <- function(gb, detect = TRUE) {
+  if (length(gb) < 3) return(gb)
+  if (isTRUE(detect)) gb <- flagInversions(gb)
+  if (is.null(gb$inv)) return(gb[0])
+  invPos <- which(gb$inv) + 1
+  coalesce_contigs(gb[-invPos])
+}
+
 #' Extract central blocks in double inversions
 #'
 #' @param gb A [`GBreaks`] object.

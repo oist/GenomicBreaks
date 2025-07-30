@@ -62,6 +62,7 @@ Other Inversion functions:
 \code{\link{flagInversions}()},
 \code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
+\code{\link{removeInversions}()},
 \code{\link{showInversions}()}
 
 Other Colinearity functions: 

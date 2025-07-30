@@ -60,6 +60,7 @@ Other Flagging functions:
 
 Other Translocation functions: 
 \code{\link{filterTranslocations}()},
+\code{\link{removeTranslocations}()},
 \code{\link{showTranslocations}()}
 
 Other Structural variants: 
