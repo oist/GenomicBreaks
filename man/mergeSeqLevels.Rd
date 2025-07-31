@@ -61,6 +61,7 @@ Other modifier functions:
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},
 \code{\link{removeTranslocations}()},
 \code{\link{reverse}()},

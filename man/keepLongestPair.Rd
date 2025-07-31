@@ -33,6 +33,7 @@ Other modifier functions:
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{mergeSeqLevels}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},
 \code{\link{removeTranslocations}()},
 \code{\link{reverse}()},

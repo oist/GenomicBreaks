@@ -28,6 +28,7 @@ Other Inversion functions:
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},
 \code{\link{flipInversions}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},
 \code{\link{showInversions}()}
 }

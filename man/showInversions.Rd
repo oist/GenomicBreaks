@@ -36,6 +36,7 @@ Other Inversion functions:
 \code{\link{flagPairs}()},
 \code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()}
 }
 \concept{Inversion functions}

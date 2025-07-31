@@ -32,6 +32,7 @@ Other Inversion functions:
 \code{\link{flagPairs}()},
 \code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{showInversions}()}
 
 Other modifier functions: 
@@ -42,6 +43,7 @@ Other modifier functions:
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
 \code{\link{mergeSeqLevels}()},
+\code{\link{removeDoubleInversions}()},
 \code{\link{removeTranslocations}()},
 \code{\link{reverse}()},
 \code{\link{splitSeqLevel}()},

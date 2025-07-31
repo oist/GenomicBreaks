@@ -306,6 +306,31 @@ filterDoubleInversions <- function(gb, rename = TRUE, detect = TRUE) {
   gb[invContext]
 }
 
+#' Remove double inversions
+#'
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagDoubleInversions()` if `TRUE`, else reuse the `Dbl`
+#'        flag or fail if it is absent.
+#'
+#' @family Inversion functions
+#' @family modifier functions
+#'
+#' @returns Returns the `GBreaks` object after removing the ranges that are
+#' doubly inverted and coalescing the resulting collinear ranges.
+#'
+#' @examples
+#' removeDoubleInversions(exampleDoubleInversion1)
+#'
+#' @export
+
+removeDoubleInversions <- function(gb, detect = TRUE) {
+  if (length(gb) < 3) return(gb)
+  if (isTRUE(detect)) gb <- flagDoubleInversions(gb)
+  if (is.null(gb$Dbl)) return(gb[0])
+  DblPos <- which(gb$Dbl)
+  coalesce_contigs(gb[- c(DblPos, DblPos + 1, DblPos + 2)])
+}
+
 #' Flip strand of inversions
 #'
 #' @param gb A [`GBreaks`] object.
