@@ -1,3 +1,9 @@
+# GenomicBreaks 0.16.0
+
+ * New functions to consolidate alignments by removing structural variants and
+   re-coalescing the objects: `removeInversions()`, `removeDoubleInversions()`,
+   and `removeTranslocations()`.
+
 # GenomicBreaks 0.15.0
 
  * New `detect` option in the show and filter functions for inversions and
