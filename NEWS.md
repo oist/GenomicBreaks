@@ -1,3 +1,9 @@
+# GenomicBreaks 0.16.1
+
+ * Fix a bug where `removeInversions()`, `removeDoubleInversions()`,
+   and `removeTranslocations()` would discard all the ranges if no inversion,
+   double inversion or translocation (respectively) were found.
+
 # GenomicBreaks 0.16.0
 
  * New functions to consolidate alignments by removing structural variants and

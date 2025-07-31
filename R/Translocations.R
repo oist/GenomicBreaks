@@ -175,5 +175,6 @@ removeTranslocations <- function(gb, detect = TRUE) {
   if (isTRUE(detect)) gb <- flagTranslocations(gb)
   if (is.null(gb$tra)) return(gb[0])
   traPos <- which(gb$tra) + 1
+  if (length(traPos) == 0) return(gb)
   coalesce_contigs(gb[-traPos])
 }

@@ -274,6 +274,7 @@ removeInversions <- function(gb, detect = TRUE) {
   if (isTRUE(detect)) gb <- flagInversions(gb)
   if (is.null(gb$inv)) return(gb[0])
   invPos <- which(gb$inv) + 1
+  if (length(invPos) == 0) return(gb)
   coalesce_contigs(gb[-invPos])
 }
 
@@ -328,6 +329,7 @@ removeDoubleInversions <- function(gb, detect = TRUE) {
   if (isTRUE(detect)) gb <- flagDoubleInversions(gb)
   if (is.null(gb$Dbl)) return(gb[0])
   DblPos <- which(gb$Dbl)
+  if (length(DblPos) == 0) return(gb)
   coalesce_contigs(gb[- c(DblPos, DblPos + 1, DblPos + 2)])
 }
 
