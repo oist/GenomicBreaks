@@ -66,6 +66,9 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/readTrainFile.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/removeDoubleInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/removeInversions.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/removeTranslocations.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/reverse.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.html</loc></url>
