@@ -1,3 +1,7 @@
+# GenomicBreaks 0.16.2
+
+ * New `matchPairs()` function to remove non-syntenic regions.
+
 # GenomicBreaks 0.16.1
 
  * Fix a bug where `removeInversions()`, `removeDoubleInversions()`,

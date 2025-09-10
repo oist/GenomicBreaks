@@ -49,6 +49,7 @@ Other modifier functions:
 \code{\link{flipInversions}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
+\code{\link{matchPairs}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},

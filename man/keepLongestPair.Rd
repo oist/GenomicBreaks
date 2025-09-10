@@ -32,6 +32,7 @@ Other modifier functions:
 \code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
+\code{\link{matchPairs}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},

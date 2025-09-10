@@ -12,7 +12,7 @@ mergeSeqLevels_to_DF(gr, seqs, name)
 \arguments{
 \item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
 
-\item{seqs}{A character vector of \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqlevels}} from \code{gr}}
+\item{seqs}{A character vector of \code{\link[GenomeInfoDb:seqlevels]{GenomeInfoDb::seqlevels}} from \code{gr}}
 
 \item{name}{The name of the new sequence level to be added}
 }
@@ -61,6 +61,7 @@ Other modifier functions:
 \code{\link{forceSeqLengths}()},
 \code{\link{guessSeqLengths}()},
 \code{\link{keepLongestPair}()},
+\code{\link{matchPairs}()},
 \code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},
 \code{\link{removeTranslocations}()},

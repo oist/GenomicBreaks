@@ -15,7 +15,7 @@ coordinates found in the \code{gr}, or the \code{gr}'s \code{seqlengths} if if t
 already exist.
 }
 \description{
-When no \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqlengths}} are available, one can resort to set
+When no \code{\link[GenomeInfoDb:seqlengths]{GenomeInfoDb::seqlengths}} are available, one can resort to set
 them as to the maximal end coordinate found in the object.
 }
 \examples{
@@ -34,6 +34,7 @@ Other modifier functions:
 \code{\link{flipInversions}()},
 \code{\link{forceSeqLengths}()},
 \code{\link{keepLongestPair}()},
+\code{\link{matchPairs}()},
 \code{\link{mergeSeqLevels}()},
 \code{\link{removeDoubleInversions}()},
 \code{\link{removeInversions}()},
