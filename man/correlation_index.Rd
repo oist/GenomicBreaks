@@ -33,6 +33,7 @@ correlation_index(gb)
 }
 \seealso{
 Other Similarity indexes: 
+\code{\link{F81_distance}()},
 \code{\link{GOC}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},

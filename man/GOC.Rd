@@ -58,6 +58,7 @@ Other Colinearity functions:
 \code{\link{flagPairs}()}
 
 Other Similarity indexes: 
+\code{\link{F81_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},

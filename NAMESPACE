@@ -2,6 +2,7 @@
 
 S3method(flipStrandNames,default)
 S3method(flipStrandNames,list)
+export(F81_distance)
 export(GBreaks)
 export(GBreaksToMatrix)
 export(GOC)

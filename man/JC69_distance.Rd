@@ -25,6 +25,7 @@ Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In \emph{Ma
 }
 \seealso{
 Other Similarity indexes: 
+\code{\link{F81_distance}()},
 \code{\link{GOC}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},

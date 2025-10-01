@@ -37,7 +37,7 @@ Imports:
   weights,
   igraph
 LinkingTo: Rcpp
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Suggests:
   BSgenome.Scerevisiae.UCSC.sacCer3,
@@ -49,6 +49,7 @@ Suggests:
   rmarkdown
 VignetteBuilder: knitr
 Collate: 
+    'F81_distance.R'
     'GBreaksToMatrix.R'
     'GOC.R'
     'GenomicBreaks.R'
