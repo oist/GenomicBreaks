@@ -16,15 +16,15 @@ slidingWindow(
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
 
+\item{factor}{Number of windows.}
+
 \item{windowSize}{The size of the window.}
 
 \item{stepSize}{The size of the step.}
 
-\item{merged}{set TRUE to output a \link{'GBreaks'} object}
+\item{merged}{set TRUE to output a \code{GBreaks} object}
 
 \item{cut}{whether cut the alignments out of the window}
-
-\item{type}{slide the window on the reference genome or query genome (reference/query)}
 }
 \value{
 Returns a list of \code{GBreaks} objects, one for each window.

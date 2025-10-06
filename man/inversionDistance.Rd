@@ -36,11 +36,11 @@ if different chromosomes have orthologous regions.
 inversionDistance(c(1, 3, -2, 4))
 
 # Example using a GBreaks object
-example         <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690"))
-strand(example) <- c(              "+",            "-",            "-",            "-",            "+",            "+"      )
-example$query   <- GRanges(c("chrA:100-190", "chrA:300-390", "chrA:200-290", "chrA:400-490", "chrA:600-690", "chrA:500-590"))
-gb_example      <- GBreaks(example)
-inversionDistance(gb_example)}
+gr         <- GRanges(c("A:10-19", "A:20-29", "A:30-39", "A:40-49", "A:50-59", "A:60-69"))
+strand(gr) <- c(            "+"  ,     "-"  ,     "-"  ,     "-"  ,     "+"  ,     "+"   )
+gr$query   <- GRanges(c("A:10-19", "A:30-39", "A:20-29", "A:40-49", "A:60-69", "A:50-59"))
+gb         <- GBreaks(gr)
+inversionDistance(gb)}
 
 }
 \seealso{

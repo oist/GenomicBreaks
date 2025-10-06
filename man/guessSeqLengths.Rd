@@ -15,7 +15,7 @@ coordinates found in the \code{gr}, or the \code{gr}'s \code{seqlengths} if if t
 already exist.
 }
 \description{
-When no \code{\link[GenomeInfoDb:seqlengths]{GenomeInfoDb::seqlengths}} are available, one can resort to set
+When no \code{\link[Seqinfo:seqinfo]{Seqinfo::seqlengths}} are available, one can resort to set
 them as to the maximal end coordinate found in the object.
 }
 \examples{

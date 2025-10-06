@@ -4,10 +4,10 @@
 #' using a sliding window.
 #'
 #' @param gb A [`GBreaks`] object.
+#' @param factor Number of windows.
 #' @param windowSize The size of the window.
 #' @param stepSize The size of the step.
-#' @param type slide the window on the reference genome or query genome (reference/query)
-#' @param merged set TRUE to output a ['GBreaks'] object
+#' @param merged set TRUE to output a `GBreaks` object
 #' @param cut whether cut the alignments out of the window
 #'
 #' @returns Returns a list of `GBreaks` objects, one for each window.

@@ -1,6 +1,6 @@
 #' Guesstimate seqlevel lengths
 #'
-#' When no [`GenomeInfoDb::seqlengths`] are available, one can resort to set
+#' When no [`Seqinfo::seqlengths`] are available, one can resort to set
 #' them as to the maximal end coordinate found in the object.
 #'
 #' @param gr A [`GenomicRanges::GRanges`] object

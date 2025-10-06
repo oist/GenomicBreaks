@@ -28,7 +28,7 @@ aligned at the centre of the plot. The result can be piped into
 }
 \note{
 The \code{GRanges} object is expected to have a \emph{sequence information}
-(see \code{\link[GenomeInfoDb:seqinfo]{GenomeInfoDb::seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
+(see \code{\link[Seqinfo:seqinfo]{Seqinfo::seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
 object via the \code{\link[BSgenome:available.genomes]{BSgenome::getBSgenome}} function.
 }
 \examples{

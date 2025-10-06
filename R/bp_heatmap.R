@@ -15,7 +15,7 @@
 #' @return Returns a [`heatmaps::Heatmap`] object of `pattern` around centred breakpoints.
 #'
 #' @note The `GRanges` object is expected to have a _sequence information_
-#' (see [`GenomeInfoDb::seqinfo`]) that allows the retrieval its corresponding `BSgenome`
+#' (see [`Seqinfo::seqinfo`]) that allows the retrieval its corresponding `BSgenome`
 #' object via the [`BSgenome::getBSgenome`] function.
 #'
 #' @import IRanges
