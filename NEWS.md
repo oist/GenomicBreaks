@@ -1,3 +1,8 @@
+# GenomicBreaks 0.16.3
+
+ * New `F81_distance()` (Felsenstein 1981) distance function.
+ * Documentation and namespace fixes.
+
 # GenomicBreaks 0.16.2
 
  * New `matchPairs()` function to remove non-syntenic regions.
