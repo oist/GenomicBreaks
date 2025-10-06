@@ -18,7 +18,7 @@ features} not covered by the original alignment.}
 }
 \value{
 A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the \emph{target}
-genome, inheriting its \emph{sequence information} (\code{\link[GenomeInfoDb:Seqinfo-class]{GenomeInfoDb::Seqinfo}}).
+genome, inheriting its \emph{sequence information} (\code{\link[GenomeInfoDb:compat]{GenomeInfoDb::Seqinfo}}).
 The class of each region is indicated by a factor in the \code{type} metadata
 column.
 }

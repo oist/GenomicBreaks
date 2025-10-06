@@ -27,11 +27,13 @@ F81_distance(parameters)
 
 }
 \references{
-Felsenstein, J. (1981). Evolutionary trees from DNA sequences: a maximumlikelihood approach.
-\emph{Journal of Molecular Evolution}, 17, 368–376. \doi{10.1007/BF01734359}
+Felsenstein, J. (1981). Evolutionary trees from DNA sequences: a maximum
+likelihood approach.  \emph{Journal of Molecular Evolution}, 17, 368–376.
+\doi{10.1007/BF01734359}
 
-McGuire, G., Prentice, M. J., & Wright, F. (1999). Improved error bounds for genetic distances from DNA sequences.
-\emph{Biometrics}, 55(4), 1064–1070. \doi{10.1111/j.0006-341x.1999.01064.x}
+McGuire, G., Prentice, M. J., & Wright, F. (1999). Improved error bounds for
+genetic distances from DNA sequences.  \emph{Biometrics}, 55(4), 1064–1070.
+\doi{10.1111/j.0006-341x.1999.01064.x}
 }
 \seealso{
 Other Similarity indexes: 
