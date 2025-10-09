@@ -1,3 +1,8 @@
+# GenomicBreaks 0.17.0
+
+ * Switch to semantic versioning.
+ * New `P_distance()` (ungapped percent difference) distance function.
+
 # GenomicBreaks 0.16.3
 
  * New `F81_distance()` (Felsenstein 1981) distance function.

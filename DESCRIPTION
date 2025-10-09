@@ -1,7 +1,7 @@
 Package: GenomicBreaks
 Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
-Version: 0.16.3
+Version: 0.17.0
 Authors@R: c(
   person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role =   "aut" ),
   person("Charles", "Plessy", email = "charles.plessy@oist.jp",  role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7410-6295")),
@@ -55,6 +55,7 @@ Collate:
     'GenomicBreaks.R'
     'JC69_distance.R'
     'K80_distance.R'
+    'P_distance.R'
     'RcppExports.R'
     'StructuralVariants.R'
     'T92_distance.R'
