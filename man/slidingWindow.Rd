@@ -51,7 +51,8 @@ Other Similarity indexes:
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
 \code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()}
+\code{\link{synteny_index}()},
+\code{\link{tau_index}()}
 }
 \author{
 Zhang Kun

@@ -1,3 +1,7 @@
+# GenomicBreaks dev
+
+ * New `tau_index()` function. Closes #16
+
 # GenomicBreaks 0.17.0
 
  * Switch to semantic versioning.
