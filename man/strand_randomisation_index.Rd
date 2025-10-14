@@ -21,24 +21,32 @@ on which homologous sequences align appears to be randomised.  This index
 expresses it with a number.
 }
 \details{
-For each feature of the \emph{target} genome, the total length of its alignments
-on the plus strand is subtracted from the total length of its alignments
-on the minus strand.  The sign of this number is removed because there is
-no guarantee that homologous chromosomes are sequenced in the same direction
-in different assemblies.  To make features comparable, this number is then
-normalised by total number of aligned bases.  Then, the computed numbers for
-all the \emph{target}'s features are averaged with a weighted mean, where the
-weight is the total number of aligned bases of that feature.  Thus, a number
-close to 1 is expected for closely related genomes.
+For each feature in the \emph{target} genome, the total length of alignments on
+the plus strand is subtracted from that on the minus strand, and the absolute
+value is taken (because there is no guarantee that homologous chromosomes are
+sequenced in the same direction in different assemblies).  This value is
+normalized by the total number of aligned bases.  A weighted mean is then
+computed across all features, using each feature’s total aligned bases as its
+weight.  Thus, a number close to 1 is expected for closely related genomes.
 }
 \note{
 This index is designed for comparison of chromosomal assemblies that
 have a strong conservation of synteny in the sense most homologous genes
-are mapped on pairs of homologous chromosomes.
+are mapped on pairs of homologous chromosomes.  In 2025, a new \code{tiles} option
+was added to make the index more robust to assembly errors and karyotype
+changes.
 }
 \examples{
 strand_randomisation_index(exampleInversion)
 
+}
+\references{
+Plessy C, Mansfield MJ, Bliznina A, Masunaga A, West C, Tan Y,
+Liu AW, Grašič J, Del Río Pisula MS, Sánchez-Serna G, Fabrega-Torrus M,
+Ferrández-Roldán A, Roncalli V, Navratilova P, Thompson EM, Onuma T, Nishida
+H, Cañestro C, Luscombe NM (2024). Extreme genome scrambling in marine
+planktonic \emph{Oikopleura dioica} cryptic species. \emph{Genome Research}, 34(3),
+426–440. \url{https://doi.org/10.1101/gr.278295.123}. PMID: 38621828
 }
 \seealso{
 Other Similarity indexes: 
@@ -52,5 +60,8 @@ Other Similarity indexes:
 \code{\link{karyotype_index}()},
 \code{\link{slidingWindow}()},
 \code{\link{synteny_index}()}
+}
+\author{
+Charles Plessy
 }
 \concept{Similarity indexes}
