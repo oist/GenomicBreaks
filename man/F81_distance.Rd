@@ -4,11 +4,13 @@
 \alias{F81_distance}
 \title{Felsenstein's 1981 Distance}
 \usage{
-F81_distance(train_parameters)
+F81_distance(m)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment,
-produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
+\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
+to be aligned to bases on the \emph{query} genome.  As a convenience it can also
+receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
+matrix.}
 }
 \value{
 A numeric value representing the evolutionary distance between two
@@ -36,20 +38,13 @@ genetic distances from DNA sequences.  \emph{Biometrics}, 55(4), 1064–1070.
 \doi{10.1111/j.0006-341x.1999.01064.x}
 }
 \seealso{
-Other Similarity indexes: 
-\code{\link{GOC}()},
+Other Nucleotide distances: 
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+\code{\link{T92_distance}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Similarity indexes}
+\concept{Nucleotide distances}

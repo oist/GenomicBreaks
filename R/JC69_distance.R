@@ -4,9 +4,12 @@
 #'
 #' @references Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In *Mammalian Protein Metabolism* (pp. 21–132). Academic Press.
 #'
-#' @param train_parameters A list containing the probabilities of the alignment, produced by the [`readTrainFile()`] function.
+#' @param m A matrix of counts or probabilities for bases of the _target_ genome
+#' to be aligned to bases on the _query_ genome.  As a convenience it can also
+#' receive a list produced by the [`readTrainFile()`] function, containing this
+#' matrix.
 #'
-#' @family Similarity indexes
+#' @family Nucleotide distances
 #'
 #' @author Zikun Yang
 #'
@@ -18,7 +21,10 @@
 #'
 #' @export
 
-JC69_distance <- function(train_parameters) {
-  p <- train_parameters[["probability_A_C"]] + train_parameters[["probability_A_G"]] + train_parameters[["probability_A_T"]] + train_parameters[["probability_C_A"]] + train_parameters[["probability_C_G"]] + train_parameters[["probability_C_T"]] + train_parameters[["probability_G_A"]] + train_parameters[["probability_G_C"]] + train_parameters[["probability_G_T"]] + train_parameters[["probability_T_A"]] + train_parameters[["probability_T_C"]] + train_parameters[["probability_T_G"]]
+JC69_distance <- function(m) {
+  if(is.list(m)) m <- m$probability_matrix
+  m <- m[c("A", "C", "G", "T"), c("A", "C", "G", "T")]
+  P <- prop.table(m)
+  p <- 1 - sum(diag(P))
   - 0.75 * log(1 - 4 * p / 3)
 }

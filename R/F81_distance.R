@@ -6,13 +6,15 @@
 #' \eqn{1} minus the sum of the squares of the average nucleotide frequencies
 #' (McGuire and coll., 1999).
 #'
-#' @param train_parameters A list containing the probabilities of the alignment,
-#' produced by the [`readTrainFile()`] function.
+#' @param m A matrix of counts or probabilities for bases of the _target_ genome
+#' to be aligned to bases on the _query_ genome.  As a convenience it can also
+#' receive a list produced by the [`readTrainFile()`] function, containing this
+#' matrix.
 #'
 #' @returns A numeric value representing the evolutionary distance between two
 #' genomes.  The larger the value, the more divergent the genomes.
 #'
-#' @family Similarity indexes
+#' @family Nucleotide distances
 #'
 #' @author Charles Plessy
 #'
@@ -31,8 +33,10 @@
 #'
 #' @export
 
-F81_distance <- function(train_parameters) {
-  P <- train_parameters$probability_matrix
+F81_distance <- function(m) {
+  if(is.list(m)) m <- m$probability_matrix
+  m <- m[c("A", "C", "G", "T"), c("A", "C", "G", "T")]
+  P <- prop.table(m)
   target_freqs <- rowSums(P)
   query_freqs  <- colSums(P)
   avg_freqs    <- (target_freqs + query_freqs) / 2

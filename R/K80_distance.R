@@ -2,9 +2,12 @@
 #'
 #' The Kimura's 2-parameter (K80) distance distinguishes between transitions and transversions.  It is calculated as \eqn{-\frac{1}{2} \ln\left(\left(1 - 2p - q\right) \times \sqrt{1 - 2q}\right)}, where \eqn{p} is the probability of transition and \eqn{q} is the probability of transversion. See the [Wikipedia](https://en.wikipedia.org/wiki/Models_of_DNA_evolution#K80_model_(Kimura_1980)) for more details.
 #'
-#' @param train_parameters A list containing the probabilities of the alignment, produced by the [`readTrainFile()`] function.
+#' @param m A matrix of counts or probabilities for bases of the _target_ genome
+#' to be aligned to bases on the _query_ genome.  As a convenience it can also
+#' receive a list produced by the [`readTrainFile()`] function, containing this
+#' matrix.
 #'
-#' @family Similarity indexes
+#' @family Nucleotide distances
 #'
 #' @author Zikun Yang
 #'
@@ -18,8 +21,15 @@
 #'
 #' @export
 
-K80_distance <- function(train_parameters) {
-  p <- train_parameters[["probability_A_G"]] + train_parameters[["probability_G_A"]] + train_parameters[["probability_T_C"]] + train_parameters[["probability_C_T"]]
-  q <- train_parameters[["probability_A_C"]] + train_parameters[["probability_C_A"]] + train_parameters[["probability_G_T"]] + train_parameters[["probability_T_G"]] + train_parameters[["probability_A_T"]] + train_parameters[["probability_T_A"]] + train_parameters[["probability_C_G"]] + train_parameters[["probability_G_C"]]
+K80_distance <- function(m) {
+  if(is.list(m)) m <- m$probability_matrix
+  m <- m[c("A", "C", "G", "T"), c("A", "C", "G", "T")]
+  P <- prop.table(m)
+  p <- P["A", "G"] + P["G", "A"] +
+       P["C", "T"] + P["T", "C"]
+  q <- P["A", "C"] + P["C", "A"] +
+       P["G", "T"] + P["T", "G"] +
+       P["A", "T"] + P["T", "A"] +
+       P["C", "G"] + P["G", "C"]
   - 0.5 * log((1 - 2 * p - q) * sqrt(1 - 2 * q))
 }

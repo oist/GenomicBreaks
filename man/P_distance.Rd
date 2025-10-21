@@ -4,11 +4,13 @@
 \alias{P_distance}
 \title{Percent difference Distance}
 \usage{
-P_distance(train_parameters)
+P_distance(m)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment,
-produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
+\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
+to be aligned to bases on the \emph{query} genome.  As a convenience it can also
+receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
+matrix.}
 }
 \value{
 A numeric value representing the evolutionary distance between two
@@ -29,20 +31,13 @@ May, A. C. W. (2004). Percent Sequence Identity: The Need to Be Explicit.
 \emph{Structure}, 12(5), 737–738. \doi{doi.org/10.1016/j.str.2004.04.001}
 }
 \seealso{
-Other Similarity indexes: 
+Other Nucleotide distances: 
 \code{\link{F81_distance}()},
-\code{\link{GOC}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+\code{\link{T92_distance}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Similarity indexes}
+\concept{Nucleotide distances}

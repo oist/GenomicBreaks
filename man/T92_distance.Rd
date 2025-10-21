@@ -4,10 +4,13 @@
 \alias{T92_distance}
 \title{Tamura 1992 distance}
 \usage{
-T92_distance(train_parameters)
+T92_distance(m)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment, produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
+\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
+to be aligned to bases on the \emph{query} genome.  As a convenience it can also
+receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
+matrix.}
 }
 \value{
 Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
@@ -24,20 +27,13 @@ T92_distance(parameters)
 Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." \emph{Molecular Biology and Evolution}, 9(4), 678–687. DOI: \href{https://doi.org/10.1093/oxfordjournals.molbev.a040752}{10.1093/oxfordjournals.molbev.a040752}
 }
 \seealso{
-Other Similarity indexes: 
+Other Nucleotide distances: 
 \code{\link{F81_distance}()},
-\code{\link{GOC}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+\code{\link{P_distance}()}
 }
 \author{
 Zikun Yang
 }
-\concept{Similarity indexes}
+\concept{Nucleotide distances}

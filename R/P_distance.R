@@ -4,13 +4,15 @@
 #' two bases are different.  See May 2004 for a discussion on the many ways to
 #' compute percent identity (and therefore difference.)
 #'
-#' @param train_parameters A list containing the probabilities of the alignment,
-#' produced by the [`readTrainFile()`] function.
+#' @param m A matrix of counts or probabilities for bases of the _target_ genome
+#' to be aligned to bases on the _query_ genome.  As a convenience it can also
+#' receive a list produced by the [`readTrainFile()`] function, containing this
+#' matrix.
 #'
 #' @returns A numeric value representing the evolutionary distance between two
 #' genomes.  The larger the value, the more divergent the genomes.
 #'
-#' @family Similarity indexes
+#' @family Nucleotide distances
 #'
 #' @author Charles Plessy
 #'
@@ -23,7 +25,9 @@
 #'
 #' @export
 
-P_distance <- function(train_parameters) {
-  P <- train_parameters$probability_matrix
+P_distance <- function(m) {
+  if(is.list(m)) m <- m$probability_matrix
+  m <- m[c("A", "C", "G", "T"), c("A", "C", "G", "T")]
+  P <- prop.table(m)
   1 - sum(diag(P))
 }

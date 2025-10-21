@@ -4,10 +4,13 @@
 \alias{JC69_distance}
 \title{Jukes-Cantor 1969 distance}
 \usage{
-JC69_distance(train_parameters)
+JC69_distance(m)
 }
 \arguments{
-\item{train_parameters}{A list containing the probabilities of the alignment, produced by the \code{\link[=readTrainFile]{readTrainFile()}} function.}
+\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
+to be aligned to bases on the \emph{query} genome.  As a convenience it can also
+receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
+matrix.}
 }
 \value{
 Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
@@ -24,20 +27,13 @@ JC69_distance(parameters)
 Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In \emph{Mammalian Protein Metabolism} (pp. 21–132). Academic Press.
 }
 \seealso{
-Other Similarity indexes: 
+Other Nucleotide distances: 
 \code{\link{F81_distance}()},
-\code{\link{GOC}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+\code{\link{T92_distance}()}
 }
 \author{
 Zikun Yang
 }
-\concept{Similarity indexes}
+\concept{Nucleotide distances}
