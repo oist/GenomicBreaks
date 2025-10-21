@@ -28,7 +28,7 @@ P_distance(parameters)
 }
 \references{
 May, A. C. W. (2004). Percent Sequence Identity: The Need to Be Explicit.
-\emph{Structure}, 12(5), 737–738. \doi{doi.org/10.1016/j.str.2004.04.001}
+\emph{Structure}, 12(5), 737–738. \doi{10.1016/j.str.2004.04.001}
 }
 \seealso{
 Other Nucleotide distances: 
