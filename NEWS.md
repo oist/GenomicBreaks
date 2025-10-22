@@ -1,6 +1,11 @@
-# GenomicBreaks dev
+# GenomicBreaks 0.18.0
 
  * New `tau_index()` function. Closes #16
+ * Reform the nucleotide distance functions to also take count matrices as input.
+ * Implement the 4 variants of percent nucleotide difference in `P_distance()`
+   as defined by [May (2004)](https://doi.org/10.1016/j.str.2004.04.001).
+   Closes #26
+ * Add a `gapProportion()` function.
 
 # GenomicBreaks 0.17.0
 
