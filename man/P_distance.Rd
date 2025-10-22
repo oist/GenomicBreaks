@@ -4,13 +4,16 @@
 \alias{P_distance}
 \title{Percent difference Distance}
 \usage{
-P_distance(m)
+P_distance(m, denominator = c("L3", "L1", "L2", "L4"))
 }
 \arguments{
 \item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
 to be aligned to bases on the \emph{query} genome.  As a convenience it can also
 receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
 matrix.}
+
+\item{denominator}{Denominator according to the nomenclature of May (2004).
+Default is \code{L3}.}
 }
 \value{
 A numeric value representing the evolutionary distance between two
@@ -18,8 +21,19 @@ genomes.  The larger the value, the more divergent the genomes.
 }
 \description{
 The P-distance is simply the percentage of the aligned base pairs where the
-two bases are different.  See May 2004 for a discussion on the many ways to
+two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)
+}
+\details{
+The P-distance is computed as 1 minus the percent sequence identity
+according to the definitions of May (2004), which is the ratio between the
+number of matching bases and four possible denominators in use at that time.
+\itemize{
+\item L1: Length of the shorter sequence.
+\item L2: Number of aligned positions, i.e., alignment length (includes gaps, if any).
+\item L3: Number of aligned residue pairs, i.e., identities and nonidentities (excludes gaps, if any).
+\item L4: Arithmetic mean sequence length.
+}
 }
 \examples{
 parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
