@@ -76,6 +76,7 @@ Collate:
     'flagAll.R'
     'flagLongShort.R'
     'flagPairs.R'
+    'gapProportion.R'
     'genoPlotR.R'
     'getRefGenome.R'
     'getSeq.R'

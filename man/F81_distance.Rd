@@ -42,7 +42,8 @@ Other Nucleotide distances:
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
-\code{\link{T92_distance}()}
+\code{\link{T92_distance}()},
+\code{\link{gapProportion}()}
 }
 \author{
 Charles Plessy
