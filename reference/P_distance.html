@@ -6,9 +6,9 @@
     }
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Percent difference Distance — P_distance"><meta name="description" content="The P-distance is simply the percentage of the aligned base pairs where the
-two bases are different.  See May 2004 for a discussion on the many ways to
+two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)"><meta property="og:description" content="The P-distance is simply the percentage of the aligned base pairs where the
-two bases are different.  See May 2004 for a discussion on the many ways to
+two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
@@ -17,7 +17,7 @@ compute percent identity (and therefore difference.)"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,22 +50,29 @@ compute percent identity (and therefore difference.)"></head><body>
 
     <div class="ref-description section level2">
     <p>The P-distance is simply the percentage of the aligned base pairs where the
-two bases are different.  See May 2004 for a discussion on the many ways to
+two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">train_parameters</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">m</span>, denominator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L3"</span>, <span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L4"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-train-parameters">train_parameters<a class="anchor" aria-label="anchor" href="#arg-train-parameters"></a></dt>
-<dd><p>A list containing the probabilities of the alignment,
-produced by the <code><a href="readTrainFile.html">readTrainFile()</a></code> function.</p></dd>
+<dl><dt id="arg-m">m<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
+<dd><p>A matrix of counts or probabilities for bases of the <em>target</em> genome
+to be aligned to bases on the <em>query</em> genome.  As a convenience it can also
+receive a list produced by the <code><a href="readTrainFile.html">readTrainFile()</a></code> function, containing this
+matrix.</p></dd>
+
+
+<dt id="arg-denominator">denominator<a class="anchor" aria-label="anchor" href="#arg-denominator"></a></dt>
+<dd><p>Denominator according to the nomenclature of May (2004).
+Default is <code>L3</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -74,24 +81,27 @@ produced by the <code><a href="readTrainFile.html">readTrainFile()</a></code> fu
 genomes.  The larger the value, the more divergent the genomes.</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The P-distance is computed as 1 minus the percent sequence identity
+according to the definitions of May (2004), which is the ratio between the
+number of matching bases and four possible denominators in use at that time.</p><ul><li><p>L1: Length of the shorter sequence.</p></li>
+<li><p>L2: Number of aligned positions, i.e., alignment length (includes gaps, if any).</p></li>
+<li><p>L3: Number of aligned residue pairs, i.e., identities and nonidentities (excludes gaps, if any).</p></li>
+<li><p>L4: Arithmetic mean sequence length.</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>May, A. C. W. (2004). Percent Sequence Identity: The Need to Be Explicit.
-<em>Structure</em>, 12(5), 737–738. <a href="https://doi.org/doi.org/10.1016/j.str.2004.04.001" class="external-link">doi:doi.org/10.1016/j.str.2004.04.001</a></p>
+<em>Structure</em>, 12(5), 737–738. <a href="https://doi.org/10.1016/j.str.2004.04.001" class="external-link">doi:10.1016/j.str.2004.04.001</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other Similarity indexes:
+    <div class="dont-index"><p>Other Nucleotide distances:
 <code><a href="F81_distance.html">F81_distance</a>()</code>,
-<code><a href="GOC.html">GOC</a>()</code>,
 <code><a href="JC69_distance.html">JC69_distance</a>()</code>,
 <code><a href="K80_distance.html">K80_distance</a>()</code>,
 <code><a href="T92_distance.html">T92_distance</a>()</code>,
-<code><a href="correlation_index.html">correlation_index</a>()</code>,
-<code><a href="karyotype_index.html">karyotype_index</a>()</code>,
-<code><a href="slidingWindow.html">slidingWindow</a>()</code>,
-<code><a href="strand_randomisation_index.html">strand_randomisation_index</a>()</code>,
-<code><a href="synteny_index.html">synteny_index</a>()</code>,
-<code><a href="tau_index.html">tau_index</a>()</code></p></div>
+<code><a href="gapProportion.html">gapProportion</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -102,7 +112,7 @@ genomes.  The larger the value, the more divergent the genomes.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="readTrainFile.html">readTrainFile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example.train"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.015976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0159755</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
