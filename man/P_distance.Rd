@@ -54,7 +54,7 @@ May, A. C. W. (2004). Percent Sequence Identity: The Need to Be Explicit.
 \emph{Structure}, 12(5), 737–738. \doi{10.1016/j.str.2004.04.001}
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
@@ -62,9 +62,35 @@ Other Nucleotide distances:
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
+\code{\link{gapProportion}()}
+
+Other Similarity indexes: 
+\code{\link{F81_distance}()},
+\code{\link{GOC}()},
+\code{\link{JC69_distance}()},
+\code{\link{K80_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{correlation_index}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
+\code{\link{strand_randomisation_index}()},
+\code{\link{synteny_index}()},
+\code{\link{tau_index}()}
+
+Other Alignment statistics: 
+\code{\link{F81_distance}()},
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
+\code{\link{JC69_distance}()},
+\code{\link{K80_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}
+\concept{Similarity indexes}

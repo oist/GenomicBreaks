@@ -14,7 +14,8 @@
 #' @returns A numeric value representing the evolutionary distance between two
 #' genomes.  The larger the value, the more divergent the genomes.
 #'
-#' @family Nucleotide distances
+#' @family Alignment statistics
+#' @family Similarity indexes
 #'
 #' @author Charles Plessy
 #'

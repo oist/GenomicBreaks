@@ -37,7 +37,7 @@ genetic distances from DNA sequences.  \emph{Biometrics}, 55(4), 1064–1070.
 \doi{10.1111/j.0006-341x.1999.01064.x}
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
 \code{\link{GCproportion}()},
@@ -45,9 +45,24 @@ Other Nucleotide distances:
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
+
+Other Similarity indexes: 
+\code{\link{GOC}()},
+\code{\link{JC69_distance}()},
+\code{\link{K80_distance}()},
+\code{\link{P_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{correlation_index}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
+\code{\link{strand_randomisation_index}()},
+\code{\link{synteny_index}()},
+\code{\link{tau_index}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}
+\concept{Similarity indexes}

@@ -47,7 +47,7 @@ heterogeneity of DNA base composition. (1962) \emph{Proc Natl Acad Sci U S A}
 48(4):582-92. \doi{10.1073/pnas.48.4.582}
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCpressure}()},
 \code{\link{GCproportion}()},
@@ -55,9 +55,10 @@ Other Nucleotide distances:
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}

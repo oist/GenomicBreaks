@@ -26,7 +26,7 @@ K80_distance(exampleSubstitutionMatrix)
 Kimura, M. (1980). "A simple method for estimating evolutionary rates of base substitutions through comparative studies of nucleotide sequences." \emph{Journal of Molecular Evolution}, 16, 111–120. DOI: \href{https://doi.org/10.1007/BF01731581}{10.1007/BF01731581}
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
@@ -34,9 +34,24 @@ Other Nucleotide distances:
 \code{\link{JC69_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
+
+Other Similarity indexes: 
+\code{\link{F81_distance}()},
+\code{\link{GOC}()},
+\code{\link{JC69_distance}()},
+\code{\link{P_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{correlation_index}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
+\code{\link{strand_randomisation_index}()},
+\code{\link{synteny_index}()},
+\code{\link{tau_index}()}
 }
 \author{
 Zikun Yang
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}
+\concept{Similarity indexes}

@@ -10,7 +10,7 @@
 #'
 #' @returns A numeric value between 0 and 1.
 #'
-#' @family Nucleotide distances
+#' @family Alignment statistics
 #'
 #' @author Charles Plessy
 #'

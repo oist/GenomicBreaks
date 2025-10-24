@@ -9,7 +9,8 @@
 #' receive a list produced by the [`readTrainFile()`] function, containing this
 #' matrix.
 #'
-#' @family Nucleotide distances
+#' @family Alignment statistics
+#' @family Similarity indexes
 #'
 #' @author Zikun Yang
 #'

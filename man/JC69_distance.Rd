@@ -26,7 +26,7 @@ JC69_distance(exampleSubstitutionMatrix)
 Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In \emph{Mammalian Protein Metabolism} (pp. 21–132). Academic Press.
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
@@ -34,9 +34,24 @@ Other Nucleotide distances:
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
+
+Other Similarity indexes: 
+\code{\link{F81_distance}()},
+\code{\link{GOC}()},
+\code{\link{K80_distance}()},
+\code{\link{P_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{correlation_index}()},
+\code{\link{karyotype_index}()},
+\code{\link{slidingWindow}()},
+\code{\link{strand_randomisation_index}()},
+\code{\link{synteny_index}()},
+\code{\link{tau_index}()}
 }
 \author{
 Zikun Yang
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}
+\concept{Similarity indexes}

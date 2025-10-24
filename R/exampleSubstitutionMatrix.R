@@ -6,4 +6,6 @@
 #'
 #' @aliases exampleProbabilityMatrix
 #'
+#' @family Alignment statistics
+#'
 "exampleSubstitutionMatrix"

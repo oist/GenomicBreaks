@@ -17,4 +17,17 @@ The probability matrix is loaded  from the file \code{extdata/example.train} dis
 \details{
 The count matrix is derived from an alignment of \emph{Oikopleura dioica} cryptic species…
 }
+\seealso{
+Other Alignment statistics: 
+\code{\link{F81_distance}()},
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
+\code{\link{JC69_distance}()},
+\code{\link{K80_distance}()},
+\code{\link{P_distance}()},
+\code{\link{T92_distance}()},
+\code{\link{gapProportion}()}
+}
+\concept{Alignment statistics}
 \keyword{datasets}

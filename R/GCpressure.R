@@ -16,7 +16,7 @@
 #'
 #' @returns A numeric value between \eqn{-1} and \eqn{1}.
 #'
-#' @family Nucleotide distances
+#' @family Alignment statistics
 #'
 #' @author Charles Plessy
 #'

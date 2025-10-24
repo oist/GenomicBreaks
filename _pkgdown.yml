@@ -24,6 +24,7 @@ reference:
   - contents:
     - has_concept("Similarity indexes")
     - has_concept("Nucleotide distances")
+    - has_concept("Alignment statistics")
   - title: Colinearity functions
     desc: Functions to analyse colinearity and synteny.
   - contents:

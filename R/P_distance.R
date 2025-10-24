@@ -23,7 +23,8 @@
 #' @returns A numeric value representing the evolutionary distance between two
 #' genomes.  The larger the value, the more divergent the genomes.
 #'
-#' @family Nucleotide distances
+#' @family Alignment statistics
+#' @family Similarity indexes
 #'
 #' @author Charles Plessy
 #'
@@ -57,6 +58,8 @@ P_distance <- function(m, denominator = c("L3", "L1", "L2", "L4")) {
 #' The `P_error` function reports the standard error given the alignment
 #' length \eqn{n} and percent difference \eqn{p} computed from the matrix:
 #' \eqn{\sqrt{p(1 - p) / n}}.
+#'
+#' @family Alignment statistics
 #'
 #' @examples
 #' # example code

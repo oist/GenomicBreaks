@@ -32,7 +32,7 @@ GCpressure(t(exampleSubstitutionMatrix))
 
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCequilibrium}()},
 \code{\link{GCproportion}()},
@@ -40,9 +40,10 @@ Other Nucleotide distances:
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}},
 \code{\link{gapProportion}()}
 }
 \author{
 Charles Plessy
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}

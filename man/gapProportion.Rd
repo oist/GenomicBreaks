@@ -37,7 +37,7 @@ genomes in mammals and bacteria. \emph{Mol Biol Evol.} 26(7):1523-31.
 \doi{10.1093/molbev/msp063}
 }
 \seealso{
-Other Nucleotide distances: 
+Other Alignment statistics: 
 \code{\link{F81_distance}()},
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
@@ -45,9 +45,10 @@ Other Nucleotide distances:
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
-\code{\link{T92_distance}()}
+\code{\link{T92_distance}()},
+\code{\link{exampleSubstitutionMatrix}}
 }
 \author{
 Charles Plessy
 }
-\concept{Nucleotide distances}
+\concept{Alignment statistics}
