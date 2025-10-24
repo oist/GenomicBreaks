@@ -3,14 +3,18 @@
 \docType{data}
 \name{exampleSubstitutionMatrix}
 \alias{exampleSubstitutionMatrix}
-\title{Example Substitution Matrix}
+\alias{exampleProbabilityMatrix}
+\title{Example Substitution Matrices}
 \format{
-An object of class \code{matrix} (inherits from \code{array}) with 4 rows and 4 columns.
+An object of class \code{matrix} (inherits from \code{array}) with 6 rows and 6 columns.
 }
 \usage{
 exampleSubstitutionMatrix
 }
 \description{
-Loaded from the file \code{extdata/example.train} distributed in this package.
+The probability matrix is loaded  from the file \code{extdata/example.train} distributed in this package.
+}
+\details{
+The count matrix is derived from an alignment of \emph{Oikopleura dioica} cryptic species…
 }
 \keyword{datasets}

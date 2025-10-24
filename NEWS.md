@@ -1,3 +1,9 @@
+# GenomicBreaks dev
+
+ * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
+ * Add lazy-loaded example data, `exampleProbabilityMatrix` and
+   `exampleSubstitutionMatrix` for easy testing of the functions above.
+
 # GenomicBreaks 0.18.0
 
  * New `tau_index()` function. Closes #16
@@ -6,7 +12,6 @@
    as defined by [May (2004)](https://doi.org/10.1016/j.str.2004.04.001).
    Closes #26
  * Add a `gapProportion()` function.
- * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
 
 # GenomicBreaks 0.17.0
 

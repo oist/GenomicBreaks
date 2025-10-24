@@ -1,5 +1,9 @@
-#' Example Substitution Matrix
+#' Example Substitution Matrices
 #'
-#' Loaded from the file `extdata/example.train` distributed in this package.
+#' The probability matrix is loaded  from the file `extdata/example.train` distributed in this package.
+#'
+#' The count matrix is derived from an alignment of _Oikopleura dioica_ cryptic species…
+#'
+#' @aliases exampleProbabilityMatrix
 #'
 "exampleSubstitutionMatrix"
