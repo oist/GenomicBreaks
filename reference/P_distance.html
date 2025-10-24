@@ -7,9 +7,15 @@
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Percent difference Distance — P_distance"><meta name="description" content="The P-distance is simply the percentage of the aligned base pairs where the
 two bases are different.  See Details for a discussion on the many ways to
-compute percent identity (and therefore difference.)"><meta property="og:description" content="The P-distance is simply the percentage of the aligned base pairs where the
+compute percent identity (and therefore difference.)
+The P_error function reports the standard error given the alignment
+length \(n\) and percent difference \(p\) computed from the matrix:
+\(\sqrt{p(1 - p) / n}\)."><meta property="og:description" content="The P-distance is simply the percentage of the aligned base pairs where the
 two bases are different.  See Details for a discussion on the many ways to
-compute percent identity (and therefore difference.)"></head><body>
+compute percent identity (and therefore difference.)
+The P_error function reports the standard error given the alignment
+length \(n\) and percent difference \(p\) computed from the matrix:
+\(\sqrt{p(1 - p) / n}\)."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -52,11 +58,16 @@ compute percent identity (and therefore difference.)"></head><body>
     <p>The P-distance is simply the percentage of the aligned base pairs where the
 two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)</p>
+<p>The <code>P_error</code> function reports the standard error given the alignment
+length \(n\) and percent difference \(p\) computed from the matrix:
+\(\sqrt{p(1 - p) / n}\).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">m</span>, denominator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L3"</span>, <span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L4"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">m</span>, denominator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L3"</span>, <span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L4"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">P_error</span><span class="op">(</span><span class="va">m</span>, denominator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L3"</span>, <span class="st">"L1"</span>, <span class="st">"L2"</span>, <span class="st">"L4"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,10 +75,10 @@ compute percent identity (and therefore difference.)</p>
 
 
 <dl><dt id="arg-m">m<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
-<dd><p>A matrix of counts or probabilities for bases of the <em>target</em> genome
-to be aligned to bases on the <em>query</em> genome.  As a convenience it can also
-receive a list produced by the <code><a href="readTrainFile.html">readTrainFile()</a></code> function, containing this
-matrix.</p></dd>
+<dd><p>A matrix of counts (<code>P_distance</code>, <code>P_variance</code>) or probabilities
+(<code>P_distance</code> only) for bases of the <em>target</em> genome to be aligned to bases
+on the <em>query</em> genome.  As a convenience it can also receive a list produced
+by the <code><a href="readTrainFile.html">readTrainFile()</a></code> function, containing this matrix.</p></dd>
 
 
 <dt id="arg-denominator">denominator<a class="anchor" aria-label="anchor" href="#arg-denominator"></a></dt>
@@ -96,11 +107,37 @@ number of matching bases and four possible denominators in use at that time.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other Nucleotide distances:
+    <div class="dont-index"><p>Other Alignment statistics:
 <code><a href="F81_distance.html">F81_distance</a>()</code>,
+<code><a href="GCequilibrium.html">GCequilibrium</a>()</code>,
+<code><a href="GCpressure.html">GCpressure</a>()</code>,
+<code><a href="GCproportion.html">GCproportion</a>()</code>,
 <code><a href="JC69_distance.html">JC69_distance</a>()</code>,
 <code><a href="K80_distance.html">K80_distance</a>()</code>,
 <code><a href="T92_distance.html">T92_distance</a>()</code>,
+<code><a href="exampleSubstitutionMatrix.html">exampleSubstitutionMatrix</a></code>,
+<code><a href="gapProportion.html">gapProportion</a>()</code></p>
+<p>Other Similarity indexes:
+<code><a href="F81_distance.html">F81_distance</a>()</code>,
+<code><a href="GOC.html">GOC</a>()</code>,
+<code><a href="JC69_distance.html">JC69_distance</a>()</code>,
+<code><a href="K80_distance.html">K80_distance</a>()</code>,
+<code><a href="T92_distance.html">T92_distance</a>()</code>,
+<code><a href="correlation_index.html">correlation_index</a>()</code>,
+<code><a href="karyotype_index.html">karyotype_index</a>()</code>,
+<code><a href="slidingWindow.html">slidingWindow</a>()</code>,
+<code><a href="strand_randomisation_index.html">strand_randomisation_index</a>()</code>,
+<code><a href="synteny_index.html">synteny_index</a>()</code>,
+<code><a href="tau_index.html">tau_index</a>()</code></p>
+<p>Other Alignment statistics:
+<code><a href="F81_distance.html">F81_distance</a>()</code>,
+<code><a href="GCequilibrium.html">GCequilibrium</a>()</code>,
+<code><a href="GCpressure.html">GCpressure</a>()</code>,
+<code><a href="GCproportion.html">GCproportion</a>()</code>,
+<code><a href="JC69_distance.html">JC69_distance</a>()</code>,
+<code><a href="K80_distance.html">K80_distance</a>()</code>,
+<code><a href="T92_distance.html">T92_distance</a>()</code>,
+<code><a href="exampleSubstitutionMatrix.html">exampleSubstitutionMatrix</a></code>,
 <code><a href="gapProportion.html">gapProportion</a>()</code></p></div>
     </div>
     <div class="section level2">
@@ -110,9 +147,12 @@ number of matching bases and four possible denominators in use at that time.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="readTrainFile.html">readTrainFile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example.train"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0159755</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">P_distance</span><span class="op">(</span><span class="va">exampleSubstitutionMatrix</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2312837</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example code</span></span></span>
+<span class="r-in"><span><span class="fu">P_error</span><span class="op">(</span><span class="va">exampleSubstitutionMatrix</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7.701531e-05</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

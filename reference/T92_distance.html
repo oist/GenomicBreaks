@@ -74,12 +74,28 @@ matrix.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other Nucleotide distances:
+    <div class="dont-index"><p>Other Alignment statistics:
 <code><a href="F81_distance.html">F81_distance</a>()</code>,
+<code><a href="GCequilibrium.html">GCequilibrium</a>()</code>,
+<code><a href="GCpressure.html">GCpressure</a>()</code>,
+<code><a href="GCproportion.html">GCproportion</a>()</code>,
 <code><a href="JC69_distance.html">JC69_distance</a>()</code>,
 <code><a href="K80_distance.html">K80_distance</a>()</code>,
 <code><a href="P_distance.html">P_distance</a>()</code>,
-<code><a href="gapProportion.html">gapProportion</a>()</code></p></div>
+<code><a href="exampleSubstitutionMatrix.html">exampleSubstitutionMatrix</a></code>,
+<code><a href="gapProportion.html">gapProportion</a>()</code></p>
+<p>Other Similarity indexes:
+<code><a href="F81_distance.html">F81_distance</a>()</code>,
+<code><a href="GOC.html">GOC</a>()</code>,
+<code><a href="JC69_distance.html">JC69_distance</a>()</code>,
+<code><a href="K80_distance.html">K80_distance</a>()</code>,
+<code><a href="P_distance.html">P_distance</a>()</code>,
+<code><a href="correlation_index.html">correlation_index</a>()</code>,
+<code><a href="karyotype_index.html">karyotype_index</a>()</code>,
+<code><a href="slidingWindow.html">slidingWindow</a>()</code>,
+<code><a href="strand_randomisation_index.html">strand_randomisation_index</a>()</code>,
+<code><a href="synteny_index.html">synteny_index</a>()</code>,
+<code><a href="tau_index.html">tau_index</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -88,9 +104,8 @@ matrix.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="readTrainFile.html">readTrainFile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example.train"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">T92_distance</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01617186</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">T92_distance</span><span class="op">(</span><span class="va">exampleSubstitutionMatrix</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2831916</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
