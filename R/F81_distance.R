@@ -28,8 +28,7 @@
 #' \doi{10.1111/j.0006-341x.1999.01064.x}
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' F81_distance(parameters)
+#' F81_distance(exampleSubstitutionMatrix)
 #'
 #' @export
 

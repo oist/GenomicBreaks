@@ -34,9 +34,8 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' GCequilibrium(parameters)
-#' GCequilibrium(t(parameters$probability_matrix))
+#' GCequilibrium(exampleSubstitutionMatrix)
+#' GCequilibrium(t(exampleSubstitutionMatrix))
 #'
 #' @export
 

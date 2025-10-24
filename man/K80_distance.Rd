@@ -19,8 +19,7 @@ Returns a numeric value show the evolutionary distance between two genomes. the 
 The Kimura's 2-parameter (K80) distance distinguishes between transitions and transversions.  It is calculated as \eqn{-\frac{1}{2} \ln\left(\left(1 - 2p - q\right) \times \sqrt{1 - 2q}\right)}, where \eqn{p} is the probability of transition and \eqn{q} is the probability of transversion. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#K80_model_(Kimura_1980)}{Wikipedia} for more details.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-K80_distance(parameters)
+K80_distance(exampleSubstitutionMatrix)
 
 }
 \references{

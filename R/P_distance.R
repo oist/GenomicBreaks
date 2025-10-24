@@ -31,8 +31,7 @@
 #' *Structure*, 12(5), 737–738. \doi{10.1016/j.str.2004.04.001}
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' P_distance(parameters)
+#' P_distance(exampleSubstitutionMatrix)
 #'
 #' @export
 

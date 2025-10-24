@@ -26,8 +26,7 @@
 #' \doi{10.1093/molbev/msp063}
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' gapProportion(parameters)
+#' gapProportion(exampleSubstitutionMatrix)
 #'
 #' @export
 

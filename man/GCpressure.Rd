@@ -27,9 +27,8 @@ package because I am screening as many indices that I can extract from an
 alignment pair.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-GCpressure(parameters)
-GCpressure(t(parameters$probability_matrix))
+GCpressure(exampleSubstitutionMatrix)
+GCpressure(t(exampleSubstitutionMatrix))
 
 }
 \seealso{

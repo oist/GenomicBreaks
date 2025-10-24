@@ -27,8 +27,7 @@ conserved regions alignable. Consequently, the proportion of gaps tends to
 decrease.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-gapProportion(parameters)
+gapProportion(exampleSubstitutionMatrix)
 
 }
 \references{

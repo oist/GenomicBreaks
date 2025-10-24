@@ -73,6 +73,7 @@ Collate:
     'zipWithNext.R'
     'coalesce_contigs.R'
     'correlation_index.R'
+    'exampleSubstitutionMatrix.R'
     'feature_coverage.R'
     'flagInversions.R'
     'flagColinearAlignments.R'

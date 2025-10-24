@@ -19,8 +19,7 @@ Returns a numeric value show the evolutionary distance between two genomes. the 
 The Tamura 1992 (T92) distance extends the K80 distance by taking \code{GC} content into account.  It is calculated as \eqn{-h \ln \left(1 - \frac{p}{h} - q\right) - \frac{1}{2} \times (1 - h) \ln\left(1 - 2 q\right)}, where \eqn{p} is the probability of transition, \eqn{q} the probability of transversion, \eqn{h = 2\theta (1 - \theta)} and \eqn{\theta} is the \code{GC} content. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#T92_model_(Tamura_1992)}{Wikipedia} for more details.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-T92_distance(parameters)
+T92_distance(exampleSubstitutionMatrix)
 
 }
 \references{

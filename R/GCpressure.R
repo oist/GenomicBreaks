@@ -21,9 +21,8 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' GCpressure(parameters)
-#' GCpressure(t(parameters$probability_matrix))
+#' GCpressure(exampleSubstitutionMatrix)
+#' GCpressure(t(exampleSubstitutionMatrix))
 #'
 #' @export
 

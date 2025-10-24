@@ -36,8 +36,7 @@ number of matching bases and four possible denominators in use at that time.
 }
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-P_distance(parameters)
+P_distance(exampleSubstitutionMatrix)
 
 }
 \references{

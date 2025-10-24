@@ -15,9 +15,8 @@
 #' @author Charles Plessy
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' GCproportion(parameters)
-#' GCproportion(t(parameters$probability_matrix))
+#' GCproportion(exampleSubstitutionMatrix)
+#' GCproportion(t(exampleSubstitutionMatrix))
 #'
 #' @export
 

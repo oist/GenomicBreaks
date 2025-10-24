@@ -24,8 +24,7 @@ calculated as \eqn{-E \ln\left(\frac{E - p}{E}\right)}, where \eqn{E} equals
 (McGuire and coll., 1999).
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-F81_distance(parameters)
+F81_distance(exampleSubstitutionMatrix)
 
 }
 \references{

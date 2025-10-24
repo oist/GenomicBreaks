@@ -20,9 +20,8 @@ The proportion of GC in the \emph{target} genome in an alignment.  For the same
 on the \emph{query} genome, just transpose the input matrix.
 }
 \examples{
-parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-GCproportion(parameters)
-GCproportion(t(parameters$probability_matrix))
+GCproportion(exampleSubstitutionMatrix)
+GCproportion(t(exampleSubstitutionMatrix))
 
 }
 \seealso{

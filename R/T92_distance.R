@@ -16,8 +16,7 @@
 #' @returns Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
 #'
 #' @examples
-#' parameters <- readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
-#' T92_distance(parameters)
+#' T92_distance(exampleSubstitutionMatrix)
 #'
 #' @export
 
