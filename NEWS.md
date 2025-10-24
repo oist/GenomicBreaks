@@ -6,6 +6,7 @@
    as defined by [May (2004)](https://doi.org/10.1016/j.str.2004.04.001).
    Closes #26
  * Add a `gapProportion()` function.
+ * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
 
 # GenomicBreaks 0.17.0
 

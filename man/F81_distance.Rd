@@ -39,6 +39,9 @@ genetic distances from DNA sequences.  \emph{Biometrics}, 55(4), 1064–1070.
 }
 \seealso{
 Other Nucleotide distances: 
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},

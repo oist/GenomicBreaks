@@ -51,6 +51,9 @@ VignetteBuilder: knitr
 Collate: 
     'F81_distance.R'
     'GBreaksToMatrix.R'
+    'GCequilibrium.R'
+    'GCpressure.R'
+    'GCproportion.R'
     'GOC.R'
     'GenomicBreaks.R'
     'JC69_distance.R'

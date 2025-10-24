@@ -40,6 +40,9 @@ genomes in mammals and bacteria. \emph{Mol Biol Evol.} 26(7):1523-31.
 \seealso{
 Other Nucleotide distances: 
 \code{\link{F81_distance}()},
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},

@@ -29,6 +29,9 @@ Jukes, T.H. & Cantor, C.R. (1969). "Evolution of protein molecules." In \emph{Ma
 \seealso{
 Other Nucleotide distances: 
 \code{\link{F81_distance}()},
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},

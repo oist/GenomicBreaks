@@ -47,6 +47,9 @@ May, A. C. W. (2004). Percent Sequence Identity: The Need to Be Explicit.
 \seealso{
 Other Nucleotide distances: 
 \code{\link{F81_distance}()},
+\code{\link{GCequilibrium}()},
+\code{\link{GCpressure}()},
+\code{\link{GCproportion}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},

@@ -32,6 +32,7 @@
 #' @export
 
 gapProportion <- function(m) {
+  if(is.list(m)) m <- m$probability_matrix
   if (! '-' %in% c(colnames(m), rownames(m))) return(0)
   (sum(m['-',]) + sum(m[,'-'])) / sum(m)
 }
