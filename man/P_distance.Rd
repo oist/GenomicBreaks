@@ -2,15 +2,18 @@
 % Please edit documentation in R/P_distance.R
 \name{P_distance}
 \alias{P_distance}
+\alias{P_error}
 \title{Percent difference Distance}
 \usage{
 P_distance(m, denominator = c("L3", "L1", "L2", "L4"))
+
+P_error(m, denominator = c("L3", "L1", "L2", "L4"))
 }
 \arguments{
-\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
-to be aligned to bases on the \emph{query} genome.  As a convenience it can also
-receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
-matrix.}
+\item{m}{A matrix of counts (\code{P_distance}, \code{P_variance}) or probabilities
+(\code{P_distance} only) for bases of the \emph{target} genome to be aligned to bases
+on the \emph{query} genome.  As a convenience it can also receive a list produced
+by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this matrix.}
 
 \item{denominator}{Denominator according to the nomenclature of May (2004).
 Default is \code{L3}.}
@@ -23,6 +26,10 @@ genomes.  The larger the value, the more divergent the genomes.
 The P-distance is simply the percentage of the aligned base pairs where the
 two bases are different.  See Details for a discussion on the many ways to
 compute percent identity (and therefore difference.)
+
+The \code{P_error} function reports the standard error given the alignment
+length \eqn{n} and percent difference \eqn{p} computed from the matrix:
+\eqn{\sqrt{p(1 - p) / n}}.
 }
 \details{
 The P-distance is computed as 1 minus the percent sequence identity
@@ -37,6 +44,9 @@ number of matching bases and four possible denominators in use at that time.
 }
 \examples{
 P_distance(exampleSubstitutionMatrix)
+
+# example code
+P_error(exampleSubstitutionMatrix)
 
 }
 \references{

@@ -1,6 +1,8 @@
 # GenomicBreaks dev
 
  * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
+ * Add a `P_error()` function to compute the binomial standard error on
+   `P_distance()`
  * Add lazy-loaded example data, `exampleProbabilityMatrix` and
    `exampleSubstitutionMatrix` for easy testing of the functions above.
 

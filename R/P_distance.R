@@ -4,10 +4,10 @@
 #' two bases are different.  See Details for a discussion on the many ways to
 #' compute percent identity (and therefore difference.)
 #'
-#' @param m A matrix of counts or probabilities for bases of the _target_ genome
-#' to be aligned to bases on the _query_ genome.  As a convenience it can also
-#' receive a list produced by the [`readTrainFile()`] function, containing this
-#' matrix.
+#' @param m A matrix of counts (`P_distance`, `P_variance`) or probabilities
+#' (`P_distance` only) for bases of the _target_ genome to be aligned to bases
+#' on the _query_ genome.  As a convenience it can also receive a list produced
+#' by the [`readTrainFile()`] function, containing this matrix.
 #' @param denominator Denominator according to the nomenclature of May (2004).
 #' Default is `L3`.
 #'
@@ -49,4 +49,35 @@ P_distance <- function(m, denominator = c("L3", "L1", "L2", "L4")) {
                                    sum(m[       , non_gap]))
                        )
   1 - numerator / denominator
+}
+
+#' @rdname P_distance
+#'
+#' @description
+#' The `P_error` function reports the standard error given the alignment
+#' length \eqn{n} and percent difference \eqn{p} computed from the matrix:
+#' \eqn{\sqrt{p(1 - p) / n}}.
+#'
+#' @examples
+#' # example code
+#' P_error(exampleSubstitutionMatrix)
+#'
+#' @export
+
+P_error <- function(m, denominator = c("L3", "L1", "L2", "L4")) {
+  denominator <- match.arg(denominator)
+  if(is.list(m)) m <- m$probability_matrix
+  non_gap <- c("A", "C", "G", "T")
+  numerator   <- sum(diag(m[non_gap, non_gap]))
+  denominator <- switch( denominator
+                         , L1 =  min(sum(m[non_gap,        ]),
+                                     sum(m[       , non_gap]))
+                         , L2 =      sum(m)
+                         , L3 =      sum(m[non_gap, non_gap])
+                         , L4 = mean(sum(m[non_gap,        ]),
+                                     sum(m[       , non_gap]))
+  )
+  p <- 1 - numerator / denominator
+  n <- denominator
+  sqrt(p * (1 - p) / n)
 }
