@@ -1,4 +1,4 @@
-# GenomicBreaks dev
+# GenomicBreaks 0.19.0
 
  * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
  * Add a `P_error()` function to compute the binomial standard error on
