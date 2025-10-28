@@ -8,7 +8,7 @@
 #' @details
 #' Let \eqn{P} be the total fraction of **transition** differences
 #' (A↔G **plus** C↔T) among A/C/G/T pairs, and \eqn{Q} the fraction of
-#' **transversion** differences (all other A↔{C,T}, G↔{C,T} pairs).
+#' **transversion** differences (all other A↔\{C,T\}, G↔\{C,T\} pairs).
 #' Let \eqn{\pi_A,\pi_C,\pi_G,\pi_T} be the **average base frequencies**
 #' across the two sequences (row and column marginals averaged),
 #' \eqn{\pi_R = \pi_A + \pi_G}, and \eqn{\pi_Y = \pi_C + \pi_T}.

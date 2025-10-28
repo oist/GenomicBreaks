@@ -23,7 +23,7 @@ are pooled into a single class (A↔G and C↔T).
 \details{
 Let \eqn{P} be the total fraction of \strong{transition} differences
 (A↔G \strong{plus} C↔T) among A/C/G/T pairs, and \eqn{Q} the fraction of
-\strong{transversion} differences (all other A↔{C,T}, G↔{C,T} pairs).
+\strong{transversion} differences (all other A↔\{C,T\}, G↔\{C,T\} pairs).
 Let \eqn{\pi_A,\pi_C,\pi_G,\pi_T} be the \strong{average base frequencies}
 across the two sequences (row and column marginals averaged),
 \eqn{\pi_R = \pi_A + \pi_G}, and \eqn{\pi_Y = \pi_C + \pi_T}.
