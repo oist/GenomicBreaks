@@ -62,6 +62,7 @@ Collate:
     'RcppExports.R'
     'StructuralVariants.R'
     'T92_distance.R'
+    'TN93_distance.R'
     'dist2next.R'
     'Translocations.R'
     'align_scaf_plot_2.R'
