@@ -59,20 +59,26 @@ Other Alignment statistics:
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
 \code{\link{GCproportion}()},
+\code{\link{HKY85_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{TN93_distance}()},
 \code{\link{exampleSubstitutionMatrix}},
-\code{\link{gapProportion}()}
+\code{\link{gapProportion}()},
+\code{\link{logDet_distance}()}
 
 Other Similarity indexes: 
 \code{\link{F81_distance}()},
 \code{\link{GOC}()},
+\code{\link{HKY85_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{TN93_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
+\code{\link{logDet_distance}()},
 \code{\link{slidingWindow}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()},
@@ -83,11 +89,14 @@ Other Alignment statistics:
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
 \code{\link{GCproportion}()},
+\code{\link{HKY85_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{TN93_distance}()},
 \code{\link{exampleSubstitutionMatrix}},
-\code{\link{gapProportion}()}
+\code{\link{gapProportion}()},
+\code{\link{logDet_distance}()}
 }
 \author{
 Charles Plessy

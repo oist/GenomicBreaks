@@ -23,11 +23,14 @@ Other Alignment statistics:
 \code{\link{GCequilibrium}()},
 \code{\link{GCpressure}()},
 \code{\link{GCproportion}()},
+\code{\link{HKY85_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
-\code{\link{gapProportion}()}
+\code{\link{TN93_distance}()},
+\code{\link{gapProportion}()},
+\code{\link{logDet_distance}()}
 }
 \concept{Alignment statistics}
 \keyword{datasets}

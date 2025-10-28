@@ -44,12 +44,15 @@ slided_gb[[1]]
 Other Similarity indexes: 
 \code{\link{F81_distance}()},
 \code{\link{GOC}()},
+\code{\link{HKY85_distance}()},
 \code{\link{JC69_distance}()},
 \code{\link{K80_distance}()},
 \code{\link{P_distance}()},
 \code{\link{T92_distance}()},
+\code{\link{TN93_distance}()},
 \code{\link{correlation_index}()},
 \code{\link{karyotype_index}()},
+\code{\link{logDet_distance}()},
 \code{\link{strand_randomisation_index}()},
 \code{\link{synteny_index}()},
 \code{\link{tau_index}()}
