@@ -56,6 +56,7 @@ Collate:
     'GCproportion.R'
     'GOC.R'
     'GenomicBreaks.R'
+    'HKY85_distance.R'
     'JC69_distance.R'
     'K80_distance.R'
     'P_distance.R'
