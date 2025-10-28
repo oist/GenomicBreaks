@@ -76,5 +76,5 @@ TN93_distance <- function(m) {
   # Guard against invalid logs / zero denominators
   if (a <= 0 || b <= 0 || c <= 0 || t1 <= 0 || t2 <= 0 || t3 <= 0) return(Inf)
 
-  -a * log(t1) - b * log(t2) - c * log(t3)
+  unname(-a * log(t1) - b * log(t2) - c * log(t3))
 }

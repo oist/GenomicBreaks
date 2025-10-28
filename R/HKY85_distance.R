@@ -91,5 +91,5 @@ HKY85_distance <- function(m) {
   # Guard against invalid logs / zero denominators
   if (a <= 0 || c <= 0 || t1 <= 0 || t2 <= 0) return(Inf)
 
-  -a * log(t1) - c * log(t2)
+  unname(-a * log(t1) - c * log(t2))
 }
