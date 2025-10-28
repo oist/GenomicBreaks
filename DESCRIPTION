@@ -94,6 +94,7 @@ Collate:
     'karyotype_index.R'
     'keepLongestPair.R'
     'load_genomic_breaks.R'
+    'logDet_distance.R'
     'longestMatchesInTarget.R'
     'makeInversions.R'
     'makeOxfordPlots.R'
