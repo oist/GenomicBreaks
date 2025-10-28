@@ -1,3 +1,9 @@
+# GenomicBreaks 0.20.0
+ * Correct GC content calculation in `T92_distance()` and add two alternatives.
+ * Add three more distances suggested by Copilot.  The code is not proofread
+   yet; take the results with skepticism.  `TN93_distance()`, `HKY85_distance()`,
+   `logDet_distance()`.
+
 # GenomicBreaks 0.19.0
 
  * Add a `GCequilibrium()`, `GCpressure()` and `GCproportion()` function.
