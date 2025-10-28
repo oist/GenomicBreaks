@@ -6,11 +6,14 @@
 #' to be aligned to bases on the _query_ genome.  As a convenience it can also
 #' receive a list produced by the [`readTrainFile()`] function, containing this
 #' matrix.
+#' @param gc Calculate the GC content from the _target_, the _query_ or average
+#' both?
 #'
 #' @family Alignment statistics
 #' @family Similarity indexes
 #'
 #' @author Zikun Yang
+#' @author Charles Plessy
 #'
 #' @references Tamura, K. (1992). "Estimation of the number of nucleotide substitutions when there are strong transition-transversion and G+C-content biases." *Molecular Biology and Evolution*, 9(4), 678–687. DOI: [10.1093/oxfordjournals.molbev.a040752](https://doi.org/10.1093/oxfordjournals.molbev.a040752)
 #'
@@ -18,14 +21,22 @@
 #'
 #' @examples
 #' T92_distance(exampleSubstitutionMatrix)
+#' T92_distance(exampleSubstitutionMatrix, gc="target")
+#' T92_distance(exampleSubstitutionMatrix, gc="query")
 #'
 #' @export
 
-T92_distance <- function(m) {
+T92_distance <- function(m, gc = c("average", "target", "query")) {
+  gc <- match.arg(gc)
   if(is.list(m)) m <- m$probability_matrix
   m <- m[c('A', 'C', 'G', 'T'), c('A', 'C', 'G', 'T')]
   P <- prop.table(m)
-  theta <- P['G', 'G'] + P['C', 'C']
+  gc_rows <- sum(P["G", ])  + sum(P["C", ])        # target
+  gc_cols <- sum(P[ , "G"]) + sum(P[ , "C"])       # query
+  theta <- switch( gc
+                 , target  =        gc_rows
+                 , query   =                  gc_cols
+                 , average = 0.5 * (gc_rows + gc_cols))
   h <- 2 * theta * (1 - theta)
   p <- P['A', 'G'] + P['G', 'A'] +
        P['C', 'T'] + P['T', 'C']

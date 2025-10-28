@@ -4,13 +4,16 @@
 \alias{T92_distance}
 \title{Tamura 1992 distance}
 \usage{
-T92_distance(m)
+T92_distance(m, gc = c("average", "target", "query"))
 }
 \arguments{
 \item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
 to be aligned to bases on the \emph{query} genome.  As a convenience it can also
 receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
 matrix.}
+
+\item{gc}{Calculate the GC content from the \emph{target}, the \emph{query} or average
+both?}
 }
 \value{
 Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
@@ -20,6 +23,8 @@ The Tamura 1992 (T92) distance extends the K80 distance by taking \code{GC} cont
 }
 \examples{
 T92_distance(exampleSubstitutionMatrix)
+T92_distance(exampleSubstitutionMatrix, gc="target")
+T92_distance(exampleSubstitutionMatrix, gc="query")
 
 }
 \references{
@@ -52,6 +57,8 @@ Other Similarity indexes:
 }
 \author{
 Zikun Yang
+
+Charles Plessy
 }
 \concept{Alignment statistics}
 \concept{Similarity indexes}
