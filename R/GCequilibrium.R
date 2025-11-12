@@ -41,6 +41,7 @@
 
 GCequilibrium <- function(m) {
   if(is.list(m)) m <- m$probability_matrix
+  if (all(m == 0)) return(NA)
   W <- c("A", "T")
   S <- c("G", "C")
   a <- sum(m[W, S])

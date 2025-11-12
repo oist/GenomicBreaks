@@ -39,6 +39,7 @@
 P_distance <- function(m, denominator = c("L3", "L1", "L2", "L4")) {
   denominator <- match.arg(denominator)
   if(is.list(m)) m <- m$probability_matrix
+  if (all(m == 0)) return(NA)
   non_gap <- c("A", "C", "G", "T")
   numerator   <- sum(diag(m[non_gap, non_gap]))
   denominator <- switch( denominator

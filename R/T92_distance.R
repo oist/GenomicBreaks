@@ -30,6 +30,7 @@ T92_distance <- function(m, gc = c("average", "target", "query")) {
   gc <- match.arg(gc)
   if(is.list(m)) m <- m$probability_matrix
   m <- m[c('A', 'C', 'G', 'T'), c('A', 'C', 'G', 'T')]
+  if (all(m == 0)) return(NA)
   P <- prop.table(m)
   gc_rows <- sum(P["G", ])  + sum(P["C", ])        # target
   gc_cols <- sum(P[ , "G"]) + sum(P[ , "C"])       # query

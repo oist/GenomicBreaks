@@ -36,6 +36,7 @@
 F81_distance <- function(m) {
   if(is.list(m)) m <- m$probability_matrix
   m <- m[c("A", "C", "G", "T"), c("A", "C", "G", "T")]
+  if (all(m == 0)) return(NA)
   P <- prop.table(m)
   target_freqs <- rowSums(P)
   query_freqs  <- colSums(P)

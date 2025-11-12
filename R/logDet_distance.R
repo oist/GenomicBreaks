@@ -64,6 +64,7 @@ logDet_distance <- function(m, pseudocount = 0) {
   # Keep only A/C/G/T
   nts <- c("A", "C", "G", "T")
   m <- m[nts, nts, drop = FALSE]
+  if (all(m == 0)) return(NA)
 
   # Optional smoothing to avoid zero cells
   if (pseudocount > 0) {

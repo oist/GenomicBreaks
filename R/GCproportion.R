@@ -22,5 +22,6 @@
 
 GCproportion <- function(m) {
   if(is.list(m)) m <- m$probability_matrix
+  if (all(m == 0)) return(NA)
   sum(colSums(m)[c("G","C")]) / sum(colSums(m)[c("A", "C", "G","T")])
 }
