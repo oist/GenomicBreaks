@@ -1,4 +1,11 @@
+# GenomicBreaks 0.21.0
+
+ * New `flagTwinInversions()` function with example data.
+ * Support all-zero substitution matrices in the distance functions introduced
+   earlier.
+
 # GenomicBreaks 0.20.0
+
  * Correct GC content calculation in `T92_distance()` and add two alternatives.
  * Add three more distances suggested by Copilot.  The code is not proofread
    yet; take the results with skepticism.  `TN93_distance()`, `HKY85_distance()`,
