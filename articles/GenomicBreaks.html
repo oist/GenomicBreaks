@@ -69,7 +69,7 @@ West</h4>
                         <h4 data-toc-skip class="author">Charles
 Plessy</h4>
             
-            <h4 data-toc-skip class="date">28 October, 2025</h4>
+            <h4 data-toc-skip class="date">12 November, 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/main/vignettes/GenomicBreaks.Rmd" class="external-link"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="d-none name"><code>GenomicBreaks.Rmd</code></div>
@@ -469,10 +469,10 @@ alignment stops that have a high probability of being breakpoints.</p>
 objects.</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb</span>,  <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, <span class="st">"chrI"</span>, main <span class="op">=</span> <span class="st">"S. cerevisiae / S. paradoxus"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-2.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-2.png" class="r-plt" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="flipping-a-chromosome">Flipping a chromosome<a class="anchor" aria-label="anchor" href="#flipping-a-chromosome"></a>
@@ -489,11 +489,11 @@ object, the <em>GenomicBreaks</em> function
 coordinate of the most distal alignment.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">gb_Neu</span>, main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gb_Neu</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/forceSeqLengths.html">forceSeqLengths</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reverse.html">reverse</a></span><span class="op">(</span>query <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-2.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-2.png" class="r-plt" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -518,11 +518,11 @@ macrosynteny plots in which all the sequence levels are merged.</p>
 <span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
-<p><img src="GenomicBreaks_files/figure-html/oxford_plots-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/oxford_plots-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/makeOxfordPlots.html">makeOxfordPlots</a></span><span class="op">(</span><span class="va">gb_Neu</span>, col <span class="op">=</span> <span class="st">"strand"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"N. crassa chrIII vs P. comata chr7 “Oxford” plot"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/oxford_plots-2.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/oxford_plots-2.png" class="r-plt" width="700"></p>
 <p>The plots are <code>ggplot2</code> objects that can be further
 customised. Also, when there is only one sequence levels in the
 <em>target</em> or <em>query</em> genomes, their name is displayed, and
@@ -538,7 +538,7 @@ addition of numeric scales show meaningful coordinates.</p>
 <span><span class="co">## Adding another scale for <span style="color: #00BB00;">x</span>, which will replace the existing scale.</span></span>
 <span><span class="co">## Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
 <span><span class="co">## Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span></code></pre>
-<p><img src="GenomicBreaks_files/figure-html/custom_oxford_plots-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/custom_oxford_plots-1.png" class="r-plt" width="700"></p>
 <p>Pass <code>type = 'none'</code> to receive a <code>ggplot</code>
 object with no layer, that you can customise at wish.</p>
 </div>
@@ -601,7 +601,7 @@ are not inversions.</p>
 <span><span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></span></code></pre>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/ideal_insertions-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/ideal_insertions-1.png" class="r-plt" width="700"></p>
 <p>See
 <code><a href="../articles/StructuralVariants.html">vignette("StructuralVariants", package = "GenomicBreaks")</a></code>
 for other examples of translocations.</p>
@@ -641,7 +641,7 @@ which genome the move happened</em>.</p>
 <span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="va">coa</span>, chrT <span class="op">=</span> <span class="st">"chrI"</span>, xlim <span class="op">=</span> <span class="fu"><a href="../reference/gb2xlim.html">gb2xlim</a></span><span class="op">(</span><span class="va">coa</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/detect_trivial_insertions-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_insertions-1.png" class="r-plt" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -720,13 +720,13 @@ collapsing.</p>
 <span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>   <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>   <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showInversions.html">showInversions</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">plyranges</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/plotApairOfChrs.html">plotApairOfChrs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png" width="700"></p>
+<p><img src="GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png" class="r-plt" width="700"></p>
 </div>
 </div>
 </div>
@@ -775,7 +775,7 @@ are always flanked by <em>breakpoint regions</em>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

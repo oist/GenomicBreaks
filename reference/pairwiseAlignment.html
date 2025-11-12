@@ -89,10 +89,10 @@ properly related to a <code>BSgenome</code> package, and aligns them with the
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Bioconductor API functions:
 <code><a href="GBreaks-class.html">GBreaks-class</a></code>,
-<code><a href="getSeq.html">getSeq</a>()</code>,
-<code><a href="range.html">range_GBreaks</a>()</code>,
-<code><a href="reverse.html">reverse</a>()</code>,
-<code><a href="subsetByOverlaps.html">subsetByOverlaps_GBreaks</a>()</code></p></div>
+<code><a href="getSeq.html">getSeq()</a></code>,
+<code><a href="range.html">range_GBreaks()</a></code>,
+<code><a href="reverse.html">reverse()</a></code>,
+<code><a href="subsetByOverlaps.html">subsetByOverlaps_GBreaks()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -106,13 +106,9 @@ properly related to a <code>BSgenome</code> package, and aligns them with the
 <span class="r-in"><span><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span> target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="st">"chrI: 1-20"</span>, seqinfo <span class="op">=</span> <span class="fu">seqinfo</span><span class="op">(</span><span class="va">Scerevisiae</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>             , query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="st">"chrI:21-40"</span>, seqinfo <span class="op">=</span> <span class="fu">seqinfo</span><span class="op">(</span><span class="va">Scerevisiae</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">pairwiseAlignment</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>pairwiseAlignment() has moved from Biostrings to the pwalign package, and is</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   formally deprecated in Biostrings &gt;= 2.75.1. Please call</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   pwalign::pairwiseAlignment() to get rid of this warning.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Global PairwiseAlignmentsSingleSubject (1 of 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pattern: C-CACACCACACCCACACACC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> subject: CACACACCACAC-CACACACC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> score: 9.653366 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .call_fun_in_pwalign("pairwiseAlignment", ...):</span> pairwiseAlignment() has moved from Biostrings to the pwalign package, and is</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   formally defunct in Biostrings &gt;= 2.77.1. Please call</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span>   pwalign::pairwiseAlignment() to get rid of this error.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -125,7 +121,7 @@ properly related to a <code>BSgenome</code> package, and aligns them with the
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

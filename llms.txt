@@ -1,0 +1,454 @@
+# GenomicBreaks
+
+## Purpose
+
+*GenomicBreaks* is a `R` package using
+*[Bioconductor](https://bioconductor.org/)* libraries to analyse
+pairwise alignments of whole genomes in which the gene order has been
+scrambled by evolution, like in the picture below that represents the
+comparison of homologous chromosomes in two distantly related molds, *N.
+crassa* (chrIII) and *P. comata* (chr7).
+
+![Comparison between Neurospora crassa chrIII / Podospora comata chr7
+(rev-complemented)](reference/figures/plotApairOfChrs_Neu-2.png)
+
+This package is especially designed to parse and process the alignment
+files produced by *nf-core*’s [pairwise genome alignment
+pipeline](https://nf-co.re/pairgenomealign/), but should be capable to
+import output of other pipelines as well.
+
+## Installation
+
+### Install the package.
+
+If you have [Bioconductor](https://www.bioconductor.org/install/) and
+the [remotes](https://remotes.r-lib.org/#installation) already
+installed, the following should work.
+
+    Rscript -e 'remotes::install_github("oist/GenomicBreaks", repos=BiocManager::repositories(), dependencies=TRUE)'
+
+Add `dependencies=TRUE` if you would like to install the packages needed
+to build the vignettes.
+
+### How to create a Singularity container with GenomicBreaks installed.
+
+See the [Singularity reciepe
+file](https://oist.github.io/GenomicBreaks/Singularity.def)
+
+    singularity build --fakeroot GenomicBreaks.sif Singularity.def
+
+## GenomicBreaks in brief:
+
+A pairwise alignment of two genomes is loaded in `GBreaks` objects
+wrapping the `GRanges` class. Here is an example:
+
+    GBreaks object with 505 ranges and 2 metadata columns:
+            seqnames      ranges strand |     score                   query
+               <Rle>   <IRanges>  <Rle> | <numeric>               <GRanges>
+        [1]     chrI  5860-10010      + |     10609  NC_047487.1:8723-12716
+        [2]     chrI 11157-11782      + |      1253 NC_047487.1:13035-13680
+        [3]     chrI 25371-26528      + |      3651 NC_047487.1:15380-16537
+        [4]     chrI 26849-29699      + |      6130 NC_047487.1:17263-20175
+        [5]     chrI 29937-30607      + |       767 NC_047487.1:20203-20866
+        ...      ...         ...    ... .       ...                     ...
+      [501]     chrM 67039-67870      + |      1441   NC_018044.1:7758-8439
+      [502]     chrM 68205-68580      + |       830   NC_018044.1:8783-9180
+      [503]     chrM 69178-76168      + |     14528  NC_018044.1:9650-16261
+      [504]     chrM 77356-80022      + |      8066 NC_018044.1:53206-55865
+      [505]     chrM 80919-85779      + |      6712 NC_018044.1:57885-61592
+      -------
+      seqinfo: 17 sequences (1 circular) from sacCer3 genome
+
+See “*Get started*” on <https://oist.github.io/GenomicBreaks> for
+further details.
+
+# Package index
+
+## Data loading functions
+
+Functions to load data
+
+- [`load_genomic_breaks()`](https://oist.github.io/GenomicBreaks/reference/load_genomic_breaks.md)
+  : Load pairwise genome alignments
+
+- [`readMAF()`](https://oist.github.io/GenomicBreaks/reference/readMAF.md)
+  : Read a MAF file
+
+- [`readTrainFile()`](https://oist.github.io/GenomicBreaks/reference/readTrainFile.md)
+  :
+
+  Extract values from `last-train` parameter file
+
+## Plotting functions
+
+Graphical display of pairwise alignments
+
+- [`bp_heatmap()`](https://oist.github.io/GenomicBreaks/reference/bp_heatmap.md)
+  : Breakpoint Associated Heatmaps
+
+- [`bp_pair_analysis()`](https://oist.github.io/GenomicBreaks/reference/bp_pair_analysis.md)
+  : Breakpoint Pairwise Comparison using Reference Genome as Coordinate
+  System
+
+- [`feature_coverage()`](https://oist.github.io/GenomicBreaks/reference/feature_coverage.md)
+  : Feature coverage heatmap
+
+- [`makeOxfordPlots()`](https://oist.github.io/GenomicBreaks/reference/makeOxfordPlots.md)
+  : Make Oxford Plots
+
+- [`plotApairOfChrs()`](https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.md)
+  :
+
+  Plots a pair of chromosomes from a `GBreaks` object.
+
+## Heatmap Functions
+
+Functions that return a `Heatmap` object from the `heatmaps` package.
+
+- [`bp_heatmap()`](https://oist.github.io/GenomicBreaks/reference/bp_heatmap.md)
+  : Breakpoint Associated Heatmaps
+- [`bp_pair_analysis()`](https://oist.github.io/GenomicBreaks/reference/bp_pair_analysis.md)
+  : Breakpoint Pairwise Comparison using Reference Genome as Coordinate
+  System
+- [`feature_coverage()`](https://oist.github.io/GenomicBreaks/reference/feature_coverage.md)
+  : Feature coverage heatmap
+
+## genoPlotR functions
+
+Functions related to the `genoPlotR` package that we use for pair
+chromosome plots.
+
+- [`gb2comp()`](https://oist.github.io/GenomicBreaks/reference/gb2comp.md)
+  :
+
+  Convert `GBreaks` object to a `comparison` object
+
+- [`gb2dna_seg()`](https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.md)
+  :
+
+  Convert `GBreaks` object to a list of `dna_seg` objects
+
+- [`gb2xlim()`](https://oist.github.io/GenomicBreaks/reference/gb2xlim.md)
+  : GBreaks to xlim
+
+- [`gr2dna_seg()`](https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.md)
+  :
+
+  Convert `GRanges` object to `dna_seg` format
+
+- [`plotApairOfChrs()`](https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.md)
+  :
+
+  Plots a pair of chromosomes from a `GBreaks` object.
+
+## Distance functions
+
+Various ways to estimate the similarity between two genomes.
+
+- [`F81_distance()`](https://oist.github.io/GenomicBreaks/reference/F81_distance.md)
+  : Felsenstein's 1981 Distance
+- [`GOC()`](https://oist.github.io/GenomicBreaks/reference/GOC.md) :
+  Gene Order Conservation
+- [`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md)
+  : Hasegawa–Kishino–Yano (1985) distance (HKY85)
+- [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md)
+  : Jukes-Cantor 1969 distance
+- [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md)
+  : Kimura's 2-parameter distance
+- [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md)
+  [`P_error()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md)
+  : Percent difference Distance
+- [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md)
+  : Tamura 1992 distance
+- [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md)
+  : Tamura–Nei 1993 distance
+- [`correlation_index()`](https://oist.github.io/GenomicBreaks/reference/correlation_index.md)
+  : Index representing how correlated syntenic regions are
+- [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md)
+  : Index representing how the karyotype changes between chromosomes of
+  two genomes
+- [`logDet_distance()`](https://oist.github.io/GenomicBreaks/reference/logDet_distance.md)
+  : LogDet (log-determinant) distance
+- [`slidingWindow()`](https://oist.github.io/GenomicBreaks/reference/slidingWindow.md)
+  : Sliding window
+- [`strand_randomisation_index()`](https://oist.github.io/GenomicBreaks/reference/strand_randomisation_index.md)
+  : Index measuring how 'random' the alignment strand has become.
+- [`synteny_index()`](https://oist.github.io/GenomicBreaks/reference/synteny_index.md)
+  : Index representing how 'syntenic' two genomes are
+- [`tau_index()`](https://oist.github.io/GenomicBreaks/reference/tau_index.md)
+  : Tau index
+- [`GCequilibrium()`](https://oist.github.io/GenomicBreaks/reference/GCequilibrium.md)
+  : Equilibrium GC fraction (GC\*)
+- [`GCpressure()`](https://oist.github.io/GenomicBreaks/reference/GCpressure.md)
+  : GC pressure
+- [`GCproportion()`](https://oist.github.io/GenomicBreaks/reference/GCproportion.md)
+  : Proportion of GC in alignment
+- [`exampleSubstitutionMatrix`](https://oist.github.io/GenomicBreaks/reference/exampleSubstitutionMatrix.md)
+  : Example Substitution Matrices
+- [`gapProportion()`](https://oist.github.io/GenomicBreaks/reference/gapProportion.md)
+  : Proportion of gaps in alignment
+
+## Colinearity functions
+
+Functions to analyse colinearity and synteny.
+
+- [`GOC()`](https://oist.github.io/GenomicBreaks/reference/GOC.md) :
+  Gene Order Conservation
+
+- [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+  : Bridge regions
+
+- [`chain_contigs()`](https://oist.github.io/GenomicBreaks/reference/chain_contigs.md)
+  : Chain contigs in pairwise alignments
+
+- [`coalesce_contigs()`](https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.md)
+  : Coalesce Pairwise Alignments
+
+- [`dist2next()`](https://oist.github.io/GenomicBreaks/reference/dist2next.md)
+  : Distances to next ranges
+
+- [`filterColinearRegions()`](https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.md)
+  : Filter colinear regions
+
+- [`flagColinearAlignments()`](https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.md)
+  : Flag colinear alignments
+
+- [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+  :
+
+  Flag successive entries of a `GBreaks` object
+
+## Flags and filters
+
+Functions to flag patterns of alignments and filter them.
+
+- [`flagAll()`](https://oist.github.io/GenomicBreaks/reference/flagAll.md)
+  : Compute all flags
+
+- [`flagColinearAlignments()`](https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.md)
+  : Flag colinear alignments
+
+- [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md)
+  : Flag double inversions
+
+- [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  : Flag inversions
+
+- [`flagLongShort()`](https://oist.github.io/GenomicBreaks/reference/flagLongShort.md)
+  : Flag long and short arms
+
+- [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+  :
+
+  Flag successive entries of a `GBreaks` object
+
+- [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+  : Flag translocations
+
+- [`filterColinearRegions()`](https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.md)
+  : Filter colinear regions
+
+- [`filterDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.md)
+  : Extract central blocks in double inversions
+
+- [`filterInversions()`](https://oist.github.io/GenomicBreaks/reference/filterInversions.md)
+  : Extract central blocks in inversions
+
+- [`filterTranslocations()`](https://oist.github.io/GenomicBreaks/reference/filterTranslocations.md)
+  : Extract central blocks in translocations
+
+- [`showInversions()`](https://oist.github.io/GenomicBreaks/reference/showInversions.md)
+  : Show inversions and their flanking blocks.
+
+- [`showTranslocations()`](https://oist.github.io/GenomicBreaks/reference/showTranslocations.md)
+  : Show translocations and their flanking blocks.
+
+## Bioconductor API functions
+
+Functions that provide compatibility with GRanges, etc.
+
+- [`GBreaks-class`](https://oist.github.io/GenomicBreaks/reference/GBreaks-class.md)
+  [`GBreaks`](https://oist.github.io/GenomicBreaks/reference/GBreaks-class.md)
+  : The GenomicBreaks class
+
+- [`getSeq()`](https://oist.github.io/GenomicBreaks/reference/getSeq.md)
+  : Get genomic sequences
+
+- [`pairwiseAlignment()`](https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.md)
+  : Pairwise alignment of genomic ranges
+
+- [`range_GBreaks()`](https://oist.github.io/GenomicBreaks/reference/range.md)
+  [`range(`*`<GBreaks>`*`)`](https://oist.github.io/GenomicBreaks/reference/range.md)
+  :
+
+  Range method for `GBreaks` objects
+
+- [`reverse()`](https://oist.github.io/GenomicBreaks/reference/reverse.md)
+  : Reverse genomic ranges
+
+- [`subsetByOverlaps_GBreaks()`](https://oist.github.io/GenomicBreaks/reference/subsetByOverlaps.md)
+  [`subsetByOverlaps(`*`<GBreaks>`*`,`*`<GBreaks>`*`)`](https://oist.github.io/GenomicBreaks/reference/subsetByOverlaps.md)
+  :
+
+  subsetByOverlaps method for `GBreaks` objects
+
+## Motifier functions
+
+Functions that take `GBreaks` objects and return them modified.
+
+- [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+  : Bridge regions
+- [`coalesce_contigs()`](https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.md)
+  : Coalesce Pairwise Alignments
+- [`flipInversions()`](https://oist.github.io/GenomicBreaks/reference/flipInversions.md)
+  : Flip strand of inversions
+- [`forceSeqLengths()`](https://oist.github.io/GenomicBreaks/reference/forceSeqLengths.md)
+  : Set sequence lengths if there were none
+- [`guessSeqLengths()`](https://oist.github.io/GenomicBreaks/reference/guessSeqLengths.md)
+  : Guesstimate seqlevel lengths
+- [`keepLongestPair()`](https://oist.github.io/GenomicBreaks/reference/keepLongestPair.md)
+  : Keep the longest pair of features
+- [`matchPairs()`](https://oist.github.io/GenomicBreaks/reference/matchPairs.md)
+  : Match pairs of sequences
+- [`mergeSeqLevels()`](https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.md)
+  [`mergeSeqLevels_to_DF()`](https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.md)
+  : Merge seqlevels in a larger one
+- [`removeDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/removeDoubleInversions.md)
+  : Remove double inversions
+- [`removeInversions()`](https://oist.github.io/GenomicBreaks/reference/removeInversions.md)
+  : Remove inversions
+- [`removeTranslocations()`](https://oist.github.io/GenomicBreaks/reference/removeTranslocations.md)
+  : Remove translocations
+- [`reverse()`](https://oist.github.io/GenomicBreaks/reference/reverse.md)
+  : Reverse genomic ranges
+- [`splitSeqLevel()`](https://oist.github.io/GenomicBreaks/reference/splitSeqLevel.md)
+  : Split a seqlevel in two pieces
+- [`swap()`](https://oist.github.io/GenomicBreaks/reference/swap.md) :
+  Swap target and query genomes
+
+## Reducing functions
+
+Functions that take `GBreaks` objects and return simpler `GRanges`
+objects.
+
+- [`cleanGaps()`](https://oist.github.io/GenomicBreaks/reference/cleanGaps.md)
+  : Gaps between ranges
+- [`get_bps()`](https://oist.github.io/GenomicBreaks/reference/get_bps.md)
+  : Get breakpoints
+- [`wholeGenomeClassification()`](https://oist.github.io/GenomicBreaks/reference/wholeGenomeClassification.md)
+  : Whole-genome classification object
+
+## Converter functions
+
+- [`GBreaksToMatrix()`](https://oist.github.io/GenomicBreaks/reference/GBreaksToMatrix.md)
+  : Convert to binned matrix of hits
+
+- [`gb2comp()`](https://oist.github.io/GenomicBreaks/reference/gb2comp.md)
+  :
+
+  Convert `GBreaks` object to a `comparison` object
+
+- [`gb2dna_seg()`](https://oist.github.io/GenomicBreaks/reference/gb2dna_seg.md)
+  :
+
+  Convert `GBreaks` object to a list of `dna_seg` objects
+
+- [`gb2xlim()`](https://oist.github.io/GenomicBreaks/reference/gb2xlim.md)
+  : GBreaks to xlim
+
+- [`gr2dna_seg()`](https://oist.github.io/GenomicBreaks/reference/gr2dna_seg.md)
+  :
+
+  Convert `GRanges` object to `dna_seg` format
+
+## Scaffolding functions
+
+Functions to aid trivial scaffolding
+
+- [`flipStrandNames()`](https://oist.github.io/GenomicBreaks/reference/flipStrandNames.md)
+  : Reverse order and flip strand
+- [`longestMatchesInTarget()`](https://oist.github.io/GenomicBreaks/reference/longestMatchesInTarget.md)
+  : Find longest matches from target to query genome.
+- [`mergeSeqLevels()`](https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.md)
+  [`mergeSeqLevels_to_DF()`](https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.md)
+  : Merge seqlevels in a larger one
+- [`scaffoldByFlipAndMerge()`](https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.md)
+  : Guided scaffolding
+- [`splitSeqLevel()`](https://oist.github.io/GenomicBreaks/reference/splitSeqLevel.md)
+  : Split a seqlevel in two pieces
+- [`strandNames()`](https://oist.github.io/GenomicBreaks/reference/strandNames.md)
+  : Sequence name with strand information
+
+## Other functions
+
+- [`StructuralVariants`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleColinear`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleNotColinear`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleColinear3`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleColinear5`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleInversion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleNestedInversions`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleInversion5uncollapsed`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleDoubleInversion1`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleDoubleInversion2`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleDoubleInversion3`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleDoubleInversion4`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleTranslocation`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleTranslocation2`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleInsertion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleDeletion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  : Structural Variants
+
+- [`align_scaf_plot_2()`](https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.md)
+  : Compare Alignments over two Reference scaffolds
+
+- [`feature_coverage()`](https://oist.github.io/GenomicBreaks/reference/feature_coverage.md)
+  : Feature coverage heatmap
+
+- [`int_frag()`](https://oist.github.io/GenomicBreaks/reference/int_frag.md)
+  : Integrated intersection of both query and reference subsets on a
+  continuous alignment
+
+- [`inv2UCSCData()`](https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.md)
+  : Represent inversions as UCSCData objects
+
+- [`isSorted()`](https://oist.github.io/GenomicBreaks/reference/isSorted.md)
+  :
+
+  Test if a `GBreaks` object is sorted
+
+- [`leftInversionGaps()`](https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.md)
+  : Isolate the left-side gaps in inversions
+
+- [`makeInversion.chr()`](https://oist.github.io/GenomicBreaks/reference/makeInversion.chr.md)
+  : Make an inversion
+
+- [`orderQuerySeqLevels()`](https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.md)
+  [`orderQuerySeqLevels_DF_GR()`](https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.md)
+  :
+
+  Ordering permutation for *query* relative to *target*
+
+- [`scaf_align_plot()`](https://oist.github.io/GenomicBreaks/reference/scaf_align_plot.md)
+  : Plot Alignment of Single Reference Scaffold
+
+- [`tan_bp()`](https://oist.github.io/GenomicBreaks/reference/tan_bp.md)
+  : Breakpoint proximity to Tandem Repeats
+
+- [`zipWithNext()`](https://oist.github.io/GenomicBreaks/reference/zipWithNext.md)
+  : Zip elements with the next ones
+
+- [`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
+  : Inversion Distance
+
+- [`permutationVector()`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md)
+  : Permutation vector
+
+# Articles
+
+### All vignettes
+
+- [Introduction to
+  GenomicBreaks](https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.md):
+- [Structural
+  Variants](https://oist.github.io/GenomicBreaks/articles/StructuralVariants.md):
