@@ -13,6 +13,8 @@
 \alias{exampleDoubleInversion2}
 \alias{exampleDoubleInversion3}
 \alias{exampleDoubleInversion4}
+\alias{exampleTwinInversions}
+\alias{exampleNotTwinInversions}
 \alias{exampleTranslocation}
 \alias{exampleTranslocation2}
 \alias{exampleInsertion}
@@ -41,6 +43,7 @@ exampleInversion
 exampleInversion5uncollapsed
 exampleNestedInversions
 exampleDoubleInversion1
+exampleTwinInversions
 exampleTranslocation
 exampleTranslocation2
 
@@ -51,6 +54,7 @@ Other Structural variants:
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},
 \code{\link{flagTranslocations}()},
+\code{\link{flagTwinInversions}()},
 \code{\link{plotApairOfChrs}()}
 }
 \author{

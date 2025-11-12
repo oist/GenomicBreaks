@@ -192,6 +192,94 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   gb.bak
 }
 
+#' Flag twin inversions
+#'
+#' Flag ranges that start a quadruplet that would be colinear if the two central
+#' pairs were aligned to the opposite strand.  This implies breakpoint reuse.
+#'
+#' Here is a trivial example of a twin inversion.
+#'
+#' ```
+#' ┌──────────────┬──────────────┬──────────────┐──────────────┐
+#' │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ chrA:401-500 │ (Target genome)
+#' └──────────────┴──────────────┴──────────────┘──────────────┘
+#'        +               -             -              +   (Alignment direction)
+#' ┌──────────────┬──────────────┬──────────────┐──────────────┐
+#' │ chrB:101-200 │ chrB:201-300 │ chrB:301-400 │ chrB:401-500 │  (Query genome)
+#' └──────────────┴──────────────┴──────────────┘──────────────┘
+#' ```
+#'
+#' @param gb A `GBreaks()` object.
+#' @param details Returns more metadata columns if `TRUE`.
+#'
+#' @return Returns the `GBreaks` object with an extra `twi` metadata column.
+#'
+#' @family Flagging functions
+#' @family Inversion functions
+#' @family Structural variants
+#'
+#' @examples
+#' flagTwinInversions(exampleTwinInversions)
+#' plotApairOfChrs(exampleTwinInversions)
+#'
+#' flagTwinInversions(exampleTwinInversions |> reverse() |> sort(ignore.strand = TRUE))
+#' plotApairOfChrs(exampleTwinInversions |> reverse())
+#'
+#' @importFrom GenomicRanges precede
+#' @export
+
+flagTwinInversions <- function(gb, details = FALSE) {
+  if(length(gb) == 0) {
+    gb$twi <- Rle(logical(0))
+    return(gb)
+  }
+  if(length(gb) < 4) {
+    gb$twi <- Rle(FALSE)
+    return(gb)
+  }
+  if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
+
+  gb.bak <- gb # Backup the object
+
+  # Look ahead for the three next alignments
+  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
+  gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
+  gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
+
+  gb$strand0 <- strand(gb)
+  gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
+  gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
+  gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
+
+  # Pattern 1: AbcD
+  gb$pat_AbcD <-
+    ( gb$qnext0  ==  1  &
+      gb$qnext1  ==  1  &
+      gb$qnext2  ==  1  &
+      gb$strand0 == "+" &
+      gb$strand1 == "-" &
+      gb$strand2 == "-" &
+      gb$strand3 == "+"   ) |> sapply(isTRUE) # Turn NAs into FALSE
+
+  # Pattern 2: dCBa
+  gb$pat_dCBa <-
+    ( gb$qnext1  == -1  &
+      gb$qnext2  == -1  &
+      gb$qnext3  == -1  &
+      gb$strand0 == "-" &
+      gb$strand1 == "+" &
+      gb$strand2 == "+" &
+      gb$strand3 == "-"   ) |> sapply(isTRUE) # Turn NAs into FALSE
+
+  gb$twi <- gb$pat_AbcD | gb$pat_dCBa
+
+  if (isTRUE(details)) return(gb)
+
+  gb.bak$twi <- gb$twi
+
+  gb.bak
+}
 
 #' Show inversions and their flanking blocks.
 #'

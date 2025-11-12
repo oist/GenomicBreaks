@@ -71,7 +71,8 @@ Other Structural variants:
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()}
+\code{\link{flagTranslocations}()},
+\code{\link{flagTwinInversions}()}
 }
 \author{
 Charles Plessy

@@ -152,6 +152,19 @@ flipped |> plotApairOfChrs()
 flipped |> coalesce_contigs() |> flagInversions()
 ```
 
+### Twin inversions
+
+Two inverted regions directly following each other in a way implying breakpoint
+reuse.
+
+```{r twinInversions}
+exampleTwinInversions |> plotApairOfChrs()
+exampleTwinInversions |> flagInversions()
+exampleTwinInversions |> flagTwinInversions()
+exampleTwinInversions |> reverse() |> plotApairOfChrs()
+exampleTwinInversions |> reverse() |> sort(i=TRUE) |> flagTwinInversions()
+```
+
 ## Transolocations
 
 If a region has moved, but is not an inversion, then it is a translocation.

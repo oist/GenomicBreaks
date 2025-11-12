@@ -39,5 +39,9 @@ flagAll <- function (gb) {
   stopifnot(all(is.na(gb$flag[Dbl])))
   gb$flag[Dbl] <- "Dbl"
 
+  Twi <- flagTwinInversions(gb)$twi |> decode()
+  stopifnot(all(is.na(gb$flag[Twi])))
+  gb$flag[Twi] <- "Twi"
+
   gb
 }

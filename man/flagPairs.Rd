@@ -53,13 +53,15 @@ Other Flagging functions:
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
-\code{\link{flagTranslocations}()}
+\code{\link{flagTranslocations}()},
+\code{\link{flagTwinInversions}()}
 
 Other Inversion functions: 
 \code{\link{filterDoubleInversions}()},
 \code{\link{filterInversions}()},
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
+\code{\link{flagTwinInversions}()},
 \code{\link{flipInversions}()},
 \code{\link{leftInversionGaps}()},
 \code{\link{removeDoubleInversions}()},
@@ -80,6 +82,7 @@ Other Structural variants:
 \code{\link{flagDoubleInversions}()},
 \code{\link{flagInversions}()},
 \code{\link{flagTranslocations}()},
+\code{\link{flagTwinInversions}()},
 \code{\link{plotApairOfChrs}()}
 }
 \concept{Colinearity functions}

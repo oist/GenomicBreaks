@@ -86,7 +86,8 @@ Other Flagging functions:
 \code{\link{flagInversions}()},
 \code{\link{flagLongShort}()},
 \code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()}
+\code{\link{flagTranslocations}()},
+\code{\link{flagTwinInversions}()}
 
 Other Colinearity functions: 
 \code{\link{GOC}()},

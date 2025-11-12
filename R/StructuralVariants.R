@@ -19,6 +19,7 @@
 #' @aliases exampleInversion exampleNestedInversions exampleInversion5uncollapsed
 #' @aliases exampleDoubleInversion1 exampleDoubleInversion2
 #' @aliases exampleDoubleInversion3 exampleDoubleInversion4
+#' @aliases exampleTwinInversions exampleNotTwinInversions
 #' @aliases exampleTranslocation exampleTranslocation2
 #' @aliases exampleInsertion exampleDeletion
 #'
@@ -33,6 +34,7 @@
 #' exampleInversion5uncollapsed
 #' exampleNestedInversions
 #' exampleDoubleInversion1
+#' exampleTwinInversions
 #' exampleTranslocation
 #' exampleTranslocation2
 #'
