@@ -55,13 +55,15 @@ Other Flagging functions:
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagLongShort()`](https://oist.github.io/GenomicBreaks/reference/flagLongShort.md),
-[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
 
 Other Inversion functions:
 [`filterDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.md),
 [`filterInversions()`](https://oist.github.io/GenomicBreaks/reference/filterInversions.md),
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md),
 [`flipInversions()`](https://oist.github.io/GenomicBreaks/reference/flipInversions.md),
 [`leftInversionGaps()`](https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.md),
 [`removeDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/removeDoubleInversions.md),
@@ -82,6 +84,7 @@ Other Structural variants:
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md),
 [`plotApairOfChrs()`](https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.md)
 
 ## Examples

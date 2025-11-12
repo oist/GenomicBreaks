@@ -53,7 +53,8 @@ Other Flagging functions:
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagLongShort()`](https://oist.github.io/GenomicBreaks/reference/flagLongShort.md),
-[`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+[`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
 
 Other Translocation functions:
 [`filterTranslocations()`](https://oist.github.io/GenomicBreaks/reference/filterTranslocations.md),
@@ -65,6 +66,7 @@ Other Structural variants:
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md),
 [`plotApairOfChrs()`](https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.md)
 
 ## Examples

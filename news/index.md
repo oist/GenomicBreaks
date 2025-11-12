@@ -1,5 +1,13 @@
 # Changelog
 
+## GenomicBreaks 0.21.0
+
+- New
+  [`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
+  function with example data.
+- Support all-zero substitution matrices in the distance functions
+  introduced earlier.
+
 ## GenomicBreaks 0.20.0
 
 - Correct GC content calculation in

@@ -27,7 +27,8 @@ Other Flagging functions:
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagLongShort()`](https://oist.github.io/GenomicBreaks/reference/flagLongShort.md),
 [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md),
-[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
 
 ## Examples
 

@@ -15,7 +15,7 @@ demonstration purpose"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,7 @@ aligned region, for instance as a gap, are not covered</p>
 <code><a href="flagInversions.html">flagInversions()</a></code>,
 <code><a href="flagPairs.html">flagPairs()</a></code>,
 <code><a href="flagTranslocations.html">flagTranslocations()</a></code>,
+<code><a href="flagTwinInversions.html">flagTwinInversions()</a></code>,
 <code><a href="plotApairOfChrs.html">plotApairOfChrs()</a></code></p></div>
     </div>
     <div class="section level2">
@@ -156,6 +157,16 @@ aligned region, for instance as a gap, are not covered</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   300-390      - | chrB:200-290</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [4]     chrA   400-490      - | chrB:300-390</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrA   500-590      + | chrB:500-590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="va">exampleTwinInversions</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 4 ranges and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   200-290      - | chrB:200-290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   300-390      - | chrB:300-390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]     chrA   400-490      + | chrB:400-490</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"><span><span class="va">exampleTranslocation</span></span></span>

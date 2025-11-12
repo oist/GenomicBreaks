@@ -38,6 +38,7 @@ Other Inversion functions:
 [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md),
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md),
 [`leftInversionGaps()`](https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.md),
 [`removeDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/removeDoubleInversions.md),
 [`removeInversions()`](https://oist.github.io/GenomicBreaks/reference/removeInversions.md),

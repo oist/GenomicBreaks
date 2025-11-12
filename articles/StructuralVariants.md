@@ -334,6 +334,65 @@ flipped |> coalesce_contigs() |> flagInversions()
     ##   -------
     ##   seqinfo: 1 sequence from an unspecified genome
 
+#### Twin inversions
+
+Two inverted regions directly following each other in a way implying
+breakpoint reuse.
+
+``` r
+exampleTwinInversions |> plotApairOfChrs()
+```
+
+![](StructuralVariants_files/figure-html/twinInversions-1.png)
+
+``` r
+exampleTwinInversions |> flagInversions()
+```
+
+    ## GBreaks object with 4 ranges and 2 metadata columns:
+    ##       seqnames    ranges strand |        query   inv
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle>
+    ##   [1]     chrA   100-190      + | chrB:100-190 FALSE
+    ##   [2]     chrA   200-290      - | chrB:200-290 FALSE
+    ##   [3]     chrA   300-390      - | chrB:300-390 FALSE
+    ##   [4]     chrA   400-490      + | chrB:400-490 FALSE
+    ##   -------
+    ##   seqinfo: 1 sequence from an unspecified genome
+
+``` r
+exampleTwinInversions |> flagTwinInversions()
+```
+
+    ## GBreaks object with 4 ranges and 2 metadata columns:
+    ##       seqnames    ranges strand |        query       twi
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <logical>
+    ##   [1]     chrA   100-190      + | chrB:100-190      TRUE
+    ##   [2]     chrA   200-290      - | chrB:200-290     FALSE
+    ##   [3]     chrA   300-390      - | chrB:300-390     FALSE
+    ##   [4]     chrA   400-490      + | chrB:400-490     FALSE
+    ##   -------
+    ##   seqinfo: 1 sequence from an unspecified genome
+
+``` r
+exampleTwinInversions |> reverse() |> plotApairOfChrs()
+```
+
+![](StructuralVariants_files/figure-html/twinInversions-2.png)
+
+``` r
+exampleTwinInversions |> reverse() |> sort(i=TRUE) |> flagTwinInversions()
+```
+
+    ## GBreaks object with 4 ranges and 2 metadata columns:
+    ##       seqnames    ranges strand |        query       twi
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <logical>
+    ##   [1]     chrA   111-201      - | chrB:400-490      TRUE
+    ##   [2]     chrA   211-301      + | chrB:300-390     FALSE
+    ##   [3]     chrA   311-401      + | chrB:200-290     FALSE
+    ##   [4]     chrA   411-501      - | chrB:100-190     FALSE
+    ##   -------
+    ##   seqinfo: 1 sequence from an unspecified genome
+
 ### Transolocations
 
 If a region has moved, but is not an inversion, then it is a

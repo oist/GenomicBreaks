@@ -24,6 +24,7 @@ Other Structural variants:
 [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md),
 [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md),
 [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md),
+[`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md),
 [`plotApairOfChrs()`](https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.md)
 
 ## Author
@@ -109,6 +110,16 @@ exampleDoubleInversion1
 #>   [3]     chrA   300-390      - | chrB:200-290
 #>   [4]     chrA   400-490      - | chrB:300-390
 #>   [5]     chrA   500-590      + | chrB:500-590
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+exampleTwinInversions
+#> GBreaks object with 4 ranges and 1 metadata column:
+#>       seqnames    ranges strand |        query
+#>          <Rle> <IRanges>  <Rle> |    <GRanges>
+#>   [1]     chrA   100-190      + | chrB:100-190
+#>   [2]     chrA   200-290      - | chrB:200-290
+#>   [3]     chrA   300-390      - | chrB:300-390
+#>   [4]     chrA   400-490      + | chrB:400-490
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
 exampleTranslocation

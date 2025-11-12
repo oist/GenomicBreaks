@@ -245,6 +245,9 @@ Functions to flag patterns of alignments and filter them.
 - [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
   : Flag translocations
 
+- [`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
+  : Flag twin inversions
+
 - [`filterColinearRegions()`](https://oist.github.io/GenomicBreaks/reference/filterColinearRegions.md)
   : Filter colinear regions
 
@@ -393,6 +396,8 @@ Functions to aid trivial scaffolding
   [`exampleDoubleInversion2`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleDoubleInversion3`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleDoubleInversion4`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleTwinInversions`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleNotTwinInversions`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleTranslocation`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleTranslocation2`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleInsertion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
