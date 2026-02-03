@@ -5,3 +5,4 @@
 docs
 *.sif
 TEST.Rmd
+containers/
