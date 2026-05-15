@@ -9,3 +9,5 @@ Singularity.def
 ^\.github$
 ^data-raw$
 containers/
+^\.positai$
+^\.claude$
