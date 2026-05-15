@@ -33,7 +33,7 @@ GBreaksToMatrix <- function(gb, ntile = 1000) {
     gr
   }
   x <- .tileGenome(gb, ntile=ntile)
-  #x <- c(x |> plyranges::mutate(strand = '+'), x |> plyranges::mutate(strand = '-')) |> sort (ignore.strand=T)
+  #x <- c(x |> mutate(strand = '+'), x |> mutate(strand = '-')) |> sort (ignore.strand=T)
   y <- .tileGenome(gb$query, ntile=ntile)
 
   m <- matrix(0, nrow = ntile, ncol = ntile)
