@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,10 @@
       <small>Source: <a href="https://github.com/oist/GenomicBreaks/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.22.0" id="genomicbreaks-0220">GenomicBreaks 0.22.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0220"></a></h2>
+<ul><li>New <code><a href="../reference/K80_gap_distance.html">K80_gap_distance()</a></code> function for Nishimaki and Sato’s K2P + Gap distance.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.21.0" id="genomicbreaks-0210">GenomicBreaks 0.21.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0210"></a></h2>
 <ul><li>New <code><a href="../reference/flagTwinInversions.html">flagTwinInversions()</a></code> function with example data.</li>
@@ -278,7 +282,7 @@
 <li>New <code><a href="../reference/cleanGaps.html">cleanGaps()</a></code> function that is guaranteed to return only the intervals between the input ranges.</li>
 <li>The <code><a href="../reference/GBreaks-class.html">GBreaks()</a></code> constructor now accepts three new parameters, <code>target</code>, <code>query</code> and <code>strand</code>, to construct <code>GBreaks</code> objects directly from <code>GRanges</code> objects.</li>
 <li>New <code><a href="https://rdrr.io/r/base/range.html" class="external-link">range()</a></code> methods for <code>GBreaks</code> objects, that runs <code>GRanges::range</code> on each pair of target/query <em>seqnames</em>, ignoring strand information.</li>
-<li>New <code>subsetByOverlaps()</code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
+<li>New <code><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps()</a></code> range that combines regions overlapping by their <em>target</em> or by their <em>query</em> ranges.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-9-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-0"></a></h3>

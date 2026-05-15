@@ -1,6 +1,7 @@
 # Introduction to GenomicBreaks
 
 ``` r
+
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_knit$set(verbose = TRUE)
 ```
@@ -18,6 +19,7 @@ loaded too. But we have to load *ggplot2* if we want to customise the
 output of the plotting functions of *GenomicBreaks*.
 
 ``` r
+
 library('GenomicBreaks') |> suppressPackageStartupMessages()
 library('ggplot2')
 ```
@@ -27,6 +29,7 @@ cerevisiae* is available in Bioconductor so let’s load its BSgenome
 package. After loading a `Scerevisiae` object is invisibly exported.
 
 ``` r
+
 library("BSgenome.Scerevisiae.UCSC.sacCer3") |> suppressPackageStartupMessages()
 ```
 
@@ -55,6 +58,7 @@ format directly, (see
 you usually do not need to convert the pipeline output to GFF3 format.
 
 ``` r
+
 exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
 ```
 
@@ -68,6 +72,7 @@ example data, by retaining only the matches between chromosome III and
 chromosome 7 (`CP071499`).
 
 ``` r
+
 exdata_Neu <- system.file("extdata/NeuCra__PodCom.III__7.gff3.gz", package = "GenomicBreaks")
 ```
 
@@ -87,6 +92,7 @@ of the alignment is held by the *target* `GRanges`, and the *query*
 `GRanges` are strandless. The objects are sorted by `seqname` first.
 
 ``` r
+
 gb <- load_genomic_breaks(exdata_Sac, Scerevisiae)
 gb
 ```
@@ -109,6 +115,7 @@ gb
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 gb$query
 ```
 
@@ -130,6 +137,7 @@ gb$query
     ##   seqinfo: 17 sequences from an unspecified genome; no seqlengths
 
 ``` r
+
 # No BSgenome available for N. crassa and P. comata.
 # This data does not contain match_part entries, so set the type parameter.
 gb_Neu <- load_genomic_breaks(exdata_Neu, type = "match")
@@ -143,10 +151,12 @@ With the *plyranges* Bioconductor package it is easy to manipulate
 need to do it yourself.
 
 ``` r
+
 # BiocManager::install('plyranges')
+library("plyranges") |> suppressPackageStartupMessages()
 
 # Subset for chrI on the target genome.
-gb |> plyranges::filter(seqnames == "chrI")
+gb |> filter(seqnames == "chrI")
 ```
 
     ## GBreaks object with 22 ranges and 2 metadata columns:
@@ -167,8 +177,9 @@ gb |> plyranges::filter(seqnames == "chrI")
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 # Subset for NC_047487.1 on the query genome
-gb |> plyranges::filter(seqnames(query) == "NC_047487.1")
+gb |> filter(seqnames(query) == "NC_047487.1")
 ```
 
     ## GBreaks object with 24 ranges and 2 metadata columns:
@@ -189,8 +200,9 @@ gb |> plyranges::filter(seqnames(query) == "NC_047487.1")
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 # Add or modify columns on the fly
-gb |> plyranges::mutate("Width" = width) |> head(3)
+gb |> mutate("Width" = width) |> head(3)
 ```
 
     ## GBreaks object with 3 ranges and 3 metadata columns:
@@ -203,7 +215,8 @@ gb |> plyranges::mutate("Width" = width) |> head(3)
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
-gb |> plyranges::mutate("score" = width) |> head(3)
+
+gb |> mutate("score" = width) |> head(3)
 ```
 
     ## GBreaks object with 3 ranges and 2 metadata columns:
@@ -216,6 +229,7 @@ gb |> plyranges::mutate("score" = width) |> head(3)
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 # Etc…
 ```
 
@@ -233,16 +247,18 @@ its first argument if they match in the second argument. Here is a toy
 example:
 
 ``` r
+
 gb[4:5] %in% gb
 ```
 
     ## [1] TRUE TRUE
 
 For
-[`?subsetByOverlaps`](https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html),
+[`?subsetByOverlaps`](https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html),
 one match on either the *target* or the *query* genome is enough.
 
 ``` r
+
 gb |> subsetByOverlaps(GRanges("chrI:200000-240000"))
 ```
 
@@ -257,6 +273,7 @@ gb |> subsetByOverlaps(GRanges("chrI:200000-240000"))
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 gb |> subsetByOverlaps(GBreaks( target = GRanges("chrI:200000-240000")
                               ,  query = GRanges("NC_047494.1:200000-800000")))
 ```
@@ -287,6 +304,7 @@ function
 can be used to transfer this annotation to the `GBreaks` object.
 
 ``` r
+
 annot <- GRanges(c("chrI:1-151465", "chrI:151582-230218"))
 annot$Type <- c("short", "long")
 flagLongShort(gb, annot)
@@ -333,12 +351,14 @@ for details. One limitation to the use of this index is that it requires
 that at least the *query* genome is a complete chromosome assembly.
 
 ``` r
+
 synteny_index(gb)
 ```
 
     ## [1] 0.9954872
 
 ``` r
+
 synteny_index(swap(gb))
 ```
 
@@ -354,18 +374,21 @@ for details. This index is more robust to the presence of uncollapsed
 haplotypes in the *query* genome.
 
 ``` r
+
 correlation_index(gb)
 ```
 
     ## [1] 0.9942222
 
 ``` r
+
 correlation_index(swap(gb))
 ```
 
     ## [1] 0.9946129
 
 ``` r
+
 correlation_index(gb_Neu)
 ```
 
@@ -386,18 +409,21 @@ the computation is possible. This function is more useful when comparing
 the position of orthologues, represented in a `GBreaks` object.*
 
 ``` r
+
 GOC(gb)
 ```
 
     ## [1] 0.9227557
 
 ``` r
+
 GOC(swap(gb))
 ```
 
     ## [1] 0.9123173
 
 ``` r
+
 GOC(gb_Neu)
 ```
 
@@ -413,12 +439,14 @@ towards 1 when within each feature most bases are aligned to the same
 strand.
 
 ``` r
+
 strand_randomisation_index(gb)
 ```
 
     ## [1] 0.989879
 
 ``` r
+
 strand_randomisation_index(gb_Neu)
 ```
 
@@ -440,6 +468,7 @@ For example, coalescing gaps of less than 500 basepairs in the `gb`
 alignment:
 
 ``` r
+
 coa <- coalesce_contigs(gb)
 length(gb)
 ```
@@ -447,6 +476,7 @@ length(gb)
     ## [1] 505
 
 ``` r
+
 length(coa)
 ```
 
@@ -464,12 +494,14 @@ that have a high probability of being breakpoints.
 To visualise synteny it is clearer to plot from the coalseced objects.
 
 ``` r
+
 plotApairOfChrs(gb,  "chrI", main = "S. cerevisiae / S. paradoxus")
 ```
 
 ![](GenomicBreaks_files/figure-html/plotApairOfChrs_Sac-1.png)
 
 ``` r
+
 plotApairOfChrs(coa, "chrI", main = "S. cerevisiae / S. paradoxus")
 ```
 
@@ -489,12 +521,14 @@ can be used to estimate it based on the coordinate of the most distal
 alignment.
 
 ``` r
+
 plotApairOfChrs(gb_Neu, main = "Neurospora crassa chrIII / Podospora comata chr7")
 ```
 
 ![](GenomicBreaks_files/figure-html/plotApairOfChrs_Neu-1.png)
 
 ``` r
+
 gb_Neu |> forceSeqLengths() |> reverse(query = TRUE) |>
   plotApairOfChrs(main = "Neurospora crassa chrIII / Podospora comata chr7 (rev-complemented)")
 ```
@@ -509,6 +543,7 @@ outputs “Oxford” macrosynteny plots in which all the sequence levels are
 merged.
 
 ``` r
+
 makeOxfordPlots(gb)
 ```
 
@@ -517,7 +552,7 @@ makeOxfordPlots(gb)
     ## ℹ See also `vignette("ggplot2-in-packages")` for more information.
     ## ℹ The deprecated feature was likely used in the GenomicBreaks package.
     ##   Please report the issue to the authors.
-    ## This warning is displayed once every 8 hours.
+    ## This warning is displayed once per session.
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
@@ -525,13 +560,14 @@ makeOxfordPlots(gb)
     ## ℹ Please use `linewidth` instead.
     ## ℹ The deprecated feature was likely used in the GenomicBreaks package.
     ##   Please report the issue to the authors.
-    ## This warning is displayed once every 8 hours.
+    ## This warning is displayed once per session.
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
 ![](GenomicBreaks_files/figure-html/oxford_plots-1.png)
 
 ``` r
+
 makeOxfordPlots(gb_Neu, col = "strand") +
   ggtitle("N. crassa chrIII vs P. comata chr7 “Oxford” plot")
 ```
@@ -544,8 +580,9 @@ genomes, their name is displayed, and addition of numeric scales show
 meaningful coordinates.
 
 ``` r
-makeOxfordPlots(gb |> plyranges::filter(seqnames        == "chrI",
-                                        seqnames(query) == "NC_047487.1")) +
+
+makeOxfordPlots(gb |> filter(seqnames        == "chrI",
+                             seqnames(query) == "NC_047487.1")) +
   scale_x_continuous() + scale_y_continuous() +
   theme_bw() +
   theme(legend.position="none") +
@@ -569,6 +606,7 @@ objects provided that a `BSgenome` packages are available and were
 indicated at load time.
 
 ``` r
+
 getSeq(gb)
 ```
 
@@ -612,6 +650,7 @@ The translocation below:
 Is represented as:
 
 ``` r
+
 exampleTranslocation
 ```
 
@@ -625,6 +664,7 @@ exampleTranslocation
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleTranslocation)
 ```
 
@@ -640,6 +680,7 @@ genome the move happened*.
 #### Detection
 
 ``` r
+
 flagTranslocations(exampleTranslocation)
 ```
 
@@ -653,6 +694,7 @@ flagTranslocations(exampleTranslocation)
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 showTranslocations(flagTranslocations(coa))
 ```
 
@@ -674,6 +716,7 @@ showTranslocations(flagTranslocations(coa))
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 plotApairOfChrs(coa, chrT = "chrI", xlim = gb2xlim(coa[2:4]))
 ```
 
@@ -691,6 +734,7 @@ More inversions are found after coalescing colinear blocks because of
 situations where `+ - +` was `+ - - +` before collapsing.
 
 ``` r
+
 flagInversions(coa)
 ```
 
@@ -725,6 +769,7 @@ flagInversions(coa)
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 showInversions(flagInversions(coa))
 ```
 
@@ -759,19 +804,22 @@ showInversions(flagInversions(coa))
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
-showInversions(flagInversions(coa)) |> plyranges::slice(1:3)   |> plotApairOfChrs()
+
+showInversions(flagInversions(coa)) |> slice(1:3)   |> plotApairOfChrs()
 ```
 
 ![](GenomicBreaks_files/figure-html/detect_trivial_invertions-1.png)
 
 ``` r
-showInversions(flagInversions(coa)) |> plyranges::slice(4:9)   |> plotApairOfChrs()
+
+showInversions(flagInversions(coa)) |> slice(4:9)   |> plotApairOfChrs()
 ```
 
 ![](GenomicBreaks_files/figure-html/detect_trivial_invertions-2.png)
 
 ``` r
-showInversions(flagInversions(coa)) |> plyranges::slice(10:12) |> plotApairOfChrs()
+
+showInversions(flagInversions(coa)) |> slice(10:12) |> plotApairOfChrs()
 ```
 
 ![](GenomicBreaks_files/figure-html/detect_trivial_invertions-3.png)
@@ -784,6 +832,7 @@ regions are always flanked by *collinear alignments* and the *isolated
 alignments* are always flanked by *breakpoint regions*.
 
 ``` r
+
 wgo <- wholeGenomeClassification(gb, coa)
 wgo
 ```
@@ -806,6 +855,7 @@ wgo
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 
 ``` r
+
 table(wgo$type)
 ```
 

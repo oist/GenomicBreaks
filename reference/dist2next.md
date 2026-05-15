@@ -43,7 +43,7 @@ genomes respectively.
 ## Details
 
 The distance is defined by the
-[`GenomicRanges::distance`](https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html)
+[`GenomicRanges::distance`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
 function. Note that because the last range has not next neighbor, the
 last value is set to `Inf` arbitrarily.
 

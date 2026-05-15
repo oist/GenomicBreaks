@@ -22,7 +22,7 @@ Ferrández-Roldán A, Roncalli V, Navratilova P, Thompson E, Onuma T,
 Nishida H, Cañestro C, Luscombe N (2024). “Extreme genome scrambling in
 marine planktonic *Oikopleura dioica* cryptic species.” *Genome
 Research*, **34**(3), 426–440.
-[doi:10.1101/gr.278295.123](https://doi.org/10.1101/gr.278295.123),
+[doi:10.1101/gr.278295.123](https://doi.org/10.1101/gr.278295.123).
 Genome structural variation study in *Oikopleura dioica*,
 <http://genome.cshlp.org/content/34/3/426.abstract>.
 

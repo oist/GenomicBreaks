@@ -78,9 +78,6 @@ bp_heatmap(gb, 200, 'GC', dir = "left") |>
   heatmaps::smoothHeatmap() |> heatmaps::plotHeatmapList()
 #> 
 #> Attaching package: ‘Biostrings’
-#> The following object is masked from ‘package:GenomicBreaks’:
-#> 
-#>     pairwiseAlignment
 #> The following object is masked from ‘package:base’:
 #> 
 #>     strsplit

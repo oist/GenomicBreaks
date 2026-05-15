@@ -17,7 +17,7 @@ pwalign::pairwiseAlignment() function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@ pwalign::pairwiseAlignment() function."></head><body>
     <div class="ref-description section level2">
     <p>Retrieves DNA sequence from <code><a href="GBreaks-class.html">GBreaks</a></code> or <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GenomicRanges::GRanges</a></code> objects that are
 properly related to a <code>BSgenome</code> package, and aligns them with the
-<code>pwalign::pairwiseAlignment()</code> function.</p>
+<code><a href="https://rdrr.io/pkg/pwalign/man/pairwiseAlignment.html" class="external-link">pwalign::pairwiseAlignment()</a></code> function.</p>
     </div>
 
     <div class="section level2">
@@ -106,9 +106,10 @@ properly related to a <code>BSgenome</code> package, and aligns them with the
 <span class="r-in"><span><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span> target <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="st">"chrI: 1-20"</span>, seqinfo <span class="op">=</span> <span class="fu">seqinfo</span><span class="op">(</span><span class="va">Scerevisiae</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>             , query  <span class="op">=</span> <span class="fu">GRanges</span><span class="op">(</span><span class="st">"chrI:21-40"</span>, seqinfo <span class="op">=</span> <span class="fu">seqinfo</span><span class="op">(</span><span class="va">Scerevisiae</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">pairwiseAlignment</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .call_fun_in_pwalign("pairwiseAlignment", ...):</span> pairwiseAlignment() has moved from Biostrings to the pwalign package, and is</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   formally defunct in Biostrings &gt;= 2.77.1. Please call</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   pwalign::pairwiseAlignment() to get rid of this error.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Global PairwiseAlignmentsSingleSubject (1 of 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pattern: C-CACACCACACCCACACACC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> subject: CACACACCACAC-CACACACC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> score: 9.653366 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

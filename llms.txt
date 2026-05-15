@@ -155,6 +155,8 @@ Various ways to estimate the similarity between two genomes.
   : Jukes-Cantor 1969 distance
 - [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md)
   : Kimura's 2-parameter distance
+- [`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md)
+  : Kimura's 2-parameter distance extended with gaps
 - [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md)
   [`P_error()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md)
   : Percent difference Distance

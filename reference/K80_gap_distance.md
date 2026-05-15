@@ -1,65 +1,53 @@
-# Hasegawa–Kishino–Yano (1985) distance (HKY85)
+# Kimura's 2-parameter distance extended with gaps
 
-Computes the HKY85 nucleotide substitution distance between two
-sequences, using only the A/C/G/T block of a pairwise count matrix. Base
-frequencies are estimated as the average of row and column marginals,
-and transitions are pooled into a single class (A↔G and C↔T).
+Nishimaki and Sato's K2P + Gap distance extends Kimura's 2-parameter
+distance by treating gaps as insertion/deletion states instead of
+removing gap-containing sites.
 
 ## Usage
 
 ``` r
-HKY85_distance(m)
+K80_gap_distance(m)
 ```
 
 ## Arguments
 
 - m:
 
-  A numeric matrix of pair counts with row/column names including
-  `A,C,G,T`. If `m` is a list, the field `$probability_matrix` is used
-  (for compatibility with your other helpers).
+  A matrix of counts or probabilities for bases of the *target* genome
+  to be aligned to bases on the *query* genome. As a convenience it can
+  also receive a list produced by the
+  [`readTrainFile()`](https://oist.github.io/GenomicBreaks/reference/readTrainFile.md)
+  function, containing this matrix.
 
 ## Value
 
-A single numeric: the HKY85 distance (substitutions/site).
+Returns a numeric value showing the evolutionary distance between two
+genomes. The larger the value, the more different the two genomes are.
 
 ## Details
 
-Let \\P\\ be the total fraction of **transition** differences (A↔G
-**plus** C↔T) among A/C/G/T pairs, and \\Q\\ the fraction of
-**transversion** differences (all other A↔{C,T}, G↔{C,T} pairs). Let
-\\\pi_A,\pi_C,\pi_G,\pi_T\\ be the **average base frequencies** across
-the two sequences (row and column marginals averaged), \\\pi_R = \pi_A +
-\pi_G\\, and \\\pi_Y = \pi_C + \pi_T\\.
+The distance is calculated as \$\$ K = \frac{3}{4} w \log(w) -
+\frac{w}{2} \log\left((S - P) \sqrt{S + P - Q}\right) \$\$ where \\S\\
+is the probability of identical nucleotide pairs, \\P\\ is the
+probability of transition-type nucleotide pairs, \\Q\\ is the
+probability of transversion-type nucleotide pairs, and \\w\\ is the
+nucleotide occupancy probability.
 
-The HKY85 distance (special case of TN93 with a single transition rate)
-is: \$\$ d\_{\mathrm{HKY85}} = -\\2(\pi_A \pi_G + \pi_C \pi_T)\\
-\ln\\\left(1 - \frac{P}{2(\pi_A \pi_G + \pi_C \pi_T)}\right) -\\2\\\pi_R
-\pi_Y\\ \ln\\\left(1 - \frac{Q}{2\\\pi_R \pi_Y}\right). \$\$
-
-Implementation notes:
-
-- Rows/columns outside `A,C,G,T` are dropped.
-
-- \\P\\ and \\Q\\ are computed from the normalized 4×4 table.
-
-- \\\pi\_\bullet\\ are estimated as the average of row and column
-  marginals.
-
-- Returns `Inf` if any log argument is non‑positive or a denominator is
-  zero.
+When there are no gaps, \\w = 1\\, and this expression reduces to the
+usual K80 distance.
 
 ## References
 
-Hasegawa, M., Kishino, H., and Yano, T. (1985). Dating of the human–ape
-splitting by a molecular clock of mitochondrial DNA. *J. Mol. Evol.*
-22:160–174.
+Kimura, M. (1980). "A simple method for estimating evolutionary rates of
+base substitutions through comparative studies of nucleotide sequences."
+*Journal of Molecular Evolution*, 16, 111–120. DOI:
+[doi:10.1007/BF01731581](https://doi.org/10.1007/BF01731581)
 
-RevBayes tutorial (overview of HKY, parameters \\\kappa,\pi\\):
-<https://revbayes.github.io/tutorials/ctmc/>
-
-IQ‑TREE model manual (relationships among HKY, K80, TN93):
-<https://iqtree.github.io/doc/Substitution-Models>
+Nishimaki, T. and Sato, K. (2019). "An Extension of the Kimura
+Two-Parameter Model to the Natural Evolutionary Process." *Journal of
+Molecular Evolution*, 87, 60–67. DOI:
+[doi:10.1007/s00239-018-9885-1](https://doi.org/10.1007/s00239-018-9885-1)
 
 ## See also
 
@@ -68,9 +56,9 @@ Other Alignment statistics:
 [`GCequilibrium()`](https://oist.github.io/GenomicBreaks/reference/GCequilibrium.md),
 [`GCpressure()`](https://oist.github.io/GenomicBreaks/reference/GCpressure.md),
 [`GCproportion()`](https://oist.github.io/GenomicBreaks/reference/GCproportion.md),
+[`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
-[`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
@@ -81,9 +69,9 @@ Other Alignment statistics:
 Other Similarity indexes:
 [`F81_distance()`](https://oist.github.io/GenomicBreaks/reference/F81_distance.md),
 [`GOC()`](https://oist.github.io/GenomicBreaks/reference/GOC.md),
+[`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
-[`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
@@ -97,11 +85,20 @@ Other Similarity indexes:
 
 ## Author
 
-Entirely written by Copilot and not proofchecked yet
+Charles Plessy
 
 ## Examples
 
 ``` r
-HKY85_distance(exampleSubstitutionMatrix)
-#> [1] 0.288648
+K80_gap_distance(exampleSubstitutionMatrix)
+#> [1] 0.313952
+
+# When there are no gaps, it returns the same as the K80 distance
+nogaps <- exampleSubstitutionMatrix
+nogaps["-",] <- 0
+nogaps[,"-"] <- 0
+K80_gap_distance(nogaps)
+#> [1] 0.2789688
+K80_distance(nogaps)
+#> [1] 0.2789688
 ```

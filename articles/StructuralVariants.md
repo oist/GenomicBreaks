@@ -17,6 +17,7 @@ colinearity between genomes.
 Colinearity is a property of pairs of mapped regions.
 
 ``` r
+
 plotApairOfChrs(exampleColinear, main = "Two colinear regions")
 ```
 
@@ -26,6 +27,7 @@ Regions that mapped on reverse strands **and** in reverse order are also
 colinear.
 
 ``` r
+
 plotApairOfChrs(reverse(exampleColinear), main = "Two colinear regions on different strands")
 ```
 
@@ -35,12 +37,14 @@ Regions that are only in reverse order, or only mapped on opposite
 strands **are not colinear**.
 
 ``` r
+
 plotApairOfChrs(exampleNotColinear, main = "Same strand but not colinear")
 ```
 
 ![](StructuralVariants_files/figure-html/notColinearRegions_pair-1.png)
 
 ``` r
+
 plotApairOfChrs(reverse(exampleNotColinear), main = "Both on opposite strand but not colinear")
 ```
 
@@ -57,6 +61,7 @@ function puts the flag on the first member of the pair, ordered by the
 sequence on the *target* genome.
 
 ``` r
+
 flagColinearAlignments(exampleColinear)
 ```
 
@@ -69,6 +74,7 @@ flagColinearAlignments(exampleColinear)
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 flagColinearAlignments(reverse(exampleColinear))
 ```
 
@@ -81,6 +87,7 @@ flagColinearAlignments(reverse(exampleColinear))
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 # Note the tolerance window
 flagColinearAlignments(exampleColinear, tol = 100)
 ```
@@ -94,8 +101,10 @@ flagColinearAlignments(exampleColinear, tol = 100)
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 # Strandless mappings can also be colinear
-exampleColinear |> plyranges::mutate(strand = "*") |> flagColinearAlignments()
+library("plyranges") |> suppressPackageStartupMessages()
+exampleColinear |> mutate(strand = "*") |> flagColinearAlignments()
 ```
 
     ## GBreaks object with 2 ranges and 2 metadata columns:
@@ -107,6 +116,7 @@ exampleColinear |> plyranges::mutate(strand = "*") |> flagColinearAlignments()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 flagColinearAlignments(exampleNotColinear)
 ```
 
@@ -122,6 +132,7 @@ To make some sanity checks against the other flagging functions there is
 also an object containing three colinear mappings.
 
 ``` r
+
 flagColinearAlignments(exampleColinear3)
 ```
 
@@ -149,6 +160,7 @@ if the strand of the second one were reversed. Note that, like for
 colinear patterns, the flag is put on the first mapping of the triplet.
 
 ``` r
+
 exampleInversion |> flagColinearAlignments() |> flagInversions()
 ```
 
@@ -162,18 +174,21 @@ exampleInversion |> flagColinearAlignments() |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleInversion, main = "An inverted region flanked by colinear regions")
 ```
 
 ![](StructuralVariants_files/figure-html/inversions-1.png)
 
 ``` r
+
 plotApairOfChrs(reverse(exampleInversion), main = "An inverted region flanked by colinear regions (opposite strands)")
 ```
 
 ![](StructuralVariants_files/figure-html/inversions-2.png)
 
 ``` r
+
 # Removing the inversion restores colinearity
 exampleInversion[-2] |> flagColinearAlignments()
 ```
@@ -187,8 +202,9 @@ exampleInversion[-2] |> flagColinearAlignments()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 # Flipping the inversion restores colinearity
-exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
+exampleInversion |> mutate(strand = "+") |> flagColinearAlignments()
 ```
 
     ## GBreaks object with 3 ranges and 2 metadata columns:
@@ -201,6 +217,7 @@ exampleInversion |> plyranges::mutate(strand = "+") |> flagColinearAlignments()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 # Note the tolerance window
 flagInversions(exampleInversion, tol = 10)
 ```
@@ -231,18 +248,21 @@ show a triplet resulting from a double inversion, flanked by two regions
 that did not move.
 
 ``` r
+
 exampleColinear5 |> plotApairOfChrs(main = "5 collinear ranges")
 ```
 
 ![](StructuralVariants_files/figure-html/doubleInversions-1.png)
 
 ``` r
+
 exampleInversion5uncollapsed |> plotApairOfChrs(main = "Invert ranges 2 and 3")
 ```
 
 ![](StructuralVariants_files/figure-html/doubleInversions-2.png)
 
 ``` r
+
 exampleDoubleInversion1 |> plotApairOfChrs(main = "Invert ranges 3 and 4 of the previous step")
 ```
 
@@ -251,18 +271,21 @@ exampleDoubleInversion1 |> plotApairOfChrs(main = "Invert ranges 3 and 4 of the 
 Same story but showing coalesced alignments.
 
 ``` r
+
 exampleColinear5 |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/doubleInversions2-1.png)
 
 ``` r
+
 exampleInversion5uncollapsed |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/doubleInversions2-2.png)
 
 ``` r
+
 exampleDoubleInversion1 |> coalesce_contigs() |> plotApairOfChrs()
 ```
 
@@ -280,12 +303,14 @@ algorithm only detects the simplest cases. In order to detect nested
 inversions, the inner ones have to be removed.
 
 ``` r
+
 exampleNestedInversions |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/nestedInversions-1.png)
 
 ``` r
+
 exampleNestedInversions |> flagInversions()
 ```
 
@@ -301,6 +326,7 @@ exampleNestedInversions |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 (flipped <- (exampleNestedInversions |> flagInversions() |> flipInversions()))
 ```
 
@@ -316,12 +342,14 @@ exampleNestedInversions |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 flipped |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/nestedInversions-2.png)
 
 ``` r
+
 flipped |> coalesce_contigs() |> flagInversions()
 ```
 
@@ -340,12 +368,14 @@ Two inverted regions directly following each other in a way implying
 breakpoint reuse.
 
 ``` r
+
 exampleTwinInversions |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/twinInversions-1.png)
 
 ``` r
+
 exampleTwinInversions |> flagInversions()
 ```
 
@@ -360,6 +390,7 @@ exampleTwinInversions |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 exampleTwinInversions |> flagTwinInversions()
 ```
 
@@ -374,12 +405,14 @@ exampleTwinInversions |> flagTwinInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 exampleTwinInversions |> reverse() |> plotApairOfChrs()
 ```
 
 ![](StructuralVariants_files/figure-html/twinInversions-2.png)
 
 ``` r
+
 exampleTwinInversions |> reverse() |> sort(i=TRUE) |> flagTwinInversions()
 ```
 
@@ -399,6 +432,7 @@ If a region has moved, but is not an inversion, then it is a
 translocation.
 
 ``` r
+
 exampleTranslocation |> flagColinearAlignments() |> flagInversions()
 ```
 
@@ -412,6 +446,7 @@ exampleTranslocation |> flagColinearAlignments() |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleTranslocation)
 ```
 
@@ -420,6 +455,7 @@ plotApairOfChrs(exampleTranslocation)
 It does not matter if the region moved on the minus strand
 
 ``` r
+
 exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
 ```
 
@@ -433,6 +469,7 @@ exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleTranslocation2)
 ```
 
@@ -445,6 +482,7 @@ one-to-one alignment unless the maximal distance for colinearity is set
 to a meaningful value.
 
 ``` r
+
 exampleDeletion
 ```
 
@@ -458,12 +496,14 @@ exampleDeletion
     ##   seqinfo: 1 sequence from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleDeletion)
 ```
 
 ![](StructuralVariants_files/figure-html/indels-1.png)
 
 ``` r
+
 exampleInsertion
 ```
 
@@ -477,6 +517,7 @@ exampleInsertion
     ##   seqinfo: 2 sequences from an unspecified genome
 
 ``` r
+
 plotApairOfChrs(exampleInsertion)
 ```
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## GenomicBreaks 0.22.0
+
+- New
+  [`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md)
+  function for Nishimaki and Sato’s K2P + Gap distance.
+
 ## GenomicBreaks 0.21.0
 
 - New
@@ -396,8 +402,10 @@
 - New [`range()`](https://rdrr.io/r/base/range.html) methods for
   `GBreaks` objects, that runs `GRanges::range` on each pair of
   target/query *seqnames*, ignoring strand information.
-- New `subsetByOverlaps()` range that combines regions overlapping by
-  their *target* or by their *query* ranges.
+- New
+  [`subsetByOverlaps()`](https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html)
+  range that combines regions overlapping by their *target* or by their
+  *query* ranges.
 
 ### Bug fixes
 

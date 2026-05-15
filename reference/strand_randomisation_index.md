@@ -64,6 +64,7 @@ Other Similarity indexes:
 [`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
+[`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),

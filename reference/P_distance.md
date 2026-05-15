@@ -70,6 +70,7 @@ Other Alignment statistics:
 [`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
+[`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
 [`exampleSubstitutionMatrix`](https://oist.github.io/GenomicBreaks/reference/exampleSubstitutionMatrix.md),
@@ -82,6 +83,7 @@ Other Similarity indexes:
 [`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
+[`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
 [`correlation_index()`](https://oist.github.io/GenomicBreaks/reference/correlation_index.md),
@@ -91,20 +93,6 @@ Other Similarity indexes:
 [`strand_randomisation_index()`](https://oist.github.io/GenomicBreaks/reference/strand_randomisation_index.md),
 [`synteny_index()`](https://oist.github.io/GenomicBreaks/reference/synteny_index.md),
 [`tau_index()`](https://oist.github.io/GenomicBreaks/reference/tau_index.md)
-
-Other Alignment statistics:
-[`F81_distance()`](https://oist.github.io/GenomicBreaks/reference/F81_distance.md),
-[`GCequilibrium()`](https://oist.github.io/GenomicBreaks/reference/GCequilibrium.md),
-[`GCpressure()`](https://oist.github.io/GenomicBreaks/reference/GCpressure.md),
-[`GCproportion()`](https://oist.github.io/GenomicBreaks/reference/GCproportion.md),
-[`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
-[`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
-[`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
-[`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
-[`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
-[`exampleSubstitutionMatrix`](https://oist.github.io/GenomicBreaks/reference/exampleSubstitutionMatrix.md),
-[`gapProportion()`](https://oist.github.io/GenomicBreaks/reference/gapProportion.md),
-[`logDet_distance()`](https://oist.github.io/GenomicBreaks/reference/logDet_distance.md)
 
 ## Author
 

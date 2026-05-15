@@ -21,7 +21,7 @@ account."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,8 +98,8 @@ each genome (<code>tdist</code> and <code>qdist</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Internally, <code>flagColinearAlignments()</code> uses the <code><a href="https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html" class="external-link">GenomicRanges::precede</a></code>
-and <code><a href="https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html" class="external-link">GenomicRanges::follow</a></code> functions functions to determine what is the
+    <p>Internally, <code>flagColinearAlignments()</code> uses the <code><a href="https://rdrr.io/pkg/IRanges/man/nearest-methods.html" class="external-link">GenomicRanges::precede</a></code>
+and <code><a href="https://rdrr.io/pkg/IRanges/man/nearest-methods.html" class="external-link">GenomicRanges::follow</a></code> functions functions to determine what is the
 <em>next</em>.  For a given range, these functions return the index position of the
 range it precedes or follows, or <code>NA</code> as the first range follows nothing and
 the last range precedes nothing.  See the examples for details.</p>

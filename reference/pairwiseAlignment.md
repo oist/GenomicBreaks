@@ -5,7 +5,9 @@ Retrieves DNA sequence from
 or
 [`GenomicRanges::GRanges`](https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html)
 objects that are properly related to a `BSgenome` package, and aligns
-them with the `pwalign::pairwiseAlignment()` function.
+them with the
+[`pwalign::pairwiseAlignment()`](https://rdrr.io/pkg/pwalign/man/pairwiseAlignment.html)
+function.
 
 ## Usage
 
@@ -60,7 +62,8 @@ Scerevisiae <- BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae
 gb <- GBreaks( target = GRanges("chrI: 1-20", seqinfo = seqinfo(Scerevisiae))
              , query  = GRanges("chrI:21-40", seqinfo = seqinfo(Scerevisiae)))
 pairwiseAlignment(gb)
-#> Error in .call_fun_in_pwalign("pairwiseAlignment", ...): pairwiseAlignment() has moved from Biostrings to the pwalign package, and is
-#>   formally defunct in Biostrings >= 2.77.1. Please call
-#>   pwalign::pairwiseAlignment() to get rid of this error.
+#> Global PairwiseAlignmentsSingleSubject (1 of 1)
+#> pattern: C-CACACCACACCCACACACC
+#> subject: CACACACCACAC-CACACACC
+#> score: 9.653366 
 ```

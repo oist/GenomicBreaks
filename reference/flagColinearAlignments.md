@@ -45,9 +45,9 @@ to the next alignment on each genome (`tdist` and `qdist`).
 ## Details
 
 Internally, `flagColinearAlignments()` uses the
-[`GenomicRanges::precede`](https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html)
+[`GenomicRanges::precede`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
 and
-[`GenomicRanges::follow`](https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html)
+[`GenomicRanges::follow`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
 functions functions to determine what is the *next*. For a given range,
 these functions return the index position of the range it precedes or
 follows, or `NA` as the first range follows nothing and the last range
