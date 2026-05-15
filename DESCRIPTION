@@ -59,6 +59,7 @@ Collate:
     'HKY85_distance.R'
     'JC69_distance.R'
     'K80_distance.R'
+    'K80_gap_distance.R'
     'P_distance.R'
     'RcppExports.R'
     'StructuralVariants.R'

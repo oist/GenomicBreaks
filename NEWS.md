@@ -1,3 +1,7 @@
+# GenomicBreaks 0.22.0
+
+ * New `K80_gap_distance()` function for Nishimaki and Sato's K2P + Gap distance.
+
 # GenomicBreaks 0.21.0
 
  * New `flagTwinInversions()` function with example data.
