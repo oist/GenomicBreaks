@@ -49,13 +49,13 @@ exampleTranslocation2
 
 }
 \seealso{
-Other Structural variants: 
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{plotApairOfChrs}()}
+Other Structural variants:
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 }
 \author{
 Charles Plessy

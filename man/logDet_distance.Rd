@@ -65,35 +65,37 @@ tests under nonstationary nucleotide frequencies. \emph{Mol Biol Evol} \strong{1
 \url{https://paperity.org/p/54207439/bias-corrected-paralinear-and-logdet-distances-and-tests-of-molecular-clocks-and} \href{https://paperity.org/p/54207439/bias-corrected-paralinear-and-logdet-distances-and-tests-of-molecular-clocks-and}{3}
 }
 \seealso{
-Other Alignment statistics: 
-\code{\link{F81_distance}()},
-\code{\link{GCequilibrium}()},
-\code{\link{GCpressure}()},
-\code{\link{GCproportion}()},
-\code{\link{HKY85_distance}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{TN93_distance}()},
+Other Alignment statistics:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=GCequilibrium]{GCequilibrium()}},
+\code{\link[=GCpressure]{GCpressure()}},
+\code{\link[=GCproportion]{GCproportion()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
 \code{\link{exampleSubstitutionMatrix}},
-\code{\link{gapProportion}()}
+\code{\link[=gapProportion]{gapProportion()}}
 
-Other Similarity indexes: 
-\code{\link{F81_distance}()},
-\code{\link{GOC}()},
-\code{\link{HKY85_distance}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{TN93_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+Other Similarity indexes:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=GOC]{GOC()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
+\code{\link[=correlation_index]{correlation_index()}},
+\code{\link[=karyotype_index]{karyotype_index()}},
+\code{\link[=slidingWindow]{slidingWindow()}},
+\code{\link[=strand_randomisation_index]{strand_randomisation_index()}},
+\code{\link[=synteny_index]{synteny_index()}},
+\code{\link[=tau_index]{tau_index()}}
 }
 \concept{Alignment statistics}
 \concept{Similarity indexes}

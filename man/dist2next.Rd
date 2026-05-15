@@ -13,7 +13,7 @@ dist2next(x, step = 1, ignore.strand = FALSE)
 \S4method{dist2next}{GBreaks}(x, step = 1, ignore.strand = FALSE)
 }
 \arguments{
-\item{x}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} or a \code{\link{GBreaks}} object.}
+\item{x}{A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} or a \code{\link{GBreaks}} object.}
 
 \item{step}{Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
 block (default: first).}
@@ -30,7 +30,7 @@ respectively.
 Calculates the distance to the next range in the \emph{target} and \emph{query} genome.
 }
 \details{
-The distance is defined by the \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::distance}} function.  Note
+The distance is defined by the \code{\link[GenomicRanges:distance]{GenomicRanges::distance}} function.  Note
 that because the last range has not next neighbor, the last value is set
 to \code{Inf} arbitrarily.
 }
@@ -43,13 +43,13 @@ dist2next(exampleInversion, 2)
 
 }
 \seealso{
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{bridgeRegions}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagPairs]{flagPairs()}}
 }
 \concept{Colinearity functions}

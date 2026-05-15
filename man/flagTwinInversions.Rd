@@ -39,34 +39,34 @@ plotApairOfChrs(exampleTwinInversions |> reverse())
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagAll}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagLongShort}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()}
+Other Flagging functions:
+\code{\link[=flagAll]{flagAll()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagLongShort]{flagLongShort()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}}
 
-Other Inversion functions: 
-\code{\link{filterDoubleInversions}()},
-\code{\link{filterInversions}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flipInversions}()},
-\code{\link{leftInversionGaps}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{showInversions}()}
+Other Inversion functions:
+\code{\link[=filterDoubleInversions]{filterDoubleInversions()}},
+\code{\link[=filterInversions]{filterInversions()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=leftInversionGaps]{leftInversionGaps()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=showInversions]{showInversions()}}
 
-Other Structural variants: 
+Other Structural variants:
 \code{\link{StructuralVariants}},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{plotApairOfChrs}()}
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 }
 \concept{Flagging functions}
 \concept{Inversion functions}

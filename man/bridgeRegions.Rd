@@ -39,29 +39,29 @@ deletion, and rearrangement in the mouse and human genomes.} Proc Natl Acad
 Sci U S A. 2003;100(20):11484-11489. doi:10.1073/pnas.1932072100)
 }
 \seealso{
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagPairs]{flagPairs()}}
 
-Other modifier functions: 
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 }
 \author{
 Charles Plessy

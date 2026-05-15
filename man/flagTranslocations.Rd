@@ -50,27 +50,27 @@ flagTranslocations(exampleColinear3)
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagAll}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagLongShort}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTwinInversions}()}
+Other Flagging functions:
+\code{\link[=flagAll]{flagAll()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagLongShort]{flagLongShort()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 
-Other Translocation functions: 
-\code{\link{filterTranslocations}()},
-\code{\link{removeTranslocations}()},
-\code{\link{showTranslocations}()}
+Other Translocation functions:
+\code{\link[=filterTranslocations]{filterTranslocations()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=showTranslocations]{showTranslocations()}}
 
-Other Structural variants: 
+Other Structural variants:
 \code{\link{StructuralVariants}},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{plotApairOfChrs}()}
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 }
 \concept{Flagging functions}
 \concept{Structural variants}

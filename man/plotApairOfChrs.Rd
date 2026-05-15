@@ -54,25 +54,25 @@ plotApairOfChrs(exampleDeletion, dna_seg_labels = c("over...", "...ridden"))
 
 }
 \seealso{
-Other genoPlotR functions: 
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gb2xlim}()},
-\code{\link{gr2dna_seg}()}
+Other genoPlotR functions:
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gb2xlim]{gb2xlim()}},
+\code{\link[=gr2dna_seg]{gr2dna_seg()}}
 
-Other plot functions: 
-\code{\link{bp_heatmap}()},
-\code{\link{bp_pair_analysis}()},
-\code{\link{feature_coverage}()},
-\code{\link{makeOxfordPlots}()}
+Other plot functions:
+\code{\link[=bp_heatmap]{bp_heatmap()}},
+\code{\link[=bp_pair_analysis]{bp_pair_analysis()}},
+\code{\link[=feature_coverage]{feature_coverage()}},
+\code{\link[=makeOxfordPlots]{makeOxfordPlots()}}
 
-Other Structural variants: 
+Other Structural variants:
 \code{\link{StructuralVariants}},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()}
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 }
 \author{
 Charles Plessy

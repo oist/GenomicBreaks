@@ -20,10 +20,10 @@ pairwiseAlignment(pattern, subject, ...)
 \item{...}{Additional arguments passed to \code{pairwiseAlignment}.}
 }
 \value{
-Returns a \code{\link[pwalign:PairwiseAlignments-class]{pwalign::PairwiseAlignments}} object.
+Returns a \code{\link[pwalign:PairwiseAlignments]{pwalign::PairwiseAlignments}} object.
 }
 \description{
-Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} objects that are
+Retrieves DNA sequence from \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} objects that are
 properly related to a \code{BSgenome} package, and aligns them with the
 \code{\link[pwalign:pairwiseAlignment]{pwalign::pairwiseAlignment()}} function.
 }
@@ -36,12 +36,12 @@ pairwiseAlignment(gb)
 
 }
 \seealso{
-Other Bioconductor API functions: 
+Other Bioconductor API functions:
 \code{\link{GBreaks-class}},
-\code{\link{getSeq}()},
-\code{\link{range_GBreaks}()},
-\code{\link{reverse}()},
-\code{\link{subsetByOverlaps_GBreaks}()}
+\code{\link[=getSeq]{getSeq()}},
+\code{\link[=range_GBreaks]{range_GBreaks()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=subsetByOverlaps_GBreaks]{subsetByOverlaps_GBreaks()}}
 }
 \author{
 Charles Plessy

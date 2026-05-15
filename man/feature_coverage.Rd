@@ -7,7 +7,7 @@
 feature_coverage(gr, feat, window, label, ...)
 }
 \arguments{
-\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
+\item{gr}{A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object.}
 
 \item{feat}{A \code{GRanges} object representing the feature of interest.}
 
@@ -29,15 +29,15 @@ on the boundaries of \emph{genomic ranges}.  Assuming that these ranges are a
 \code{\link{GBreaks}} object, then the boundaries approximate breakpoints.
 }
 \seealso{
-Other plot functions: 
-\code{\link{bp_heatmap}()},
-\code{\link{bp_pair_analysis}()},
-\code{\link{makeOxfordPlots}()},
-\code{\link{plotApairOfChrs}()}
+Other plot functions:
+\code{\link[=bp_heatmap]{bp_heatmap()}},
+\code{\link[=bp_pair_analysis]{bp_pair_analysis()}},
+\code{\link[=makeOxfordPlots]{makeOxfordPlots()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 
-Other heatmap functions: 
-\code{\link{bp_heatmap}()},
-\code{\link{bp_pair_analysis}()}
+Other heatmap functions:
+\code{\link[=bp_heatmap]{bp_heatmap()}},
+\code{\link[=bp_pair_analysis]{bp_pair_analysis()}}
 }
 \concept{heatmap functions}
 \concept{plot functions}

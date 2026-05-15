@@ -29,7 +29,7 @@ aligned at the centre of the plot. The result can be piped into
 \note{
 The \code{GRanges} object is expected to have a \emph{sequence information}
 (see \code{\link[Seqinfo:seqinfo]{Seqinfo::seqinfo}}) that allows the retrieval its corresponding \code{BSgenome}
-object via the \code{\link[BSgenome:available.genomes]{BSgenome::getBSgenome}} function.
+object via the \code{\link[BSgenome:getBSgenome]{BSgenome::getBSgenome}} function.
 }
 \examples{
 # The plot makes no sense, but that is the best example I have at the moment.
@@ -40,15 +40,15 @@ bp_heatmap(gb, 200, 'GC', dir = "left") |>
 
 }
 \seealso{
-Other plot functions: 
-\code{\link{bp_pair_analysis}()},
-\code{\link{feature_coverage}()},
-\code{\link{makeOxfordPlots}()},
-\code{\link{plotApairOfChrs}()}
+Other plot functions:
+\code{\link[=bp_pair_analysis]{bp_pair_analysis()}},
+\code{\link[=feature_coverage]{feature_coverage()}},
+\code{\link[=makeOxfordPlots]{makeOxfordPlots()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 
-Other heatmap functions: 
-\code{\link{bp_pair_analysis}()},
-\code{\link{feature_coverage}()}
+Other heatmap functions:
+\code{\link[=bp_pair_analysis]{bp_pair_analysis()}},
+\code{\link[=feature_coverage]{feature_coverage()}}
 }
 \author{
 Charlotte West

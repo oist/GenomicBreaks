@@ -45,7 +45,7 @@ tbd
 }
 \description{
 This is a \code{subsetByOverlaps} method for \code{\link{GBreaks}} objects, that will run
-\code{\link[GenomicRanges:findOverlaps-methods]{GenomicRanges::subsetByOverlaps}} on its \emph{target} and \emph{query} ranges and
+\code{\link[GenomicRanges:subsetByOverlaps]{GenomicRanges::subsetByOverlaps}} on its \emph{target} and \emph{query} ranges and
 will return a new \code{GBreaks} object.
 }
 \note{
@@ -55,11 +55,11 @@ will return a new \code{GBreaks} object.
 subsetByOverlaps(exampleColinear3, exampleColinear3)
 }
 \seealso{
-Other Bioconductor API functions: 
+Other Bioconductor API functions:
 \code{\link{GBreaks-class}},
-\code{\link{getSeq}()},
-\code{\link{pairwiseAlignment}()},
-\code{\link{range_GBreaks}()},
-\code{\link{reverse}()}
+\code{\link[=getSeq]{getSeq()}},
+\code{\link[=pairwiseAlignment]{pairwiseAlignment()}},
+\code{\link[=range_GBreaks]{range_GBreaks()}},
+\code{\link[=reverse]{reverse()}}
 }
 \concept{Bioconductor API functions}

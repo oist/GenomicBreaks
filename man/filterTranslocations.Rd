@@ -31,9 +31,9 @@ filterTranslocations(remove = TRUE, exampleTranslocation)
 
 }
 \seealso{
-Other Translocation functions: 
-\code{\link{flagTranslocations}()},
-\code{\link{removeTranslocations}()},
-\code{\link{showTranslocations}()}
+Other Translocation functions:
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=showTranslocations]{showTranslocations()}}
 }
 \concept{Translocation functions}

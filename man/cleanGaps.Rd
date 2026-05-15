@@ -7,10 +7,10 @@
 cleanGaps(gr)
 }
 \arguments{
-\item{gr}{A \code{\link{GBreaks}} or a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
+\item{gr}{A \code{\link{GBreaks}} or a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object.}
 }
 \value{
-Returns a strandless \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the gaps
+Returns a strandless \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object representing the gaps
 between the ranges of the input.
 }
 \description{
@@ -30,9 +30,9 @@ cleanGaps(exampleInversion)
 
 }
 \seealso{
-Other Reducing functions: 
-\code{\link{get_bps}()},
-\code{\link{wholeGenomeClassification}()}
+Other Reducing functions:
+\code{\link[=get_bps]{get_bps()}},
+\code{\link[=wholeGenomeClassification]{wholeGenomeClassification()}}
 }
 \author{
 Charles Plessy

@@ -28,16 +28,16 @@ showInversions(exampleInversion)
 
 }
 \seealso{
-Other Inversion functions: 
-\code{\link{filterDoubleInversions}()},
-\code{\link{filterInversions}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{flipInversions}()},
-\code{\link{leftInversionGaps}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()}
+Other Inversion functions:
+\code{\link[=filterDoubleInversions]{filterDoubleInversions()}},
+\code{\link[=filterInversions]{filterInversions()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=leftInversionGaps]{leftInversionGaps()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}}
 }
 \concept{Inversion functions}

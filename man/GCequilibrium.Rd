@@ -47,19 +47,20 @@ heterogeneity of DNA base composition. (1962) \emph{Proc Natl Acad Sci U S A}
 48(4):582-92. \doi{10.1073/pnas.48.4.582}
 }
 \seealso{
-Other Alignment statistics: 
-\code{\link{F81_distance}()},
-\code{\link{GCpressure}()},
-\code{\link{GCproportion}()},
-\code{\link{HKY85_distance}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{TN93_distance}()},
+Other Alignment statistics:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=GCpressure]{GCpressure()}},
+\code{\link[=GCproportion]{GCproportion()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
 \code{\link{exampleSubstitutionMatrix}},
-\code{\link{gapProportion}()},
-\code{\link{logDet_distance}()}
+\code{\link[=gapProportion]{gapProportion()}},
+\code{\link[=logDet_distance]{logDet_distance()}}
 }
 \author{
 Charles Plessy

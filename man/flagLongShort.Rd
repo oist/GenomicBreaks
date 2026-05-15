@@ -7,7 +7,7 @@
 flagLongShort(gr, annot, select = c("first", "last", "arbitrary"))
 }
 \arguments{
-\item{gr}{A \code{\link{GBreaks}} or a simple \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object}
+\item{gr}{A \code{\link{GBreaks}} or a simple \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object}
 
 \item{annot}{A \code{GRanges} file containing the coordinate of arms and their
 nature (such as \code{long}, \code{short}, \code{XSR} or \code{YSR}) in a \code{Type}
@@ -20,7 +20,7 @@ on how to handle the regions that match both arms.}
 Returns a modified version of the object with an extra \emph{metadata
 column}, \code{Arm} in which the information from the annotation file's \code{Type}
 column was transferred.  See the examples below and in the manual of
-\code{\link[IRanges:findOverlaps-methods]{IRanges::findOverlaps}} for details. on how regions that match both arms
+\code{\link[IRanges:findOverlaps]{IRanges::findOverlaps}} for details. on how regions that match both arms
 are handled.
 }
 \description{
@@ -37,14 +37,14 @@ flagLongShort(exampleColinear, annot, select = "arbitrary")
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagAll}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()}
+Other Flagging functions:
+\code{\link[=flagAll]{flagAll()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 }
 \author{
 Charles Plessy

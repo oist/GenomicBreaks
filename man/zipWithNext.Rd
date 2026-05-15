@@ -13,7 +13,7 @@ zipWithNext(x, step = 1)
 it with itself.}
 }
 \value{
-A \code{\link[S4Vectors:Pairs-class]{S4Vectors::Pairs}} object with a copy of \code{x} in the \code{first} slot,
+A \code{\link[S4Vectors:Pairs]{S4Vectors::Pairs}} object with a copy of \code{x} in the \code{first} slot,
 and \code{x} with \code{step} elements removed from its head and complemented with
 \code{NAs} in the \code{second} slot.
 }

@@ -17,8 +17,8 @@ computed on-the-fly with the \code{\link{coalesce_contigs}} function.}
 features} not covered by the original alignment.}
 }
 \value{
-A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the \emph{target}
-genome, inheriting its \emph{sequence information} (\code{\link[GenomeInfoDb:compat]{GenomeInfoDb::Seqinfo}}).
+A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object representing the \emph{target}
+genome, inheriting its \emph{sequence information} (\code{\link[GenomeInfoDb:Seqinfo]{GenomeInfoDb::Seqinfo}}).
 The class of each region is indicated by a factor in the \code{type} metadata
 column.
 }
@@ -37,9 +37,9 @@ exampleColinear5 |> wholeGenomeClassification(ends = TRUE)
 
 }
 \seealso{
-Other Reducing functions: 
-\code{\link{cleanGaps}()},
-\code{\link{get_bps}()}
+Other Reducing functions:
+\code{\link[=cleanGaps]{cleanGaps()}},
+\code{\link[=get_bps]{get_bps()}}
 }
 \author{
 Charles Plessy

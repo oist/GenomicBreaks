@@ -7,7 +7,7 @@
 gr2dna_seg(gr, ...)
 }
 \arguments{
-\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
+\item{gr}{A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object.}
 
 \item{...}{Extra arguments passed to \code{dna_seg()}.}
 }
@@ -25,17 +25,17 @@ gr2dna_seg(exampleInversion$query)
 
 }
 \seealso{
-Other genoPlotR functions: 
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gb2xlim}()},
-\code{\link{plotApairOfChrs}()}
+Other genoPlotR functions:
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gb2xlim]{gb2xlim()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 
-Other Converter functions: 
-\code{\link{GBreaksToMatrix}()},
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gb2xlim}()}
+Other Converter functions:
+\code{\link[=GBreaksToMatrix]{GBreaksToMatrix()}},
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gb2xlim]{gb2xlim()}}
 }
 \author{
 Charles Plessy

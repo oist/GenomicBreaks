@@ -25,14 +25,14 @@ chain_contigs(exampleInversion)
 
 }
 \seealso{
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagPairs]{flagPairs()}}
 }
 \author{
 Charles Plessy

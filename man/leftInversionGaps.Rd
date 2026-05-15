@@ -10,7 +10,7 @@ leftInversionGaps(gb)
 \item{gb}{A \code{\link{GBreaks}} object.}
 }
 \value{
-Returns a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object representing the left-side gaps in the
+Returns a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object representing the left-side gaps in the
 \code{GBreaks} object.
 }
 \description{
@@ -21,16 +21,16 @@ leftInversionGaps(flagInversions(exampleInversion))
 
 }
 \seealso{
-Other Inversion functions: 
-\code{\link{filterDoubleInversions}()},
-\code{\link{filterInversions}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{flipInversions}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{showInversions}()}
+Other Inversion functions:
+\code{\link[=filterDoubleInversions]{filterDoubleInversions()}},
+\code{\link[=filterInversions]{filterInversions()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=showInversions]{showInversions()}}
 }
 \concept{Inversion functions}

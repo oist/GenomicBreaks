@@ -17,11 +17,11 @@ Takes a character vector of "strand names", reverses the order of its
 elements and flips the strand.
 }
 \seealso{
-Other scaffolding functions: 
-\code{\link{longestMatchesInTarget}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{scaffoldByFlipAndMerge}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{strandNames}()}
+Other scaffolding functions:
+\code{\link[=longestMatchesInTarget]{longestMatchesInTarget()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=scaffoldByFlipAndMerge]{scaffoldByFlipAndMerge()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=strandNames]{strandNames()}}
 }
 \concept{scaffolding functions}

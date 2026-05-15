@@ -25,13 +25,13 @@ filterColinearRegions(flagColinearAlignments(exampleColinear))
 
 }
 \seealso{
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{bridgeRegions}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagPairs]{flagPairs()}}
 }
 \concept{Colinearity functions}

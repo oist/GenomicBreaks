@@ -26,7 +26,7 @@ breakpoints and a \code{-} strand to the right-side ones.}
 \code{GRanges} object of the breakpoints
 }
 \description{
-Given a \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object, the function produces a \code{GRanges}
+Given a \code{\link{GBreaks}} or \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object, the function produces a \code{GRanges}
 object detailing the breakpoints only.
 }
 \examples{
@@ -38,8 +38,8 @@ get_bps(exampleInversion, direction = "mid")
 
 }
 \seealso{
-Other Reducing functions: 
-\code{\link{cleanGaps}()},
-\code{\link{wholeGenomeClassification}()}
+Other Reducing functions:
+\code{\link[=cleanGaps]{cleanGaps()}},
+\code{\link[=wholeGenomeClassification]{wholeGenomeClassification()}}
 }
 \concept{Reducing functions}

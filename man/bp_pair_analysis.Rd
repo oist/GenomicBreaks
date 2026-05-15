@@ -27,15 +27,15 @@ point reference, and the breakpoints of \emph{query} 2 that fall within the wind
 are projected onto it.
 }
 \seealso{
-Other plot functions: 
-\code{\link{bp_heatmap}()},
-\code{\link{feature_coverage}()},
-\code{\link{makeOxfordPlots}()},
-\code{\link{plotApairOfChrs}()}
+Other plot functions:
+\code{\link[=bp_heatmap]{bp_heatmap()}},
+\code{\link[=feature_coverage]{feature_coverage()}},
+\code{\link[=makeOxfordPlots]{makeOxfordPlots()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 
-Other heatmap functions: 
-\code{\link{bp_heatmap}()},
-\code{\link{feature_coverage}()}
+Other heatmap functions:
+\code{\link[=bp_heatmap]{bp_heatmap()}},
+\code{\link[=feature_coverage]{feature_coverage()}}
 }
 \author{
 Charlotte West

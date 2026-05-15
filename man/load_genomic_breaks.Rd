@@ -69,8 +69,8 @@ documentation on the UCSC genome browser website, and the
 \href{https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md}{GFF3 specification}
 from the \emph{Sequence Ontology} group.
 
-Other Data loading functions: 
-\code{\link{readMAF}()},
-\code{\link{readTrainFile}()}
+Other Data loading functions:
+\code{\link[=readMAF]{readMAF()}},
+\code{\link[=readTrainFile]{readTrainFile()}}
 }
 \concept{Data loading functions}

@@ -33,8 +33,8 @@ alignment on the \emph{query} genome, with strand information being taken into
 account.
 }
 \details{
-Internally, \code{flagColinearAlignments()} uses the \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::precede}}
-and \code{\link[GenomicRanges:nearest-methods]{GenomicRanges::follow}} functions functions to determine what is the
+Internally, \code{flagColinearAlignments()} uses the \code{\link[GenomicRanges:precede]{GenomicRanges::precede}}
+and \code{\link[GenomicRanges:follow]{GenomicRanges::follow}} functions functions to determine what is the
 \emph{next}.  For a given range, these functions return the index position of the
 range it precedes or follows, or \code{NA} as the first range follows nothing and
 the last range precedes nothing.  See the examples for details.
@@ -80,23 +80,23 @@ flagColinearAlignments(exampleNotColinear)
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagAll}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagLongShort}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()}
+Other Flagging functions:
+\code{\link[=flagAll]{flagAll()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagLongShort]{flagLongShort()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{bridgeRegions}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagPairs]{flagPairs()}}
 }
 \author{
 Charlotte West

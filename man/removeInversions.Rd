@@ -24,32 +24,32 @@ removeInversions(exampleInversion)
 
 }
 \seealso{
-Other Inversion functions: 
-\code{\link{filterDoubleInversions}()},
-\code{\link{filterInversions}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{flipInversions}()},
-\code{\link{leftInversionGaps}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{showInversions}()}
+Other Inversion functions:
+\code{\link[=filterDoubleInversions]{filterDoubleInversions()}},
+\code{\link[=filterInversions]{filterInversions()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=leftInversionGaps]{leftInversionGaps()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=showInversions]{showInversions()}}
 
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 }
 \concept{Inversion functions}
 \concept{modifier functions}

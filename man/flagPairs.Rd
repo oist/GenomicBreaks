@@ -47,43 +47,43 @@ GenomicBreaks:::allPossiblePairClasses
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagAll}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagLongShort}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()}
+Other Flagging functions:
+\code{\link[=flagAll]{flagAll()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagLongShort]{flagLongShort()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 
-Other Inversion functions: 
-\code{\link{filterDoubleInversions}()},
-\code{\link{filterInversions}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{flipInversions}()},
-\code{\link{leftInversionGaps}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{showInversions}()}
+Other Inversion functions:
+\code{\link[=filterDoubleInversions]{filterDoubleInversions()}},
+\code{\link[=filterInversions]{filterInversions()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=leftInversionGaps]{leftInversionGaps()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=showInversions]{showInversions()}}
 
-Other Colinearity functions: 
-\code{\link{GOC}()},
-\code{\link{bridgeRegions}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()}
+Other Colinearity functions:
+\code{\link[=GOC]{GOC()}},
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}}
 
-Other Structural variants: 
+Other Structural variants:
 \code{\link{StructuralVariants}},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()},
-\code{\link{plotApairOfChrs}()}
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 }
 \concept{Colinearity functions}
 \concept{Flagging functions}

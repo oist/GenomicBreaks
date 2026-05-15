@@ -7,7 +7,7 @@
 scaffoldByFlipAndMerge(gr, guide, drop = FALSE)
 }
 \arguments{
-\item{gr}{A \link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges} object.}
+\item{gr}{A \link[GenomicRanges:GRanges]{GenomicRanges::GRanges} object.}
 
 \item{guide}{A named list of data frames of contig names and orientations.}
 
@@ -28,12 +28,12 @@ scaffoldByFlipAndMerge(gr, g, drop = TRUE)
 
 }
 \seealso{
-Other scaffolding functions: 
-\code{\link{flipStrandNames}()},
-\code{\link{longestMatchesInTarget}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{strandNames}()}
+Other scaffolding functions:
+\code{\link[=flipStrandNames]{flipStrandNames()}},
+\code{\link[=longestMatchesInTarget]{longestMatchesInTarget()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=strandNames]{strandNames()}}
 }
 \author{
 Michael Mansfield

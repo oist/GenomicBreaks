@@ -33,29 +33,29 @@ reverse(exampleInsertion, query = TRUE)
 
 }
 \seealso{
-See also the \code{\link[IRanges:reverse-methods]{IRanges::reverse}} function.
+See also the \code{\link[IRanges:reverse]{IRanges::reverse}} function.
 
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 
-Other Bioconductor API functions: 
+Other Bioconductor API functions:
 \code{\link{GBreaks-class}},
-\code{\link{getSeq}()},
-\code{\link{pairwiseAlignment}()},
-\code{\link{range_GBreaks}()},
-\code{\link{subsetByOverlaps_GBreaks}()}
+\code{\link[=getSeq]{getSeq()}},
+\code{\link[=pairwiseAlignment]{pairwiseAlignment()}},
+\code{\link[=range_GBreaks]{range_GBreaks()}},
+\code{\link[=subsetByOverlaps_GBreaks]{subsetByOverlaps_GBreaks()}}
 }
 \author{
 Charles Plessy

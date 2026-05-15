@@ -48,30 +48,31 @@ loss of gene order in bacteria.} \emph{Trends in genetics : TIG} vol. 19,11
 (2003): 600-3. \href{https://doi.org/10.1016/j.tig.2003.09.011}{doi:10.1016/j.tig.2003.09.011}
 }
 \seealso{
-Other Colinearity functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{chain_contigs}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{dist2next}()},
-\code{\link{filterColinearRegions}()},
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagPairs}()}
+Other Colinearity functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chain_contigs]{chain_contigs()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=dist2next]{dist2next()}},
+\code{\link[=filterColinearRegions]{filterColinearRegions()}},
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagPairs]{flagPairs()}}
 
-Other Similarity indexes: 
-\code{\link{F81_distance}()},
-\code{\link{HKY85_distance}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{TN93_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{logDet_distance}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{synteny_index}()},
-\code{\link{tau_index}()}
+Other Similarity indexes:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
+\code{\link[=correlation_index]{correlation_index()}},
+\code{\link[=karyotype_index]{karyotype_index()}},
+\code{\link[=logDet_distance]{logDet_distance()}},
+\code{\link[=slidingWindow]{slidingWindow()}},
+\code{\link[=strand_randomisation_index]{strand_randomisation_index()}},
+\code{\link[=synteny_index]{synteny_index()}},
+\code{\link[=tau_index]{tau_index()}}
 }
 \concept{Colinearity functions}
 \concept{Similarity indexes}

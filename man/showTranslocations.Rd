@@ -28,9 +28,9 @@ showTranslocations(exampleTranslocation)
 
 }
 \seealso{
-Other Translocation functions: 
-\code{\link{filterTranslocations}()},
-\code{\link{flagTranslocations}()},
-\code{\link{removeTranslocations}()}
+Other Translocation functions:
+\code{\link[=filterTranslocations]{filterTranslocations()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}}
 }
 \concept{Translocation functions}

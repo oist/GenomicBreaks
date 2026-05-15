@@ -25,10 +25,10 @@ makeOxfordPlots(exampleColinear5)
 
 }
 \seealso{
-Other Converter functions: 
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gb2xlim}()},
-\code{\link{gr2dna_seg}()}
+Other Converter functions:
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gb2xlim]{gb2xlim()}},
+\code{\link[=gr2dna_seg]{gr2dna_seg()}}
 }
 \concept{Converter functions}

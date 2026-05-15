@@ -39,20 +39,21 @@ synteny_index(gb)
 
 }
 \seealso{
-Other Similarity indexes: 
-\code{\link{F81_distance}()},
-\code{\link{GOC}()},
-\code{\link{HKY85_distance}()},
-\code{\link{JC69_distance}()},
-\code{\link{K80_distance}()},
-\code{\link{P_distance}()},
-\code{\link{T92_distance}()},
-\code{\link{TN93_distance}()},
-\code{\link{correlation_index}()},
-\code{\link{karyotype_index}()},
-\code{\link{logDet_distance}()},
-\code{\link{slidingWindow}()},
-\code{\link{strand_randomisation_index}()},
-\code{\link{tau_index}()}
+Other Similarity indexes:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=GOC]{GOC()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
+\code{\link[=correlation_index]{correlation_index()}},
+\code{\link[=karyotype_index]{karyotype_index()}},
+\code{\link[=logDet_distance]{logDet_distance()}},
+\code{\link[=slidingWindow]{slidingWindow()}},
+\code{\link[=strand_randomisation_index]{strand_randomisation_index()}},
+\code{\link[=tau_index]{tau_index()}}
 }
 \concept{Similarity indexes}

@@ -21,13 +21,13 @@ flagAll(exampleInversion)
 
 }
 \seealso{
-Other Flagging functions: 
-\code{\link{flagColinearAlignments}()},
-\code{\link{flagDoubleInversions}()},
-\code{\link{flagInversions}()},
-\code{\link{flagLongShort}()},
-\code{\link{flagPairs}()},
-\code{\link{flagTranslocations}()},
-\code{\link{flagTwinInversions}()}
+Other Flagging functions:
+\code{\link[=flagColinearAlignments]{flagColinearAlignments()}},
+\code{\link[=flagDoubleInversions]{flagDoubleInversions()}},
+\code{\link[=flagInversions]{flagInversions()}},
+\code{\link[=flagLongShort]{flagLongShort()}},
+\code{\link[=flagPairs]{flagPairs()}},
+\code{\link[=flagTranslocations]{flagTranslocations()}},
+\code{\link[=flagTwinInversions]{flagTwinInversions()}}
 }
 \concept{Flagging functions}

@@ -28,19 +28,19 @@ swap(exampleDeletion, sort = TRUE)
 
 }
 \seealso{
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}}
 }
 \concept{modifier functions}

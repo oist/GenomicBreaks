@@ -22,7 +22,7 @@ did not exist.  For \code{GBreaks} objects it handles both the \emph{target} and
 \emph{query} ranges at the same time.
 }
 \description{
-Takes a \code{\link{GBreaks}} or a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object and if \code{seqlengths} are not
+Takes a \code{\link{GBreaks}} or a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object and if \code{seqlengths} are not
 available, sets them using the output of the \code{\link{guessSeqLengths}} function.
 }
 \examples{
@@ -43,19 +43,19 @@ forceSeqLengths(granges(gb)) |> seqlengths()
 
 }
 \seealso{
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 }
 \concept{modifier functions}

@@ -17,7 +17,7 @@ considered.}
 to chaining genomes are kept.}
 }
 \value{
-Returns a \code{\link[GenomicRanges:GRangesList-class]{GenomicRanges::GRangesList}} object containing one \code{\link{GBreaks}} object per
+Returns a \code{\link[GenomicRanges:GRangesList]{GenomicRanges::GRangesList}} object containing one \code{\link{GBreaks}} object per
 sequence on the query genome.
 }
 \description{
@@ -42,12 +42,12 @@ exampleColinear3 |> longestMatchesInTarget(min.width = 0, min.matches = 1)
 
 }
 \seealso{
-Other scaffolding functions: 
-\code{\link{flipStrandNames}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{scaffoldByFlipAndMerge}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{strandNames}()}
+Other scaffolding functions:
+\code{\link[=flipStrandNames]{flipStrandNames()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=scaffoldByFlipAndMerge]{scaffoldByFlipAndMerge()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=strandNames]{strandNames()}}
 }
 \author{
 Charles Plessy

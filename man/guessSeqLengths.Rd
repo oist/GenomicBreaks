@@ -7,7 +7,7 @@
 guessSeqLengths(gr)
 }
 \arguments{
-\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object}
+\item{gr}{A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object}
 }
 \value{
 Returns sequence lengths that have been guessed as the maximal end
@@ -15,7 +15,7 @@ coordinates found in the \code{gr}, or the \code{gr}'s \code{seqlengths} if if t
 already exist.
 }
 \description{
-When no \code{\link[Seqinfo:seqinfo]{Seqinfo::seqlengths}} are available, one can resort to set
+When no \code{\link[Seqinfo:seqlengths]{Seqinfo::seqlengths}} are available, one can resort to set
 them as to the maximal end coordinate found in the object.
 }
 \examples{
@@ -28,20 +28,20 @@ guessSeqLengths(gb2$query)
 
 }
 \seealso{
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{mergeSeqLevels}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=mergeSeqLevels]{mergeSeqLevels()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 }
 \author{
 Charles Plessy

@@ -10,9 +10,9 @@ mergeSeqLevels(gr, seqs, name)
 mergeSeqLevels_to_DF(gr, seqs, name)
 }
 \arguments{
-\item{gr}{A \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}} object.}
+\item{gr}{A \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object.}
 
-\item{seqs}{A character vector of \code{\link[Seqinfo:seqinfo]{Seqinfo::seqlevels}} from \code{gr}}
+\item{seqs}{A character vector of \code{\link[Seqinfo:seqlevels]{Seqinfo::seqlevels}} from \code{gr}}
 
 \item{name}{The name of the new sequence level to be added}
 }
@@ -54,27 +54,27 @@ mergeSeqLevels(gb, seqlevelsInUse(gb), "AllMerged")
 
 }
 \seealso{
-Other modifier functions: 
-\code{\link{bridgeRegions}()},
-\code{\link{coalesce_contigs}()},
-\code{\link{flipInversions}()},
-\code{\link{forceSeqLengths}()},
-\code{\link{guessSeqLengths}()},
-\code{\link{keepLongestPair}()},
-\code{\link{matchPairs}()},
-\code{\link{removeDoubleInversions}()},
-\code{\link{removeInversions}()},
-\code{\link{removeTranslocations}()},
-\code{\link{reverse}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{swap}()}
+Other modifier functions:
+\code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=coalesce_contigs]{coalesce_contigs()}},
+\code{\link[=flipInversions]{flipInversions()}},
+\code{\link[=forceSeqLengths]{forceSeqLengths()}},
+\code{\link[=guessSeqLengths]{guessSeqLengths()}},
+\code{\link[=keepLongestPair]{keepLongestPair()}},
+\code{\link[=matchPairs]{matchPairs()}},
+\code{\link[=removeDoubleInversions]{removeDoubleInversions()}},
+\code{\link[=removeInversions]{removeInversions()}},
+\code{\link[=removeTranslocations]{removeTranslocations()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=swap]{swap()}}
 
-Other scaffolding functions: 
-\code{\link{flipStrandNames}()},
-\code{\link{longestMatchesInTarget}()},
-\code{\link{scaffoldByFlipAndMerge}()},
-\code{\link{splitSeqLevel}()},
-\code{\link{strandNames}()}
+Other scaffolding functions:
+\code{\link[=flipStrandNames]{flipStrandNames()}},
+\code{\link[=longestMatchesInTarget]{longestMatchesInTarget()}},
+\code{\link[=scaffoldByFlipAndMerge]{scaffoldByFlipAndMerge()}},
+\code{\link[=splitSeqLevel]{splitSeqLevel()}},
+\code{\link[=strandNames]{strandNames()}}
 }
 \author{
 Charles Plessy

@@ -21,9 +21,9 @@ readTrainFile(system.file("extdata/example.train", package = "GenomicBreaks"))
 
 }
 \seealso{
-Other Data loading functions: 
-\code{\link{load_genomic_breaks}()},
-\code{\link{readMAF}()}
+Other Data loading functions:
+\code{\link[=load_genomic_breaks]{load_genomic_breaks()}},
+\code{\link[=readMAF]{readMAF()}}
 }
 \author{
 Zikun Yang

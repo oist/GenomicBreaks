@@ -28,17 +28,17 @@ gb2xlim(exampleColinear)
 
 }
 \seealso{
-Other genoPlotR functions: 
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gr2dna_seg}()},
-\code{\link{plotApairOfChrs}()}
+Other genoPlotR functions:
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gr2dna_seg]{gr2dna_seg()}},
+\code{\link[=plotApairOfChrs]{plotApairOfChrs()}}
 
-Other Converter functions: 
-\code{\link{GBreaksToMatrix}()},
-\code{\link{gb2comp}()},
-\code{\link{gb2dna_seg}()},
-\code{\link{gr2dna_seg}()}
+Other Converter functions:
+\code{\link[=GBreaksToMatrix]{GBreaksToMatrix()}},
+\code{\link[=gb2comp]{gb2comp()}},
+\code{\link[=gb2dna_seg]{gb2dna_seg()}},
+\code{\link[=gr2dna_seg]{gr2dna_seg()}}
 }
 \author{
 Charles Plessy

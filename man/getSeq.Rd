@@ -18,11 +18,11 @@ getSeq(x, ...)
 \item{...}{Extra arguments (not used, but present for compatibility).}
 }
 \value{
-A \code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet}} object containing the extracted
+A \code{\link[Biostrings:DNAStringSet]{Biostrings::DNAStringSet}} object containing the extracted
 sequence(s).
 }
 \description{
-Extract the sequences of the genomic ranges from a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges}}
+Extract the sequences of the genomic ranges from a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}}
 or a \code{\link{GBreaks}} object.
 }
 \examples{
@@ -33,12 +33,12 @@ getSeq(GRanges("chrI:1-20", seqinfo = seqinfo(Scerevisiae)))
 \seealso{
 See also the \code{\link[Biostrings:getSeq]{Biostrings::getSeq}} function.
 
-Other Bioconductor API functions: 
+Other Bioconductor API functions:
 \code{\link{GBreaks-class}},
-\code{\link{pairwiseAlignment}()},
-\code{\link{range_GBreaks}()},
-\code{\link{reverse}()},
-\code{\link{subsetByOverlaps_GBreaks}()}
+\code{\link[=pairwiseAlignment]{pairwiseAlignment()}},
+\code{\link[=range_GBreaks]{range_GBreaks()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=subsetByOverlaps_GBreaks]{subsetByOverlaps_GBreaks()}}
 }
 \author{
 Charles Plessy

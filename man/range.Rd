@@ -31,7 +31,7 @@ tbd
 }
 \description{
 This is a \code{range} method for \code{\link{GBreaks}} objects, that will run
-\code{\link[GenomicRanges:inter-range-methods]{GenomicRanges::range}} on its \emph{target} and \emph{query} ranges and will return
+\code{\link[GenomicRanges:range]{GenomicRanges::range}} on its \emph{target} and \emph{query} ranges and will return
 a new \code{GBreaks} object.
 }
 \note{
@@ -42,11 +42,11 @@ range(exampleColinear3)
 range(exampleDeletion)
 }
 \seealso{
-Other Bioconductor API functions: 
+Other Bioconductor API functions:
 \code{\link{GBreaks-class}},
-\code{\link{getSeq}()},
-\code{\link{pairwiseAlignment}()},
-\code{\link{reverse}()},
-\code{\link{subsetByOverlaps_GBreaks}()}
+\code{\link[=getSeq]{getSeq()}},
+\code{\link[=pairwiseAlignment]{pairwiseAlignment()}},
+\code{\link[=reverse]{reverse()}},
+\code{\link[=subsetByOverlaps_GBreaks]{subsetByOverlaps_GBreaks()}}
 }
 \concept{Bioconductor API functions}
