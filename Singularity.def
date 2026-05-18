@@ -26,7 +26,7 @@ From: debian:trixie
 
     # Unfortunately Nextflow can not access $HOME so let's install more packages.
 
-    ./R -e 'devtools::install_github("brennern/ScrambledTreeBuilder", repos=BiocManager::repositories())'
+    ./R -e 'remotes::install_github("brennern/ScrambledTreeBuilder", repos=BiocManager::repositories())'
     ./R -e 'install.packages(c("uwot", "cluster", "factoextra"))'
     ./R -e 'install.packages(c("SingleCellExperiment", "zellkonverter"))'
     ./R -e 'install.packages(c("cowplot", "ggplot2", "patchwork", "ComplexHeatmap", "pheatmap", "RColorBrewer"))'
