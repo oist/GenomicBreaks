@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^AGENTS\.md$
+^CODE_REVIEW\.md$
 Dockerfile
 Singularity.def
 ^.*\.sif$
