@@ -11,6 +11,9 @@ engineering issues recorded in `docs/code_review.md` (license placeholder,
 missing CI, unpinned dependencies, etc.) are **low urgency**: fix them
 opportunistically, not as blockers. Do not let them stall feature work.
 
+The detailed reusability/code-review notes are in `CODE_REVIEW.md` (repo root),
+not `docs/code_review.md`.
+
 ## Commit Messages
 
 When creating commits, include the line `AI-generated: yes` in the commit
@@ -46,7 +49,7 @@ Oxford / pair-of-chromosome figures.
 | `inst/CITATION` | Published-paper citation. |
 | `man/` | roxygen-generated `.Rd` (do not edit by hand). |
 | `vignettes/` | Long-form documentation (`*.Rmd`). |
-| `docs/code_review.md` | Reusability/code-review study. Excluded from the build. |
+| `CODE_REVIEW.md` | Reusability/code-review study. Excluded from the build. |
 
 ## Build / check / document
 
@@ -64,6 +67,9 @@ R -e 'pkgdown::build_site()'     # rebuild the documentation site
 Building the MAF reader requires a C++ toolchain (Rcpp). System prerequisites
 for a clean environment are listed in `Singularity.def`.
 
+GitHub Actions currently only builds/deploys the pkgdown site
+(`.github/workflows/pkgdown.yaml`). It does not run `R CMD check`.
+
 ## Conventions
 
 - **roxygen2 in markdown mode** (`Config/roxygen2`, `DESCRIPTION` `Roxygen:`).
@@ -78,16 +84,14 @@ for a clean environment are listed in `Singularity.def`.
 
 ## Testing (please help here)
 
-Verification today rests heavily on **vignettes + man-page examples**. The
-maintainer is keen to grow real unit tests. When touching code, **proactively
-suggest adding or migrating coverage into a `tests/testthat/` suite** using
-**`testthat`** — the most common test framework in Bioconductor (`RUnit` is the
-legacy alternative). Do **not** remove the example/vignette coverage; the test
-suite should complement it.
+Verification today rests heavily on **vignettes + man-page examples**.
 
-A practical starting point is to lift existing `@examples` (e.g.
-`coalesce_contigs()`, `isSorted()`, `load_genomic_breaks()` round-trips, the
-distance functions) into `expect_*` assertions. See `docs/code_review.md` §5 for
-concrete seed-test ideas. Note that the distance functions `TN93_distance()`,
-`HKY85_distance()`, and `logDet_distance()` are flagged as not-yet-proofread
-(`NEWS.md`), so reference-value tests there are especially valuable.
+There is currently **no `tests/` directory** in the repo, so if you add unit
+tests, start with `tests/testthat/` using **`testthat`** (Bioconductor
+convention). Do **not** remove the existing vignette/@examples coverage; add
+tests incrementally.
+
+Lift existing `@examples` into `expect_*` assertions. High-value candidates
+include the colinearity/coalescing functions and the nucleotide-distance
+functions (some distance functions are explicitly flagged as not-yet-proofread
+in `NEWS.md`).
