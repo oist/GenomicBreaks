@@ -137,9 +137,18 @@ load_genomic_breaks_blasttabplus <- function (
   stopifnot(all(strand(grq)=="+"))
   strand(grq) <- "*"
 
+  # Let's not report P as it is lossy and can not be used to recover number of mismatches.
+  #
+  # Quoting from the maf-convert source code:
+  #
+  # alignmentColumns = list(zip(rowA, rowB))
+  # alnSize = len(alignmentColumns)
+  # matches = sum(x == y for x, y in alignmentColumns)
+  # mismatches = alnSize - matches - rowA.count("-") - rowB.count("-")
+  # matchPercent = "%.2f" % (100.0 * matches / alnSize)
+
   gb <- GBreaks (target = grt, query = grq)
   score(gb)     <- df$score
-  gb$P          <- df$P
   gb$alength    <- df$alength
   gb$mismatches <- df$mismatches
   gb$gaps       <- df$gaps
