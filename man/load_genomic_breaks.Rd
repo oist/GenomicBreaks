@@ -53,7 +53,7 @@ the \emph{plus} strand.
 }
 \examples{
 load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks"))
-load_genomic_breaks(system.file("extdata/SacCer3__SacPar.blasttabplus.gz",
+load_genomic_breaks(system.file("extdata/MT192765___genome-OY074094.blasttabplus.gz",
   package = "GenomicBreaks"))
 
 \dontrun{

@@ -39,7 +39,7 @@
 #'
 #' @examples
 #' load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks"))
-#' load_genomic_breaks(system.file("extdata/SacCer3__SacPar.blasttabplus.gz",
+#' load_genomic_breaks(system.file("extdata/MT192765___genome-OY074094.blasttabplus.gz",
 #'   package = "GenomicBreaks"))
 #'
 #' \dontrun{
@@ -97,6 +97,7 @@ load_genomic_breaks_blasttabplus <- function (
     c(       "qend",         "integer"),
     c(       "tstart",       "integer"),
     c(       "tend",         "integer"),
+    c(       "E",            "numeric"),
     c(       "bit",          "numeric"),
     c(       "qlen",         "integer"),
     c(       "tlen",         "integer"),
