@@ -39,6 +39,8 @@
 #'
 #' @examples
 #' load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "GenomicBreaks"))
+#' load_genomic_breaks(system.file("extdata/SacCer3__SacPar.blasttabplus.gz",
+#'   package = "GenomicBreaks"))
 #'
 #' \dontrun{
 #' library("BSgenome.Scerevisiae.UCSC.sacCer3")
@@ -48,6 +50,7 @@
 #'   query = NULL)
 #' }
 #'
+#' @importFrom utils read.delim
 #' @importFrom rtracklayer import.gff3
 #' @importFrom Biostrings readDNAStringSet
 #' @export
@@ -64,12 +67,83 @@ load_genomic_breaks <- function (
     load_genomic_breaks_function <- load_genomic_breaks_GFF
   } else if (grepl(".maf$|.maf.gz$", file)) {
     load_genomic_breaks_function <- load_genomic_breaks_MAF
+  } else if (grepl("blasttabplus$|blasttabplus.gz$", file)) {
+    load_genomic_breaks_function <- load_genomic_breaks_blasttabplus
   } else {
+
     stop("Unsupported file type: extension should be gff, gff.gz, gff3, gff3.gz, maf, or maf.gz.")
   }
   gb <- load_genomic_breaks_function(
     file = file, target_bsgenome = target_bsgenome,
     query_bsgenome = query_bsgenome, sort = sort, type = type)
+  gb
+}
+
+load_genomic_breaks_blasttabplus <- function (
+    file,
+    target_bsgenome = NULL,
+    query_bsgenome = NULL,
+    sort = TRUE,
+    type = "match_part")
+{
+  blasttabplusformat <- rbind(
+    c(name = "qname", type = "factor"),
+    c(       "tname",        "factor"),
+    c(       "P",            "numeric"),
+    c(       "alength",      "integer"),
+    c(       "mismatches",   "integer"),
+    c(       "gaps",         "integer"),
+    c(       "qstart",       "integer"),
+    c(       "qend",         "integer"),
+    c(       "tstart",       "integer"),
+    c(       "tend",         "integer"),
+    c(       "bit",          "numeric"),
+    c(       "qlen",         "integer"),
+    c(       "tlen",         "integer"),
+    c(       "score",        "integer")
+  ) |> as.data.frame()
+  df <- read.delim( file
+                  , header = FALSE
+                  , colClasses = blasttabplusformat$type
+                  , col.names = blasttabplusformat$name)
+
+  toSeqinfo <- function(si)
+    DataFrame( seqlengths = si[,2]
+               , row.names  = si[,1]
+               , isCircular = FALSE
+               , genome = NA_character_) |> as("Seqinfo")
+
+  mkSeqinfo <- function(genome, df)
+    switch( class(genome)
+          , "NULL" = toSeqinfo(unique(df))
+          , "character" = seqinfo(readDNAStringSet(genome))
+          , seqinfo(genome)
+    )
+
+  mkGranges <- function(seqnames, start, end, seqinfo = NULL) {
+    flip <- end < start
+    GRanges( seqnames = seqnames
+           , ranges   = IRanges( start = ifelse(flip, end, start)
+                               , end   = ifelse(flip, start, end))
+           , strand   = ifelse(flip, "-", "+")
+           , seqinfo  = seqinfo
+    )
+  }
+
+  grt <- mkGranges(df$tname, df$tstart, df$tend, mkSeqinfo(target_bsgenome, df[,c("tname", "tlen")]))
+  grq <- mkGranges(df$qname, df$qstart, df$qend, mkSeqinfo(query_bsgenome,  df[,c("qname", "qlen")]))
+
+  stopifnot(all(strand(grq)=="+"))
+  strand(grq) <- "*"
+
+  gb <- GBreaks (target = grt, query = grq)
+  score(gb)     <- df$score
+  gb$P          <- df$P
+  gb$alength    <- df$alength
+  gb$mismatches <- df$mismatches
+  gb$gaps       <- df$gaps
+
+  if (sort) gb <- sort(gb, ignore.strand = TRUE)
   gb
 }
 

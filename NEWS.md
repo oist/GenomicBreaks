@@ -1,3 +1,7 @@
+# GenomicBreaks 0.23.0
+
+ * Support for the _blasttab+_ format in `load_genomic_breaks()`.
+
 # GenomicBreaks 0.22.0
 
  * New `K80_gap_distance()` function for Nishimaki and Sato's K2P + Gap distance.
