@@ -136,37 +136,19 @@ from the <em>Sequence Ontology</em> group.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2] NODE_1_length_20973_cov_191.628754:26-20973     20948     20945</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
-<span class="r-in"><span><span class="fu">load_genomic_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/SacCer3__SacPar.blasttabplus.gz"</span>,</span></span>
+<span class="r-in"><span><span class="fu">load_genomic_breaks</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/MT192765___genome-OY074094.blasttabplus.gz"</span>,</span></span>
 <span class="r-in"><span>  package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 677 ranges and 6 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         seqnames        ranges strand |                       query     score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                   &lt;GRanges&gt; &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [1]     chrI     2452-2714      - |   NC_047500.1:770507-770785       736</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [2]     chrI     6952-9750      + |      NC_047487.1:9556-12401      9367</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [3]     chrI    9779-10007      + |     NC_047487.1:12486-12713       216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [4]     chrI   11455-11624      + |     NC_047487.1:13352-13522       549</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [5]     chrI   11625-12502      - |   NC_047487.1:202778-203667      2937</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ...      ...           ...    ... .                         ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [673]   chrXVI 921147-928804      + |   NC_047502.1:881568-889175     23396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [674]   chrXVI 928893-929583      + |   NC_047502.1:889416-890120       619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [675]   chrXVI 929848-933046      + |   NC_047502.1:890289-893554      7363</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [676]   chrXVI 933405-936088      + |   NC_047502.1:893560-896238     10002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [677]   chrXVI 936726-942083      + | NC_047493.1:1107170-1112502     25819</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 P   alength mismatches      gaps</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;numeric&gt; &lt;integer&gt;  &lt;integer&gt; &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [1]     80.65       279         38         5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [2]     84.45      2856        377        22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [3]     68.26       230         70         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [4]     84.88       172         23         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [5]     79.57       920        116         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ...       ...       ...        ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [673]     82.12      7769       1117        82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [674]     66.94       738        164        22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [675]     74.89      3345        615        39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [676]     87.50      2704        293        19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [677]     95.53      5370        191         6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 6 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         seqnames     ranges strand |                              query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; |                          &lt;GRanges&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] MT192765.1    48-4436      + |     ENA|OY074094|OY074094.1:1-4389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2] MT192765.1 4562-29829      + | ENA|OY074094|OY074094.1:4515-29729</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           score         P   alength mismatches      gaps</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;  &lt;integer&gt; &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     25362     99.91      4389          4         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]    142891     99.53     25268         66         4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 17 sequences from an unspecified genome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"BSgenome.Scerevisiae.UCSC.sacCer3"</span><span class="op">)</span></span></span>
