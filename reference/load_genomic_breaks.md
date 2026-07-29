@@ -98,15 +98,15 @@ load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "Geno
 #>   seqinfo: 1 sequence from an unspecified genome
 load_genomic_breaks(system.file("extdata/MT192765___genome-OY074094.blasttabplus.gz",
   package = "GenomicBreaks"))
-#> GBreaks object with 2 ranges and 6 metadata columns:
+#> GBreaks object with 2 ranges and 5 metadata columns:
 #>         seqnames     ranges strand |                              query
 #>            <Rle>  <IRanges>  <Rle> |                          <GRanges>
 #>   [1] MT192765.1    48-4436      + |     ENA|OY074094|OY074094.1:1-4389
 #>   [2] MT192765.1 4562-29829      + | ENA|OY074094|OY074094.1:4515-29729
-#>           score         P   alength mismatches      gaps
-#>       <integer> <numeric> <integer>  <integer> <integer>
-#>   [1]     25362     99.91      4389          4         0
-#>   [2]    142891     99.53     25268         66         4
+#>           score   alength mismatches      gaps
+#>       <integer> <integer>  <integer> <integer>
+#>   [1]     25362      4389          4         0
+#>   [2]    142891     25268         66         4
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
 
