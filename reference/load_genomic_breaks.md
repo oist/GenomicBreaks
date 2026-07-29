@@ -96,6 +96,37 @@ load_genomic_breaks(system.file("extdata/contigs.genome.maf.gz", package = "Geno
 #>   [2] NODE_1_length_20973_cov_191.628754:26-20973     20948     20945
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
+load_genomic_breaks(system.file("extdata/SacCer3__SacPar.blasttabplus.gz",
+  package = "GenomicBreaks"))
+#> GBreaks object with 677 ranges and 6 metadata columns:
+#>         seqnames        ranges strand |                       query     score
+#>            <Rle>     <IRanges>  <Rle> |                   <GRanges> <integer>
+#>     [1]     chrI     2452-2714      - |   NC_047500.1:770507-770785       736
+#>     [2]     chrI     6952-9750      + |      NC_047487.1:9556-12401      9367
+#>     [3]     chrI    9779-10007      + |     NC_047487.1:12486-12713       216
+#>     [4]     chrI   11455-11624      + |     NC_047487.1:13352-13522       549
+#>     [5]     chrI   11625-12502      - |   NC_047487.1:202778-203667      2937
+#>     ...      ...           ...    ... .                         ...       ...
+#>   [673]   chrXVI 921147-928804      + |   NC_047502.1:881568-889175     23396
+#>   [674]   chrXVI 928893-929583      + |   NC_047502.1:889416-890120       619
+#>   [675]   chrXVI 929848-933046      + |   NC_047502.1:890289-893554      7363
+#>   [676]   chrXVI 933405-936088      + |   NC_047502.1:893560-896238     10002
+#>   [677]   chrXVI 936726-942083      + | NC_047493.1:1107170-1112502     25819
+#>                 P   alength mismatches      gaps
+#>         <numeric> <integer>  <integer> <integer>
+#>     [1]     80.65       279         38         5
+#>     [2]     84.45      2856        377        22
+#>     [3]     68.26       230         70         3
+#>     [4]     84.88       172         23         2
+#>     [5]     79.57       920        116         3
+#>     ...       ...       ...        ...       ...
+#>   [673]     82.12      7769       1117        82
+#>   [674]     66.94       738        164        22
+#>   [675]     74.89      3345        615        39
+#>   [676]     87.50      2704        293        19
+#>   [677]     95.53      5370        191         6
+#>   -------
+#>   seqinfo: 17 sequences from an unspecified genome
 
 if (FALSE) { # \dontrun{
 library("BSgenome.Scerevisiae.UCSC.sacCer3")

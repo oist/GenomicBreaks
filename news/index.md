@@ -1,5 +1,10 @@
 # Changelog
 
+## GenomicBreaks 0.23.0
+
+- Support for the *blasttab+* format in
+  [`load_genomic_breaks()`](https://oist.github.io/GenomicBreaks/reference/load_genomic_breaks.md).
+
 ## GenomicBreaks 0.22.0
 
 - New

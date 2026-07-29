@@ -49,6 +49,7 @@
 <div class="section level2">
 <h2 id="status--urgency">Status / urgency<a class="anchor" aria-label="anchor" href="#status--urgency"></a></h2>
 <p><strong>There is no official public release of this package yet.</strong> Consequently, the engineering issues recorded in <code>docs/code_review.md</code> (license placeholder, missing CI, unpinned dependencies, etc.) are <strong>low urgency</strong>: fix them opportunistically, not as blockers. Do not let them stall feature work.</p>
+<p>The detailed reusability/code-review notes are in <code>CODE_REVIEW.md</code> (repo root), not <code>docs/code_review.md</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="commit-messages">Commit Messages<a class="anchor" aria-label="anchor" href="#commit-messages"></a></h2>
@@ -87,7 +88,7 @@
 <td>roxygen-generated <code>.Rd</code> (do not edit by hand).</td>
 </tr><tr><td><code>vignettes/</code></td>
 <td>Long-form documentation (<code>*.Rmd</code>).</td>
-</tr><tr><td><code>docs/code_review.md</code></td>
+</tr><tr><td><code>CODE_REVIEW.md</code></td>
 <td>Reusability/code-review study. Excluded from the build.</td>
 </tr></tbody></table></div>
 <div class="section level2">
@@ -99,6 +100,7 @@
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ex">R</span> CMD check GenomicBreaks_<span class="pp">*</span>.tar.gz   <span class="co"># full package check</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="ex">R</span> <span class="at">-e</span> <span class="st">'pkgdown::build_site()'</span>     <span class="co"># rebuild the documentation site</span></span></code></pre></div>
 <p>Building the MAF reader requires a C++ toolchain (Rcpp). System prerequisites for a clean environment are listed in <code>Singularity.def</code>.</p>
+<p>GitHub Actions currently only builds/deploys the pkgdown site (<code>.github/workflows/pkgdown.yaml</code>). It does not run <code>R CMD check</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="conventions">Conventions<a class="anchor" aria-label="anchor" href="#conventions"></a></h2>
@@ -114,8 +116,9 @@
 </ul></div>
 <div class="section level2">
 <h2 id="testing-please-help-here">Testing (please help here)<a class="anchor" aria-label="anchor" href="#testing-please-help-here"></a></h2>
-<p>Verification today rests heavily on <strong>vignettes + man-page examples</strong>. The maintainer is keen to grow real unit tests. When touching code, <strong>proactively suggest adding or migrating coverage into a <code>tests/testthat/</code> suite</strong> using <strong><code>testthat</code></strong> — the most common test framework in Bioconductor (<code>RUnit</code> is the legacy alternative). Do <strong>not</strong> remove the example/vignette coverage; the test suite should complement it.</p>
-<p>A practical starting point is to lift existing <code>@examples</code> (e.g. <code><a href="reference/coalesce_contigs.html">coalesce_contigs()</a></code>, <code><a href="reference/isSorted.html">isSorted()</a></code>, <code><a href="reference/load_genomic_breaks.html">load_genomic_breaks()</a></code> round-trips, the distance functions) into <code>expect_*</code> assertions. See <code>docs/code_review.md</code> §5 for concrete seed-test ideas. Note that the distance functions <code><a href="reference/TN93_distance.html">TN93_distance()</a></code>, <code><a href="reference/HKY85_distance.html">HKY85_distance()</a></code>, and <code><a href="reference/logDet_distance.html">logDet_distance()</a></code> are flagged as not-yet-proofread (<code>NEWS.md</code>), so reference-value tests there are especially valuable.</p>
+<p>Verification today rests heavily on <strong>vignettes + man-page examples</strong>.</p>
+<p>There is currently <strong>no <code>tests/</code> directory</strong> in the repo, so if you add unit tests, start with <code>tests/testthat/</code> using <strong><code>testthat</code></strong> (Bioconductor convention). Do <strong>not</strong> remove the existing <a href="mailto:vignette/@examples" class="email">vignette/@examples</a> coverage; add tests incrementally.</p>
+<p>Lift existing <code>@examples</code> into <code>expect_*</code> assertions. High-value candidates include the colinearity/coalescing functions and the nucleotide-distance functions (some distance functions are explicitly flagged as not-yet-proofread in <code>NEWS.md</code>).</p>
 </div>
 </div>
 
@@ -128,7 +131,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
