@@ -90,9 +90,9 @@ load_genomic_breaks_blasttabplus <- function (
     c(name = "qname", type = "factor"),
     c(       "tname",        "factor"),
     c(       "P",            "numeric"),
-    c(       "alength",      "integer"),
+    c(       "aLength",      "integer"),
     c(       "mismatches",   "integer"),
-    c(       "gaps",         "integer"),
+    c(       "gapOpens",     "integer"),
     c(       "qstart",       "integer"),
     c(       "qend",         "integer"),
     c(       "tstart",       "integer"),
@@ -149,9 +149,9 @@ load_genomic_breaks_blasttabplus <- function (
 
   gb <- GBreaks (target = grt, query = grq)
   score(gb)     <- df$score
-  gb$alength    <- df$alength
+  gb$aLength    <- df$aLength
   gb$mismatches <- df$mismatches
-  gb$gaps       <- df$gaps
+  gb$gapOpens   <- df$gapOpens
 
   if (sort) gb <- sort(gb, ignore.strand = TRUE)
   gb
