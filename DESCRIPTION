@@ -3,10 +3,11 @@ Type: Package
 Title: Pairwise Alignment Breakpoint Analysis
 Version: 0.23.0
 Authors@R: c(
-  person("Charlotte", "West", email = "charwest1@hotmail.co.uk", role =   "aut" ),
-  person("Charles", "Plessy", email = "charles.plessy@oist.jp",  role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7410-6295")),
-  person("Bruna", "Fistarol", email = "bruna.fistarol@oist.jp",  role =   "ctb" ),
-  person("Zikun", "Yang",     email = "zikun.yang@oist.jp",      role =   "ctb" )
+  person("Charlotte", "West",  email = "charwest1@hotmail.co.uk", role =   "aut" ),
+  person("Charles", "Plessy",  email = "charles.plessy@oist.jp",  role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7410-6295")),
+  person("Bruna", "Fistarol",  email = "bruna.fistarol@oist.jp",  role =   "ctb" ),
+  person("Zikun", "Yang",      email = "zikun.yang@oist.jp",      role =   "ctb" ),
+  person("Priscila", "Biller", email = "pribiller@gmail.com",     role =   "ctb" )
   )
 Description: Load pairwise genome alignments into objects, coalesce colinear
     alignments to discover syntenic regions, flag inversions, and much more.
@@ -35,7 +36,8 @@ Imports:
   pwalign,
   Rcpp,
   weights,
-  igraph
+  igraph,
+  httr
 LinkingTo: Rcpp
 Roxygen: list(markdown = TRUE)
 Suggests:
@@ -75,6 +77,7 @@ Collate:
     'zipWithNext.R'
     'coalesce_contigs.R'
     'correlation_index.R'
+    'divergenceTime_TimeTree.R'
     'exampleSubstitutionMatrix.R'
     'feature_coverage.R'
     'flagInversions.R'
