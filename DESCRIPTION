@@ -120,4 +120,4 @@ Collate:
     'tan_bp.R'
     'tau_index.R'
     'wholeGenomeClassification.R'
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
