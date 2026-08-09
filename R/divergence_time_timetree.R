@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' getDivergenceTime(9555,9601)}
+#' get_divergence_time(9555,9601)}
 #'
 #' @family Query functions
 #'
@@ -21,15 +21,15 @@
 #' @author Priscila Biller
 #'
 #' @export
-getDivergenceTime <- function(taxid1, taxid2) {
-  timeTreePairwiseBase <- "http://timetree.temple.edu/api/pairwise/"
+get_divergence_time <- function(taxid1, taxid2) {
+  timetree_pairwise_base <- "http://timetree.temple.edu/api/pairwise/"
   # Example of request to the TimeTree's API: 
   # - Request: http://timetree.temple.edu/api/pairwise/9555/9601
   # - Answer from TimeTree: 
   # taxon_a_id,taxon_b_id,scientific_name_a,scientific_name_b,all_total,precomputed_age,precomputed_ci_low,precomputed_ci_high,adjusted_age
   # 9555,9601,Papio anubis,Pongo abelii,83,28.82,26.8,30.6,0
-  timeTreeRequest <- paste(timeTreePairwiseBase, taxid1, "/", taxid2, sep="")
-  response <- GET(timeTreeRequest)
+  timetree_request <- paste(timetree_pairwise_base, taxid1, "/", taxid2, sep="")
+  response <- GET(timetree_request)
   lines    <- content(response, as="text", encoding="UTF-8")
   # Break the whole content into lines, and gets the second line (data).
   line_data <- strsplit(lines, "\n", fixed = TRUE)[[1]][2] # First line: header; Second line: data.
