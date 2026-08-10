@@ -33,6 +33,7 @@ splitSeqLevel(exampleInsertion, "chrA", 200)
 \seealso{
 Other modifier functions:
 \code{\link[=bridgeRegions]{bridgeRegions()}},
+\code{\link[=chromosome_mapping]{chromosome_mapping()}},
 \code{\link[=coalesce_contigs]{coalesce_contigs()}},
 \code{\link[=flipInversions]{flipInversions()}},
 \code{\link[=forceSeqLengths]{forceSeqLengths()}},

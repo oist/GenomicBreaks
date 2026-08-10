@@ -49,6 +49,7 @@ Other Colinearity functions:
 \code{\link[=flagPairs]{flagPairs()}}
 
 Other modifier functions:
+\code{\link[=chromosome_mapping]{chromosome_mapping()}},
 \code{\link[=coalesce_contigs]{coalesce_contigs()}},
 \code{\link[=flipInversions]{flipInversions()}},
 \code{\link[=forceSeqLengths]{forceSeqLengths()}},

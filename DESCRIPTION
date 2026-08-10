@@ -71,6 +71,7 @@ Collate:
     'bp_pair_analysis.R'
     'bridgeRegions.R'
     'chain_contigs.R'
+    'chromosome_mapping.R'
     'cleanGaps.R'
     'zipWithNext.R'
     'coalesce_contigs.R'
@@ -117,4 +118,4 @@ Collate:
     'tan_bp.R'
     'tau_index.R'
     'wholeGenomeClassification.R'
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
