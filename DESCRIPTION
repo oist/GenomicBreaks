@@ -77,7 +77,7 @@ Collate:
     'zipWithNext.R'
     'coalesce_contigs.R'
     'correlation_index.R'
-    'divergence_time_timetree.R'
+    'divergenceTime_Timetree.R'
     'exampleSubstitutionMatrix.R'
     'feature_coverage.R'
     'flagInversions.R'
