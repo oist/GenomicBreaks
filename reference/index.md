@@ -320,6 +320,14 @@ Functions to aid trivial scaffolding
 - [`strandNames()`](https://oist.github.io/GenomicBreaks/reference/strandNames.md)
   : Sequence name with strand information
 
+## Query functions
+
+Functions for querying information from internal objects or external
+sources.
+
+- [`getDivergenceTime()`](https://oist.github.io/GenomicBreaks/reference/getDivergenceTime.md)
+  : Divergence time - TimeTree
+
 ## Other functions
 
 - [`StructuralVariants`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
