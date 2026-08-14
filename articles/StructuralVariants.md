@@ -426,7 +426,75 @@ exampleTwinInversions |> reverse() |> sort(i=TRUE) |> flagTwinInversions()
     ##   -------
     ##   seqinfo: 1 sequence from an unspecified genome
 
-### Transolocations
+#### Other inversions from literature
+
+The inversions below were taken from various papers on reversal
+estimates and provide a useful benchmark for functions that estimate the
+number of inversions separating two genomes, such as the
+[`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
+function.
+
+- Example used in [Garg et
+  al. (2019)](https://ieeexplore.ieee.org/abstract/document/8711775). In
+  this example, at least five inversions are needed to explain the
+  differences between the two genomes. Thus,
+  `inversionDistance(exampleInversionGarg2019)` returns `5`:
+
+``` r
+
+exampleInversionGarg2019 |> plotApairOfChrs(main = "Garg et al. (2019)")
+```
+
+![](StructuralVariants_files/figure-html/inversionsGarg2019-1.png)
+
+- Example from [Bader et
+  al. (2001)](https://link.springer.com/chapter/10.1007/3-540-44634-6_34).
+  Here 7 inversions separate the two genomes:
+
+``` r
+
+exampleInversionBader2001 |> plotApairOfChrs(main = "Bader et al. (2001)")
+```
+
+![](StructuralVariants_files/figure-html/inversionsBader2001-1.png)
+
+- The two examples below are from the classical paper by [Hannehalli and
+  Pevzner (1999)](https://dl.acm.org/doi/abs/10.1145/300515.300516). The
+  inversion distance is 8 and 9 reversals, respectively.
+
+``` r
+
+exampleInversionHP1999fig4a |> plotApairOfChrs(main = "Hannehalli and Pevzner (1999) - Figure 4(a)")
+```
+
+![](StructuralVariants_files/figure-html/inversionsHP1999-1.png)
+
+``` r
+
+exampleInversionHP1999fig4b |> plotApairOfChrs(main = "Hannehalli and Pevzner (1999) - Figure 4(b)")
+```
+
+![](StructuralVariants_files/figure-html/inversionsHP1999-2.png)
+
+- The last two examples come from the very nice book [Mathematics of
+  Evolution and Phylogeny](https://academic.oup.com/book/52874). The
+  inversion distance is 8 and 13 reversals, respectively.
+
+``` r
+
+exampleInversionBergeron2005a |> plotApairOfChrs(main = "Mathematics of Evolution and Phylogeny (2005) - Section 10.4.2")
+```
+
+![](StructuralVariants_files/figure-html/inversionsBergeron2005-1.png)
+
+``` r
+
+exampleInversionBergeron2005b |> plotApairOfChrs(main = "Mathematics of Evolution and Phylogeny (2005) - Figure 10.6")
+```
+
+![](StructuralVariants_files/figure-html/inversionsBergeron2005-2.png)
+
+### Translocations
 
 If a region has moved, but is not an inversion, then it is a
 translocation.
