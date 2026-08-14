@@ -122,6 +122,77 @@ exampleNotTwinInversions                          <- GBreaks(exampleNotTwinInver
 seqlengths(exampleNotTwinInversions)              <- seqlengths(exampleNotTwinInversions$query) <- 600
 isSorted(exampleNotTwinInversions)
 
+# Example of inversions from literature.
+
+# Example used in the paper from Garg et al. (2019).
+# {-2,5,4,-1,3,6,9,-7,-8}
+# Reversal distance = 5 reversals. 
+# Details for Reversal distance (d) computation: 10 breakpoints (b); 5 cycles(c); 0 hurdles(h): d = b-c+h (+1 if fortress).
+exampleInversionGarg2019              <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890", "chrA:900-990"))
+strand(exampleInversionGarg2019)      <- c(              "-",            "+",            "+",            "-",            "+",            "+",            "+",            "-",            "-")
+exampleInversionGarg2019$query        <- GRanges(c("chrB:200-290", "chrB:500-590", "chrB:400-490", "chrB:100-190", "chrB:300-390", "chrB:600-690", "chrB:900-990", "chrB:700-790", "chrB:800-890"))
+exampleInversionGarg2019              <- GBreaks(exampleInversionGarg2019)
+seqlengths(exampleInversionGarg2019)  <- seqlengths(exampleInversionGarg2019$query) <- 1000
+isSorted(exampleInversionGarg2019)
+
+
+# Example used in the paper from Bader et al. (2001).
+# (+3, +9, −7, +5, −10, +8, +4, −6, +11, +2, +1)
+# - Reversal distance (d) = expected: 7 reversals.
+exampleInversionBader2001             <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590",   "chrA:600-690", "chrA:700-790", "chrA:800-890", "chrA:900-990",   "chrA:1000-1090", "chrA:1100-1190"))
+strand(exampleInversionBader2001)     <- c(              "+",            "+",            "-",            "+",            "-",            "+",            "+",            "-",            "+",             "+",             "+")
+exampleInversionBader2001$query       <- GRanges(c("chrB:300-390", "chrB:900-990", "chrB:700-790", "chrB:500-590", "chrB:1000-1090", "chrB:800-890", "chrB:400-490", "chrB:600-690", "chrB:1100-1190", "chrB:200-290",   "chrB:100-190"))
+exampleInversionBader2001             <- GBreaks(exampleInversionBader2001)
+seqlengths(exampleInversionBader2001) <- seqlengths(exampleInversionBader2001$query) <- 1200
+isSorted(exampleInversionBader2001)
+
+
+# Example used in the paper from Hannehalli and Pevzner (1999) (Figure 4(a)).
+# {+5, +7, +6, +8, +1, +3, +2, +4}
+# - Reversal distance (d) = expected: 8 reversals
+# Details for Reversal distance (d) computation: 9 breakpoints (b); 3 cycles(c); 2 hurdles(h): d = b-c+h (+1 if fortress).
+exampleInversionHP1999fig4a             <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890"))
+strand(exampleInversionHP1999fig4a)     <- c(              "+",            "+",            "+",            "+",            "+",            "+",            "+",            "+")
+exampleInversionHP1999fig4a$query       <- GRanges(c("chrB:500-590", "chrB:700-790", "chrB:600-690", "chrB:800-890", "chrB:100-190", "chrB:300-390", "chrB:200-290", "chrB:400-490"))
+exampleInversionHP1999fig4a             <- GBreaks(exampleInversionHP1999fig4a)
+seqlengths(exampleInversionHP1999fig4a) <- seqlengths(exampleInversionHP1999fig4a$query) <- 900
+isSorted(exampleInversionHP1999fig4a)
+
+
+# Example used in the paper from Hannehalli and Pevzner (1999) (Figure 4(b)).
+# {+2, +4, +3, +5, +7, +6, +8, +1}
+# - Reversal distance (d) = expected: 9 reversals
+# Details for Reversal distance (d) computation: 9 breakpoints (b); 3 cycles(c); 3 hurdles(h): d = b-c+h (+1 if fortress).
+exampleInversionHP1999fig4b             <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890"))
+strand(exampleInversionHP1999fig4b)     <- c(              "+",            "+",            "+",            "+",            "+",            "+",            "+",            "+")
+exampleInversionHP1999fig4b$query       <- GRanges(c("chrB:200-290", "chrB:400-490", "chrB:300-390", "chrB:500-590", "chrB:700-790", "chrB:600-690", "chrB:800-890", "chrB:100-190"))
+exampleInversionHP1999fig4b             <- GBreaks(exampleInversionHP1999fig4b)
+seqlengths(exampleInversionHP1999fig4b) <- seqlengths(exampleInversionHP1999fig4b$query) <- 900
+isSorted(exampleInversionHP1999fig4b)
+
+# Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Section 10.4.2).
+# {0, 2, 1, 3, 5, 7, 6, 8, 9, 4, 10}
+# - Reversal distance (d) = expected: 8 reversals
+# Details for Reversal distance (d) computation: 9 breakpoints (b); 4 cycles(c); 2 hurdles(h): d = b-c+h (+1 if fortress).
+exampleInversionBergeron2005a             <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890", "chrA:900-990",   "chrA:1000-1090", "chrA:1100-1190"))
+strand(exampleInversionBergeron2005a)     <- c(              "+",            "+",            "+",            "+",            "+",            "+",            "+",            "+",            "+",             "+",             "+")
+exampleInversionBergeron2005a$query       <- GRanges(c("chrB:100-190", "chrB:300-390", "chrB:200-290", "chrB:400-490", "chrB:600-690", "chrB:800-890", "chrB:700-790", "chrB:900-990", "chrB:1000-1090", "chrB:500-590",   "chrB:1100-1190"))
+exampleInversionBergeron2005a             <- GBreaks(exampleInversionBergeron2005a)
+seqlengths(exampleInversionBergeron2005a) <- seqlengths(exampleInversionBergeron2005a$query) <- 1200
+isSorted(exampleInversionBergeron2005a)
+
+
+# Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Figure 10.6).
+# P_2 = {0, -3, 1, 2, 4, 6, 5, 7, -15, -13, -14, -12, -10, -11, -9, 8, 16}
+# - Reversal distance (d) = expected: 13 reversals
+# Details for Reversal distance (d) computation: 15 breakpoints (b); 6 cycles(c); 3 hurdles(h): d = b-c+h (+1 if fortress).
+exampleInversionBergeron2005b             <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890", "chrA:900-990",   "chrA:1000-1090", "chrA:1100-1190",  "chrA:1200-1290", "chrA:1300-1390", "chrA:1400-1490", "chrA:1500-1590", "chrA:1600-1690", "chrA:1700-1790"))
+strand(exampleInversionBergeron2005b)     <- c(              "+",            "-",           "+",            "+",            "+",            "+",            "+",            "+",              "-",              "-",             "-",               "-",             "-",               "-",             "-",              "+",              "+")
+exampleInversionBergeron2005b$query       <- GRanges(c("chrB:100-190", "chrB:400-490", "chrB:200-290", "chrB:300-390", "chrB:500-590", "chrB:700-790", "chrB:600-690", "chrB:800-890", "chrB:1600-1690", "chrB:1400-1490",  "chrB:1500-1590", "chrB:1300-1390", "chrB:1100-1190", "chrB:1200-1290", "chrB:1000-1090", "chrB:900-990",   "chrB:1700-1790"))
+exampleInversionBergeron2005b             <- GBreaks(exampleInversionBergeron2005b)
+seqlengths(exampleInversionBergeron2005b) <- seqlengths(exampleInversionBergeron2005b$query) <- 1800
+isSorted(exampleInversionBergeron2005b)
+
 # Translocation
 
 exampleTranslocation                      <- GRanges(c("chrA:100-200", "chrA:201-300", "chrA:301-400"))
@@ -187,6 +258,12 @@ usethis::use_data(
   exampleNestedInversions,
   exampleTwinInversions,
   exampleNotTwinInversions,
+  exampleInversionGarg2019,
+  exampleInversionBader2001,
+  exampleInversionHP1999fig4a,
+  exampleInversionHP1999fig4b,
+  exampleInversionBergeron2005a,
+  exampleInversionBergeron2005b,
   exampleTranslocation,
   exampleTranslocation2,
   exampleInsertion,
