@@ -19,10 +19,10 @@ Computes the minimal number of inversions required to sort a signed permutation
 using the Hannenhalli and Pevzner algorithm.
 }
 \details{
-This function uses several internal helper functions (e.g., \code{extendedPermutation},
+This function uses several helper functions defined in breakpointGraph.R (e.g., \code{extendedPermutation},
 \code{breakpoint_graph}, \code{hurdles_count}, \code{superhurdles_count}, and others) to
 compute properties of the breakpoint graph and identify cycles, hurdles and superhurdles.
-It also depends on \code{permutationVector()}, which is defined in another .R file.
+It also depends on \code{permutationVector()}, which is defined in permutationVector.R.
 
 This algorithm was designed to work in \emph{a single, linear chromosome alignment}.
 Although the function still works if the GBreaks object involves more than one chromosome,
@@ -36,16 +36,39 @@ if different chromosomes have orthologous regions.
 inversionDistance(c(1, 3, -2, 4))
 
 # Example using a GBreaks object
-gr         <- GRanges(c("A:10-19", "A:20-29", "A:30-39", "A:40-49", "A:50-59", "A:60-69"))
-strand(gr) <- c(            "+"  ,     "-"  ,     "-"  ,     "-"  ,     "+"  ,     "+"   )
-gr$query   <- GRanges(c("A:10-19", "A:30-39", "A:20-29", "A:40-49", "A:60-69", "A:50-59"))
-gb         <- GBreaks(gr)
-inversionDistance(gb)}
+inversionDistance(exampleInversion2)}
 
+}
+\references{
+Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 }
 \seealso{
 \code{\link{permutationVector}} for generating the permutation vector.
+
+Other Rearrangement distances:
+\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}}
+
+Other Similarity indexes:
+\code{\link[=F81_distance]{F81_distance()}},
+\code{\link[=GOC]{GOC()}},
+\code{\link[=HKY85_distance]{HKY85_distance()}},
+\code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=K80_distance]{K80_distance()}},
+\code{\link[=K80_gap_distance]{K80_gap_distance()}},
+\code{\link[=P_distance]{P_distance()}},
+\code{\link[=T92_distance]{T92_distance()}},
+\code{\link[=TN93_distance]{TN93_distance()}},
+\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
+\code{\link[=correlation_index]{correlation_index()}},
+\code{\link[=karyotype_index]{karyotype_index()}},
+\code{\link[=logDet_distance]{logDet_distance()}},
+\code{\link[=slidingWindow]{slidingWindow()}},
+\code{\link[=strand_randomisation_index]{strand_randomisation_index()}},
+\code{\link[=synteny_index]{synteny_index()}},
+\code{\link[=tau_index]{tau_index()}}
 }
 \author{
 Bruna Fistarol
 }
+\concept{Rearrangement distances}
+\concept{Similarity indexes}

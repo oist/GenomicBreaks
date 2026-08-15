@@ -42,6 +42,8 @@ Other Similarity indexes:
 \code{\link[=P_distance]{P_distance()}},
 \code{\link[=T92_distance]{T92_distance()}},
 \code{\link[=TN93_distance]{TN93_distance()}},
+\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
+\code{\link[=inversionDistance]{inversionDistance()}},
 \code{\link[=karyotype_index]{karyotype_index()}},
 \code{\link[=logDet_distance]{logDet_distance()}},
 \code{\link[=slidingWindow]{slidingWindow()}},

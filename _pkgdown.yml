@@ -24,6 +24,7 @@ reference:
   - contents:
     - has_concept("Similarity indexes")
     - has_concept("Nucleotide distances")
+    - has_concept("Rearrangement distances")
     - has_concept("Alignment statistics")
   - title: Colinearity functions
     desc: Functions to analyse colinearity and synteny.
@@ -58,6 +59,10 @@ reference:
     desc: Functions for querying information from internal objects or external sources.
   - contents:
     - has_concept("Query functions")
+  - title: Breakpoint graph functions
+    desc: Functions that compute properties of breakpoint graphs.
+  - contents:
+    - has_concept("Breakpoint graph functions")
   - title: Other functions
   - contents:
     - StructuralVariants

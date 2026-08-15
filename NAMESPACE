@@ -20,6 +20,7 @@ export(TN93_distance)
 export(align_scaf_plot_2)
 export(bp_heatmap)
 export(bp_pair_analysis)
+export(breakpointGraphProperties)
 export(bridgeRegions)
 export(chain_contigs)
 export(cleanGaps)
@@ -163,8 +164,7 @@ importFrom(igraph,
   delete_vertices,
   ends,
   induced_subgraph,
-  make_empty_graph,
-  membership
+  make_empty_graph
 )
 importFrom(methods,
   as,
