@@ -44,6 +44,8 @@ Other Similarity indexes:
 [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md),
 [`T92_distance()`](https://oist.github.io/GenomicBreaks/reference/T92_distance.md),
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
+[`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md),
+[`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md),
 [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md),
 [`logDet_distance()`](https://oist.github.io/GenomicBreaks/reference/logDet_distance.md),
 [`slidingWindow()`](https://oist.github.io/GenomicBreaks/reference/slidingWindow.md),

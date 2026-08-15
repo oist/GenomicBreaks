@@ -72,18 +72,42 @@ using <code><a href="permutationVector.html">permutationVector</a></code>.</p></
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function uses several internal helper functions (e.g., <code>extendedPermutation</code>,
+    <p>This function uses several helper functions defined in breakpointGraph.R (e.g., <code>extendedPermutation</code>,
 <code>breakpoint_graph</code>, <code>hurdles_count</code>, <code>superhurdles_count</code>, and others) to
 compute properties of the breakpoint graph and identify cycles, hurdles and superhurdles.
-It also depends on <code><a href="permutationVector.html">permutationVector()</a></code>, which is defined in another .R file.</p>
+It also depends on <code><a href="permutationVector.html">permutationVector()</a></code>, which is defined in permutationVector.R.</p>
 <p>This algorithm was designed to work in <em>a single, linear chromosome alignment</em>.
 Although the function still works if the GBreaks object involves more than one chromosome,
 the returned value for the minimal number of inversions will imply in non-usual inversions
 if different chromosomes have orthologous regions.</p>
     </div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="permutationVector.html">permutationVector</a></code> for generating the permutation vector.</p></div>
+    <div class="dont-index"><p><code><a href="permutationVector.html">permutationVector</a></code> for generating the permutation vector.</p>
+<p>Other Rearrangement distances:
+<code><a href="breakpointGraphProperties.html">breakpointGraphProperties()</a></code></p>
+<p>Other Similarity indexes:
+<code><a href="F81_distance.html">F81_distance()</a></code>,
+<code><a href="GOC.html">GOC()</a></code>,
+<code><a href="HKY85_distance.html">HKY85_distance()</a></code>,
+<code><a href="JC69_distance.html">JC69_distance()</a></code>,
+<code><a href="K80_distance.html">K80_distance()</a></code>,
+<code><a href="K80_gap_distance.html">K80_gap_distance()</a></code>,
+<code><a href="P_distance.html">P_distance()</a></code>,
+<code><a href="T92_distance.html">T92_distance()</a></code>,
+<code><a href="TN93_distance.html">TN93_distance()</a></code>,
+<code><a href="breakpointGraphProperties.html">breakpointGraphProperties()</a></code>,
+<code><a href="correlation_index.html">correlation_index()</a></code>,
+<code><a href="karyotype_index.html">karyotype_index()</a></code>,
+<code><a href="logDet_distance.html">logDet_distance()</a></code>,
+<code><a href="slidingWindow.html">slidingWindow()</a></code>,
+<code><a href="strand_randomisation_index.html">strand_randomisation_index()</a></code>,
+<code><a href="synteny_index.html">synteny_index()</a></code>,
+<code><a href="tau_index.html">tau_index()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -98,11 +122,7 @@ if different chromosomes have orthologous regions.</p>
 <span class="r-in"><span><span class="fu">inversionDistance</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example using a GBreaks object</span></span></span>
-<span class="r-in"><span><span class="va">gr</span>         <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A:10-19"</span>, <span class="st">"A:20-29"</span>, <span class="st">"A:30-39"</span>, <span class="st">"A:40-49"</span>, <span class="st">"A:50-59"</span>, <span class="st">"A:60-69"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">strand</span><span class="op">(</span><span class="va">gr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>            <span class="st">"+"</span>  ,     <span class="st">"-"</span>  ,     <span class="st">"-"</span>  ,     <span class="st">"-"</span>  ,     <span class="st">"+"</span>  ,     <span class="st">"+"</span>   <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gr</span><span class="op">$</span><span class="va">query</span>   <span class="op">&lt;-</span> <span class="fu">GRanges</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A:10-19"</span>, <span class="st">"A:30-39"</span>, <span class="st">"A:20-29"</span>, <span class="st">"A:40-49"</span>, <span class="st">"A:60-69"</span>, <span class="st">"A:50-59"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gb</span>         <span class="op">&lt;-</span> <span class="fu"><a href="GBreaks-class.html">GBreaks</a></span><span class="op">(</span><span class="va">gr</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">inversionDistance</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="fu">inversionDistance</span><span class="op">(</span><span class="va">exampleInversion2</span><span class="op">)</span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

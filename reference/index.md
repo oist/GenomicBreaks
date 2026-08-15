@@ -100,8 +100,12 @@ Various ways to estimate the similarity between two genomes.
   : Tamura 1992 distance
 - [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md)
   : Tamura–Nei 1993 distance
+- [`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md)
+  : Breakpoint graph properties
 - [`correlation_index()`](https://oist.github.io/GenomicBreaks/reference/correlation_index.md)
   : Index representing how correlated syntenic regions are
+- [`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
+  : Inversion Distance
 - [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md)
   : Index representing how the karyotype changes between chromosomes of
   two genomes
@@ -327,6 +331,31 @@ sources.
 
 - [`getDivergenceTime()`](https://oist.github.io/GenomicBreaks/reference/getDivergenceTime.md)
   : Divergence time - TimeTree
+
+## Breakpoint graph functions
+
+Functions that compute properties of breakpoint graphs.
+
+- [`bp_count()`](https://oist.github.io/GenomicBreaks/reference/bp_count.md)
+  : Number of Breakpoints
+- [`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md)
+  : Breakpoint graph properties
+- [`breakpoint_graph()`](https://oist.github.io/GenomicBreaks/reference/breakpoint_graph.md)
+  : Breakpoint Graph
+- [`components_graph()`](https://oist.github.io/GenomicBreaks/reference/components_graph.md)
+  : Connected components
+- [`cycle_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_count.md)
+  : Number of Cycles
+- [`extendedPermutation()`](https://oist.github.io/GenomicBreaks/reference/extendedPermutation.md)
+  : Extended Permutation
+- [`hurdles_count()`](https://oist.github.io/GenomicBreaks/reference/hurdles_count.md)
+  : Count hurdles
+- [`is_fortress()`](https://oist.github.io/GenomicBreaks/reference/is_fortress.md)
+  : Check fortrees
+- [`is_interleaving()`](https://oist.github.io/GenomicBreaks/reference/is_interleaving.md)
+  : Interleaving Check
+- [`superhurdles_count()`](https://oist.github.io/GenomicBreaks/reference/superhurdles_count.md)
+  : Count superhurdles
 
 ## Other functions
 
