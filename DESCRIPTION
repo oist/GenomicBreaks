@@ -95,6 +95,7 @@ Collate:
     'int_frag.R'
     'inv2UCSCData.R'
     'inversionDistance.R'
+    'inversionEstimate_BD.R'
     'karyotype_index.R'
     'keepLongestPair.R'
     'load_genomic_breaks.R'

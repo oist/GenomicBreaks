@@ -67,6 +67,7 @@ Other Similarity indexes:
 \code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
 \code{\link[=correlation_index]{correlation_index()}},
 \code{\link[=inversionDistance]{inversionDistance()}},
+\code{\link[=inversionEstimate_BD]{inversionEstimate_BD()}},
 \code{\link[=karyotype_index]{karyotype_index()}},
 \code{\link[=logDet_distance]{logDet_distance()}},
 \code{\link[=slidingWindow]{slidingWindow()}},
