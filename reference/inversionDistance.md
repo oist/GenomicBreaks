@@ -84,5 +84,5 @@ if (FALSE) { # \dontrun{
 inversionDistance(c(1, 3, -2, 4))
 
 # Example using a GBreaks object
-inversionDistance(exampleInversion2)} # }
+inversionDistance(exampleInversionHP1999fig4a)} # }
 ```
