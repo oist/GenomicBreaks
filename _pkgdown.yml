@@ -55,10 +55,6 @@ reference:
     desc: Functions to aid trivial scaffolding
   - contents:
     - has_concept("scaffolding functions")
-  - title: Query functions
-    desc: Functions for querying information from internal objects or external sources.
-  - contents:
-    - has_concept("Query functions")
   - title: Breakpoint graph functions
     desc: Functions that compute properties of breakpoint graphs.
   - contents:
