@@ -22,13 +22,13 @@
 #' @return An integer: the minimal number of inversions needed to sort the permutation.
 #'
 #' @examples
-#' \dontrun{
 #' # Example using a permutation vector directly
 #' # Suppose we want to sort the permutation p = c(1, 3, -2, 4)
 #' inversionDistance(c(1, 3, -2, 4))
 #'
-#' # Example using a GBreaks object
-#' inversionDistance(exampleInversion2)}
+#' # Example using a GBreaks object.
+#' # This example is based on Figure 4(a) from Hannehalli and Pevzner (1999). The inversion distance is 8.
+#' inversionDistance(exampleInversionHP1999fig4a)
 #'
 #' @seealso \code{\link{permutationVector}} for generating the permutation vector.
 #'
