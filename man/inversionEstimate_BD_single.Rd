@@ -2,8 +2,7 @@
 % Please edit documentation in R/inversionEstimate_BD.R
 \name{inversionEstimate_BD_single}
 \alias{inversionEstimate_BD_single}
-\title{It finds the number of inversions whose expected number of cycles
-is closest to the observed number of cycles.}
+\title{Inversion Estimate - option 'single'}
 \usage{
 inversionEstimate_BD_single(n, obs_nb_cycles)
 }
@@ -16,12 +15,16 @@ or any other genomic region being rearranged.}
 in the breakpoint graph of two genomes.}
 }
 \description{
-This function is an alternative to the function "inversionEstimate_BD_many",
-which uses the function "inversionEstimate_BD_setup".
+It finds the number of inversions whose expected number of cycles
+is closest to the observed number of cycles.
 }
 \details{
+This function is an alternative to the function "inversionEstimate_BD_many",
+which uses the function "inversionEstimate_BD_setup".
+
 This function should be preferred when there are few inversion estimates to be computed.
 }
 \author{
 Priscila Biller
 }
+\keyword{internal}

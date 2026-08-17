@@ -2,8 +2,7 @@
 % Please edit documentation in R/inversionEstimate_BD.R
 \name{nb_cycles_k}
 \alias{nb_cycles_k}
-\title{Computes the expected number of cycles in a random graph
-after k edges.}
+\title{Expected number of cycler after k reversals}
 \usage{
 nb_cycles_k(k, N)
 }
@@ -15,6 +14,10 @@ equivalent to the number of inversions.}
 equivalent to the number of markers+1.}
 }
 \description{
+Computes the expected number of cycles in a random graph
+after k edges.
+}
+\details{
 Implements Theorem 3 from Berestycki and Durrett (2006),
 also described in Equation 6 in Biller et al. (2015).
 }
@@ -28,3 +31,4 @@ Biller, Priscila, Laurent Guéguen, and Eric Tannier. "Moments of genome evoluti
 \author{
 Priscila Biller
 }
+\keyword{internal}

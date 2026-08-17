@@ -1,4 +1,6 @@
 
+#' Expected number of cycler after k reversals
+#' 
 #' Computes the expected number of cycles in a random graph
 #' after k edges. 
 #' 
@@ -16,6 +18,9 @@
 #' @references Biller, Priscila, Laurent Guéguen, and Eric Tannier. "Moments of genome evolution by double cut-and-join." BMC bioinformatics 16.Suppl 14 (2015): S7.
 #'
 #' @author Priscila Biller
+#'
+#' @export
+#' @keywords internal
 nb_cycles_k <- function(k, N){
 
     # Invalid value (negative number of inversions or not enough markers).
@@ -43,6 +48,8 @@ nb_cycles_k <- function(k, N){
     }
 }
 
+#' Inversion Estimate - setup for option 'many'
+#' 
 #' The setup step computes the expected number of cycles 
 #' after k edges for various values of k. 
 #'
@@ -60,6 +67,9 @@ nb_cycles_k <- function(k, N){
 #'          or any other genomic region being rearranged.
 #'
 #' @author Priscila Biller
+#'
+#' @export
+#' @keywords internal
 inversionEstimate_BD_setup <- function(n){
 
   # The components of the breakpoint graph for random reversals 
@@ -103,7 +113,8 @@ inversionEstimate_BD_setup <- function(n){
   cyc_all
 }
 
-
+#' Inversion Estimate - option 'single'
+#' 
 #' It finds the number of inversions whose expected number of cycles 
 #' is closest to the observed number of cycles.
 #' 
@@ -120,6 +131,9 @@ inversionEstimate_BD_setup <- function(n){
 #'                      in the breakpoint graph of two genomes.
 #'
 #' @author Priscila Biller
+#'
+#' @export
+#' @keywords internal
 inversionEstimate_BD_single <- function(n, obs_nb_cycles){
 
   # The components of the breakpoint graph for random reversals 
@@ -208,6 +222,8 @@ inversionEstimate_BD_single <- function(n, obs_nb_cycles){
   list(k_beg=k_beg, k_end=k_end, k_avg=as.integer((k_beg + k_end)/2), nb_cyc_beg=nb_cyc_k_beg, nb_cyc_end=nb_cyc_k_end)
 }
 
+#' Inversion Estimate - option 'many'
+#' 
 #' This function should be preferred when there are many inversion estimates to be computed.
 #' 
 #' @param n An integer: The number of markers. 
@@ -218,6 +234,9 @@ inversionEstimate_BD_single <- function(n, obs_nb_cycles){
 #'                      in the breakpoint graph of two genomes.
 #'
 #' @author Priscila Biller
+#'
+#' @export
+#' @keywords internal
 inversionEstimate_BD_many <- function(n, obs_nb_cycles, cyc_all=NA){
   # Computes for various values of k the relation:
   # Number of inversions k <-> Expected number of cycles after k inversions

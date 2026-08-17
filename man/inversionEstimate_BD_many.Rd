@@ -2,7 +2,7 @@
 % Please edit documentation in R/inversionEstimate_BD.R
 \name{inversionEstimate_BD_many}
 \alias{inversionEstimate_BD_many}
-\title{This function should be preferred when there are many inversion estimates to be computed.}
+\title{Inversion Estimate - option 'many'}
 \usage{
 inversionEstimate_BD_many(n, obs_nb_cycles, cyc_all = NA)
 }
@@ -20,3 +20,4 @@ This function should be preferred when there are many inversion estimates to be 
 \author{
 Priscila Biller
 }
+\keyword{internal}
