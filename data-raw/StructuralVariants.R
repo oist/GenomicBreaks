@@ -45,15 +45,6 @@ exampleInversion                          <- GBreaks(exampleInversion)
 seqlengths(exampleInversion)              <- seqlengths(exampleInversion$query) <- 600
 isSorted(exampleInversion)
 
-# Inversions 2
-
-exampleInversion2                          <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690"))
-strand(exampleInversion2)                  <- c(              "+",            "-",            "-",            "-",            "+",            "+"      )
-exampleInversion2$query                    <- GRanges(c("chrA:100-190", "chrA:300-390", "chrA:200-290", "chrA:400-490", "chrA:600-690", "chrA:500-590"))
-exampleInversion2                          <- GBreaks(exampleInversion2)
-seqlengths(exampleInversion2)              <- seqlengths(exampleInversion2$query) <- 700
-isSorted(exampleInversion2)
-
 # Inversion in a 5-bloc context with non-collapsed regions
 # This is an intermediary step towards `exampleDoubleInversion1`
 
@@ -259,7 +250,6 @@ usethis::use_data(
   exampleColinear3,
   exampleColinear5,
   exampleInversion,
-  exampleInversion2,
   exampleInversion5uncollapsed,
   exampleDoubleInversion1,
   exampleDoubleInversion2,
