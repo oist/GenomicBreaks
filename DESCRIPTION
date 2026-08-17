@@ -36,8 +36,7 @@ Imports:
   pwalign,
   Rcpp,
   weights,
-  igraph,
-  httr
+  igraph
 LinkingTo: Rcpp
 Roxygen: list(markdown = TRUE)
 Suggests:
@@ -78,7 +77,6 @@ Collate:
     'zipWithNext.R'
     'coalesce_contigs.R'
     'correlation_index.R'
-    'divergenceTime_Timetree.R'
     'exampleSubstitutionMatrix.R'
     'feature_coverage.R'
     'flagInversions.R'
