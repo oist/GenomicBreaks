@@ -80,11 +80,13 @@ Bruna Fistarol
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Example using a permutation vector directly
 # Suppose we want to sort the permutation p = c(1, 3, -2, 4)
 inversionDistance(c(1, 3, -2, 4))
+#> [1] 2
 
-# Example using a GBreaks object
-inversionDistance(exampleInversionHP1999fig4a)} # }
+# Example using a GBreaks object.
+# This example is based on Figure 4(a) from Hannehalli and Pevzner (1999). The inversion distance is 8.
+inversionDistance(exampleInversionHP1999fig4a)
+#> [1] 8
 ```
