@@ -46,7 +46,8 @@ Other Breakpoint graph functions:
 [`superhurdles_count()`](https://oist.github.io/GenomicBreaks/reference/superhurdles_count.md)
 
 Other Rearrangement distances:
-[`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
+[`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md),
+[`inversionEstimate_BD()`](https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.md)
 
 Other Similarity indexes:
 [`F81_distance()`](https://oist.github.io/GenomicBreaks/reference/F81_distance.md),
@@ -60,6 +61,7 @@ Other Similarity indexes:
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
 [`correlation_index()`](https://oist.github.io/GenomicBreaks/reference/correlation_index.md),
 [`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md),
+[`inversionEstimate_BD()`](https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.md),
 [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md),
 [`logDet_distance()`](https://oist.github.io/GenomicBreaks/reference/logDet_distance.md),
 [`slidingWindow()`](https://oist.github.io/GenomicBreaks/reference/slidingWindow.md),

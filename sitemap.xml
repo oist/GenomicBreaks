@@ -70,6 +70,10 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/int_frag.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/inv2UCSCData.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/inversionDistance.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD_few.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD_many.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD_setup.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/isSorted.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/is_fortress.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/is_interleaving.html</loc></url>
@@ -83,6 +87,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/makeOxfordPlots.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/matchPairs.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/mergeSeqLevels.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/nb_cycles_k.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/permutationVector.html</loc></url>

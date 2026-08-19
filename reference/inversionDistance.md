@@ -50,7 +50,8 @@ reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 for generating the permutation vector.
 
 Other Rearrangement distances:
-[`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md)
+[`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md),
+[`inversionEstimate_BD()`](https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.md)
 
 Other Similarity indexes:
 [`F81_distance()`](https://oist.github.io/GenomicBreaks/reference/F81_distance.md),
@@ -64,6 +65,7 @@ Other Similarity indexes:
 [`TN93_distance()`](https://oist.github.io/GenomicBreaks/reference/TN93_distance.md),
 [`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md),
 [`correlation_index()`](https://oist.github.io/GenomicBreaks/reference/correlation_index.md),
+[`inversionEstimate_BD()`](https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.md),
 [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md),
 [`logDet_distance()`](https://oist.github.io/GenomicBreaks/reference/logDet_distance.md),
 [`slidingWindow()`](https://oist.github.io/GenomicBreaks/reference/slidingWindow.md),

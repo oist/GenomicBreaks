@@ -1,0 +1,45 @@
+# Expected number of cycler after k reversals
+
+Computes the expected number of cycles in a random graph after k edges.
+
+## Usage
+
+``` r
+nb_cycles_k(k, N)
+```
+
+## Arguments
+
+- k:
+
+  An integer: The number of edges in the random graph, equivalent to the
+  number of inversions.
+
+- N:
+
+  An integer: The number of vertices in the random graph, equivalent to
+  the number of markers+1.
+
+## Details
+
+Implements Theorem 3 from Berestycki and Durrett (2006), also described
+in Equation 6 in Biller et al. (2015).
+
+## References
+
+Berestycki, Nathanaël, and Rick Durrett. "A phase transition in the
+random transposition random walk." Discrete Mathematics and Theoretical
+Computer Science. Discrete Mathematics and Theoretical Computer Science,
+2003.
+
+Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into
+turnip: polynomial algorithm for sorting signed permutations by
+reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
+
+Biller, Priscila, Laurent Guéguen, and Eric Tannier. "Moments of genome
+evolution by double cut-and-join." BMC bioinformatics 16.Suppl 14
+(2015): S7.
+
+## Author
+
+Priscila Biller

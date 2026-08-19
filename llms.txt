@@ -170,6 +170,8 @@ Various ways to estimate the similarity between two genomes.
   : Index representing how correlated syntenic regions are
 - [`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
   : Inversion Distance
+- [`inversionEstimate_BD()`](https://oist.github.io/GenomicBreaks/reference/inversionEstimate_BD.md)
+  : Inversion Estimate - Berestycki and Durrett (2006)
 - [`karyotype_index()`](https://oist.github.io/GenomicBreaks/reference/karyotype_index.md)
   : Index representing how the karyotype changes between chromosomes of
   two genomes
