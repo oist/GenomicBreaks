@@ -22,30 +22,21 @@
 #' @export
 #' @keywords internal
 nb_cycles_k <- function(k, N){
+  if ((N < 2) | (k < 0)) return(NA) # Invalid value (negative number of inversions or not enough markers).
+  if            (k == 0) return(N)  # No inversions. Genomes are the same
 
-    # Invalid value (negative number of inversions or not enough markers).
-    if ((N < 2) | (k < 0)){
-      NA
-
-    # No inversions. Genomes are the same.
-    } else if(k == 0) {
-      N
-
-    # At least one inversion.
-    } else {
-
-      nb_cyc_k <- 0
-      # This loop is supposed to go until infinity (sum until infinity), 
-      # but as i grows, the contribution of the i-th term gets smaller and smaller.
-      # Here, the computation is capped at 10 for efficiency. 
-      # It does not seem to affect much the accuracy.
-      for(i in 1:10) {
-        term_base <- 2.0*k/N
-        term_k    <- term_base*exp(-term_base)
-        nb_cyc_k  <- nb_cyc_k + ((1.0 / term_base) * ( i**(i-2) / factorial(i) )* term_k**i)
-      }
-      nb_cyc_k*N
-    }
+  # At least one inversion.
+  nb_cyc_k <- 0
+  # This loop is supposed to go until infinity (sum until infinity), 
+  # but as i grows, the contribution of the i-th term gets smaller and smaller.
+  # Here, the computation is capped at 10 for efficiency. 
+  # It does not seem to affect much the accuracy.
+  for(i in 1:10) {
+    term_base <- 2.0*k/N
+    term_k    <- term_base*exp(-term_base)
+    nb_cyc_k  <- nb_cyc_k + ((1.0 / term_base) * ( i**(i-2) / factorial(i) )* term_k**i)
+  }
+  nb_cyc_k*N
 }
 
 #' Inversion Estimate - setup for option 'many'
@@ -113,7 +104,7 @@ inversionEstimate_BD_setup <- function(n){
   cyc_all
 }
 
-#' Inversion Estimate - option 'single'
+#' Inversion Estimate - option 'few'
 #' 
 #' It finds the number of inversions whose expected number of cycles 
 #' is closest to the observed number of cycles.
@@ -134,7 +125,7 @@ inversionEstimate_BD_setup <- function(n){
 #'
 #' @export
 #' @keywords internal
-inversionEstimate_BD_single <- function(n, obs_nb_cycles){
+inversionEstimate_BD_few <- function(n, obs_nb_cycles){
 
   # The components of the breakpoint graph for random reversals 
   # on n-1 markers are related to the cycles of random 
@@ -273,7 +264,7 @@ inversionEstimate_BD_many <- function(n, obs_nb_cycles, cyc_all=NA){
 #'
 #' @param gb A [`GBreaks`] object.
 #' @param mode Optional parameter that specifies how estimates are computed. Two options are available: 
-#'             1. `single` : recommended when computing a few values in one function call; 
+#'             1. `few` : recommended when computing a few values in one function call; 
 #'             2. `many` : use when computing many values. 
 #' @param chrom_sep An optional string that separates the chromosome names in each item of the returned list.
 #'
@@ -315,7 +306,7 @@ inversionEstimate_BD_many <- function(n, obs_nb_cycles, cyc_all=NA){
 #' @author Priscila Biller
 #'
 #' @export
-inversionEstimate_BD <- function(gb, mode="single", chrom_sep="---"){
+inversionEstimate_BD <- function(gb, mode="few", chrom_sep="---"){
 
   # Get matched chromosomes.
   chrom_pairs <- lapply(split(gb, paste(seqnames(gb),seqnames(gb$query),sep=chrom_sep), drop=TRUE), function(x) {breakpointGraphProperties(x)})
@@ -352,9 +343,9 @@ inversionEstimate_BD <- function(gb, mode="single", chrom_sep="---"){
       # Estimate expected number of inversions.
       chrom_pairs[[chrom_pair]]$expinv_BD <- inversionEstimate_BD_many(chr$N, chr$nb_cycles, cyc_all=cyc_all)
 
-    # Mode: "single"
+    # Mode: "few"
     } else {
-      chrom_pairs[[chrom_pair]]$expinv_BD <- inversionEstimate_BD_single(chr$N, chr$nb_cycles)
+      chrom_pairs[[chrom_pair]]$expinv_BD <- inversionEstimate_BD_few(chr$N, chr$nb_cycles)
     }
   }
   chrom_pairs

@@ -4,14 +4,14 @@
 \alias{inversionEstimate_BD}
 \title{Inversion Estimate - Berestycki and Durrett (2006)}
 \usage{
-inversionEstimate_BD(gb, mode = "single", chrom_sep = "---")
+inversionEstimate_BD(gb, mode = "few", chrom_sep = "---")
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
 
 \item{mode}{Optional parameter that specifies how estimates are computed. Two options are available:
 \enumerate{
-\item \code{single} : recommended when computing a few values in one function call;
+\item \code{few} : recommended when computing a few values in one function call;
 \item \code{many} : use when computing many values.
 }}
 
