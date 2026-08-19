@@ -46,7 +46,8 @@ Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: p
 \code{\link{permutationVector}} for generating the permutation vector.
 
 Other Rearrangement distances:
-\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}}
+\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
+\code{\link[=inversionEstimate_BD]{inversionEstimate_BD()}}
 
 Other Similarity indexes:
 \code{\link[=F81_distance]{F81_distance()}},
@@ -60,6 +61,7 @@ Other Similarity indexes:
 \code{\link[=TN93_distance]{TN93_distance()}},
 \code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
 \code{\link[=correlation_index]{correlation_index()}},
+\code{\link[=inversionEstimate_BD]{inversionEstimate_BD()}},
 \code{\link[=karyotype_index]{karyotype_index()}},
 \code{\link[=logDet_distance]{logDet_distance()}},
 \code{\link[=slidingWindow]{slidingWindow()}},
