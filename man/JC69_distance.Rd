@@ -4,22 +4,31 @@
 \alias{JC69_distance}
 \title{Jukes-Cantor 1969 distance}
 \usage{
-JC69_distance(m)
+JC69_distance(m, tot = 1, adjust_p = FALSE)
 }
 \arguments{
-\item{m}{A matrix of counts or probabilities for bases of the \emph{target} genome
-to be aligned to bases on the \emph{query} genome.  As a convenience it can also
-receive a list produced by the \code{\link[=readTrainFile]{readTrainFile()}} function, containing this
-matrix.}
+\item{m}{Two possible types of input are available:
+\enumerate{
+\item A matrix of counts or probabilities for bases of the \emph{target} genome to be aligned to bases on the \emph{query} genome;
+\item The mismatch count (a positive integer) or proportion (a number between \code{0.0} and \code{1.0}).
+}}
+
+\item{tot}{The total count of nucleotides, in case the parameter \code{m} is the \emph{count} of mismatches.}
+
+\item{adjust_p}{A boolean flag. If \code{TRUE}, the distance is scaled between \code{0} and \code{0.75} to ensure the logarithm stays positive.}
 }
 \value{
-Returns a numeric value show the evolutionary distance between two genomes. the larger the value, the more different the two genomes are.
+Returns a numeric value representing the evolutionary distance between two genomes. The greater the value, the more genetically different the genomes are.
 }
 \description{
 The Jukes and Cantor 1969 (JC69) distance is calculated as \eqn{-\frac{3}{4} \ln(1 - \frac{4}{3} p )}, where \eqn{p} is the sum of the probabilities of the alignment. See the \href{https://en.wikipedia.org/wiki/Models_of_DNA_evolution#JC69_model_(Jukes_and_Cantor_1969)}{Wikipedia} for more details.
 }
 \examples{
-JC69_distance(exampleSubstitutionMatrix)
+# Using a substitution matrix as input:
+d <- JC69_distance(exampleSubstitutionMatrix)
+
+# Using numerical values as input:
+d <- JC69_distance(25, 100)
 
 }
 \references{
@@ -63,6 +72,8 @@ Other Similarity indexes:
 }
 \author{
 Zikun Yang
+
+Priscila Biller
 }
 \concept{Alignment statistics}
 \concept{Similarity indexes}
