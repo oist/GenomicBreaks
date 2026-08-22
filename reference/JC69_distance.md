@@ -9,23 +9,36 @@ for more details.
 ## Usage
 
 ``` r
-JC69_distance(m)
+JC69_distance(m, tot = 1, adjust_p = FALSE)
 ```
 
 ## Arguments
 
 - m:
 
-  A matrix of counts or probabilities for bases of the *target* genome
-  to be aligned to bases on the *query* genome. As a convenience it can
-  also receive a list produced by the
-  [`readTrainFile()`](https://oist.github.io/GenomicBreaks/reference/readTrainFile.md)
-  function, containing this matrix.
+  Two possible types of input are available:
+
+  1.  A matrix of counts or probabilities for bases of the *target*
+      genome to be aligned to bases on the *query* genome;
+
+  2.  The mismatch count (a positive integer) or proportion (a number
+      between `0.0` and `1.0`).
+
+- tot:
+
+  The total count of nucleotides, in case the parameter `m` is the
+  *count* of mismatches.
+
+- adjust_p:
+
+  A boolean flag. If `TRUE`, the distance is scaled between `0` and
+  `0.75` to ensure the logarithm stays positive.
 
 ## Value
 
-Returns a numeric value show the evolutionary distance between two
-genomes. the larger the value, the more different the two genomes are.
+Returns a numeric value representing the evolutionary distance between
+two genomes. The greater the value, the more genetically different the
+genomes are.
 
 ## References
 
@@ -73,9 +86,14 @@ Other Similarity indexes:
 
 Zikun Yang
 
+Priscila Biller
+
 ## Examples
 
 ``` r
-JC69_distance(exampleSubstitutionMatrix)
-#> [1] 0.2765371
+# Using a substitution matrix as input:
+d <- JC69_distance(exampleSubstitutionMatrix)
+
+# Using numerical values as input:
+d <- JC69_distance(25, 100)
 ```
