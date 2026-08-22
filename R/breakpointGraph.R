@@ -78,6 +78,14 @@ breakpoint_graph <- function(p_extended) {
 
 #' Interleaving Check
 #'
+#' This function checks if two edges are interleaving.
+#'
+#' @param p_extended The extended permutation.
+#' @param graph_1 A cycle in the breakpoint graph.
+#' @param graph_2 A cycle in the breakpoint graph.
+#' @param edge_1 An edge in the breakpoint graph.
+#' @param edge_2 An edge in the breakpoint graph.
+#'
 #' @importFrom igraph E V E<- V<- ends
 #'
 #' @author Bruna Fistarol
@@ -118,7 +126,7 @@ bp_count <- function(p_extended){
 #'
 #' This function computes the number of cycles in a breakpoint graph.
 #'
-#' @param p_extended The extended permutation.
+#' @param g The breakpoint graph.
 #'
 #' @return The number of cycles in a breakpoint graph.
 #'
@@ -202,7 +210,10 @@ components_graph <- function(g, p_extended) {
 
 #' Count hurdles
 #'
-#' Count hurdles in the breakpoint graph.
+#' This function finds hurdles in the breakpoint graph and returns them.
+#'
+#' @param g The breakpoint graph.
+#' @param query_sequence_unsig The extended permutation.
 #'
 #' @importFrom igraph E V E<- V<- components ends
 #'
@@ -325,7 +336,11 @@ hurdles_count <- function(g, query_sequence_unsig){
 
 #' Count superhurdles
 #' 
-#' Counts superhurdles in the breakpoint graph.
+#' This function finds superhurdles in the breakpoint graph by checking which hurdles are superhurdles.
+#'
+#' @param info Object that stores the hurdles in the breakpoint graph.
+#' @param g The breakpoint graph.
+#' @param query_sequence_unsig The extended permutation.
 #'
 #' @importFrom igraph E V E<- V<- components ends
 #'
@@ -492,6 +507,9 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
 #' Check fortrees
 #' 
 #' Check whether or not the permutation is a fortress.
+#' A permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles.
+#'
+#' @param superhurdles Object that stores the counts of hurdles and superhurdles in the breakpoint graph.
 #'
 #' @author Bruna Fistarol
 #'

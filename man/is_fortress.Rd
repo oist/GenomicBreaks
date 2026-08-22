@@ -6,8 +6,12 @@
 \usage{
 is_fortress(superhurdles)
 }
+\arguments{
+\item{superhurdles}{Object that stores the counts of hurdles and superhurdles in the breakpoint graph.}
+}
 \description{
 Check whether or not the permutation is a fortress.
+A permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles.
 }
 \seealso{
 Other Breakpoint graph functions:

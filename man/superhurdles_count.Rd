@@ -6,8 +6,15 @@
 \usage{
 superhurdles_count(info, g, query_sequence_unsig)
 }
+\arguments{
+\item{info}{Object that stores the hurdles in the breakpoint graph.}
+
+\item{g}{The breakpoint graph.}
+
+\item{query_sequence_unsig}{The extended permutation.}
+}
 \description{
-Counts superhurdles in the breakpoint graph.
+This function finds superhurdles in the breakpoint graph by checking which hurdles are superhurdles.
 }
 \seealso{
 Other Breakpoint graph functions:

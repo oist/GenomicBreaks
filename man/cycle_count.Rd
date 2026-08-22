@@ -7,7 +7,7 @@
 cycle_count(g)
 }
 \arguments{
-\item{p_extended}{The extended permutation.}
+\item{g}{The breakpoint graph.}
 }
 \value{
 The number of cycles in a breakpoint graph.

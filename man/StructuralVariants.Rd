@@ -15,6 +15,12 @@
 \alias{exampleDoubleInversion4}
 \alias{exampleTwinInversions}
 \alias{exampleNotTwinInversions}
+\alias{exampleInversionGarg2019}
+\alias{exampleInversionBader2001}
+\alias{exampleInversionHP1999fig4a}
+\alias{exampleInversionHP1999fig4b}
+\alias{exampleInversionBergeron2005a}
+\alias{exampleInversionBergeron2005b}
 \alias{exampleTranslocation}
 \alias{exampleTranslocation2}
 \alias{exampleInsertion}
@@ -44,6 +50,12 @@ exampleInversion5uncollapsed
 exampleNestedInversions
 exampleDoubleInversion1
 exampleTwinInversions
+exampleInversionGarg2019
+exampleInversionBader2001
+exampleInversionHP1999fig4a
+exampleInversionHP1999fig4b
+exampleInversionBergeron2005a
+exampleInversionBergeron2005b
 exampleTranslocation
 exampleTranslocation2
 

@@ -6,8 +6,19 @@
 \usage{
 is_interleaving(p_extended, graph_1, graph_2, edge_1, edge_2)
 }
+\arguments{
+\item{p_extended}{The extended permutation.}
+
+\item{graph_1}{A cycle in the breakpoint graph.}
+
+\item{graph_2}{A cycle in the breakpoint graph.}
+
+\item{edge_1}{An edge in the breakpoint graph.}
+
+\item{edge_2}{An edge in the breakpoint graph.}
+}
 \description{
-Interleaving Check
+This function checks if two edges are interleaving.
 }
 \seealso{
 Other Breakpoint graph functions:
