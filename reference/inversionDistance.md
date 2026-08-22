@@ -86,7 +86,8 @@ inversionDistance(c(1, 3, -2, 4))
 #> [1] 2
 
 # Example using a GBreaks object.
-# This example is based on Figure 4(a) from Hannehalli and Pevzner (1999). The inversion distance is 8.
+# This example is based on Figure 4(a) from Hannehalli and Pevzner (1999). 
+# The inversion distance is 8.
 inversionDistance(exampleInversionHP1999fig4a)
 #> [1] 8
 ```

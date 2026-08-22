@@ -1,12 +1,34 @@
 # Interleaving Check
 
-Interleaving Check
+This function checks if two edges are interleaving.
 
 ## Usage
 
 ``` r
 is_interleaving(p_extended, graph_1, graph_2, edge_1, edge_2)
 ```
+
+## Arguments
+
+- p_extended:
+
+  The extended permutation.
+
+- graph_1:
+
+  A cycle in the breakpoint graph.
+
+- graph_2:
+
+  A cycle in the breakpoint graph.
+
+- edge_1:
+
+  An edge in the breakpoint graph.
+
+- edge_2:
+
+  An edge in the breakpoint graph.
 
 ## See also
 

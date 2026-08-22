@@ -10,9 +10,9 @@ cycle_count(g)
 
 ## Arguments
 
-- p_extended:
+- g:
 
-  The extended permutation.
+  The breakpoint graph.
 
 ## Value
 

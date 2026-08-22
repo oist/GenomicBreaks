@@ -1,12 +1,21 @@
 # Check fortrees
 
-Check whether or not the permutation is a fortress.
+Check whether or not the permutation is a fortress. A permutation is a
+fortress if the number of hurdles is odd and all hurdles are
+superhurdles.
 
 ## Usage
 
 ``` r
 is_fortress(superhurdles)
 ```
+
+## Arguments
+
+- superhurdles:
+
+  Object that stores the counts of hurdles and superhurdles in the
+  breakpoint graph.
 
 ## See also
 

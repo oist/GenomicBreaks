@@ -1,12 +1,27 @@
 # Count superhurdles
 
-Counts superhurdles in the breakpoint graph.
+This function finds superhurdles in the breakpoint graph by checking
+which hurdles are superhurdles.
 
 ## Usage
 
 ``` r
 superhurdles_count(info, g, query_sequence_unsig)
 ```
+
+## Arguments
+
+- info:
+
+  Object that stores the hurdles in the breakpoint graph.
+
+- g:
+
+  The breakpoint graph.
+
+- query_sequence_unsig:
+
+  The extended permutation.
 
 ## See also
 

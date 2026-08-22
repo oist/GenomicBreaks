@@ -1,12 +1,22 @@
 # Count hurdles
 
-Count hurdles in the breakpoint graph.
+This function finds hurdles in the breakpoint graph and returns them.
 
 ## Usage
 
 ``` r
 hurdles_count(g, query_sequence_unsig)
 ```
+
+## Arguments
+
+- g:
+
+  The breakpoint graph.
+
+- query_sequence_unsig:
+
+  The extended permutation.
 
 ## See also
 

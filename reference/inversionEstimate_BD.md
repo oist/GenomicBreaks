@@ -121,21 +121,26 @@ Priscila Biller
 
 ``` r
 if (FALSE) { # \dontrun{
-
 # Create a chromosome mapping given a GBreaks object (useful when genomes are multichromosomal).
 chrMapping <- matchPairs(exampleInversionBader2001)
 # Compute the expected number of inversions using the method from Berestycki and Durrett (2006).
 expNbInversions <- inversionEstimate_BD(chrMapping)
 # Compute the minimum number of inversions using the method from Hannehalli and Pevzner (1999).
 minNbInversions <- inversionDistance(chrMapping)
-# Output: Example from Bader et al. (2001): Inversion distance = 7 , Expected nb. of inversions = 7
-cat(paste("Example from Bader et al. (2001): Inversion distance =", minNbInversions, ", Expected nb. of inversions =", expNbInversions[[1]]$expinv_BD$k_avg))
+# Output: Example from Bader et al. (2001): 
+#         - Inversion distance = 7 , Expected nb. of inversions = 7
+cat("Example from Bader et al. (2001):")
+cat(paste("- Inversion distance =", minNbInversions))
+cat(paste("- Expected nb. of inversions =", expNbInversions[[1]]$expinv_BD$k_avg))
 
 # Another example, this time without computing the chromosome mapping.
 # The chromosome mapping is not needed if genomes are unichromosomal.
 expNbInversions <- inversionEstimate_BD(exampleInversionBergeron2005b)
 minNbInversions <- inversionDistance(exampleInversionBergeron2005b)
-# Output: Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Figure 10.6): Inversion distance = 13 , Expected nb. of inversions = 15
-cat(paste("Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Figure 10.6): Inversion distance =", minNbInversions, ", Expected nb. of inversions =", expNbInversions[[1]]$expinv_BD$k_avg))
+# Output: Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Figure 10.6): 
+#         - Inversion distance = 13 , Expected nb. of inversions = 15
+cat("Example used in the book ``Mathematics of Evolution and Phylogeny`` (2005) (Figure 10.6):")
+cat(paste("- Inversion distance =", minNbInversions))
+cat(paste("- Expected nb. of inversions =", expNbInversions[[1]]$expinv_BD$k_avg))
 } # }
 ```
