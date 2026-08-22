@@ -6,8 +6,13 @@
 \usage{
 hurdles_count(g, query_sequence_unsig)
 }
+\arguments{
+\item{g}{The breakpoint graph.}
+
+\item{query_sequence_unsig}{The extended permutation.}
+}
 \description{
-Count hurdles in the breakpoint graph.
+This function finds hurdles in the breakpoint graph and returns them.
 }
 \seealso{
 Other Breakpoint graph functions:
