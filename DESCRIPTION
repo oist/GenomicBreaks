@@ -58,6 +58,7 @@ Collate:
     'GenomicBreaks.R'
     'HKY85_distance.R'
     'JC69_distance.R'
+    'JC69_distance_allseq.R'
     'K80_distance.R'
     'K80_gap_distance.R'
     'P_distance.R'
