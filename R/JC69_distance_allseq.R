@@ -41,15 +41,14 @@
 #'
 #' @export
 JC69_distance_allseq <- function(gb, m, adjust_p=FALSE) {
+  
+  if(length(gb) == 0) return(numeric(0))
+  if (all(m == 0)) return(NA)
 
   # Gets the smallest sequence length.
-  totBps <- min(sum(seqlengths(gb)),sum(seqlengths(gb$query)))
-  if(is.na(totBps)){
-    totBps <- min(sum(guessSeqLengths(gb)),sum(guessSeqLengths(gb$query)))
-  }
+  totBps <- min(sum(guessSeqLengths(gb)),sum(guessSeqLengths(gb$query)))
 
   # Matrix of aligned base pairs, excluding gaps.
-  if (all(m == 0)) return(NA)
   non_gap    <- c("A", "C", "G", "T")
   m_non_gap  <- m[non_gap, non_gap]
 
