@@ -89,6 +89,8 @@ Various ways to estimate the similarity between two genomes.
   : Hasegawa–Kishino–Yano (1985) distance (HKY85)
 - [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md)
   : Jukes-Cantor 1969 distance
+- [`JC69_distance_allseq()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance_allseq.md)
+  : Variation of the Jukes-Cantor 1969 distance
 - [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md)
   : Kimura's 2-parameter distance
 - [`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md)

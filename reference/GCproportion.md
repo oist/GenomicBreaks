@@ -31,6 +31,7 @@ Other Alignment statistics:
 [`GCpressure()`](https://oist.github.io/GenomicBreaks/reference/GCpressure.md),
 [`HKY85_distance()`](https://oist.github.io/GenomicBreaks/reference/HKY85_distance.md),
 [`JC69_distance()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance.md),
+[`JC69_distance_allseq()`](https://oist.github.io/GenomicBreaks/reference/JC69_distance_allseq.md),
 [`K80_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_distance.md),
 [`K80_gap_distance()`](https://oist.github.io/GenomicBreaks/reference/K80_gap_distance.md),
 [`P_distance()`](https://oist.github.io/GenomicBreaks/reference/P_distance.md),
