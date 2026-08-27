@@ -34,6 +34,7 @@ Other Similarity indexes:
 \code{\link[=GOC]{GOC()}},
 \code{\link[=HKY85_distance]{HKY85_distance()}},
 \code{\link[=JC69_distance]{JC69_distance()}},
+\code{\link[=JC69_distance_allseq]{JC69_distance_allseq()}},
 \code{\link[=K80_distance]{K80_distance()}},
 \code{\link[=K80_gap_distance]{K80_gap_distance()}},
 \code{\link[=P_distance]{P_distance()}},
