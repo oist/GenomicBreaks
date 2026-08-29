@@ -71,6 +71,6 @@ inversionDistance <- function(x){
   hurdles <- hurdles_count(bp_graph, p_extended)
   superhurdles <- superhurdles_count(hurdles, bp_graph, p_extended)
 
-  bp_count(p_extended) - cycle_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
+  bp_count(p_extended) - cycle_nontrivial_count(bp_graph) + sum(hurdles$hurdle) + is_fortress(superhurdles)
 
 }
