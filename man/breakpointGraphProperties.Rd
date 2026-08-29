@@ -13,7 +13,7 @@ breakpointGraphProperties(gb)
 A list containing the following properties of the breakpoint graph:
 1. \code{N} : the total number of places where a breakpoint could occur (which is the same as the \code{number_aligned_blocks + 1});
 2. \code{nbBreakpoints} : the total number of breakpoints in the extended permutation;
-3. \code{nbCycles} : the total number of cycles in the breakpoint graph.
+3. \code{nbCycles} : the total number of cycles in the breakpoint graph (trivial and non-trivial cycles).
 }
 \description{
 Computes the breakpoint graph of a pair of chromosomes
@@ -29,6 +29,7 @@ Other Breakpoint graph functions:
 \code{\link[=breakpoint_graph]{breakpoint_graph()}},
 \code{\link[=components_graph]{components_graph()}},
 \code{\link[=cycle_count]{cycle_count()}},
+\code{\link[=cycle_nontrivial_count]{cycle_nontrivial_count()}},
 \code{\link[=extendedPermutation]{extendedPermutation()}},
 \code{\link[=hurdles_count]{hurdles_count()}},
 \code{\link[=is_fortress]{is_fortress()}},

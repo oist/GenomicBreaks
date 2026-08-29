@@ -13,7 +13,8 @@ cycle_count(g)
 The number of cycles in a breakpoint graph.
 }
 \description{
-This function computes the number of cycles in a breakpoint graph.
+This function computes the number of cycles (trivial and non-trivial) in a breakpoint graph.
+Non-trivial cycles are cycles with more than 2 vertices, whereas trivial cycles are cycles with 2 vertices that represent common adjacencies.
 }
 \seealso{
 Other Breakpoint graph functions:
@@ -21,6 +22,7 @@ Other Breakpoint graph functions:
 \code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
 \code{\link[=breakpoint_graph]{breakpoint_graph()}},
 \code{\link[=components_graph]{components_graph()}},
+\code{\link[=cycle_nontrivial_count]{cycle_nontrivial_count()}},
 \code{\link[=extendedPermutation]{extendedPermutation()}},
 \code{\link[=hurdles_count]{hurdles_count()}},
 \code{\link[=is_fortress]{is_fortress()}},
@@ -28,6 +30,6 @@ Other Breakpoint graph functions:
 \code{\link[=superhurdles_count]{superhurdles_count()}}
 }
 \author{
-Bruna Fistarol
+Priscila Biller
 }
 \concept{Breakpoint graph functions}

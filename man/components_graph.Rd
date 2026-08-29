@@ -23,6 +23,7 @@ Other Breakpoint graph functions:
 \code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},
 \code{\link[=breakpoint_graph]{breakpoint_graph()}},
 \code{\link[=cycle_count]{cycle_count()}},
+\code{\link[=cycle_nontrivial_count]{cycle_nontrivial_count()}},
 \code{\link[=extendedPermutation]{extendedPermutation()}},
 \code{\link[=hurdles_count]{hurdles_count()}},
 \code{\link[=is_fortress]{is_fortress()}},

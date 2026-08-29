@@ -24,6 +24,7 @@ Other Breakpoint graph functions:
 \code{\link[=breakpoint_graph]{breakpoint_graph()}},
 \code{\link[=components_graph]{components_graph()}},
 \code{\link[=cycle_count]{cycle_count()}},
+\code{\link[=cycle_nontrivial_count]{cycle_nontrivial_count()}},
 \code{\link[=hurdles_count]{hurdles_count()}},
 \code{\link[=is_fortress]{is_fortress()}},
 \code{\link[=is_interleaving]{is_interleaving()}},
