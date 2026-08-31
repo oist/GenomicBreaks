@@ -122,9 +122,10 @@ bp_count <- function(p_extended){
   sum(abs(diff(p_extended)) != 1 )
 }
 
-#' Number of Cycles
+#' Number of Non-Trivial Cycles
 #'
-#' This function computes the number of cycles in a breakpoint graph.
+#' This function computes the number of **non-trivial** cycles in a breakpoint graph.
+#' Non-trivial cycles are cycles with more than 2 vertices, whereas trivial cycles are cycles with 2 vertices that represent common adjacencies.
 #'
 #' @param g The breakpoint graph.
 #'
@@ -136,8 +137,28 @@ bp_count <- function(p_extended){
 #'
 #' @family Breakpoint graph functions
 #'
-cycle_count <- function(g){
+cycle_nontrivial_count <- function(g){
   sum(components(g)$csize > 1)
+}
+
+#' Number of Cycles
+#'
+#' This function computes the number of cycles (trivial and non-trivial) in a breakpoint graph.
+#' Non-trivial cycles are cycles with more than 2 vertices, whereas trivial cycles are cycles with 2 vertices that represent common adjacencies.
+#'
+#' @param g The breakpoint graph.
+#'
+#' @return The number of cycles in a breakpoint graph.
+#'
+#' @importFrom igraph components
+#'
+#' @author Priscila Biller
+#'
+#' @family Breakpoint graph functions
+#'
+cycle_count <- function(g){
+  isolated_vertices <- sum(degree(g) == 0)
+  cycle_nontrivial_count(g) + isolated_vertices/2
 }
 
 #' Connected components
@@ -542,7 +563,7 @@ is_fortress <- function(superhurdles){
 #' @return A list containing the following properties of the breakpoint graph:
 #'         1. `N` : the total number of places where a breakpoint could occur (which is the same as the `number_aligned_blocks + 1`);
 #'         2. `nbBreakpoints` : the total number of breakpoints in the extended permutation;
-#'         3. `nbCycles` : the total number of cycles in the breakpoint graph.
+#'         3. `nbCycles` : the total number of cycles in the breakpoint graph (trivial and non-trivial cycles).
 #' 
 #' @references Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 #'
