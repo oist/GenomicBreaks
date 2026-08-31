@@ -342,6 +342,8 @@ Functions that compute properties of breakpoint graphs.
   : Connected components
 - [`cycle_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_count.md)
   : Number of Cycles
+- [`cycle_nontrivial_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_nontrivial_count.md)
+  : Number of Non-Trivial Cycles
 - [`extendedPermutation()`](https://oist.github.io/GenomicBreaks/reference/extendedPermutation.md)
   : Extended Permutation
 - [`hurdles_count()`](https://oist.github.io/GenomicBreaks/reference/hurdles_count.md)

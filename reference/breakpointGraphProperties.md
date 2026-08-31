@@ -24,7 +24,8 @@ A list containing the following properties of the breakpoint graph: 1.
 `N` : the total number of places where a breakpoint could occur (which
 is the same as the `number_aligned_blocks + 1`); 2. `nbBreakpoints` :
 the total number of breakpoints in the extended permutation; 3.
-`nbCycles` : the total number of cycles in the breakpoint graph.
+`nbCycles` : the total number of cycles in the breakpoint graph (trivial
+and non-trivial cycles).
 
 ## References
 
@@ -39,6 +40,7 @@ Other Breakpoint graph functions:
 [`breakpoint_graph()`](https://oist.github.io/GenomicBreaks/reference/breakpoint_graph.md),
 [`components_graph()`](https://oist.github.io/GenomicBreaks/reference/components_graph.md),
 [`cycle_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_count.md),
+[`cycle_nontrivial_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_nontrivial_count.md),
 [`extendedPermutation()`](https://oist.github.io/GenomicBreaks/reference/extendedPermutation.md),
 [`hurdles_count()`](https://oist.github.io/GenomicBreaks/reference/hurdles_count.md),
 [`is_fortress()`](https://oist.github.io/GenomicBreaks/reference/is_fortress.md),

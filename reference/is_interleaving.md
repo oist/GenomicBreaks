@@ -38,6 +38,7 @@ Other Breakpoint graph functions:
 [`breakpoint_graph()`](https://oist.github.io/GenomicBreaks/reference/breakpoint_graph.md),
 [`components_graph()`](https://oist.github.io/GenomicBreaks/reference/components_graph.md),
 [`cycle_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_count.md),
+[`cycle_nontrivial_count()`](https://oist.github.io/GenomicBreaks/reference/cycle_nontrivial_count.md),
 [`extendedPermutation()`](https://oist.github.io/GenomicBreaks/reference/extendedPermutation.md),
 [`hurdles_count()`](https://oist.github.io/GenomicBreaks/reference/hurdles_count.md),
 [`is_fortress()`](https://oist.github.io/GenomicBreaks/reference/is_fortress.md),
