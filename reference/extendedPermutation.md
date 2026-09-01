@@ -40,3 +40,10 @@ Other Breakpoint graph functions:
 ## Author
 
 Bruna Fistarol
+
+## Examples
+
+``` r
+permutationVector(exampleInversion) |> GenomicBreaks:::extendedPermutation()
+#> [1] 1 2 3 5 4 6 7 8
+```

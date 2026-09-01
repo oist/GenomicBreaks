@@ -75,3 +75,18 @@ Other Similarity indexes:
 ## Author
 
 Priscila Biller
+
+## Examples
+
+``` r
+breakpointGraphProperties(exampleInversionHP1999fig4a)
+#> $N
+#> [1] 9
+#> 
+#> $nbBreakpoints
+#> [1] 9
+#> 
+#> $nb_cycles
+#> [1] 3
+#> 
+```

@@ -41,3 +41,15 @@ Other Breakpoint graph functions:
 ## Author
 
 Bruna Fistarol
+
+## Examples
+
+``` r
+permutationVector(exampleInversion) |>
+  GenomicBreaks:::extendedPermutation() |>
+  GenomicBreaks:::breakpoint_graph()
+#> IGRAPH cf88c0b U--- 8 4 -- 
+#> + attr: color (e/c), unoriented (e/n)
+#> + edges from cf88c0b:
+#> [1] 3--5 3--4 4--6 5--6
+```
