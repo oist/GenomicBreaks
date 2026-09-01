@@ -1,3 +1,9 @@
+# GenomicBreaks 0.24.0
+
+ * Support correction for unaligned bases in `JC69_distance()`.
+ * Refactor breakpoint graph code.
+ * Add new example `GBreaks` objects from the litterature.
+
 # GenomicBreaks 0.23.0
 
  * Support for the _blasttab+_ format in `load_genomic_breaks()`.
