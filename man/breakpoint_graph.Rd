@@ -15,6 +15,12 @@ The breakpoint graph.
 \description{
 This function creates a breakpoint graph given an extended permutation.
 }
+\examples{
+permutationVector(exampleInversion) |>
+  GenomicBreaks:::extendedPermutation() |>
+  GenomicBreaks:::breakpoint_graph()
+
+}
 \references{
 Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 }

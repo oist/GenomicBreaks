@@ -17,6 +17,10 @@ This function transforms a permutation with \code{N} elements into a permutation
 The idea is that each element in the input permutation corresponds to an aligned block (or gene, conserved region, etc.).
 This function creates two elements for each original element: one representing the start of the block and the other representing the end.
 }
+\examples{
+permutationVector(exampleInversion) |> GenomicBreaks:::extendedPermutation()
+
+}
 \seealso{
 Other Breakpoint graph functions:
 \code{\link[=bp_count]{bp_count()}},

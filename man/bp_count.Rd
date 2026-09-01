@@ -15,6 +15,12 @@ The number of breakpoints between two genomes.
 \description{
 This function computes the number of breakpoints given an extended permutation.
 }
+\examples{
+permutationVector(exampleInversion) |>
+  GenomicBreaks:::extendedPermutation() |>
+  GenomicBreaks:::bp_count()
+
+}
 \seealso{
 Other Breakpoint graph functions:
 \code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}},

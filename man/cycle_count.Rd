@@ -16,6 +16,13 @@ The number of cycles in a breakpoint graph.
 This function computes the number of cycles (trivial and non-trivial) in a breakpoint graph.
 Non-trivial cycles are cycles with more than 2 vertices, whereas trivial cycles are cycles with 2 vertices that represent common adjacencies.
 }
+\examples{
+permutationVector(exampleInversion) |>
+  GenomicBreaks:::extendedPermutation() |>
+  GenomicBreaks:::breakpoint_graph() |>
+  GenomicBreaks:::cycle_count()
+
+}
 \seealso{
 Other Breakpoint graph functions:
 \code{\link[=bp_count]{bp_count()}},

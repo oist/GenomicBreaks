@@ -1,7 +1,7 @@
 #' Extended Permutation
 #'
 #' This function transforms a permutation with `N` elements into a permutation with `2N` elements.
-#' The idea is that each element in the input permutation corresponds to an aligned block (or gene, conserved region, etc.). 
+#' The idea is that each element in the input permutation corresponds to an aligned block (or gene, conserved region, etc.).
 #' This function creates two elements for each original element: one representing the start of the block and the other representing the end.
 #'
 #' @param p A signed permutation vector.
@@ -11,6 +11,9 @@
 #' @author Bruna Fistarol
 #'
 #' @family Breakpoint graph functions
+#'
+#' @examples
+#' permutationVector(exampleInversion) |> GenomicBreaks:::extendedPermutation()
 #'
 extendedPermutation <- function(p){
   p_extended <- sapply(p, function(i) {
@@ -33,6 +36,11 @@ extendedPermutation <- function(p){
 #' @importFrom igraph make_empty_graph add_edges E V E<- V<-
 #'
 #' @author Bruna Fistarol
+#'
+#' @examples
+#' permutationVector(exampleInversion) |>
+#'   GenomicBreaks:::extendedPermutation() |>
+#'   GenomicBreaks:::breakpoint_graph()
 #'
 #' @family Breakpoint graph functions
 #'
@@ -118,6 +126,11 @@ is_interleaving <- function(p_extended, graph_1, graph_2, edge_1, edge_2) {
 #'
 #' @family Breakpoint graph functions
 #'
+#' @examples
+#' permutationVector(exampleInversion) |>
+#'   GenomicBreaks:::extendedPermutation() |>
+#'   GenomicBreaks:::bp_count()
+#'
 bp_count <- function(p_extended){
   sum(abs(diff(p_extended)) != 1 )
 }
@@ -137,6 +150,12 @@ bp_count <- function(p_extended){
 #'
 #' @family Breakpoint graph functions
 #'
+#' @examples
+#' permutationVector(exampleInversion) |>
+#'   GenomicBreaks:::extendedPermutation() |>
+#'   GenomicBreaks:::breakpoint_graph() |>
+#'   GenomicBreaks:::cycle_nontrivial_count()
+#'
 cycle_nontrivial_count <- function(g){
   sum(components(g)$csize > 1)
 }
@@ -150,11 +169,17 @@ cycle_nontrivial_count <- function(g){
 #'
 #' @return The number of cycles in a breakpoint graph.
 #'
-#' @importFrom igraph components
+#' @importFrom igraph components degree
 #'
 #' @author Priscila Biller
 #'
 #' @family Breakpoint graph functions
+#'
+#' @examples
+#' permutationVector(exampleInversion) |>
+#'   GenomicBreaks:::extendedPermutation() |>
+#'   GenomicBreaks:::breakpoint_graph() |>
+#'   GenomicBreaks:::cycle_count()
 #'
 cycle_count <- function(g){
   isolated_vertices <- sum(degree(g) == 0)
@@ -162,7 +187,7 @@ cycle_count <- function(g){
 }
 
 #' Connected components
-#' 
+#'
 #' Connected components of the breakpoint graph.
 #'
 #' @param g The breakpoint graph.
@@ -356,7 +381,7 @@ hurdles_count <- function(g, query_sequence_unsig){
 }
 
 #' Count superhurdles
-#' 
+#'
 #' This function finds superhurdles in the breakpoint graph by checking which hurdles are superhurdles.
 #'
 #' @param info Object that stores the hurdles in the breakpoint graph.
@@ -381,7 +406,7 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
   for (ignored in info$membership[info$hurdle == 1]){
 
     # Remove "ignored" to calculate hurdles
-    info2 <- subset(info, membership != ignored)
+    info2 <- info[info$membership != ignored, ]
 
     line <- length(info2$membership)
 
@@ -510,8 +535,7 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
 
     # Compare info and info2 to see if some nonhurdle turned into a hurdle
 
-    if (any(((subset(info, membership != ignored)$hurdle) - (info2$hurdle)) == -1)){
-
+    if (any((info$hurdle[info$membership != ignored] - info2$hurdle) == -1)) {
       # Ignored is a superhurdle
       info["superhurdle"][info["membership"] == ignored] <- 1
     }
@@ -526,7 +550,7 @@ superhurdles_count <- function(info, g, query_sequence_unsig){
 }
 
 #' Check fortrees
-#' 
+#'
 #' Check whether or not the permutation is a fortress.
 #' A permutation is a fortress if the number of hurdles is odd and all hurdles are superhurdles.
 #'
@@ -553,18 +577,18 @@ is_fortress <- function(superhurdles){
 }
 
 #' Breakpoint graph properties
-#' 
-#' Computes the breakpoint graph of a pair of chromosomes 
-#' and returns key properties of the graph, which are used 
+#'
+#' Computes the breakpoint graph of a pair of chromosomes
+#' and returns key properties of the graph, which are used
 #' in various rearrangement estimates.
-#' 
+#'
 #' @param gb A [`GBreaks`] object.
-#' 
+#'
 #' @return A list containing the following properties of the breakpoint graph:
 #'         1. `N` : the total number of places where a breakpoint could occur (which is the same as the `number_aligned_blocks + 1`);
 #'         2. `nbBreakpoints` : the total number of breakpoints in the extended permutation;
 #'         3. `nbCycles` : the total number of cycles in the breakpoint graph (trivial and non-trivial cycles).
-#' 
+#'
 #' @references Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 #'
 #' @author Priscila Biller
@@ -572,6 +596,9 @@ is_fortress <- function(superhurdles){
 #' @family Breakpoint graph functions
 #' @family Rearrangement distances
 #' @family Similarity indexes
+#'
+#' @examples
+#' breakpointGraphProperties(exampleInversionHP1999fig4a)
 #'
 #' @export
 breakpointGraphProperties <- function(gb) {

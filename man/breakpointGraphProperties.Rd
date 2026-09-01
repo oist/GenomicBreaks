@@ -20,6 +20,10 @@ Computes the breakpoint graph of a pair of chromosomes
 and returns key properties of the graph, which are used
 in various rearrangement estimates.
 }
+\examples{
+breakpointGraphProperties(exampleInversionHP1999fig4a)
+
+}
 \references{
 Hannenhalli, Sridhar, and Pavel A. Pevzner. "Transforming cabbage into turnip: polynomial algorithm for sorting signed permutations by reversals." Journal of the ACM (JACM) 46.1 (1999): 1-27.
 }
