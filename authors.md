@@ -16,7 +16,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/oist/GenomicBreaks/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/oist/GenomicBreaks/blob/0.24.0/inst/CITATION)
 
 Plessy C, Mansfield M, Bliznina A, Masunaga A, West C, Tan Y, Liu A,
 Grasic J, del Río Pisula M, Sánchez-Serna G, Fabrega-Torrus M,
