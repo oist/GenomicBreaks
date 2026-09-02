@@ -25,6 +25,7 @@
 \alias{exampleTranslocation2}
 \alias{exampleInsertion}
 \alias{exampleDeletion}
+\alias{exampleClownInversion}
 \title{Structural Variants}
 \format{
 \code{\link{GBreaks}} objects described in more details in the
@@ -49,6 +50,7 @@ exampleInversion
 exampleInversion5uncollapsed
 exampleNestedInversions
 exampleDoubleInversion1
+exampleClownInversion
 exampleTwinInversions
 exampleInversionGarg2019
 exampleInversionBader2001

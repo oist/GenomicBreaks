@@ -95,6 +95,16 @@ exampleDoubleInversion4                   <- GBreaks(exampleDoubleInversion4)
 seqlengths(exampleDoubleInversion4)       <- seqlengths(exampleDoubleInversion4$query) <- 600
 isSorted(exampleDoubleInversion4)
 
+# Clown inversion based on exampleDoubleInversion4
+# ABC/cba -> ABC/cAB -> ABC/aCB => 1-, 3+, 2+
+
+exampleClownInversion                   <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-340", "chrA:341-370","chrA:371-390", "chrA:400-490", "chrA:500-590"))
+strand(exampleClownInversion)           <- c(              "-",            "-",            "+",            "-",            "+",            "+",            "-"     )
+exampleClownInversion$query             <- GRanges(c("chrB:500-590", "chrB:200-290", "chrB:400-440", "chrB:441-470","chrB:471-490", "chrB:300-390", "chrB:100-190"))
+exampleClownInversion                   <- GBreaks(exampleClownInversion)
+seqlengths(exampleClownInversion)       <- seqlengths(exampleClownInversion$query) <- 600
+isSorted(exampleClownInversion)
+
 # Nested inversions
 # ABCDE -> AdcbE -> AdCbE
 
@@ -126,7 +136,7 @@ isSorted(exampleNotTwinInversions)
 
 # Example used in the paper from Garg et al. (2019).
 # {-2,5,4,-1,3,6,9,-7,-8}
-# Reversal distance = 5 reversals. 
+# Reversal distance = 5 reversals.
 # Details for Reversal distance (d) computation: 10 breakpoints (b); 5 cycles(c); 0 hurdles(h): d = b-c+h (+1 if fortress).
 exampleInversionGarg2019              <- GRanges(c("chrA:100-190", "chrA:200-290", "chrA:300-390", "chrA:400-490", "chrA:500-590", "chrA:600-690", "chrA:700-790", "chrA:800-890", "chrA:900-990"))
 strand(exampleInversionGarg2019)      <- c(              "-",            "+",            "+",            "-",            "+",            "+",            "+",            "-",            "-")
@@ -255,6 +265,7 @@ usethis::use_data(
   exampleDoubleInversion2,
   exampleDoubleInversion3,
   exampleDoubleInversion4,
+  exampleClownInversion,
   exampleNestedInversions,
   exampleTwinInversions,
   exampleNotTwinInversions,
