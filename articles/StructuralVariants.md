@@ -494,6 +494,34 @@ exampleInversionBergeron2005b |> plotApairOfChrs(main = "Mathematics of Evolutio
 
 ![](StructuralVariants_files/figure-html/inversionsBergeron2005-2.png)
 
+#### The inversion clown.
+
+Find it in your alignments!
+
+``` r
+
+exampleClownInversion |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
+```
+
+    ## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+    ## ℹ Please use tidy evaluation idioms with `aes()`.
+    ## ℹ See also `vignette("ggplot2-in-packages")` for more information.
+    ## ℹ The deprecated feature was likely used in the GenomicBreaks package.
+    ##   Please report the issue to the authors.
+    ## This warning is displayed once per session.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+    ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+    ## ℹ Please use `linewidth` instead.
+    ## ℹ The deprecated feature was likely used in the GenomicBreaks package.
+    ##   Please report the issue to the authors.
+    ## This warning is displayed once per session.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+![](StructuralVariants_files/figure-html/inversionClown-1.png)
+
 ### Translocations
 
 If a region has moved, but is not an inversion, then it is a
