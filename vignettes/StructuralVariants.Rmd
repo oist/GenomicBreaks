@@ -202,6 +202,14 @@ exampleInversionBergeron2005a |> plotApairOfChrs(main = "Mathematics of Evolutio
 exampleInversionBergeron2005b |> plotApairOfChrs(main = "Mathematics of Evolution and Phylogeny (2005) - Figure 10.6")
 ```
 
+### The inversion clown.
+
+Find it in your alignments!
+
+```{r inversionClown}
+exampleClownInversion |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
+```
+
 ## Translocations
 
 If a region has moved, but is not an inversion, then it is a translocation.
