@@ -26,6 +26,8 @@
 #' @aliases exampleTranslocation exampleTranslocation2
 #' @aliases exampleInsertion exampleDeletion
 #' @aliases exampleClownInversion
+#' @aliases exampleGenomicBreaks
+#' @aliases exampleJustAClown
 #'
 #' @family Structural variants
 #'
@@ -48,5 +50,7 @@
 #' exampleInversionBergeron2005b
 #' exampleTranslocation
 #' exampleTranslocation2
+#' exampleGenomicBreaks
+#' exampleJustAClown
 #'
 NULL
