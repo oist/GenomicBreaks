@@ -618,3 +618,42 @@ plotApairOfChrs(exampleInsertion)
 ```
 
 ![](StructuralVariants_files/figure-html/indels-2.png)
+
+### Fun patterns
+
+The examples below produce specific patterns in the 2D line plot.
+
+#### Genomic Breaks
+
+Genomes rearranged in a way that creates a bacterial-like X pattern, but
+with a special twist.
+
+``` r
+
+exampleGenomicBreaks |> plotApairOfChrs(main = "Genomic Breaks")
+```
+
+![](StructuralVariants_files/figure-html/genomicBreaks-1.png)
+
+``` r
+
+exampleGenomicBreaks |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
+```
+
+![](StructuralVariants_files/figure-html/genomicBreaks-2.png)
+
+#### Clown
+
+``` r
+
+exampleJustAClown |> plotApairOfChrs(main = "Clown")
+```
+
+![](StructuralVariants_files/figure-html/justAClown-1.png)
+
+``` r
+
+exampleJustAClown |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
+```
+
+![](StructuralVariants_files/figure-html/justAClown-2.png)
