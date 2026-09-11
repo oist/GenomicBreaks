@@ -26,6 +26,8 @@
 \alias{exampleInsertion}
 \alias{exampleDeletion}
 \alias{exampleClownInversion}
+\alias{exampleGenomicBreaks}
+\alias{exampleJustAClown}
 \title{Structural Variants}
 \format{
 \code{\link{GBreaks}} objects described in more details in the
@@ -60,6 +62,8 @@ exampleInversionBergeron2005a
 exampleInversionBergeron2005b
 exampleTranslocation
 exampleTranslocation2
+exampleGenomicBreaks
+exampleJustAClown
 
 }
 \seealso{
