@@ -247,4 +247,38 @@ exampleTranslocation2
 #>   [3]     chrA   301-400      + | chrB:301-400
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
+exampleGenomicBreaks
+#> GBreaks object with 1232 ranges and 1 metadata column:
+#>          seqnames    ranges strand |          query
+#>             <Rle> <IRanges>  <Rle> |      <GRanges>
+#>      [1]     chrA      1-50      - | chrB:9495-9536
+#>      [2]     chrA     51-55      + | chrB:9461-9465
+#>      [3]     chrA     56-65      - |   chrB:405-406
+#>      [4]     chrA     66-70      + |   chrB:416-420
+#>      [5]     chrA     71-75      + |   chrB:426-430
+#>      ...      ...       ...    ... .            ...
+#>   [1228]     chrA 9466-9475      + | chrB:9116-9125
+#>   [1229]     chrA 9476-9480      + | chrB:9131-9135
+#>   [1230]     chrA 9481-9485      + |   chrB:246-250
+#>   [1231]     chrA 9486-9490      + | chrB:9126-9130
+#>   [1232]     chrA 9491-9540      - |      chrB:5-46
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+exampleJustAClown
+#> GBreaks object with 685 ranges and 1 metadata column:
+#>         seqnames    ranges strand |          query
+#>            <Rle> <IRanges>  <Rle> |      <GRanges>
+#>     [1]     chrA       1-5      + |   chrB:596-600
+#>     [2]     chrA      6-10      + | chrB:3486-3490
+#>     [3]     chrA     11-15      + | chrB:1251-1255
+#>     [4]     chrA     16-20      + | chrB:2006-2010
+#>     [5]     chrA     21-25      + | chrB:3471-3475
+#>     ...      ...       ...    ... .            ...
+#>   [681]     chrA 3736-3740      + | chrB:3506-3510
+#>   [682]     chrA 3741-3745      + | chrB:3516-3520
+#>   [683]     chrA 3746-3750      + | chrB:3371-3375
+#>   [684]     chrA 3751-3755      + | chrB:3016-3020
+#>   [685]     chrA 3756-3760      + | chrB:3346-3350
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
 ```

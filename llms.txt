@@ -446,6 +446,8 @@ Functions that compute properties of breakpoint graphs.
   [`exampleInsertion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleDeletion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   [`exampleClownInversion`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleGenomicBreaks`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
+  [`exampleJustAClown`](https://oist.github.io/GenomicBreaks/reference/StructuralVariants.md)
   : Structural Variants
 
 - [`align_scaf_plot_2()`](https://oist.github.io/GenomicBreaks/reference/align_scaf_plot_2.md)

@@ -48,8 +48,8 @@ Bruna Fistarol
 permutationVector(exampleInversion) |>
   GenomicBreaks:::extendedPermutation() |>
   GenomicBreaks:::breakpoint_graph()
-#> IGRAPH 3d121dd U--- 8 4 -- 
+#> IGRAPH 8db7994 U--- 8 4 -- 
 #> + attr: color (e/c), unoriented (e/n)
-#> + edges from 3d121dd:
+#> + edges from 8db7994:
 #> [1] 3--5 3--4 4--6 5--6
 ```
