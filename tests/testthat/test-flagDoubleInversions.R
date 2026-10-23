@@ -50,6 +50,13 @@ test_that("flanks that are not colinear with the triplet are not flagged", {
   }
 })
 
+test_that("ranges on different target sequences are not flagged", {
+  for (gb in dblExamples) {
+    expect_false(any(flagDoubleInversions(moveToOtherTargetSeq(gb, 1))$Dbl))
+    expect_false(any(flagDoubleInversions(moveToOtherTargetSeq(gb, 5))$Dbl))
+  }
+})
+
 test_that("the central triplet alone is not flagged", {
   for (gb in dblExamples)
     expect_false(any(flagDoubleInversions(gb[2:4])$Dbl))

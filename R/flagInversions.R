@@ -95,7 +95,8 @@ flagInversions <- function (gb, tol = Inf) {
 #' genome.  The flanks `X` and `Y` must be on the strand shown: with flanks on
 #' the opposite strand, the same central triplet requires three inversions.
 #' The flag is set on range `X`, as [`flagInversions()`] sets its flag on the
-#' left flank of an inversion.
+#' left flank of an inversion.  The five ranges must be on the same _target_
+#' sequence.
 #'
 #' @param gb A [`GBreaks()`] object.
 #' @param details Returns more metadata columns if `TRUE`.
@@ -167,6 +168,11 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
   gb$strand4 <- c(tail(strand(gb), -4), factor("*"), factor("*"), factor("*"), factor("*"))
 
+  # All ranges must be on the same target sequence.  As the object is sorted,
+  # it is enough to compare the first and the last one.
+  gb$tseq0   <- seqnames(gb)
+  gb$tseq4   <- c(tail(seqnames(gb), -4), factor(NA), factor(NA), factor(NA), factor(NA))
+
   # In the target order X A B C Y, the expected values of qnext0 to qnext4 are
   # precede(IPos(rank of each range in the query order)) - 1:5.
   # Each pattern tests the four values that are not NA, that is the four
@@ -175,7 +181,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   # Pattern 1: X b c A Y
   # precede(IPos(c(1,4,2,3,5))) - 1:5  ->  2, 3, 1, -2, NA
   gb$pat_bcA <-
-    ( gb$qnext0  ==  2  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext0  ==  2  &
       gb$qnext1  ==  3  &
       gb$qnext2  ==  1  &
       gb$qnext3  == -2  &
@@ -188,7 +195,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   # Pattern 2: X C a b Y
   # precede(IPos(c(1,3,4,2,5))) - 1:5  ->  3, 1, 2, -2, NA
   gb$pat_Cab <-
-    ( gb$qnext0  ==  3  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext0  ==  3  &
       gb$qnext1  ==  1  &
       gb$qnext2  ==  2  &
       gb$qnext3  == -2  &
@@ -201,7 +209,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   # Pattern 3: y B A c x
   # precede(IPos(c(5,3,2,4,1))) - 1:5  ->  NA, 2, -1, -3, -2
   gb$pat_BAc <-
-    ( gb$qnext1  ==  2  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext1  ==  2  &
       gb$qnext2  == -1  &
       gb$qnext3  == -3  &
       gb$qnext4  == -2  &
@@ -214,7 +223,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   # Pattern 4: y a C B x
   # precede(IPos(c(5,2,4,3,1))) - 1:5  ->  NA, 2, -2, -1, -3
   gb$pat_aCB <-
-    ( gb$qnext1  ==  2  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext1  ==  2  &
       gb$qnext2  == -2  &
       gb$qnext3  == -1  &
       gb$qnext4  == -3  &
@@ -237,6 +247,7 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 #'
 #' Flag ranges that start a quadruplet that would be colinear if the two central
 #' pairs were aligned to the opposite strand.  This implies breakpoint reuse.
+#' The four ranges must be on the same _target_ sequence.
 #'
 #' Here is a trivial example of a twin inversion.
 #'
@@ -293,9 +304,15 @@ flagTwinInversions <- function(gb, details = FALSE) {
   gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
   gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
 
+  # All ranges must be on the same target sequence.  As the object is sorted,
+  # it is enough to compare the first and the last one.
+  gb$tseq0   <- seqnames(gb)
+  gb$tseq3   <- c(tail(seqnames(gb), -3), factor(NA), factor(NA), factor(NA))
+
   # Pattern 1: AbcD
   gb$pat_AbcD <-
-    ( gb$qnext0  ==  1  &
+    ( gb$tseq3   == gb$tseq0 &
+      gb$qnext0  ==  1  &
       gb$qnext1  ==  1  &
       gb$qnext2  ==  1  &
       gb$strand0 == "+" &
@@ -305,7 +322,8 @@ flagTwinInversions <- function(gb, details = FALSE) {
 
   # Pattern 2: dCBa
   gb$pat_dCBa <-
-    ( gb$qnext1  == -1  &
+    ( gb$tseq3   == gb$tseq0 &
+      gb$qnext1  == -1  &
       gb$qnext2  == -1  &
       gb$qnext3  == -1  &
       gb$strand0 == "-" &

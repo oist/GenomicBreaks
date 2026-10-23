@@ -9,6 +9,9 @@
    consequence, `filterDoubleInversions()` now returns the central triplet
    (it returned its last two ranges and the right flank), and
    `removeDoubleInversions()` was adjusted to remove the same three ranges.
+ * `flagDoubleInversions()` and `flagTwinInversions()` now require all the
+   ranges of a pattern to be on the same _target_ sequence, like
+   `flagInversions()` does.
 
 # GenomicBreaks 0.24.0
 

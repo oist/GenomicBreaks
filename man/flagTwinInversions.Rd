@@ -17,6 +17,7 @@ Returns the \code{GBreaks} object with an extra \code{twi} metadata column.
 \description{
 Flag ranges that start a quadruplet that would be colinear if the two central
 pairs were aligned to the opposite strand.  This implies breakpoint reuse.
+The four ranges must be on the same \emph{target} sequence.
 }
 \details{
 Here is a trivial example of a twin inversion.
