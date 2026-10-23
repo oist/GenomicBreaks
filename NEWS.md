@@ -1,5 +1,14 @@
-# GenomicBreaks 0.24.1
+# GenomicBreaks 0.25.0
 
+ * **Breaking change:** `dist2next()` now returns the number of bases between
+   two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
+   overlapping ranges), instead of that number plus one.  The `tol` argument
+   of `coalesce_contigs()`, `flagColinearAlignments()` and `flagInversions()`
+   now bridges gaps of up to `tol` bases, as documented, instead of gaps
+   shorter than `tol`.  With a finite `tol`, results change where a gap is
+   exactly `tol` bases wide; for example `coalesce_contigs(gb, tol = 0)` now
+   merges adjacent colinear ranges.  Results with the default `tol = Inf`
+   are unchanged.
  * `flagDoubleInversions()` now requires the ranges before and after the
    triplet to be colinear with it: on the plus strand for the `bcA` and `Cab`
    patterns, and on the minus strand for `BAc` and `aCB`.  Previously, it also

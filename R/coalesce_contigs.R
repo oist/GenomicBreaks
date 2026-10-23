@@ -91,7 +91,9 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gb <- flagColinearAlignments(gb, tol = tol, minwidth = minwidth, details = TRUE)
 
   # apply extension to intersected zone (applying just to end points) (ref only)
-  gb$r_add <- gb$tdist
+  # Extend by the gap plus one base, so that the ranges overlap and are merged
+  # by reduce(min.gapwidth = 0), which does not merge adjacent ranges.
+  gb$r_add <- gb$tdist + 1
   gb[gb$colinear != TRUE]$r_add <- 0
 
   #######################################################################
@@ -114,7 +116,7 @@ coalesce_contigs <- function(gb, tol = Inf, minwidth = 0) {
   gr_red <- reduceAndSort(gr_ext)
 
   # apply extension to intersected zone (applying just to end points) (query only)
-  gb$q_add <- gb$qdist
+  gb$q_add <- gb$qdist + 1
   gb[gb$colinear != TRUE]$q_add <- 0
 
   # Guess strand for strandless ranges.

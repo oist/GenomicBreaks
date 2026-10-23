@@ -62,8 +62,9 @@ member of the pair, ordered by the sequence on the _target_ genome.
 flagColinearAlignments(exampleColinear)
 flagColinearAlignments(reverse(exampleColinear))
 
-# Note the tolerance window
+# Note the tolerance window: the ranges are separated by 100 unaligned bases
 flagColinearAlignments(exampleColinear, tol = 100)
+flagColinearAlignments(exampleColinear, tol = 99)
 
 # Strandless mappings can also be colinear
 library("plyranges") |> suppressPackageStartupMessages()

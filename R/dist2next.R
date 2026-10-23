@@ -2,7 +2,10 @@
 #'
 #' Calculates the distance to the next range in the _target_ and _query_ genome.
 #'
-#' The distance is defined by the [`GenomicRanges::distance`] function.  Note
+#' The distance is defined by the [`GenomicRanges::distance`] function: it is
+#' the number of bases between the two ranges, so it is `0` for adjacent
+#' ranges, and also for overlapping ranges.  It is `NA` for ranges on different
+#' sequences, or on different strands unless `ignore.strand = TRUE`.  Note
 #' that because the last range has not next neighbor, the last value is set
 #' to `Inf` arbitrarily.
 #'
@@ -36,7 +39,7 @@ dist2next_GRanges <- function(x, step = 1, ignore.strand = FALSE) {
   x$dist <-
     c( distance( head(x, -step)
                , tail(x, -step)
-               , ignore.strand) + 1  # Why is there +1 here ??
+               , ignore.strand)
      , rep(Inf, step)
      )
   x

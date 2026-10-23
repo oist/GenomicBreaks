@@ -30,7 +30,10 @@ respectively.
 Calculates the distance to the next range in the \emph{target} and \emph{query} genome.
 }
 \details{
-The distance is defined by the \code{\link[GenomicRanges:distance]{GenomicRanges::distance}} function.  Note
+The distance is defined by the \code{\link[GenomicRanges:distance]{GenomicRanges::distance}} function: it is
+the number of bases between the two ranges, so it is \code{0} for adjacent
+ranges, and also for overlapping ranges.  It is \code{NA} for ranges on different
+sequences, or on different strands unless \code{ignore.strand = TRUE}.  Note
 that because the last range has not next neighbor, the last value is set
 to \code{Inf} arbitrarily.
 }

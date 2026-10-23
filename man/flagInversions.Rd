@@ -9,7 +9,8 @@ flagInversions(gb, tol = Inf)
 \arguments{
 \item{gb}{A \code{GBreaks()} object.}
 
-\item{tol}{Tolerance window for the distance between two ranges.}
+\item{tol}{Ranges separated by more than \code{tol} unaligned bases on either
+genome are not considered adjacent.}
 }
 \value{
 Returns the \code{GBreaks} object with an extra \code{inv} metadata column.
@@ -32,7 +33,9 @@ Here is a trivial example of an inversion.
 }
 \examples{
 flagInversions(exampleInversion)
+# The widest gap between the ranges of this example is 19 bases.
 flagInversions(exampleInversion, tol = 19)
+flagInversions(exampleInversion, tol = 18)
 plotApairOfChrs(exampleInversion)
 
 flagInversions(exampleInversion |> reverse() |> sort(ignore.strand = TRUE))

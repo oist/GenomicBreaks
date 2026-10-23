@@ -123,11 +123,12 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
               ( decode(strand(gb)) %in% c("-") &  gb$qprev == 1                ) |
               ( decode(strand(gb)) %in% c("*") & (gb$qfoll == 1 | gb$qprev == 1) )
 
-  # Calculate distance and check if it is within tolerance threshold
-  # See 18939aa98b2db83a2360d5a0e92966581de4799e about tol + 1
+  # Calculate distance and check if it is within tolerance threshold.
+  # The last range has an infinite distance, which passes the test when
+  # tol = Inf, but it has no next range, so q_col is not TRUE.
   gb <- dist2next(gb)
-  gb$colinear <- gb$tdist < tol + 1 &
-                 gb$qdist < tol + 1 &
+  gb$colinear <- gb$tdist <= tol &
+                 gb$qdist <= tol &
                  gb$q_col
   gb$colinear[is.na(gb$colinear)] <- FALSE
 

@@ -16,7 +16,8 @@
 #' ```
 #'
 #' @param gb A `GBreaks()` object.
-#' @param tol Tolerance window for the distance between two ranges.
+#' @param tol Ranges separated by more than `tol` unaligned bases on either
+#'        genome are not considered adjacent.
 #'
 #' @return Returns the `GBreaks` object with an extra `inv` metadata column.
 #'
@@ -26,7 +27,9 @@
 #'
 #' @examples
 #' flagInversions(exampleInversion)
+#' # The widest gap between the ranges of this example is 19 bases.
 #' flagInversions(exampleInversion, tol = 19)
+#' flagInversions(exampleInversion, tol = 18)
 #' plotApairOfChrs(exampleInversion)
 #'
 #' flagInversions(exampleInversion |> reverse() |> sort(ignore.strand = TRUE))
@@ -66,10 +69,10 @@ flagInversions <- function (gb, tol = Inf) {
            (gb$colPlus | gb$colMin)  &
             gb$nextDiffStrand        &
             gb$nextNextSameStrand    &
-            gb$tdist  < tol + 1 &   # We need `< tol + 1`
-            gb$tdist2 < tol + 1 &   # and not `<= tol`
-            gb$qdist  < tol + 1 &   # Because of comparisons to
-            gb$qdist2 < tol + 1     # infinite distance returned by dist2next.
+            gb$tdist  <= tol    &   # The last ranges have infinite distances,
+            gb$tdist2 <= tol    &   # which pass these tests when tol = Inf,
+            gb$qdist  <= tol    &   # but the adjacency tests above exclude
+            gb$qdist2 <= tol        # them.
   if (any(is.na(gb.bak$inv)))
     gb.bak[is.na(gb.bak$inv)]$inv <- FALSE
   gb.bak
