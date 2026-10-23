@@ -84,8 +84,8 @@ flagPairs <- function (gb) {
   # Compute various indicators
   gb$Strnd <- as.character(strand(gb))
   gb$Snext <- c(tail(as.character(strand(gb)), -1), NA)
-  gb$oneNext <- precede(gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
-  gb$onePrev <- follow( gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
+  gb$oneNext <- precede(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
+  gb$onePrev <- follow( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$Qnext <- "other"
   gb$Qnext[sapply(gb$oneNext, isTRUE)] <- "next"
   gb$Qnext[sapply(gb$onePrev, isTRUE)] <- "prev"

@@ -12,6 +12,10 @@
  * `flagDoubleInversions()` and `flagTwinInversions()` now require all the
    ranges of a pattern to be on the same _target_ sequence, like
    `flagInversions()` does.
+ * `flagInversions()` and `flagPairs()` ignored the first range of the object
+   when testing whether two ranges are adjacent on the _query_ genome.  For
+   example, `flagPairs(exampleInversionGarg2019)` now returns `Scr` instead
+   of `Inv` for ranges 4 and 5, which are separated by range 1 on the _query_.
 
 # GenomicBreaks 0.24.0
 
