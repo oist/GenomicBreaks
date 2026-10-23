@@ -86,10 +86,9 @@ GitHub Actions currently only builds/deploys the pkgdown site
 
 Verification today rests heavily on **vignettes + man-page examples**.
 
-There is currently **no `tests/` directory** in the repo, so if you add unit
-tests, start with `tests/testthat/` using **`testthat`** (Bioconductor
-convention). Do **not** remove the existing vignette/@examples coverage; add
-tests incrementally.
+Unit tests are in `tests/testthat/` (**`testthat`**, edition 3); run them with
+`R -e 'devtools::test()'`. Do **not** remove the existing vignette/@examples
+coverage; add tests incrementally.
 
 Lift existing `@examples` into `expect_*` assertions. High-value candidates
 include the colinearity/coalescing functions and the nucleotide-distance

@@ -46,7 +46,9 @@ Suggests:
   Gviz,
   knitr,
   plyranges,
-  rmarkdown
+  rmarkdown,
+  testthat (>= 3.0.0)
+Config/testthat/edition: 3
 VignetteBuilder: knitr
 Collate: 
     'F81_distance.R'
