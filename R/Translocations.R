@@ -148,8 +148,11 @@ filterTranslocations <- function(gb, rename = TRUE, remove = FALSE, detect = TRU
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
   flagPos <- which(gb$tra) + 1
-  if (isTRUE(remove))
+  if (isTRUE(remove)) {
+    # gb[-integer(0)] would return an empty object.
+    if (length(flagPos) == 0) return(gb)
     flagPos <- -(flagPos)
+  }
   gb[flagPos]
 }
 

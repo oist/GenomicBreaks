@@ -25,6 +25,8 @@
    when testing whether two ranges are adjacent on the _query_ genome.  For
    example, `flagPairs(exampleInversionGarg2019)` now returns `Scr` instead
    of `Inv` for ranges 4 and 5, which are separated by range 1 on the _query_.
+ * `filterTranslocations(remove = TRUE)` returned an empty object when no
+   translocation was flagged; it now returns all the ranges.
 
 # GenomicBreaks 0.24.0
 
