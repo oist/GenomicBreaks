@@ -11,9 +11,29 @@ flagDoubleInversions(gb, details = FALSE)
 
 \item{details}{Returns more metadata columns if \code{TRUE}.}
 }
+\value{
+Returns the \code{GBreaks} object with an extra \code{Dbl} metadata column.
+}
 \description{
-Two consecutive and overlapping inversions will generate patterns that can
-this function aims to detect.
+Flag ranges that start a quintuplet in which two overlapping inversions
+moved the three central ranges, and the two flanking ranges did not move.
+}
+\details{
+With the five \emph{target} ranges named \verb{X A B C Y} in their order on the
+\emph{target} genome, and lower case meaning the minus strand, the \emph{query}
+genome reads one of the following:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{X b c A Y    ABC -> baC -> bcA
+X C a b Y    ABC -> Acb -> Cab
+y B A c x    cba -> BCa -> BAc
+y a C B x    cba -> cAB -> aCB
+}\if{html}{\out{</div>}}
+
+The last two are the first two read on the other strand of the \emph{query}
+genome.  The flanks \code{X} and \code{Y} must be on the strand shown: with flanks on
+the opposite strand, the same central triplet requires three inversions.
+The flag is set on range \code{X}, as \code{\link[=flagInversions]{flagInversions()}} sets its flag on the
+left flank of an inversion.
 }
 \examples{
 # Start colinear.  Lower case meands minus strand

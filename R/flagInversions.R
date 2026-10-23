@@ -77,11 +77,30 @@ flagInversions <- function (gb, tol = Inf) {
 
 #' Flag double inversions
 #'
-#' Two consecutive and overlapping inversions will generate patterns that can
-#' this function aims to detect.
+#' Flag ranges that start a quintuplet in which two overlapping inversions
+#' moved the three central ranges, and the two flanking ranges did not move.
+#'
+#' With the five _target_ ranges named `X A B C Y` in their order on the
+#' _target_ genome, and lower case meaning the minus strand, the _query_
+#' genome reads one of the following:
+#'
+#' ```
+#' X b c A Y    ABC -> baC -> bcA
+#' X C a b Y    ABC -> Acb -> Cab
+#' y B A c x    cba -> BCa -> BAc
+#' y a C B x    cba -> cAB -> aCB
+#' ```
+#'
+#' The last two are the first two read on the other strand of the _query_
+#' genome.  The flanks `X` and `Y` must be on the strand shown: with flanks on
+#' the opposite strand, the same central triplet requires three inversions.
+#' The flag is set on range `X`, as [`flagInversions()`] sets its flag on the
+#' left flank of an inversion.
 #'
 #' @param gb A [`GBreaks()`] object.
 #' @param details Returns more metadata columns if `TRUE`.
+#'
+#' @return Returns the `GBreaks` object with an extra `Dbl` metadata column.
 #'
 #' @family Flagging functions
 #' @family Inversion functions
@@ -127,61 +146,83 @@ flagDoubleInversions <- function(gb, details = FALSE) {
     gb$Dbl <- Rle(logical(0))
     return(gb)
   }
-  if(length(gb) == 1) {
-    gb$Dbl <- Rle(FALSE)
+  if(length(gb) < 5) {
+    gb$Dbl <- Rle(FALSE, length(gb))
     return(gb)
   }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
 
   gb.bak <- gb # Backup the object
 
-  # Look ahead for the two next alignments
+  # Look ahead for the four next alignments
   gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
   gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
   gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
+  gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
+  gb$qnext4  <- c(tail(gb$qnext0, -4), NA, NA, NA, NA)
 
   gb$strand0 <- strand(gb)
   gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
   gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
+  gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
+  gb$strand4 <- c(tail(strand(gb), -4), factor("*"), factor("*"), factor("*"), factor("*"))
 
-  # Pattern 1: bcA
-  # case (strand)-insensitive order of bcA is 3, 1, 2
-  # In that order, strands are +, -, -
-  # precede(IPos(c(3,1,2))) - 1:3
-  # We do not test value for the 3rd position (NA)
+  # In the target order X A B C Y, the expected values of qnext0 to qnext4 are
+  # precede(IPos(rank of each range in the query order)) - 1:5.
+  # Each pattern tests the four values that are not NA, that is the four
+  # adjacencies chaining the five ranges in the query order.
+
+  # Pattern 1: X b c A Y
+  # precede(IPos(c(1,4,2,3,5))) - 1:5  ->  2, 3, 1, -2, NA
   gb$pat_bcA <-
-    ( gb$qnext1  ==  1  &
-      gb$qnext2  == -2  &
+    ( gb$qnext0  ==  2  &
+      gb$qnext1  ==  3  &
+      gb$qnext2  ==  1  &
+      gb$qnext3  == -2  &
       gb$strand0 == "+" &
-      gb$strand1 == "-" &
-      gb$strand2 == "-"   ) |> sapply(isTRUE) # Turn NAs into FALSE
+      gb$strand1 == "+" &
+      gb$strand2 == "-" &
+      gb$strand3 == "-" &
+      gb$strand4 == "+"   ) |> sapply(isTRUE) # Turn NAs into FALSE
 
-  # Pattern 2: Cab
-  # precede(IPos(c(2,3,1))) - 1:3
+  # Pattern 2: X C a b Y
+  # precede(IPos(c(1,3,4,2,5))) - 1:5  ->  3, 1, 2, -2, NA
   gb$pat_Cab <-
-    ( gb$qnext0  ==  1  &
+    ( gb$qnext0  ==  3  &
+      gb$qnext1  ==  1  &
+      gb$qnext2  ==  2  &
+      gb$qnext3  == -2  &
+      gb$strand0 == "+" &
+      gb$strand1 == "-" &
+      gb$strand2 == "-" &
+      gb$strand3 == "+" &
+      gb$strand4 == "+"   ) |> sapply(isTRUE)
+
+  # Pattern 3: y B A c x
+  # precede(IPos(c(5,3,2,4,1))) - 1:5  ->  NA, 2, -1, -3, -2
+  gb$pat_BAc <-
+    ( gb$qnext1  ==  2  &
+      gb$qnext2  == -1  &
+      gb$qnext3  == -3  &
+      gb$qnext4  == -2  &
+      gb$strand0 == "-" &
+      gb$strand1 == "+" &
+      gb$strand2 == "+" &
+      gb$strand3 == "-" &
+      gb$strand4 == "-"   ) |> sapply(isTRUE)
+
+  # Pattern 4: y a C B x
+  # precede(IPos(c(5,2,4,3,1))) - 1:5  ->  NA, 2, -2, -1, -3
+  gb$pat_aCB <-
+    ( gb$qnext1  ==  2  &
       gb$qnext2  == -2  &
+      gb$qnext3  == -1  &
+      gb$qnext4  == -3  &
       gb$strand0 == "-" &
       gb$strand1 == "-" &
-      gb$strand2 == "+"   ) |> sapply(isTRUE)
-
-  # Pattern 3: BAc
-  # precede(IPos(c(2,1,3))) - 1:3
-  gb$pat_BAc <-
-    ( gb$qnext0  ==  2  &
-      gb$qnext1  == -1  &
-      gb$strand0 == "+" &
-      gb$strand1 == "+" &
-      gb$strand2 == "-"   ) |> sapply(isTRUE)
-
-  # Pattern 4; aCB
-  # precede(IPos(c(1,3,2))) - 1:3
-  gb$pat_aCB <-
-    ( gb$qnext0  ==  2  &
-      gb$qnext2  == -1  &
-      gb$strand0 == "-" &
-      gb$strand1 == "+" &
-      gb$strand2 == "+"   ) |> sapply(isTRUE)
+      gb$strand2 == "+" &
+      gb$strand3 == "+" &
+      gb$strand4 == "-"   ) |> sapply(isTRUE)
 
   gb$Dbl <- gb$pat_bcA | gb$pat_Cab |  gb$pat_BAc | gb$pat_aCB
 
@@ -418,7 +459,7 @@ removeDoubleInversions <- function(gb, detect = TRUE) {
   if (is.null(gb$Dbl)) return(gb[0])
   DblPos <- which(gb$Dbl)
   if (length(DblPos) == 0) return(gb)
-  coalesce_contigs(gb[- c(DblPos, DblPos + 1, DblPos + 2)])
+  coalesce_contigs(gb[- c(DblPos + 1, DblPos + 2, DblPos + 3)])
 }
 
 #' Flip strand of inversions

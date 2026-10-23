@@ -1,3 +1,15 @@
+# GenomicBreaks 0.24.1
+
+ * `flagDoubleInversions()` now requires the ranges before and after the
+   triplet to be colinear with it: on the plus strand for the `bcA` and `Cab`
+   patterns, and on the minus strand for `BAc` and `aCB`.  Previously, it also
+   flagged triplets that require three inversions, and triplets whose
+   neighbours map elsewhere in the _query_ genome.  The flag is now set on the
+   left flank, as in `flagInversions()` and `flagTwinInversions()`.  As a
+   consequence, `filterDoubleInversions()` now returns the central triplet
+   (it returned its last two ranges and the right flank), and
+   `removeDoubleInversions()` was adjusted to remove the same three ranges.
+
 # GenomicBreaks 0.24.0
 
  * Support correction for unaligned bases in `JC69_distance()`.
