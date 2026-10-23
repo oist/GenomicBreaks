@@ -27,6 +27,11 @@
    of `Inv` for ranges 4 and 5, which are separated by range 1 on the _query_.
  * `filterTranslocations(remove = TRUE)` returned an empty object when no
    translocation was flagged; it now returns all the ranges.
+ * `leftInversionGaps()` now returns one gap per inversion, as a zero-width
+   range when the left flank and the central range are adjacent or overlap
+   (these inversions were dropped), with a new `flagIndex` metadata column
+   giving the position of the left flank.  A new `detect` argument allows
+   to reuse existing `inv` flags, for instance computed with a `tol` value.
 
 # GenomicBreaks 0.24.0
 

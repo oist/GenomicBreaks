@@ -516,32 +516,41 @@ flipInversions <- function(gb, detect = TRUE) {
 
 #' Isolate the left-side gaps in inversions
 #'
-#' @param gb A [`GBreaks`] object.
+#' For each inversion flagged by [`flagInversions()`], returns the region of
+#' the _target_ genome between the left flank of the inversion triplet (the
+#' range carrying the flag) and its central range.
 #'
-#' @return Returns a [`GenomicRanges::GRanges`] object representing the left-side gaps in the
-#' `GBreaks` object.
+#' @note When these two ranges are adjacent or overlap on the _target_ genome,
+#' the gap is a zero-width range that starts after the end of the left flank.
+#'
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag.  If the flag is absent, no gap is returned.
+#'
+#' @return Returns a [`GenomicRanges::GRanges`] object representing the
+#' left-side gaps in the `GBreaks` object, one per inversion.  Its `flagIndex`
+#' metadata column contains the position in `gb` of the left flank of each
+#' inversion.
 #'
 #' @family Inversion functions
 #'
 #' @examples
-#' leftInversionGaps(flagInversions(exampleInversion))
+#' leftInversionGaps(exampleInversion)
+#'
+#' # Reuse flags computed with a tolerance threshold
+#' exampleInversion |> flagInversions(tol = 19) |> leftInversionGaps(detect = FALSE)
+#' exampleInversion |> flagInversions(tol = 18) |> leftInversionGaps(detect = FALSE)
 #'
 #' @export
 
-leftInversionGaps <- function(gb) {
-  # Flag inversions.
-  #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE
-  lgaps <- flagInversions(gb)
-  # Extract inversions
-  invs <- lgaps[lgaps$inv]
-  # Extend inversion of 1 bp so that they overlap with their neighbor gap
-  invs <- shift(invs, 1)
-  # Remove strand information
+leftInversionGaps <- function(gb, detect = TRUE) {
+  if (isTRUE(detect)) gb <- flagInversions(gb)
+  # The flag is on the left flank of the inversion triplet.
+  flagPos <- if (is.null(gb$inv)) integer(0) else which(gb$inv)
+  # pgap() returns a zero-width range when the two ranges are adjacent or
+  # overlap, so that every inversion has a gap.
+  lgaps <- pgap(granges(gb)[flagPos], granges(gb)[flagPos + 1], ignore.strand = TRUE)
   strand(lgaps) <- "*"
-  # Then extract gap positions ignoring strand
-  lgaps <- gaps(lgaps, start=min(start(lgaps)), end=max(end(lgaps)))
-  # Remove bogus gaps on + and - strands
-  lgaps <- lgaps[strand(lgaps) == "*"]
-  # Return the gaps overlapping with the flagged inversions
-  subsetByOverlaps(lgaps, invs)
+  lgaps$flagIndex <- flagPos
+  lgaps
 }

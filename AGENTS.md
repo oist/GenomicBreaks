@@ -131,6 +131,9 @@ GitHub Actions currently only builds/deploys the pkgdown site
    and `B A` three, and these three are flagged only as translocations.
    Triple inversions are to be revisited once translocations are included in
    the enumeration.
+5. Deferred: a function returning, for each inversion, both breakpoint
+   regions on both genomes, computed from the coordinates of the triplet.
+   `leftInversionGaps()` only returns the left one on the _target_ genome.
 
 ## Testing (please help here)
 
