@@ -198,12 +198,14 @@ when possible, ignore when needed, error when unavoidable.  Current state
 - Zero-width ranges: `precede()` reports a zero-width range as preceding
   itself, which breaks the adjacency tests of all flagging functions (a
   zero-width bridge is not colinear with the next alignment).
-- `flagTranslocations()` treats `*` as `+`, so on an unoriented object the
-  result depends on the arbitrary orientation of the _query_ sequences, and
-  `flagAll()` can then fail.  With adjacency in either direction instead,
-  extra ranges are flagged as moved (target `X Y U A V`, query `X A Y U V`:
-  `Y` and `U` too, because moving `A` over `Y U` is also moving `Y U` over
-  `A`); a stronger criterion is needed for unoriented data.
+- `flagTranslocations()` tests `*` ranges in both directions (done,
+  experimental).  Extra ranges are then flagged as moved (target
+  `X Y U A V`, query `X A Y U V`: `Y` and `U` too, because moving `A` over
+  `Y U` is also moving `Y U` over `A`); this was accepted and documented.
+  A stricter criterion for unoriented data could require the moved range
+  not to be adjacent to the flanks on the other genome.  `flagAll()` gives
+  colinearity precedence over `Tra` on `*` ranges, where the two can now
+  coincide.
 - `flagPairs()` returns `Bnd` (boundary) for every pair that involves `*`.
 - `permutationVector()` counts `*` as `+`, so `inversionDistance()` returns
   a value for unoriented objects.

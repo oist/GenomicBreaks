@@ -39,6 +39,14 @@
 #' └──────────────┴──────────────┴──────────────┘
 #' ```
 #'
+#' @section Unstranded ranges (experimental):
+#' Ranges on the `*` strand are considered adjacent in either direction.  When
+#' orientation is unknown, moving one range over a segment can not be told
+#' apart from moving the segment over the range, so that more ranges are
+#' flagged as moved: for instance, with the _target_ genome `X Y U A V` and the
+#' _query_ genome `X A Y U V`, `Y` and `U` are flagged in addition to `A`.
+#' This behaviour may change in future versions.
+#'
 #' @note Before version 0.25.0, the site was flagged only with the `both`
 #' option, by a `tra` flag on the _query_ ranges, set on the first range of the
 #' site in _query_ order.
@@ -93,12 +101,12 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb.bak <- gb # save the original object
 
   # Offset of the range that each range immediately precedes (qnext0) or
-  # follows (qprev0) on the query genome.  The plus-strand tests also apply to
-  # unstranded ranges.
+  # follows (qprev0) on the query genome.  Unstranded ranges are tested in both
+  # directions (experimental).
   gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
   gb$qprev0  <- follow( gb$query) - seq_along(gb$query)
   plus  <- decode(strand(gb)) %in% c("+", "*")
-  minus <- decode(strand(gb)) ==      "-"
+  minus <- decode(strand(gb)) %in% c("-", "*")
 
   gb$strand0 <- strand(gb)
   gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
@@ -132,8 +140,10 @@ flagTranslocations <- function (gb, tol = Inf) {
   # the offset k of X.  Mirror image with follow() on the minus strand.
   gb$qnextPay <- gb$qnext0[seq_along(gb) + gb$qnext0]
   gb$qprevPay <- gb$qprev0[seq_along(gb) + gb$qprev0]
+  gb$sitePlus  <- (plus  & gb$qnext0 != 1 & gb$qnext0 + gb$qnextPay == 1) |> sapply(isTRUE)
+  gb$siteMinus <- (minus & gb$qprev0 != 1 & gb$qprev0 + gb$qprevPay == 1) |> sapply(isTRUE)
   # Distances on the query genome from X to A and from A to Y.
-  pay   <- seq_along(gb) + ifelse(minus, gb$qprev0, gb$qnext0)
+  pay   <- seq_along(gb) + ifelse(gb$sitePlus, gb$qnext0, gb$qprev0)
   payOK <- ifelse(is.na(pay), seq_along(gb), pay)    # Index without NAs
   next1 <- pmin(seq_along(gb) + 1, length(gb))
   gb$qdistXA <- ifelse(is.na(pay), NA, distance(gb$query,        gb$query[payOK]))
@@ -141,8 +151,7 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb$trs <-
     ( gb$tseq1   == gb$tseq0   &
       gb$strand1 == gb$strand0 &
-      ( (plus  & gb$qnext0 != 1 & gb$qnext0 + gb$qnextPay == 1) |
-        (minus & gb$qprev0 != 1 & gb$qprev0 + gb$qprevPay == 1) ) &
+      ( gb$sitePlus | gb$siteMinus ) &
       gb$tdist0  <= tol &
       gb$qdistXA <= tol &
       gb$qdistAY <= tol ) |> sapply(isTRUE)
@@ -160,8 +169,13 @@ flagTranslocations <- function (gb, tol = Inf) {
 translocationPayloads <- function(gb) {
   traPos  <- which(gb$tra) + 1
   trsPos  <- which(gb$trs)
-  minus   <- decode(strand(gb))[trsPos] == "-"
-  sitePay <- ifelse(minus, follow(gb$query)[trsPos], precede(gb$query)[trsPos])
+  nxt <- precede(gb$query)
+  prv <- follow( gb$query)
+  st  <- decode(strand(gb))
+  # Is the site read with precede() (X A Y), or with follow() (Y A X) ?
+  # Unstranded ranges can be read either way.
+  viaNext <- vapply(trsPos, \(X) st[X] != "-" && isTRUE(nxt[nxt[X]] == X + 1), logical(1))
+  sitePay <- ifelse(viaNext, nxt[trsPos], prv[trsPos])
   sort(unique(c(traPos, sitePay)))
 }
 

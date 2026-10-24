@@ -5,6 +5,11 @@
 #'
 #' @param gb A `GBreaks` object.
 #'
+#' @section Unstranded ranges (experimental):
+#' On ranges of the `*` strand, a range can be both colinear with the next
+#' one and the start of a payload region of [`flagTranslocations()`]; it is
+#' then flagged as colinear.  This behaviour may change in future versions.
+#'
 #' @return Returns the `GBreaks` object with an extra `flag` metadata column.
 #'
 #' @family Flagging functions
@@ -32,6 +37,10 @@ flagAll <- function (gb) {
   gb$flag[Inv] <- "Inv"
 
   Tra <- flagTranslocations(gb)$tra |> decode()
+  # Unstranded ranges (experimental): adjacency is tested in both directions,
+  # so that a range can be colinear with the next one and also start a
+  # payload region.  Colinearity takes precedence.
+  Tra[Tra & decode(strand(gb)) == "*" & !is.na(gb$flag)] <- FALSE
   stopifnot(all(is.na(gb$flag[Tra])))
   gb$flag[Tra] <- "Tra"
 

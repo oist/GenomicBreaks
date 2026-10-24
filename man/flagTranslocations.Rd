@@ -63,6 +63,16 @@ Before version 0.25.0, the site was flagged only with the \code{both}
 option, by a \code{tra} flag on the \emph{query} ranges, set on the first range of the
 site in \emph{query} order.
 }
+\section{Unstranded ranges (experimental)}{
+
+Ranges on the \code{*} strand are considered adjacent in either direction.  When
+orientation is unknown, moving one range over a segment can not be told
+apart from moving the segment over the range, so that more ranges are
+flagged as moved: for instance, with the \emph{target} genome \verb{X Y U A V} and the
+\emph{query} genome \verb{X A Y U V}, \code{Y} and \code{U} are flagged in addition to \code{A}.
+This behaviour may change in future versions.
+}
+
 \examples{
 flagTranslocations(exampleTranslocation)
 # The ranges U and V are separated by 100 bases on the query genome.

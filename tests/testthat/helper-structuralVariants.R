@@ -17,24 +17,25 @@ loadSimulations <- function(n = Inf) {
 #  - trs: X Y consecutive on one target sequence and on the same strand, with
 #    exactly one range between them on the query, in the direction of the
 #    strand.
+#  Unstranded ranges are tested in both directions.
 bruteTranslocations <- function(gb) {
   n  <- length(gb)
   ts <- as.character(seqnames(gb))
   qs <- as.character(seqnames(gb$query))
   st <- as.character(strand(gb))
   qrank <- ave(start(gb$query), qs, FUN = rank)
-  step  <- ifelse(st == "-", -1, 1)
+  steps <- lapply(st, \(s) switch(s, "+" = 1, "-" = -1, "*" = c(-1, 1)))
   tra <- trs <- logical(n)
   for (i in seq_len(n)) {
     if (i + 2 <= n) {
       U <- i; V <- i + 2
       if (ts[U] == ts[V] && st[U] == st[V] && qs[U] == qs[V] &&
-          qrank[V] == qrank[U] + step[U]) tra[U] <- TRUE
+          any(qrank[V] == qrank[U] + steps[[U]])) tra[U] <- TRUE
     }
     if (i + 1 <= n) {
       X <- i; Y <- i + 1
       if (ts[X] == ts[Y] && st[X] == st[Y] && qs[X] == qs[Y] &&
-          qrank[Y] == qrank[X] + 2 * step[X]) trs[X] <- TRUE
+          any(qrank[Y] == qrank[X] + 2 * steps[[X]])) trs[X] <- TRUE
     }
   }
   list(tra = tra, trs = trs)

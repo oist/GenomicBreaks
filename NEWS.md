@@ -27,6 +27,12 @@
    `bridgeRegions()` to an object: inversions can not be determined without
    orientation.  `flagDoubleInversions()` and `flagTwinInversions()` already
    required known strands; this is now documented.
+ * `flagTranslocations()` now tests unstranded ranges in both directions,
+   instead of as plus-strand ranges, so that its result on unoriented
+   objects no longer depends on the orientation of the _query_ sequences.
+   As orientation is unknown, more ranges can be flagged as moved (see the
+   help page).  `flagAll()` gives precedence to colinearity on such ranges,
+   instead of failing (experimental).
  * `showTranslocations()`, `filterTranslocations()` and
    `removeTranslocations()` now use both the `tra` and `trs` flags, so that
    moves seen only at their site are no longer ignored.  A moved range seen
