@@ -192,9 +192,9 @@ when possible, ignore when needed, error when unavoidable.  Current state
   `GenomicRanges` does, and adjacency in either direction counts for `*`
   pairs.  Works on unoriented objects and on mapped regions of non-zero
   width.
-- `coalesce_contigs()` merges unoriented objects, but never merges across a
-  mapped region (its `reduce()` is strand-aware), and fails with "2 elements
-  in value to replace 3 elements" when a range has width zero on one genome.
+- `coalesce_contigs()` merges unoriented objects.  In mixed objects, it
+  coalesces the oriented ranges and absorbs the mapped regions that they
+  contain on both genomes (done; this avoids the zero-width problem below).
 - Zero-width ranges: `precede()` reports a zero-width range as preceding
   itself, which breaks the adjacency tests of all flagging functions (a
   zero-width bridge is not colinear with the next alignment).

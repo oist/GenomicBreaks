@@ -16,6 +16,12 @@
    duplicated.  `flagAll()` still uses only the `tra` flag.
  * The `tol` argument of `flagTranslocations()` is now implemented, with the
    same meaning as in `flagInversions()`.
+ * `coalesce_contigs()` now coalesces over _mapped regions_: in an object that
+   mixes oriented ranges and ranges on the `*` strand, such as the output of
+   `bridgeRegions()` added to the alignments, the oriented ranges are
+   coalesced and absorb the unstranded ranges that they contain on both
+   genomes (experimental).  Before, such objects were not coalesced at all,
+   and mapped regions of width zero on one genome caused an error.
  * `flagInversions()` no longer flags triplets that contain a range on the `*`
    strand, such as a colinear `+ * +` triplet made by adding the output of
    `bridgeRegions()` to an object: inversions can not be determined without
