@@ -206,7 +206,8 @@ when possible, ignore when needed, error when unavoidable.  Current state
   not to be adjacent to the flanks on the other genome.  `flagAll()` gives
   colinearity precedence over `Tra` on `*` ranges, where the two can now
   coincide.
-- `flagPairs()` returns `Bnd` (boundary) for every pair that involves `*`.
+- `flagPairs()`: pairs that involve `*` are `Col`, `Scr` or `NA` when
+  undetermined (done, experimental); the factor levels must not change.
 - `permutationVector()` counts `*` as `+`, so `inversionDistance()` returns
   a value for unoriented objects.
 - To decide: whether mapped regions should be ignored by the flagging

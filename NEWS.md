@@ -33,6 +33,11 @@
    As orientation is unknown, more ranges can be flagged as moved (see the
    help page).  `flagAll()` gives precedence to colinearity on such ranges,
    instead of failing (experimental).
+ * `flagPairs()` no longer flags all pairs that involve a range on the `*`
+   strand as boundaries (`Bnd`): they are now `Col` when adjacent in an order
+   compatible with colinearity, `Scr` when not adjacent, and `NA` when
+   adjacent but undetermined (experimental).  The factor levels are
+   unchanged.
  * `showTranslocations()`, `filterTranslocations()` and
    `removeTranslocations()` now use both the `tra` and `trs` flags, so that
    moves seen only at their site are no longer ignored.  A moved range seen

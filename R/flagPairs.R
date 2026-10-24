@@ -48,6 +48,13 @@ allPossiblePairClasses <- with(allPossiblePairClasses, {
 #'
 #' @param gb A `GBreaks()` object.
 #'
+#' @section Unstranded ranges (experimental):
+#' A pair that involves a range on the `*` strand is flagged `Col` when its
+#' ranges are adjacent on the _query_ genome in an order compatible with
+#' colinearity, `Scr` when they are not adjacent, and `NA` when they are
+#' adjacent but their class depends on the unknown strand (`Inv` or `Flp`).
+#' This behaviour may change in future versions.
+#'
 #' @return Returns the `GBreaks` object with an extra `pairs` metadata column.
 #' This `pairs` column is a factor of all flags, so that `table(gb$pairs)`
 #' always returns a vector of the same length, reporting `0` when necessary.
@@ -92,12 +99,22 @@ flagPairs <- function (gb) {
 
   # Match the combinations with the allPossiblePairClasses table
   gb$paste <- paste(gb$Qnext, gb$Strnd, gb$Snext)
-  gb$paste[is.na(precede(gb, ignore.strand=T))] <- NA   # Put NAs at boundaries
+  boundary <- is.na(precede(gb, ignore.strand = TRUE))
+  gb$paste[boundary] <- NA   # Put NAs at boundaries
   gb$paste <- factor(gb$paste, labels = allPossiblePairClasses$pair, levels = allPossiblePairClasses$paste)
 
   # Transform the NAs into the "boundary" state
   gb$paste <- as.character(gb$paste)
   gb$paste[is.na(gb$paste)] <- "Bnd"
+
+  # Pairs involving unstranded ranges (experimental): colinear if adjacent in
+  # an order compatible with colinearity, scrambled if not adjacent, and
+  # undetermined (NA) otherwise.
+  unstranded <- !boundary & (gb$Strnd %in% "*" | gb$Snext %in% "*")
+  colinear <- (gb$Qnext == "next" & gb$Strnd %in% c("+", "*") & gb$Snext %in% c("+", "*")) |
+              (gb$Qnext == "prev" & gb$Strnd %in% c("-", "*") & gb$Snext %in% c("-", "*"))
+  gb$paste[unstranded] <- ifelse(gb$Qnext[unstranded] == "other", "Scr",
+                                 ifelse(colinear[unstranded], "Col", NA))
 
   # Output as a factor
   gb.bak$pairs <- factor(gb$paste, levels = c("Col", "Inv", "Flp", "Scr", "Bnd"))

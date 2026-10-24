@@ -79,3 +79,28 @@ test_that("flagAll() does not fail on unstranded simulations", {
     expect_no_error(flagAll(unstrand(gb)))
   }
 })
+
+# flagPairs(): unstranded pairs (experimental), with unchanged factor levels.
+
+test_that("flagPairs() classifies pairs of unstranded ranges", {
+  lv <- c("Col", "Inv", "Flp", "Scr", "Bnd")
+  p <- flagPairs(unstrand(exampleColinear3))$pairs
+  expect_equal(levels(p), lv)
+  expect_equal(as.character(p), c("Col", "Col", "Bnd"))
+  expect_equal(as.character(flagPairs(unstrand(exampleInversion))$pairs),     c("Col", "Col", "Bnd"))
+  expect_equal(as.character(flagPairs(unstrand(exampleTranslocation))$pairs), c("Scr", "Scr", "Bnd"))
+  # Alignments with their bridge regions
+  p <- flagPairs(withBridges(exampleColinear5))$pairs
+  expect_equal(levels(p), lv)
+  expect_equal(as.character(p), c(rep("Col", 8), "Bnd"))
+})
+
+test_that("flagPairs() leaves undetermined pairs as NA", {
+  # On the query, the unstranded range comes before the plus-strand one: an
+  # inversion or a flip, depending on its unknown orientation.
+  gb <- GBreaks(target = GRanges(c("chrA:100-190:+", "chrA:200-290:*")),
+                query  = GRanges(c("chrB:200-290",   "chrB:100-190")))
+  p <- flagPairs(gb)$pairs
+  expect_equal(levels(p), c("Col", "Inv", "Flp", "Scr", "Bnd"))
+  expect_equal(as.character(p), c(NA, "Bnd"))
+})
