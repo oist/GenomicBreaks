@@ -134,6 +134,71 @@ GitHub Actions currently only builds/deploys the pkgdown site
 5. Deferred: a function returning, for each inversion, both breakpoint
    regions on both genomes, computed from the coordinates of the triplet.
    `leftInversionGaps()` only returns the left one on the _target_ genome.
+6. The `show*`, `filter*` and `remove*` helpers must work well and
+   consistently for all structural variants (see the known issues below).
+
+### Known issues
+
+**Flags are relative to the _target_ side, and fragile.**  A flag is a
+metadata column of the _target_ ranges, and its meaning depends on the row
+order of the object.  Any transformation of a `GBreaks` object (subsetting,
+`sort()`, `c()`, `coalesce_contigs()`, `reverse()`, `swap()`) can invalidate
+the flags or drop them, without warning.  `swap()` drops the _target_
+metadata columns, flags included, and the `remove*` helpers drop them through
+`coalesce_contigs()`.  Flags should be recomputed after a transformation.
+
+**Translocations** (`flagTranslocations()`; checked against a brute-force
+implementation on simulations, which it follows on both genomes):
+
+- The function finds transpositions (moves of one range, possibly inverted,
+  on the same sequence or not) rather than translocations; do not rename it
+  for now.
+- A move of range `A` is seen in two places of the _target_ order:
+  - the **payload region** `U A V`: three consecutive _target_ ranges, with
+    `U` and `V` adjacent and colinear on the _query_.  This is the `tra`
+    flag, on `U`; the payload is the next range.
+  - the **site** `X Y`: two consecutive _target_ ranges between which `A` is
+    found on the _query_ (`X A Y`).  With `both = TRUE`, this is the
+    `query$tra` flag, computed by swapping the genomes and swapping back.
+  When both are seen, they point to the same payload; either can be missing,
+  for instance when `A` is alone on its sequence in one genome.
+- Problems of the current implementation:
+  - The `show*`, `filter*` and `remove*` helpers and `flagAll()` only use
+    `tra`, so moves seen only at their site are ignored.
+  - `query$tra` is set on the first range of the site in _query_ order, which
+    is `Y`, not `X`, when the site is on the minus strand: this breaks the
+    first-range convention (39 of the query-side flags of the 200 stored
+    simulations, after coalescing).
+  - `query$tra` is brought back to _target_ order by sorting the swapped
+    object again; when _target_ ranges are duplicated (possible in
+    many-to-many alignments), sorting can exchange the tied rows and put the
+    flag on the wrong one.
+  - `tol` is not implemented: a finite value stops with an error, after the
+    work is done.  `qdist2` (the distance between `U` and `V` on the
+    _query_) is computed for that purpose and never used.
+- Proposed redesign (to be confirmed): two flags relative to the _target_
+  side, computed without `swap()`: one for payload regions (as `tra` now)
+  and one for sites, on `X`.  The site flag is a look-ahead pattern with one
+  indirect lookup: with `qnext0` as above, the payload is `i + qnext0[i]`,
+  and on the plus strand the site test is `qnext0[i] != 1 &
+  qnext0[i] + qnext0[i + qnext0[i]] == 1` (with `follow()` instead of
+  `precede()` on the minus strand), plus the same target sequence and the
+  same strand for `X` and `Y`.  This equals `query$tra` moved to `X` on all
+  200 stored simulations.  Events can then be built by pairing the two
+  flags through their payload.
+
+**Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
+
+- Translocations: only the `tra` flag is used (see above).
+- Double inversions: there is no `showDoubleInversions()`.
+- Twin inversions: there are no `show*`, `filter*` or `remove*` functions.
+- `filterColinearRegions()` has no `detect` argument.
+- The `detect` argument is documented as "reuse the flag or fail if it is
+  absent", but the helpers return an empty object instead of failing; for
+  the `remove*` functions, an empty object is especially misleading.
+- Only `show*` and `filter*` have a `rename` argument.
+- `removeDoubleInversions()` returns early for objects of fewer than 3
+  ranges, instead of 5.
 
 ## Testing (please help here)
 
