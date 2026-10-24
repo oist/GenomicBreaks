@@ -114,6 +114,7 @@ Collate:
     'scaf_align_plot.R'
     'scaffoldByFlipAndMerge.R'
     'serviceFunctions.R'
+    'simulateRearrangements.R'
     'slidingWindow.R'
     'splitSeqLevels.R'
     'strandNames.R'

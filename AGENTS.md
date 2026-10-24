@@ -44,8 +44,8 @@ Oxford / pair-of-chromosome figures.
 | `R/` | R source, one topic per file (see `Collate:` in `DESCRIPTION`). |
 | `src/` | Rcpp C++ MAF reader (`readMaf.cpp`) + `RcppExports.cpp`; partly from LAST (GPLv3+). |
 | `data/` | Lazy-loaded example datasets (`example*` objects). |
-| `data-raw/` | Scripts that regenerate `data/`. |
-| `inst/extdata/` | Small fixture files (GFF3, MAF, train) used by examples. |
+| `data-raw/` | Scripts that regenerate `data/` and some `inst/extdata/` files. |
+| `inst/extdata/` | Small fixture files (GFF3, MAF, train) used by examples, and `simulatedRearrangements.rds` (200 simulated genome pairs stored as permutation vectors; see `?simulateRearrangements`). |
 | `inst/CITATION` | Published-paper citation. |
 | `man/` | roxygen-generated `.Rd` (do not edit by hand). |
 | `vignettes/` | Long-form documentation (`*.Rmd`). |
@@ -142,6 +142,12 @@ Verification today rests heavily on **vignettes + man-page examples**.
 Unit tests are in `tests/testthat/` (**`testthat`**, edition 3); run them with
 `R -e 'devtools::test()'`. Do **not** remove the existing vignette/@examples
 coverage; add tests incrementally.
+
+For structural variants, `simulateRearrangements()` and
+`permutationVectorToGBreaks()` build test objects from known events or
+signed permutations, and the simulations in
+`inst/extdata/simulatedRearrangements.rds` can be compared with an
+independent, brute-force implementation of a flag's definition.
 
 Lift existing `@examples` into `expect_*` assertions. High-value candidates
 include the colinearity/coalescing functions and the nucleotide-distance

@@ -1,5 +1,10 @@
 # GenomicBreaks 0.25.0
 
+ * New `simulateRearrangements()` function, which simulates a pair of genomes
+   rearranged by random inversions and transpositions and records the events,
+   and new `permutationVectorToGBreaks()` function, the inverse of
+   `permutationVector()`.  A set of 200 simulations is provided in
+   `inst/extdata/simulatedRearrangements.rds` for tests and benchmarks.
  * **Breaking change:** `dist2next()` now returns the number of bases between
    two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
    overlapping ranges), instead of that number plus one.  The `tol` argument
