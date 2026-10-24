@@ -54,3 +54,19 @@ moveToOtherTargetSeq <- function(gb, i) {
   }
   gb
 }
+
+# Remove the orientation of all ranges, as in objects made from unoriented
+# reciprocal best hits.
+unstrand <- function(gb) {
+  strand(gb) <- "*"
+  gb
+}
+
+# Add the bridge regions (unstranded "mapped regions" between colinear
+# alignments) to a GBreaks object.
+withBridges <- function(gb) {
+  br <- bridgeRegions(gb)
+  out <- c(granges(gb), granges(br))
+  out$query <- c(gb$query, br$query)
+  sort(GBreaks(out), ignore.strand = TRUE)
+}

@@ -3,6 +3,9 @@
 #' Flag ranges that start a triplet that would be colinear if the central pair
 #' were aligned to the opposite strand.
 #'
+#' Inversions can not be determined without orientation: triplets that contain
+#' a range on the `*` strand are never flagged.
+#'
 #' Here is a trivial example of an inversion.
 #'
 #' ```
@@ -65,8 +68,13 @@ flagInversions <- function (gb, tol = Inf) {
   gb$nextDiffStrand     <- strand(gb) != c(strand(tail(gb, -1)), factor(    "*"    ))
   # Is the current strand the same as the next-next ?
   gb$nextNextSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
+  # Are the three ranges oriented ?  Without orientation, an inversion can not
+  # be told apart from colinearity.
+  oriented <- decode(strand(gb)) != "*"
+  gb$allOriented <- oriented & c(oriented[-1], FALSE) & c(oriented[-(1:2)], FALSE, FALSE)
   gb.bak$inv <-
            (gb$colPlus | gb$colMin)  &
+            gb$allOriented           &
             gb$nextDiffStrand        &
             gb$nextNextSameStrand    &
             gb$tdist  <= tol    &   # The last ranges have infinite distances,
@@ -99,7 +107,7 @@ flagInversions <- function (gb, tol = Inf) {
 #' the opposite strand, the same central triplet requires three inversions.
 #' The flag is set on range `X`, as [`flagInversions()`] sets its flag on the
 #' left flank of an inversion.  The five ranges must be on the same _target_
-#' sequence.
+#' sequence, and their strand must be known (not `*`).
 #'
 #' @param gb A [`GBreaks()`] object.
 #' @param details Returns more metadata columns if `TRUE`.
@@ -250,7 +258,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 #'
 #' Flag ranges that start a quadruplet that would be colinear if the two central
 #' pairs were aligned to the opposite strand.  This implies breakpoint reuse.
-#' The four ranges must be on the same _target_ sequence.
+#' The four ranges must be on the same _target_ sequence, and their strand must
+#' be known (not `*`).
 #'
 #' Here is a trivial example of a twin inversion.
 #'

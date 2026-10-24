@@ -20,6 +20,9 @@ Flag ranges that start a triplet that would be colinear if the central pair
 were aligned to the opposite strand.
 }
 \details{
+Inversions can not be determined without orientation: triplets that contain
+a range on the \code{*} strand are never flagged.
+
 Here is a trivial example of an inversion.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{┌──────────────┬──────────────┬──────────────┐

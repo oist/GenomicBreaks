@@ -34,7 +34,7 @@ genome.  The flanks \code{X} and \code{Y} must be on the strand shown: with flan
 the opposite strand, the same central triplet requires three inversions.
 The flag is set on range \code{X}, as \code{\link[=flagInversions]{flagInversions()}} sets its flag on the
 left flank of an inversion.  The five ranges must be on the same \emph{target}
-sequence.
+sequence, and their strand must be known (not \code{*}).
 }
 \examples{
 # Start colinear.  Lower case meands minus strand

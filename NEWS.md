@@ -16,6 +16,11 @@
    duplicated.  `flagAll()` still uses only the `tra` flag.
  * The `tol` argument of `flagTranslocations()` is now implemented, with the
    same meaning as in `flagInversions()`.
+ * `flagInversions()` no longer flags triplets that contain a range on the `*`
+   strand, such as a colinear `+ * +` triplet made by adding the output of
+   `bridgeRegions()` to an object: inversions can not be determined without
+   orientation.  `flagDoubleInversions()` and `flagTwinInversions()` already
+   required known strands; this is now documented.
  * `showTranslocations()`, `filterTranslocations()` and
    `removeTranslocations()` now use both the `tra` and `trs` flags, so that
    moves seen only at their site are no longer ignored.  A moved range seen
