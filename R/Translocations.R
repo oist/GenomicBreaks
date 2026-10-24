@@ -1,13 +1,33 @@
 #' Flag translocations
 #'
-#' Flag ranges that start a triplet that would be colinear if the central pair
-#' were colinear, and that are not an inversion.
+#' Flag the two places where a range that moved between the two genomes is
+#' seen in the order of the _target_ genome: the _payload region_, where the
+#' moved range is found on the _target_ genome, and the _site_, where it is
+#' found on the _query_ genome.
 #'
-#' The result of the flagging differs if the _target_ and _query_ ranges are
-#' swapped.  Therefore, by default this function will search for translocations
-#' on both cases, and flag both ranges.
+#' A range `A` moved between the two genomes when, for instance:
 #'
-#' Here is a trivial example of a translocation:
+#' ```
+#' Target genome:  X Y . . . U A V
+#' Query genome:   X A Y . . . U V
+#' ```
+#'
+#' * The _payload region_ is a triplet of consecutive ranges `U A V` on one
+#'   _target_ sequence, such that `U` and `V` are on the same strand and would
+#'   be colinear if `A` were removed.  The `tra` flag is set on `U`.
+#' * The _site_ is a pair of consecutive ranges `X Y` on one _target_ sequence,
+#'   on the same strand, such that `A` is found between them on the _query_
+#'   genome, and that `X A Y` would be colinear if `A` were on the same strand
+#'   as `X` and `Y`.  The `trs` flag is set on `X`.
+#'
+#' `A` can be on either strand, and on any _target_ sequence.  When one of the
+#' two genomes has no context for `A`, for instance when it is alone on its
+#' sequence, only one of the two flags is set.  When both are set, they
+#' designate the same range `A`.  The function therefore detects transpositions
+#' of single ranges, whether or not they change sequence.
+#'
+#' Here is a trivial example of a translocation, where the _query_ genome has
+#' no context for the moved range, so that only the payload region is flagged:
 #'
 #' ```
 #' ┌──────────────┬──────────────┬──────────────┐
@@ -19,11 +39,15 @@
 #' └──────────────┴──────────────┴──────────────┘
 #' ```
 #'
+#' @note Before version 0.25.0, the site was flagged only with the `both`
+#' option, by a `tra` flag on the _query_ ranges, set on the first range of the
+#' site in _query_ order.
+#'
 #' @param gb A `GBreaks()` object.
 #' @param tol Tolerance window for the distance between two ranges.
-#' @param both Flag both the _target_ and _query_ ranges.
 #'
-#' @return Returns the `GBreaks` object with an extra `tra` metadata column.
+#' @return Returns the `GBreaks` object with two extra metadata columns, `tra`
+#' and `trs`, flagging the payload regions and the sites.
 #'
 #' @family Flagging functions
 #' @family Translocation functions
@@ -33,62 +57,74 @@
 #' flagTranslocations(exampleTranslocation)
 #' flagTranslocations(exampleTranslocation2)
 #' plotApairOfChrs(exampleTranslocation)
+#'
+#' # When the genomes are swapped, the moved range has no context on the
+#' # target genome, and only the site is flagged.
+#' flagTranslocations(swap(exampleTranslocation, sort = TRUE))
+#'
+#' # A move along one sequence is seen at both places.
+#' gb <- permutationVectorToGBreaks(c(1, 3, 4, 2, 5))
+#' flagTranslocations(gb)
+#'
 #' flagTranslocations(exampleDeletion)
 #' flagTranslocations(exampleInsertion)
-#' flagTranslocations(exampleInsertion  |> swap(sort = TRUE))
-#' flagTranslocations(exampleInsertion) |> swap(sort = TRUE)
-#' flagTranslocations(sort(reverse(exampleDeletion)))
+#' flagTranslocations(exampleInsertion |> swap(sort = TRUE))
+#' flagTranslocations(sort(reverse(exampleDeletion), ignore.strand = TRUE))
 #' flagTranslocations(exampleInversion)
 #' flagTranslocations(exampleColinear3)
 #'
 #' @include dist2next.R
-#' @importFrom GenomicRanges precede
+#' @importFrom GenomicRanges precede follow
 #' @export
 
-flagTranslocations <- function (gb, tol = Inf, both = TRUE) {
-  if(length(gb) == 0) {
-    gb$tra <- Rle(logical(0))
+flagTranslocations <- function (gb, tol = Inf) {
+  if(length(gb) < 2) {
+    gb$tra <- gb$trs <- Rle(FALSE, length(gb))
     return(gb)
   }
-  if(length(gb) == 1) {
-    gb$tra <- Rle(FALSE)
-    return(gb)
-  }
-  # Enforce sorting, to guarantee colinearity on the _target_ranges
+  if (tol < Inf) stop("Not implemented yet")
+  # Enforce sorting, to guarantee colinearity on the _target_ ranges
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
-  # Calculate distance to next and next-next entry
-  # (here, "next" is next in order; do not confuse with preceding/following)
-  gb <- flagColinearAlignments(gb, details = TRUE) # Provides qfoll and qprev for later
-  gb <- dist2next(gb, step = 2, ignore.strand = TRUE)
-  gb$tdist2 <- gb$tdist
-  gb$qdist2 <- gb$qdist
-  gb <- dist2next(gb, step = 1, ignore.strand = TRUE) # Overrides strand-aware values from flagColinearAlignments
-  gb$twoSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
 
-  gb.bak$tra <-
-    # There is a distance, therefore they are on the same sequence.
-    (! (is.na(gb$tdist) | is.na(gb$tdist2)))  &
-    # Query colinear with the next-next entry…
-    (
-      ( decode(strand(gb)) %in% c("+", "*") & gb$qfoll == 2 ) |
-      ( decode(strand(gb)) %in%    c("-") & gb$qprev == 2 )
-    ) &
-    # … colinear if same strand
-    gb$twoSameStrand
+  # Offset of the range that each range immediately precedes (qnext0) or
+  # follows (qprev0) on the query genome.  The plus-strand tests also apply to
+  # unstranded ranges.
+  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qprev0  <- follow( gb$query) - seq_along(gb$query)
+  plus  <- decode(strand(gb)) %in% c("+", "*")
+  minus <- decode(strand(gb)) ==      "-"
 
-  if(tol < Inf) stop("Not implemented yet")
+  gb$strand0 <- strand(gb)
+  gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
+  gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
 
-  gb.bak$tra[is.na(gb.bak$tra)] <- FALSE
+  gb$tseq0   <- seqnames(gb)
+  gb$tseq1   <- c(tail(seqnames(gb), -1), factor(NA))
+  gb$tseq2   <- c(tail(seqnames(gb), -2), factor(NA), factor(NA))
 
-  if (isTRUE(both)) {
-    gb.swapped <- swap(gb.bak, sort = TRUE)
-    gb.swapped <- flagTranslocations(gb.swapped, tol = tol, both = FALSE)
-    gb.swapped$query$tra <- gb.swapped$tra # Save the flag on the _query_ because swap will drop the _target_ one.
-    gb.reswapped <- swap(gb.swapped, sort = TRUE)
-    gb.bak$query$tra <- gb.reswapped$tra
-  }
+  # Payload region U A V: U and V are adjacent on the query, that is
+  # precede(IPos(c(1, 3, 2))) - 1:3 -> 2, NA, -1 on the plus strand.
+  gb$tra <-
+    ( gb$tseq2   == gb$tseq0   &
+      gb$strand2 == gb$strand0 &
+      ( (plus  & gb$qnext0 == 2) |
+        (minus & gb$qprev0 == 2) ) ) |> sapply(isTRUE) # Turn NAs into FALSE
 
+  # Site X Y: X precedes the payload A on the query, and A precedes Y, that
+  # is precede(IPos(c(1, 3))) - 1:2 -> k, NA with A at position 1 + k, and
+  # precede(A) - (1 + k) == 1 - k.  The qnext value of A is looked up through
+  # the offset k of X.  Mirror image with follow() on the minus strand.
+  gb$qnextPay <- gb$qnext0[seq_along(gb) + gb$qnext0]
+  gb$qprevPay <- gb$qprev0[seq_along(gb) + gb$qprev0]
+  gb$trs <-
+    ( gb$tseq1   == gb$tseq0   &
+      gb$strand1 == gb$strand0 &
+      ( (plus  & gb$qnext0 != 1 & gb$qnext0 + gb$qnextPay == 1) |
+        (minus & gb$qprev0 != 1 & gb$qprev0 + gb$qprevPay == 1) ) ) |> sapply(isTRUE)
+
+  gb.bak$tra <- Rle(gb$tra)
+  gb.bak$trs <- Rle(gb$trs)
   gb.bak
 }
 

@@ -5,6 +5,15 @@
    and new `permutationVectorToGBreaks()` function, the inverse of
    `permutationVector()`.  A set of 200 simulations is provided in
    `inst/extdata/simulatedRearrangements.rds` for tests and benchmarks.
+ * **Breaking change:** `flagTranslocations()` now flags the two places where
+   a moved range is seen in the order of the _target_ genome: its payload
+   region (`tra` flag, as before) and its site, the pair of adjacent ranges
+   between which it is found on the _query_ genome (new `trs` flag, on the
+   first range of the pair).  The `both` argument and the `tra` flag on the
+   _query_ ranges are removed: they computed the site by swapping the genomes
+   and sorting again, which put the flag on the second range of the site when
+   it was on the minus strand, and on the wrong row when _target_ ranges were
+   duplicated.  `flagAll()` still uses only the `tra` flag.
  * **Breaking change:** `dist2next()` now returns the number of bases between
    two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
    overlapping ranges), instead of that number plus one.  The `tol` argument

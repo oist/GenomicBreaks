@@ -147,45 +147,34 @@ the flags or drop them, without warning.  `swap()` drops the _target_
 metadata columns, flags included, and the `remove*` helpers drop them through
 `coalesce_contigs()`.  Flags should be recomputed after a transformation.
 
-**Translocations** (`flagTranslocations()`; checked against a brute-force
-implementation on simulations, which it follows on both genomes):
+**Translocations** (`flagTranslocations()`; tested against a brute-force
+implementation of its definition on the stored simulations):
 
 - The function finds transpositions (moves of one range, possibly inverted,
   on the same sequence or not) rather than translocations; do not rename it
   for now.
-- A move of range `A` is seen in two places of the _target_ order:
+- A move of range `A` is seen in two places of the _target_ order, both
+  flagged on the _target_ ranges, without `swap()`:
   - the **payload region** `U A V`: three consecutive _target_ ranges, with
-    `U` and `V` adjacent and colinear on the _query_.  This is the `tra`
-    flag, on `U`; the payload is the next range.
+    `U` and `V` adjacent and colinear on the _query_.  `tra` flag, on `U`;
+    the payload is the next range.
   - the **site** `X Y`: two consecutive _target_ ranges between which `A` is
-    found on the _query_ (`X A Y`).  With `both = TRUE`, this is the
-    `query$tra` flag, computed by swapping the genomes and swapping back.
+    found on the _query_ (`X A Y`).  `trs` flag, on `X`.  The pattern uses
+    one indirect lookup: the payload is `i + qnext0[i]` (`i + qprev0[i]` on
+    the minus strand), and the test is `qnext0[i] != 1 &
+    qnext0[i] + qnext0[i + qnext0[i]] == 1`.
   When both are seen, they point to the same payload; either can be missing,
-  for instance when `A` is alone on its sequence in one genome.
-- Problems of the current implementation:
-  - The `show*`, `filter*` and `remove*` helpers and `flagAll()` only use
-    `tra`, so moves seen only at their site are ignored.
-  - `query$tra` is set on the first range of the site in _query_ order, which
-    is `Y`, not `X`, when the site is on the minus strand: this breaks the
-    first-range convention (39 of the query-side flags of the 200 stored
-    simulations, after coalescing).
-  - `query$tra` is brought back to _target_ order by sorting the swapped
-    object again; when _target_ ranges are duplicated (possible in
-    many-to-many alignments), sorting can exchange the tied rows and put the
-    flag on the wrong one.
-  - `tol` is not implemented: a finite value stops with an error, after the
-    work is done.  `qdist2` (the distance between `U` and `V` on the
-    _query_) is computed for that purpose and never used.
-- Proposed redesign (to be confirmed): two flags relative to the _target_
-  side, computed without `swap()`: one for payload regions (as `tra` now)
-  and one for sites, on `X`.  The site flag is a look-ahead pattern with one
-  indirect lookup: with `qnext0` as above, the payload is `i + qnext0[i]`,
-  and on the plus strand the site test is `qnext0[i] != 1 &
-  qnext0[i] + qnext0[i + qnext0[i]] == 1` (with `follow()` instead of
-  `precede()` on the minus strand), plus the same target sequence and the
-  same strand for `X` and `Y`.  This equals `query$tra` moved to `X` on all
-  200 stored simulations.  Events can then be built by pairing the two
-  flags through their payload.
+  for instance when `A` is alone on its sequence in one genome.  Events can
+  be built by pairing the two flags through their payload.
+- `flagAll()` only uses `tra`, on purpose for now: the `X` of a site can
+  carry another flag, which would make its `stopifnot()` checks fail.
+- Before 0.25.0, the site was flagged with `both = TRUE`, by a `tra` flag on
+  the _query_ ranges computed through `swap()`; that flag was on `Y` for
+  minus-strand sites, and on the wrong row when _target_ ranges were
+  duplicated.
+- To do: the `show*`, `filter*` and `remove*` helpers only use `tra`, so
+  moves seen only at their site are ignored; `tol` is not implemented (a
+  finite value stops with an error).
 
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 
