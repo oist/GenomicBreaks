@@ -244,6 +244,22 @@ signed permutations, and the simulations in
 `inst/extdata/simulatedRearrangements.rds` can be compared with an
 independent, brute-force implementation of a flag's definition.
 
+**Use the lazy-loaded `example*` objects in the tests as much as possible.**
+Build an object by hand only when no example fits, and in that case propose
+a new example (in `data-raw/StructuralVariants.R`) when it would also fill a
+missing role in the man-page examples.  Candidates from the hand-built
+objects of the current tests:
+
+- a transposition along one sequence, seen at both its payload region and
+  its site (target `X Y U A V`, query `X A Y U V`; currently
+  `permutationVectorToGBreaks(c(1, 3, 4, 2, 5))`);
+- colinear alignments with their mapped regions, including zero-width ones
+  and one of width zero on the query only (a new intron in the target);
+- an unoriented object (all ranges on the `*` strand), as made from
+  reciprocal best hits;
+- an inversion triplet whose query adjacency is interrupted by range 1
+  (regression test for `flagInversions()` and `flagPairs()`).
+
 Lift existing `@examples` into `expect_*` assertions. High-value candidates
 include the colinearity/coalescing functions and the nucleotide-distance
 functions (some distance functions are explicitly flagged as not-yet-proofread
