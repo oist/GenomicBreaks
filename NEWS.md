@@ -16,6 +16,10 @@
    duplicated.  `flagAll()` still uses only the `tra` flag.
  * The `tol` argument of `flagTranslocations()` is now implemented, with the
    same meaning as in `flagInversions()`.
+ * `showTranslocations()`, `filterTranslocations()` and
+   `removeTranslocations()` now use both the `tra` and `trs` flags, so that
+   moves seen only at their site are no longer ignored.  A moved range seen
+   at both places is counted once.
  * **Breaking change:** `dist2next()` now returns the number of bases between
    two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
    overlapping ranges), instead of that number plus one.  The `tol` argument

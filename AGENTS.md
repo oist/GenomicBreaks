@@ -175,12 +175,11 @@ implementation of its definition on the stored simulations):
 - `tol` limits the distances between the ranges that must be adjacent:
   `U A V` on the _target_ and `U V` on the _query_ for payload regions,
   `X Y` on the _target_ and `X A Y` on the _query_ for sites.
-- To do: the `show*`, `filter*` and `remove*` helpers only use `tra`, so
-  moves seen only at their site are ignored.
+- The `show*`, `filter*` and `remove*` helpers use both flags; the moved
+  ranges are computed by the internal `translocationPayloads()`.
 
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 
-- Translocations: only the `tra` flag is used (see above).
 - Double inversions: there is no `showDoubleInversions()`.
 - Twin inversions: there are no `show*`, `filter*` or `remove*` functions.
 - `filterColinearRegions()` has no `detect` argument.

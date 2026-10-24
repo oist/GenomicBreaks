@@ -152,62 +152,82 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb.bak
 }
 
+# Positions of the ranges moved by the translocations flagged in `gb`: the
+# range after each `tra` flag (the centre of a payload region), and the range
+# found on the query genome between the two ranges of each `trs` flag (a
+# site).  A range seen at both places is reported once.
+
+translocationPayloads <- function(gb) {
+  traPos  <- which(gb$tra) + 1
+  trsPos  <- which(gb$trs)
+  minus   <- decode(strand(gb))[trsPos] == "-"
+  sitePay <- ifelse(minus, follow(gb$query)[trsPos], precede(gb$query)[trsPos])
+  sort(unique(c(traPos, sitePay)))
+}
+
 #' Show translocations and their flanking blocks.
 #'
 #' @param gb A [`GBreaks`] object.
 #' @param rename Replace range names by their numeric order before subsetting.
-#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
-#'        flag or fail if it is absent.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the
+#'        `tra` and `trs` flags.  If they are absent, an empty object is
+#'        returned.
 #'
 #' @family Translocation functions
 #'
 #' @returns Returns the `GBreaks` object in which all ranges that are not
-#' part of a translocation triplet have been discarded.  If the object was missing
-#' the `tra` metadata column, return the object after discarding all of its
-#' ranges.
+#' part of a payload region (`U A V`), of a site (`X Y`), or the moved range
+#' of a site, have been discarded (see [`flagTranslocations()`]).
 #'
 #' @examples
 #' showTranslocations(exampleTranslocation)
+#' showTranslocations(swap(exampleTranslocation, sort = TRUE))
 #'
 #' @export
 
 showTranslocations <- function(gb, rename = TRUE, detect = TRUE) {
   if(isTRUE(detect)) gb <- flagTranslocations(gb)
-  if (is.null(gb$tra)) return(gb[0])
+  if (is.null(gb$tra) || is.null(gb$trs)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
-  flagPos <- which(gb$tra) + 1
-  flagContext <- c(flagPos -1 , flagPos, flagPos + 1) |> unique() |> sort()
+  traPos <- which(gb$tra)
+  trsPos <- which(gb$trs)
+  flagContext <- c(traPos, traPos + 1, traPos + 2,
+                   trsPos, trsPos + 1,
+                   translocationPayloads(gb)) |> unique() |> sort()
   gb[flagContext]
 }
 
-#' Extract central blocks in translocations
+#' Extract moved blocks in translocations
 #'
 #' @param gb A [`GBreaks`] object.
 #' @param rename Replace range names by their numeric order before subsetting.
 #' @param remove Filter out instead of filtering in.
-#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
-#'        flag or fail if it is absent.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the
+#'        `tra` and `trs` flags.  If they are absent, an empty object is
+#'        returned.
 #'
 #' @family Translocation functions
 #'
 #' @returns Returns the `GBreaks` object in which all ranges that are not
-#' the central part of an inversion triplet have been discarded.  If the object
-#' was missing the `tra` metadata column, return the object after discarding all
-#' of its ranges.
+#' moved ranges have been discarded: the centre of each payload region, and
+#' the range found between the two ranges of each site on the _query_ genome
+#' (see [`flagTranslocations()`]).  A range found by both flags is returned
+#' once.  With `remove = TRUE`, the moved ranges are discarded instead.
 #'
 #' @examples
 #' filterTranslocations(exampleTranslocation)
 #' filterTranslocations(remove = TRUE, exampleTranslocation)
+#' filterTranslocations(swap(exampleTranslocation, sort = TRUE))
 #'
 #' @export
 
 filterTranslocations <- function(gb, rename = TRUE, remove = FALSE, detect = TRUE) {
   if(isTRUE(detect)) gb <- flagTranslocations(gb)
-  if (is.null(gb$tra)) return(gb[0])
+  if (is.null(gb$tra) || is.null(gb$trs)) return(gb[0])
   if (isTRUE(rename))
     names(gb) <- seq_along(gb)
-  flagPos <- which(gb$tra) + 1
+  flagPos <- translocationPayloads(gb)
   if (isTRUE(remove)) {
     # gb[-integer(0)] would return an empty object.
     if (length(flagPos) == 0) return(gb)
@@ -219,25 +239,28 @@ filterTranslocations <- function(gb, rename = TRUE, remove = FALSE, detect = TRU
 #' Remove translocations
 #'
 #' @param gb A [`GBreaks`] object.
-#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the `tra`
-#'        flag or fail if it is absent.
+#' @param detect Run again `flagTranslocations()` if `TRUE`, else reuse the
+#'        `tra` and `trs` flags.  If they are absent, an empty object is
+#'        returned.
 #'
 #' @family Translocation functions
 #' @family modifier functions
 #'
-#' @returns Returns the `GBreaks` object after removing the ranges that are
-#' translocated and coalescing the resulting collinear ranges.
+#' @returns Returns the `GBreaks` object after removing the moved ranges
+#' (see [`filterTranslocations()`]) and coalescing the resulting collinear
+#' ranges.
 #'
 #' @examples
 #' removeTranslocations(exampleTranslocation)
+#' removeTranslocations(swap(exampleTranslocation, sort = TRUE))
 #'
 #' @export
 
 removeTranslocations <- function(gb, detect = TRUE) {
   if (length(gb) < 3) return(gb)
   if (isTRUE(detect)) gb <- flagTranslocations(gb)
-  if (is.null(gb$tra)) return(gb[0])
-  traPos <- which(gb$tra) + 1
+  if (is.null(gb$tra) || is.null(gb$trs)) return(gb[0])
+  traPos <- translocationPayloads(gb)
   if (length(traPos) == 0) return(gb)
   coalesce_contigs(gb[-traPos])
 }

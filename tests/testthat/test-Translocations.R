@@ -96,3 +96,45 @@ test_that("filterTranslocations(remove = TRUE) keeps everything when nothing is 
   expect_equal(names(kept), c("1", "2", "3"))
   expect_equal(granges(unname(kept)), granges(exampleColinear3))
 })
+
+test_that("the helpers use payload regions and sites", {
+  # Target X Y U A V, query X A Y U V: A is seen at both places.
+  gb <- permutationVectorToGBreaks(c(1, 3, 4, 2, 5))
+  expect_equal(names(filterTranslocations(gb)), "4")
+  expect_equal(names(filterTranslocations(gb, remove = TRUE)), c("1", "2", "3", "5"))
+  expect_equal(names(showTranslocations(gb)), as.character(1:5))
+  expect_length(removeTranslocations(gb), 1)
+
+  # Swapped example: only the site is seen.
+  sw <- swap(exampleTranslocation, sort = TRUE)
+  expect_equal(names(filterTranslocations(sw)), "3")
+  expect_equal(names(showTranslocations(sw)), c("1", "2", "3"))
+  rm <- removeTranslocations(sw)
+  expect_length(rm, 1)
+  expect_equal(as.character(rm$query), "chrA:100-400")
+
+  # Original example: only the payload region is seen.
+  expect_equal(names(filterTranslocations(exampleTranslocation)), "2")
+  expect_equal(names(showTranslocations(exampleTranslocation)), c("1", "2", "3"))
+  expect_length(removeTranslocations(exampleTranslocation), 1)
+})
+
+test_that("filterTranslocations() returns the moved ranges of the simulations", {
+  for (gb in loadSimulations(50)) {
+    b <- bruteTranslocations(gb)
+    # Moved range of each site: the range between X and Y on the query
+    qs <- as.character(seqnames(gb$query))
+    qrank <- ave(start(gb$query), qs, FUN = rank)
+    step <- ifelse(as.character(strand(gb)) == "-", -1, 1)
+    sitePay <- sapply(which(b$trs), \(X) which(qs == qs[X] & qrank == qrank[X] + step[X]))
+    expected <- sort(unique(c(which(b$tra) + 1, unlist(sitePay))))
+    expect_equal(as.integer(names(filterTranslocations(gb))), expected)
+  }
+})
+
+test_that("detect = FALSE reuses the flags", {
+  flagged <- flagTranslocations(exampleTranslocation, tol = 99)
+  expect_length(filterTranslocations(flagged, detect = FALSE), 0)
+  expect_length(filterTranslocations(exampleTranslocation, detect = FALSE), 0)
+  expect_length(removeTranslocations(flagged, detect = FALSE), 3)
+})
