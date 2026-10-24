@@ -16,6 +16,13 @@ Returns the \code{GBreaks} object with an extra \code{flag} metadata column.
 Flag ranges that are at the beginning of a colinear duplet, or an inversion
 or a translocation triplet.
 }
+\section{Unstranded ranges (experimental)}{
+
+On ranges of the \code{*} strand, a range can be both colinear with the next
+one and the start of a payload region of \code{\link[=flagTranslocations]{flagTranslocations()}}; it is
+then flagged as colinear.  This behaviour may change in future versions.
+}
+
 \examples{
 flagAll(exampleInversion)
 

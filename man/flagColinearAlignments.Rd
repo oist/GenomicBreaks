@@ -47,6 +47,17 @@ Pay attention that if the \code{mindwidth} option is passed, some intervals
 are discarded from the returned object.  This parameter might be removed in
 the future if too confusing or useless.
 }
+\section{Unstranded ranges (experimental)}{
+
+A range on the \code{*} strand is compatible with both strands: a pair of
+unstranded ranges is colinear when its ranges are adjacent in either
+direction.  This behaviour may change in future versions.
+
+Ranges of width zero, such as the mapped regions returned by
+\code{\link[=bridgeRegions]{bridgeRegions()}} between adjacent alignments, are placed between the two
+bases that surround them.
+}
+
 \examples{
 flagColinearAlignments(exampleColinear3)
 flagColinearAlignments(exampleColinear3, details = TRUE)

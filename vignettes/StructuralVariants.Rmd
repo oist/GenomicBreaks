@@ -62,8 +62,9 @@ member of the pair, ordered by the sequence on the _target_ genome.
 flagColinearAlignments(exampleColinear)
 flagColinearAlignments(reverse(exampleColinear))
 
-# Note the tolerance window
+# Note the tolerance window: the ranges are separated by 100 unaligned bases
 flagColinearAlignments(exampleColinear, tol = 100)
+flagColinearAlignments(exampleColinear, tol = 99)
 
 # Strandless mappings can also be colinear
 library("plyranges") |> suppressPackageStartupMessages()
@@ -213,16 +214,34 @@ exampleClownInversion |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
 ## Translocations
 
 If a region has moved, but is not an inversion, then it is a translocation.
+A moved range is seen at two places of the _target_ genome: its _payload
+region_, where it is found on the _target_ genome between two ranges that are
+adjacent on the _query_ genome (`tra` flag), and its _site_, a pair of
+adjacent ranges between which it is found on the _query_ genome (`trs` flag).
 
 ```{r translocation}
-exampleTranslocation |> flagColinearAlignments() |> flagInversions()
+exampleTranslocation |> flagTranslocations()
 plotApairOfChrs(exampleTranslocation)
+```
+
+Here, the moved range is alone on its _query_ sequence, so there is no site.
+When the genomes are swapped, there is a site but no payload region.
+
+```{r translocationSwapped}
+exampleTranslocation |> swap(sort = TRUE) |> flagTranslocations()
 ```
 
 It does not matter if the region moved on the minus strand
 ```{r translocationOnMinus}
-exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
+exampleTranslocation2 |> flagTranslocations()
 plotApairOfChrs(exampleTranslocation2)
+```
+
+When a range moves along a sequence, both places are flagged.
+
+```{r translocationBoth}
+# Target: X Y U A V ; query: X A Y U V
+permutationVectorToGBreaks(c(1, 3, 4, 2, 5)) |> flagTranslocations()
 ```
 
 ## Insertions / Deletions (indels)

@@ -38,6 +38,15 @@ Lastly, \code{Bnd} (for \emph{boundary}) signals that there is no pair to analys
 because the current entry is the last one for the current sequence level on
 the \emph{target} genome.
 }
+\section{Unstranded ranges (experimental)}{
+
+A pair that involves a range on the \code{*} strand is flagged \code{Col} when its
+ranges are adjacent on the \emph{query} genome in an order compatible with
+colinearity, \code{Scr} when they are not adjacent, and \code{NA} when they are
+adjacent but their class depends on the unknown strand (\code{Inv} or \code{Flp}).
+This behaviour may change in future versions.
+}
+
 \examples{
 flagPairs(exampleInversion)
 flagPairs(exampleTranslocation)

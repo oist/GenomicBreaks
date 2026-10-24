@@ -4,20 +4,35 @@
 \alias{leftInversionGaps}
 \title{Isolate the left-side gaps in inversions}
 \usage{
-leftInversionGaps(gb)
+leftInversionGaps(gb, detect = TRUE)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
+
+\item{detect}{Run again \code{flagInversions()} if \code{TRUE}, else reuse the \code{inv}
+flag.  If the flag is absent, no gap is returned.}
 }
 \value{
-Returns a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object representing the left-side gaps in the
-\code{GBreaks} object.
+Returns a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges}} object representing the
+left-side gaps in the \code{GBreaks} object, one per inversion.  Its \code{flagIndex}
+metadata column contains the position in \code{gb} of the left flank of each
+inversion.
 }
 \description{
-Isolate the left-side gaps in inversions
+For each inversion flagged by \code{\link[=flagInversions]{flagInversions()}}, returns the region of
+the \emph{target} genome between the left flank of the inversion triplet (the
+range carrying the flag) and its central range.
+}
+\note{
+When these two ranges are adjacent or overlap on the \emph{target} genome,
+the gap is a zero-width range that starts after the end of the left flank.
 }
 \examples{
-leftInversionGaps(flagInversions(exampleInversion))
+leftInversionGaps(exampleInversion)
+
+# Reuse flags computed with a tolerance threshold
+exampleInversion |> flagInversions(tol = 19) |> leftInversionGaps(detect = FALSE)
+exampleInversion |> flagInversions(tol = 18) |> leftInversionGaps(detect = FALSE)
 
 }
 \seealso{

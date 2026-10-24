@@ -1,3 +1,95 @@
+# GenomicBreaks 0.25.0
+
+ * The handling of ranges on the `*` strand (unoriented objects, and mapped
+   regions such as the output of `bridgeRegions()`) is experimental: it may
+   change in later versions without being considered a breaking change.
+   Inversions are never flagged on such ranges, and functions that need
+   orientation, such as `permutationVector()`, stop with an error.
+ * New `simulateRearrangements()` function, which simulates a pair of genomes
+   rearranged by random inversions and transpositions and records the events,
+   and new `permutationVectorToGBreaks()` function, the inverse of
+   `permutationVector()`.  A set of 200 simulations is provided in
+   `inst/extdata/simulatedRearrangements.rds` for tests and benchmarks.
+ * **Breaking change:** `flagTranslocations()` now flags the two places where
+   a moved range is seen in the order of the _target_ genome: its payload
+   region (`tra` flag, as before) and its site, the pair of adjacent ranges
+   between which it is found on the _query_ genome (new `trs` flag, on the
+   first range of the pair).  The `both` argument and the `tra` flag on the
+   _query_ ranges are removed: they computed the site by swapping the genomes
+   and sorting again, which put the flag on the second range of the site when
+   it was on the minus strand, and on the wrong row when _target_ ranges were
+   duplicated.  `flagAll()` still uses only the `tra` flag.
+ * The `tol` argument of `flagTranslocations()` is now implemented, with the
+   same meaning as in `flagInversions()`.
+ * `coalesce_contigs()` now coalesces over _mapped regions_: in an object that
+   mixes oriented ranges and ranges on the `*` strand, such as the output of
+   `bridgeRegions()` added to the alignments, the oriented ranges are
+   coalesced and absorb the unstranded ranges that they contain on both
+   genomes (experimental).  Before, such objects were not coalesced at all,
+   and mapped regions of width zero on one genome caused an error.
+ * `flagInversions()` no longer flags triplets that contain a range on the `*`
+   strand, such as a colinear `+ * +` triplet made by adding the output of
+   `bridgeRegions()` to an object: inversions can not be determined without
+   orientation.  `flagDoubleInversions()` and `flagTwinInversions()` already
+   required known strands; this is now documented.
+ * `flagTranslocations()` now tests unstranded ranges in both directions,
+   instead of as plus-strand ranges, so that its result on unoriented
+   objects no longer depends on the orientation of the _query_ sequences.
+   As orientation is unknown, more ranges can be flagged as moved (see the
+   help page).  `flagAll()` gives precedence to colinearity on such ranges,
+   instead of failing (experimental).
+ * `flagPairs()` no longer flags all pairs that involve a range on the `*`
+   strand as boundaries (`Bnd`): they are now `Col` when adjacent in an order
+   compatible with colinearity, `Scr` when not adjacent, and `NA` when
+   adjacent but undetermined (experimental).  The factor levels are
+   unchanged.
+ * Ranges of width zero on one or both genomes, such as the mapped regions
+   that `bridgeRegions()` returns between adjacent alignments, broke the
+   adjacency tests of `flagColinearAlignments()`, `flagPairs()` and the
+   functions that flag structural variants: `GenomicRanges::precede()` and
+   `follow()` report a zero-width range as adjacent to itself.  The adjacency
+   tests now place such ranges between the bases that surround them.  Results
+   on objects without zero-width ranges are unchanged.
+ * `permutationVector()`, and therefore `inversionDistance()` and
+   `breakpointGraphProperties()`, now stop with an error when a range is on
+   the `*` strand, instead of counting it as a plus-strand range.
+ * `showTranslocations()`, `filterTranslocations()` and
+   `removeTranslocations()` now use both the `tra` and `trs` flags, so that
+   moves seen only at their site are no longer ignored.  A moved range seen
+   at both places is counted once.
+ * **Breaking change:** `dist2next()` now returns the number of bases between
+   two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
+   overlapping ranges), instead of that number plus one.  The `tol` argument
+   of `coalesce_contigs()`, `flagColinearAlignments()` and `flagInversions()`
+   now bridges gaps of up to `tol` bases, as documented, instead of gaps
+   shorter than `tol`.  With a finite `tol`, results change where a gap is
+   exactly `tol` bases wide; for example `coalesce_contigs(gb, tol = 0)` now
+   merges adjacent colinear ranges.  Results with the default `tol = Inf`
+   are unchanged.
+ * `flagDoubleInversions()` now requires the ranges before and after the
+   triplet to be colinear with it: on the plus strand for the `bcA` and `Cab`
+   patterns, and on the minus strand for `BAc` and `aCB`.  Previously, it also
+   flagged triplets that require three inversions, and triplets whose
+   neighbours map elsewhere in the _query_ genome.  The flag is now set on the
+   left flank, as in `flagInversions()` and `flagTwinInversions()`.  As a
+   consequence, `filterDoubleInversions()` now returns the central triplet
+   (it returned its last two ranges and the right flank), and
+   `removeDoubleInversions()` was adjusted to remove the same three ranges.
+ * `flagDoubleInversions()` and `flagTwinInversions()` now require all the
+   ranges of a pattern to be on the same _target_ sequence, like
+   `flagInversions()` does.
+ * `flagInversions()` and `flagPairs()` ignored the first range of the object
+   when testing whether two ranges are adjacent on the _query_ genome.  For
+   example, `flagPairs(exampleInversionGarg2019)` now returns `Scr` instead
+   of `Inv` for ranges 4 and 5, which are separated by range 1 on the _query_.
+ * `filterTranslocations(remove = TRUE)` returned an empty object when no
+   translocation was flagged; it now returns all the ranges.
+ * `leftInversionGaps()` now returns one gap per inversion, as a zero-width
+   range when the left flank and the central range are adjacent or overlap
+   (these inversions were dropped), with a new `flagIndex` metadata column
+   giving the position of the left flank.  A new `detect` argument allows
+   to reuse existing `inv` flags, for instance computed with a `tol` value.
+
 # GenomicBreaks 0.24.0
 
  * Support correction for unaligned bases in `JC69_distance()`.

@@ -17,7 +17,8 @@
 #'
 #' @param x Either a GBreaks object or a signed permutation vector.
 #'   If \code{x} is a GBreaks object, a permutation vector will be extracted
-#'   using \code{\link{permutationVector}}.
+#'   using \code{\link{permutationVector}}, which stops with an error if a
+#'   range is on the \code{*} strand.
 #'
 #' @return An integer: the minimal number of inversions needed to sort the permutation.
 #'

@@ -3,6 +3,9 @@
 #' Flag ranges that start a triplet that would be colinear if the central pair
 #' were aligned to the opposite strand.
 #'
+#' Inversions can not be determined without orientation: triplets that contain
+#' a range on the `*` strand are never flagged.
+#'
 #' Here is a trivial example of an inversion.
 #'
 #' ```
@@ -16,7 +19,8 @@
 #' ```
 #'
 #' @param gb A `GBreaks()` object.
-#' @param tol Tolerance window for the distance between two ranges.
+#' @param tol Ranges separated by more than `tol` unaligned bases on either
+#'        genome are not considered adjacent.
 #'
 #' @return Returns the `GBreaks` object with an extra `inv` metadata column.
 #'
@@ -26,7 +30,9 @@
 #'
 #' @examples
 #' flagInversions(exampleInversion)
+#' # The widest gap between the ranges of this example is 19 bases.
 #' flagInversions(exampleInversion, tol = 19)
+#' flagInversions(exampleInversion, tol = 18)
 #' plotApairOfChrs(exampleInversion)
 #'
 #' flagInversions(exampleInversion |> reverse() |> sort(ignore.strand = TRUE))
@@ -51,25 +57,30 @@ flagInversions <- function (gb, tol = Inf) {
   gb$tdist2 <- c(gb$tdist[-1], Inf)
   gb$qdist2 <- c(gb$qdist[-1], Inf)
   # Check that the next and next-next are colinear, ignoring strand
-  gb$oneNext <- precede(gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
+  gb$oneNext <- precedeZW(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$twoNext <- c(gb$oneNext[-1], NA)
   gb$colPlus <- strand(gb) %in% c("+", "*") &  gb$oneNext & gb$twoNext
   # Check that the next and next-next are anti-colinear, ignoring strand
-  gb$onePrev <- follow(gb$query, tail(gb$query, -1), ignore.strand = T) - seq_along(gb) == 0
+  gb$onePrev <- followZW( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$twoPrev <- c(gb$onePrev[-1], NA)
   gb$colMin  <- strand(gb) %in%     "-"     &  gb$onePrev & gb$twoPrev
   # Is the current strand the same as the next ?
   gb$nextDiffStrand     <- strand(gb) != c(strand(tail(gb, -1)), factor(    "*"    ))
   # Is the current strand the same as the next-next ?
   gb$nextNextSameStrand <- strand(gb) == c(strand(tail(gb, -2)), factor(c("*", "*")))
+  # Are the three ranges oriented ?  Without orientation, an inversion can not
+  # be told apart from colinearity.
+  oriented <- decode(strand(gb)) != "*"
+  gb$allOriented <- oriented & c(oriented[-1], FALSE) & c(oriented[-(1:2)], FALSE, FALSE)
   gb.bak$inv <-
            (gb$colPlus | gb$colMin)  &
+            gb$allOriented           &
             gb$nextDiffStrand        &
             gb$nextNextSameStrand    &
-            gb$tdist  < tol + 1 &   # We need `< tol + 1`
-            gb$tdist2 < tol + 1 &   # and not `<= tol`
-            gb$qdist  < tol + 1 &   # Because of comparisons to
-            gb$qdist2 < tol + 1     # infinite distance returned by dist2next.
+            gb$tdist  <= tol    &   # The last ranges have infinite distances,
+            gb$tdist2 <= tol    &   # which pass these tests when tol = Inf,
+            gb$qdist  <= tol    &   # but the adjacency tests above exclude
+            gb$qdist2 <= tol        # them.
   if (any(is.na(gb.bak$inv)))
     gb.bak[is.na(gb.bak$inv)]$inv <- FALSE
   gb.bak
@@ -77,11 +88,31 @@ flagInversions <- function (gb, tol = Inf) {
 
 #' Flag double inversions
 #'
-#' Two consecutive and overlapping inversions will generate patterns that can
-#' this function aims to detect.
+#' Flag ranges that start a quintuplet in which two overlapping inversions
+#' moved the three central ranges, and the two flanking ranges did not move.
+#'
+#' With the five _target_ ranges named `X A B C Y` in their order on the
+#' _target_ genome, and lower case meaning the minus strand, the _query_
+#' genome reads one of the following:
+#'
+#' ```
+#' X b c A Y    ABC -> baC -> bcA
+#' X C a b Y    ABC -> Acb -> Cab
+#' y B A c x    cba -> BCa -> BAc
+#' y a C B x    cba -> cAB -> aCB
+#' ```
+#'
+#' The last two are the first two read on the other strand of the _query_
+#' genome.  The flanks `X` and `Y` must be on the strand shown: with flanks on
+#' the opposite strand, the same central triplet requires three inversions.
+#' The flag is set on range `X`, as [`flagInversions()`] sets its flag on the
+#' left flank of an inversion.  The five ranges must be on the same _target_
+#' sequence, and their strand must be known (not `*`).
 #'
 #' @param gb A [`GBreaks()`] object.
 #' @param details Returns more metadata columns if `TRUE`.
+#'
+#' @return Returns the `GBreaks` object with an extra `Dbl` metadata column.
 #'
 #' @family Flagging functions
 #' @family Inversion functions
@@ -127,61 +158,92 @@ flagDoubleInversions <- function(gb, details = FALSE) {
     gb$Dbl <- Rle(logical(0))
     return(gb)
   }
-  if(length(gb) == 1) {
-    gb$Dbl <- Rle(FALSE)
+  if(length(gb) < 5) {
+    gb$Dbl <- Rle(FALSE, length(gb))
     return(gb)
   }
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
 
   gb.bak <- gb # Backup the object
 
-  # Look ahead for the two next alignments
-  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  # Look ahead for the four next alignments
+  gb$qnext0  <- precedeZW(gb$query) - seq_along(gb$query)
   gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
   gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
+  gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
+  gb$qnext4  <- c(tail(gb$qnext0, -4), NA, NA, NA, NA)
 
   gb$strand0 <- strand(gb)
   gb$strand1 <- c(tail(strand(gb), -1), factor("*"))
   gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
+  gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
+  gb$strand4 <- c(tail(strand(gb), -4), factor("*"), factor("*"), factor("*"), factor("*"))
 
-  # Pattern 1: bcA
-  # case (strand)-insensitive order of bcA is 3, 1, 2
-  # In that order, strands are +, -, -
-  # precede(IPos(c(3,1,2))) - 1:3
-  # We do not test value for the 3rd position (NA)
+  # All ranges must be on the same target sequence.  As the object is sorted,
+  # it is enough to compare the first and the last one.
+  gb$tseq0   <- seqnames(gb)
+  gb$tseq4   <- c(tail(seqnames(gb), -4), factor(NA), factor(NA), factor(NA), factor(NA))
+
+  # In the target order X A B C Y, the expected values of qnext0 to qnext4 are
+  # precede(IPos(rank of each range in the query order)) - 1:5.
+  # Each pattern tests the four values that are not NA, that is the four
+  # adjacencies chaining the five ranges in the query order.
+
+  # Pattern 1: X b c A Y
+  # precede(IPos(c(1,4,2,3,5))) - 1:5  ->  2, 3, 1, -2, NA
   gb$pat_bcA <-
-    ( gb$qnext1  ==  1  &
-      gb$qnext2  == -2  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext0  ==  2  &
+      gb$qnext1  ==  3  &
+      gb$qnext2  ==  1  &
+      gb$qnext3  == -2  &
       gb$strand0 == "+" &
-      gb$strand1 == "-" &
-      gb$strand2 == "-"   ) |> sapply(isTRUE) # Turn NAs into FALSE
+      gb$strand1 == "+" &
+      gb$strand2 == "-" &
+      gb$strand3 == "-" &
+      gb$strand4 == "+"   ) |> sapply(isTRUE) # Turn NAs into FALSE
 
-  # Pattern 2: Cab
-  # precede(IPos(c(2,3,1))) - 1:3
+  # Pattern 2: X C a b Y
+  # precede(IPos(c(1,3,4,2,5))) - 1:5  ->  3, 1, 2, -2, NA
   gb$pat_Cab <-
-    ( gb$qnext0  ==  1  &
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext0  ==  3  &
+      gb$qnext1  ==  1  &
+      gb$qnext2  ==  2  &
+      gb$qnext3  == -2  &
+      gb$strand0 == "+" &
+      gb$strand1 == "-" &
+      gb$strand2 == "-" &
+      gb$strand3 == "+" &
+      gb$strand4 == "+"   ) |> sapply(isTRUE)
+
+  # Pattern 3: y B A c x
+  # precede(IPos(c(5,3,2,4,1))) - 1:5  ->  NA, 2, -1, -3, -2
+  gb$pat_BAc <-
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext1  ==  2  &
+      gb$qnext2  == -1  &
+      gb$qnext3  == -3  &
+      gb$qnext4  == -2  &
+      gb$strand0 == "-" &
+      gb$strand1 == "+" &
+      gb$strand2 == "+" &
+      gb$strand3 == "-" &
+      gb$strand4 == "-"   ) |> sapply(isTRUE)
+
+  # Pattern 4: y a C B x
+  # precede(IPos(c(5,2,4,3,1))) - 1:5  ->  NA, 2, -2, -1, -3
+  gb$pat_aCB <-
+    ( gb$tseq4   == gb$tseq0 &
+      gb$qnext1  ==  2  &
       gb$qnext2  == -2  &
+      gb$qnext3  == -1  &
+      gb$qnext4  == -3  &
       gb$strand0 == "-" &
       gb$strand1 == "-" &
-      gb$strand2 == "+"   ) |> sapply(isTRUE)
-
-  # Pattern 3: BAc
-  # precede(IPos(c(2,1,3))) - 1:3
-  gb$pat_BAc <-
-    ( gb$qnext0  ==  2  &
-      gb$qnext1  == -1  &
-      gb$strand0 == "+" &
-      gb$strand1 == "+" &
-      gb$strand2 == "-"   ) |> sapply(isTRUE)
-
-  # Pattern 4; aCB
-  # precede(IPos(c(1,3,2))) - 1:3
-  gb$pat_aCB <-
-    ( gb$qnext0  ==  2  &
-      gb$qnext2  == -1  &
-      gb$strand0 == "-" &
-      gb$strand1 == "+" &
-      gb$strand2 == "+"   ) |> sapply(isTRUE)
+      gb$strand2 == "+" &
+      gb$strand3 == "+" &
+      gb$strand4 == "-"   ) |> sapply(isTRUE)
 
   gb$Dbl <- gb$pat_bcA | gb$pat_Cab |  gb$pat_BAc | gb$pat_aCB
 
@@ -196,6 +258,8 @@ flagDoubleInversions <- function(gb, details = FALSE) {
 #'
 #' Flag ranges that start a quadruplet that would be colinear if the two central
 #' pairs were aligned to the opposite strand.  This implies breakpoint reuse.
+#' The four ranges must be on the same _target_ sequence, and their strand must
+#' be known (not `*`).
 #'
 #' Here is a trivial example of a twin inversion.
 #'
@@ -242,7 +306,7 @@ flagTwinInversions <- function(gb, details = FALSE) {
   gb.bak <- gb # Backup the object
 
   # Look ahead for the three next alignments
-  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qnext0  <- precedeZW(gb$query) - seq_along(gb$query)
   gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
   gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
   gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
@@ -252,9 +316,15 @@ flagTwinInversions <- function(gb, details = FALSE) {
   gb$strand2 <- c(tail(strand(gb), -2), factor("*"), factor("*"))
   gb$strand3 <- c(tail(strand(gb), -3), factor("*"), factor("*"), factor("*"))
 
+  # All ranges must be on the same target sequence.  As the object is sorted,
+  # it is enough to compare the first and the last one.
+  gb$tseq0   <- seqnames(gb)
+  gb$tseq3   <- c(tail(seqnames(gb), -3), factor(NA), factor(NA), factor(NA))
+
   # Pattern 1: AbcD
   gb$pat_AbcD <-
-    ( gb$qnext0  ==  1  &
+    ( gb$tseq3   == gb$tseq0 &
+      gb$qnext0  ==  1  &
       gb$qnext1  ==  1  &
       gb$qnext2  ==  1  &
       gb$strand0 == "+" &
@@ -264,7 +334,8 @@ flagTwinInversions <- function(gb, details = FALSE) {
 
   # Pattern 2: dCBa
   gb$pat_dCBa <-
-    ( gb$qnext1  == -1  &
+    ( gb$tseq3   == gb$tseq0 &
+      gb$qnext1  == -1  &
       gb$qnext2  == -1  &
       gb$qnext3  == -1  &
       gb$strand0 == "-" &
@@ -418,7 +489,7 @@ removeDoubleInversions <- function(gb, detect = TRUE) {
   if (is.null(gb$Dbl)) return(gb[0])
   DblPos <- which(gb$Dbl)
   if (length(DblPos) == 0) return(gb)
-  coalesce_contigs(gb[- c(DblPos, DblPos + 1, DblPos + 2)])
+  coalesce_contigs(gb[- c(DblPos + 1, DblPos + 2, DblPos + 3)])
 }
 
 #' Flip strand of inversions
@@ -454,32 +525,41 @@ flipInversions <- function(gb, detect = TRUE) {
 
 #' Isolate the left-side gaps in inversions
 #'
-#' @param gb A [`GBreaks`] object.
+#' For each inversion flagged by [`flagInversions()`], returns the region of
+#' the _target_ genome between the left flank of the inversion triplet (the
+#' range carrying the flag) and its central range.
 #'
-#' @return Returns a [`GenomicRanges::GRanges`] object representing the left-side gaps in the
-#' `GBreaks` object.
+#' @note When these two ranges are adjacent or overlap on the _target_ genome,
+#' the gap is a zero-width range that starts after the end of the left flank.
+#'
+#' @param gb A [`GBreaks`] object.
+#' @param detect Run again `flagInversions()` if `TRUE`, else reuse the `inv`
+#'        flag.  If the flag is absent, no gap is returned.
+#'
+#' @return Returns a [`GenomicRanges::GRanges`] object representing the
+#' left-side gaps in the `GBreaks` object, one per inversion.  Its `flagIndex`
+#' metadata column contains the position in `gb` of the left flank of each
+#' inversion.
 #'
 #' @family Inversion functions
 #'
 #' @examples
-#' leftInversionGaps(flagInversions(exampleInversion))
+#' leftInversionGaps(exampleInversion)
+#'
+#' # Reuse flags computed with a tolerance threshold
+#' exampleInversion |> flagInversions(tol = 19) |> leftInversionGaps(detect = FALSE)
+#' exampleInversion |> flagInversions(tol = 18) |> leftInversionGaps(detect = FALSE)
 #'
 #' @export
 
-leftInversionGaps <- function(gb) {
-  # Flag inversions.
-  #  WHAT FOLLOWS ASSUMES THAT THE FLAG IS ON THE LEFT-SIDE BLOCK OF THE TRIPLE
-  lgaps <- flagInversions(gb)
-  # Extract inversions
-  invs <- lgaps[lgaps$inv]
-  # Extend inversion of 1 bp so that they overlap with their neighbor gap
-  invs <- shift(invs, 1)
-  # Remove strand information
+leftInversionGaps <- function(gb, detect = TRUE) {
+  if (isTRUE(detect)) gb <- flagInversions(gb)
+  # The flag is on the left flank of the inversion triplet.
+  flagPos <- if (is.null(gb$inv)) integer(0) else which(gb$inv)
+  # pgap() returns a zero-width range when the two ranges are adjacent or
+  # overlap, so that every inversion has a gap.
+  lgaps <- pgap(granges(gb)[flagPos], granges(gb)[flagPos + 1], ignore.strand = TRUE)
   strand(lgaps) <- "*"
-  # Then extract gap positions ignoring strand
-  lgaps <- gaps(lgaps, start=min(start(lgaps)), end=max(end(lgaps)))
-  # Remove bogus gaps on + and - strands
-  lgaps <- lgaps[strand(lgaps) == "*"]
-  # Return the gaps overlapping with the flagged inversions
-  subsetByOverlaps(lgaps, invs)
+  lgaps$flagIndex <- flagPos
+  lgaps
 }

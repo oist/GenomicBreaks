@@ -11,20 +11,21 @@ showTranslocations(gb, rename = TRUE, detect = TRUE)
 
 \item{rename}{Replace range names by their numeric order before subsetting.}
 
-\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the \code{tra}
-flag or fail if it is absent.}
+\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the
+\code{tra} and \code{trs} flags.  If they are absent, an empty object is
+returned.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are not
-part of a translocation triplet have been discarded.  If the object was missing
-the \code{tra} metadata column, return the object after discarding all of its
-ranges.
+part of a payload region (\verb{U A V}), of a site (\verb{X Y}), or the moved range
+of a site, have been discarded (see \code{\link[=flagTranslocations]{flagTranslocations()}}).
 }
 \description{
 Show translocations and their flanking blocks.
 }
 \examples{
 showTranslocations(exampleTranslocation)
+showTranslocations(swap(exampleTranslocation, sort = TRUE))
 
 }
 \seealso{
