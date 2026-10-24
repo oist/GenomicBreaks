@@ -25,6 +25,14 @@
 #' are discarded from the returned object.  This parameter might be removed in
 #' the future if too confusing or useless.
 #'
+#' @section Unstranded ranges (experimental):
+#' A range on the `*` strand is compatible with both strands: a pair of
+#' unstranded ranges is colinear when its ranges are adjacent in either
+#' direction.  Ranges of width zero, such as some of the mapped regions
+#' returned by [`bridgeRegions()`], are not handled: they may break the
+#' colinearity of the ranges around them.  This behaviour may change in future
+#' versions.
+#'
 #' @return Returns a modified `GBreaks` object with a new `colinear` metadata
 #' column indicating if an alignment is colinear with the next one.  If the
 #' `details` option is set to `TRUE`, it will also output the relative position

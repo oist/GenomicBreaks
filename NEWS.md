@@ -1,5 +1,10 @@
 # GenomicBreaks 0.25.0
 
+ * The handling of ranges on the `*` strand (unoriented objects, and mapped
+   regions such as the output of `bridgeRegions()`) is experimental: it may
+   change in later versions without being considered a breaking change.
+   Inversions are never flagged on such ranges, and functions that need
+   orientation, such as `permutationVector()`, stop with an error.
  * New `simulateRearrangements()` function, which simulates a pair of genomes
    rearranged by random inversions and transpositions and records the events,
    and new `permutationVectorToGBreaks()` function, the inverse of

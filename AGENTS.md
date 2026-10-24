@@ -183,38 +183,36 @@ unoriented as a whole, for instance made from reciprocal best hits, and (2)
 _mapped regions_ (`bridgeRegions()`), which materialise the unaligned region
 between two colinear alignments, possibly with a width of zero on one or both
 genomes (in Plessy et al. 2024, some are new short introns).  Rule: process
-when possible, ignore when needed, error when unavoidable.  Current state
-(checked on unstranded examples and on examples with their bridge regions):
+when possible, ignore when needed, error when unavoidable.  The behaviour of
+all functions on such ranges is **experimental** (stated in `NEWS.md` and in
+an "Unstranded ranges (experimental)" section of the help pages), so that it
+can change without a breaking change.  State (decided 2026-10-24):
 
 - Inversions (simple, double, twin) are never flagged when a range of the
-  pattern is unstranded (done).
+  pattern is unstranded.
 - Colinearity treats `*` as compatible with both strands, as
   `GenomicRanges` does, and adjacency in either direction counts for `*`
   pairs.  Works on unoriented objects and on mapped regions of non-zero
   width.
 - `coalesce_contigs()` merges unoriented objects.  In mixed objects, it
   coalesces the oriented ranges and absorbs the mapped regions that they
-  contain on both genomes (done; this avoids the zero-width problem below).
-- Zero-width ranges: `precede()` reports a zero-width range as preceding
-  itself, which breaks the adjacency tests of all flagging functions (a
-  zero-width bridge is not colinear with the next alignment).
-- `flagTranslocations()` tests `*` ranges in both directions (done,
-  experimental).  Extra ranges are then flagged as moved (target
-  `X Y U A V`, query `X A Y U V`: `Y` and `U` too, because moving `A` over
-  `Y U` is also moving `Y U` over `A`); this was accepted and documented.
-  A stricter criterion for unoriented data could require the moved range
-  not to be adjacent to the flanks on the other genome.  `flagAll()` gives
-  colinearity precedence over `Tra` on `*` ranges, where the two can now
-  coincide.
-- `flagPairs()`: pairs that involve `*` are `Col`, `Scr` or `NA` when
-  undetermined (done, experimental); the factor levels must not change.
+  contain on both genomes; other mapped regions are returned unchanged.
+- `flagTranslocations()` tests `*` ranges in both directions.  Extra ranges
+  are then flagged as moved (target `X Y U A V`, query `X A Y U V`: `Y` and
+  `U` too, because moving `A` over `Y U` is also moving `Y U` over `A`);
+  this was accepted and documented.  A stricter criterion for unoriented
+  data could require the moved range not to be adjacent to the flanks on the
+  other genome.  `flagAll()` gives colinearity precedence over `Tra` on `*`
+  ranges, where the two can coincide.
+- `flagPairs()`: pairs that involve `*` are `Col`, `Scr`, or `NA` when
+  undetermined; the factor levels must not change.
 - `permutationVector()` stops with an error on `*` ranges, which also stops
-  `inversionDistance()` and `breakpointGraphProperties()` (done).
-- To decide: whether mapped regions should be ignored by the flagging
-  functions and `coalesce_contigs()` (computing on the stranded ranges only,
-  which conflicts with flags located by row offsets), or make them stop with
-  an explicit error; and how to flag translocations and pairs in unoriented
-  objects.
+  `inversionDistance()` and `breakpointGraphProperties()`.
+- Remaining: zero-width ranges.  `precede()` reports a zero-width range as
+  preceding itself (and `follow()` as following itself), which breaks the
+  adjacency tests of the flagging functions in mixed objects: a zero-width
+  mapped region is not colinear with the next alignment.  `coalesce_contigs()`
+  avoids the problem by using containment instead.
 
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 
