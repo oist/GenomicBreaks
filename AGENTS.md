@@ -208,8 +208,8 @@ when possible, ignore when needed, error when unavoidable.  Current state
   coincide.
 - `flagPairs()`: pairs that involve `*` are `Col`, `Scr` or `NA` when
   undetermined (done, experimental); the factor levels must not change.
-- `permutationVector()` counts `*` as `+`, so `inversionDistance()` returns
-  a value for unoriented objects.
+- `permutationVector()` stops with an error on `*` ranges, which also stops
+  `inversionDistance()` and `breakpointGraphProperties()` (done).
 - To decide: whether mapped regions should be ignored by the flagging
   functions and `coalesce_contigs()` (computing on the stranded ranges only,
   which conflicts with flags located by row offsets), or make them stop with

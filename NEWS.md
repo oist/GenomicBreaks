@@ -38,6 +38,9 @@
    compatible with colinearity, `Scr` when not adjacent, and `NA` when
    adjacent but undetermined (experimental).  The factor levels are
    unchanged.
+ * `permutationVector()`, and therefore `inversionDistance()` and
+   `breakpointGraphProperties()`, now stop with an error when a range is on
+   the `*` strand, instead of counting it as a plus-strand range.
  * `showTranslocations()`, `filterTranslocations()` and
    `removeTranslocations()` now use both the `tra` and `trs` flags, so that
    moves seen only at their site are no longer ignored.  A moved range seen

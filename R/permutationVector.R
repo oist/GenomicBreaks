@@ -10,9 +10,17 @@
 #' @returns A vector of non-zero integers representing the position of the
 #' genomic content in the `GBreaks` object.
 #'
+#' @note A signed permutation needs the orientation of every range: the
+#' function stops with an error if a range is on the `*` strand.  This also
+#' applies to the functions that use it, such as [`inversionDistance()`] and
+#' [`breakpointGraphProperties()`].
+#'
 #' @export
 
 permutationVector <- function(gb) {
+  if (any(strand(gb) == "*"))
+    stop("A permutation vector needs the orientation of all ranges, ",
+         "but some ranges are on the `*` strand.")
   # Transform query ranges into simple indices
   o <- order(order(gb$query))
   o * ifelse(strand(gb) == '-', -1L, 1L)

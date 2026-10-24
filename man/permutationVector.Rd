@@ -20,3 +20,9 @@ Represent \emph{GenomicBreaks} objects as a \emph{permutation vector}.
 In a \code{GBreaks} object properly sorted by its \emph{target} ranges, the \emph{query}
 ranges …
 }
+\note{
+A signed permutation needs the orientation of every range: the
+function stops with an error if a range is on the \code{*} strand.  This also
+applies to the functions that use it, such as \code{\link[=inversionDistance]{inversionDistance()}} and
+\code{\link[=breakpointGraphProperties]{breakpointGraphProperties()}}.
+}
