@@ -43,6 +43,13 @@
    compatible with colinearity, `Scr` when not adjacent, and `NA` when
    adjacent but undetermined (experimental).  The factor levels are
    unchanged.
+ * Ranges of width zero on one or both genomes, such as the mapped regions
+   that `bridgeRegions()` returns between adjacent alignments, broke the
+   adjacency tests of `flagColinearAlignments()`, `flagPairs()` and the
+   functions that flag structural variants: `GenomicRanges::precede()` and
+   `follow()` report a zero-width range as adjacent to itself.  The adjacency
+   tests now place such ranges between the bases that surround them.  Results
+   on objects without zero-width ranges are unchanged.
  * `permutationVector()`, and therefore `inversionDistance()` and
    `breakpointGraphProperties()`, now stop with an error when a range is on
    the `*` strand, instead of counting it as a plus-strand range.

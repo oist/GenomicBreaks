@@ -90,8 +90,11 @@ GitHub Actions currently only builds/deploys the pkgdown site
   example the left flank of an inversion triplet).  The `filter*`, `remove*`,
   `show*` and `flip*` helpers find the other ranges by their offset from the
   flag.  This has confused users and may change later; keep it for now.
+- **Use `precedeZW()` and `followZW()`** (internal, in `R/dist2next.R`)
+  instead of `GenomicRanges::precede()` and `follow()` for adjacency tests:
+  the latter report a zero-width range as adjacent to itself.
 - **Look-ahead coding pattern** (see `flagDoubleInversions()`):
-  - `qnext0 <- precede(gb$query) - seq_along(gb$query)` is the offset, in
+  - `qnext0 <- precedeZW(gb$query) - seq_along(gb$query)` is the offset, in
     _target_ order, of the range that range `i` immediately precedes on the
     _query_; `qnextK <- c(tail(qnext0, -K), NA, ...)` is the same for range
     `i + K`, and `strandK` is built the same way from `strand(gb)`.
@@ -208,11 +211,12 @@ can change without a breaking change.  State (decided 2026-10-24):
   undetermined; the factor levels must not change.
 - `permutationVector()` stops with an error on `*` ranges, which also stops
   `inversionDistance()` and `breakpointGraphProperties()`.
-- Remaining: zero-width ranges.  `precede()` reports a zero-width range as
-  preceding itself (and `follow()` as following itself), which breaks the
-  adjacency tests of the flagging functions in mixed objects: a zero-width
-  mapped region is not colinear with the next alignment.  `coalesce_contigs()`
-  avoids the problem by using containment instead.
+- Zero-width ranges: `precede()` reports a zero-width range as preceding
+  itself (and `follow()` as following itself), and breaks ties by index.  The
+  adjacency tests use `precedeZW()` and `followZW()`, which place zero-width
+  ranges between the bases that surround them (done; tested by adding
+  zero-width bridges to simulations, which must not change the flags of the
+  alignments).
 
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 

@@ -91,15 +91,15 @@ flagPairs <- function (gb) {
   # Compute various indicators
   gb$Strnd <- as.character(strand(gb))
   gb$Snext <- c(tail(as.character(strand(gb)), -1), NA)
-  gb$oneNext <- precede(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
-  gb$onePrev <- follow( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
+  gb$oneNext <- precedeZW(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
+  gb$onePrev <- followZW( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$Qnext <- "other"
   gb$Qnext[sapply(gb$oneNext, isTRUE)] <- "next"
   gb$Qnext[sapply(gb$onePrev, isTRUE)] <- "prev"
 
   # Match the combinations with the allPossiblePairClasses table
   gb$paste <- paste(gb$Qnext, gb$Strnd, gb$Snext)
-  boundary <- is.na(precede(gb, ignore.strand = TRUE))
+  boundary <- is.na(precedeZW(gb, ignore.strand = TRUE))
   gb$paste[boundary] <- NA   # Put NAs at boundaries
   gb$paste <- factor(gb$paste, labels = allPossiblePairClasses$pair, levels = allPossiblePairClasses$paste)
 

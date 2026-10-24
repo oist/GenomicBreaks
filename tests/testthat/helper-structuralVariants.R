@@ -71,3 +71,23 @@ withBridges <- function(gb) {
   out$query <- c(gb$query, br$query)
   sort(GBreaks(out), ignore.strand = TRUE)
 }
+
+# Make the blocks of an object built by permutationVectorToGBreaks() (with the
+# default spacing of 100) adjacent on both genomes, so that its bridge regions
+# have a width of zero.
+adjacent <- function(gb) {
+  ranges(gb) <- IRanges(start(gb), width = 100)
+  gb$query   <- GRanges(seqnames(gb$query), IRanges(start(gb$query), width = 100),
+                        seqinfo = seqinfo(gb$query))
+  gb
+}
+
+# Same as withBridges(), but the bridge regions carry the strand of their
+# flanks, as in wholeGenomeClassification().
+withStrandedBridges <- function(gb) {
+  x  <- withBridges(gb)
+  st <- as.character(strand(x))
+  for (i in which(st == "*")) st[i] <- st[i - 1]
+  strand(x) <- st
+  x
+}

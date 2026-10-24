@@ -51,10 +51,11 @@ the future if too confusing or useless.
 
 A range on the \code{*} strand is compatible with both strands: a pair of
 unstranded ranges is colinear when its ranges are adjacent in either
-direction.  Ranges of width zero, such as some of the mapped regions
-returned by \code{\link[=bridgeRegions]{bridgeRegions()}}, are not handled: they may break the
-colinearity of the ranges around them.  This behaviour may change in future
-versions.
+direction.  This behaviour may change in future versions.
+
+Ranges of width zero, such as the mapped regions returned by
+\code{\link[=bridgeRegions]{bridgeRegions()}} between adjacent alignments, are placed between the two
+bases that surround them.
 }
 
 \examples{

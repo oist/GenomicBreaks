@@ -103,8 +103,8 @@ flagTranslocations <- function (gb, tol = Inf) {
   # Offset of the range that each range immediately precedes (qnext0) or
   # follows (qprev0) on the query genome.  Unstranded ranges are tested in both
   # directions (experimental).
-  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
-  gb$qprev0  <- follow( gb$query) - seq_along(gb$query)
+  gb$qnext0  <- precedeZW(gb$query) - seq_along(gb$query)
+  gb$qprev0  <- followZW( gb$query) - seq_along(gb$query)
   plus  <- decode(strand(gb)) %in% c("+", "*")
   minus <- decode(strand(gb)) %in% c("-", "*")
 
@@ -169,8 +169,8 @@ flagTranslocations <- function (gb, tol = Inf) {
 translocationPayloads <- function(gb) {
   traPos  <- which(gb$tra) + 1
   trsPos  <- which(gb$trs)
-  nxt <- precede(gb$query)
-  prv <- follow( gb$query)
+  nxt <- precedeZW(gb$query)
+  prv <- followZW( gb$query)
   st  <- decode(strand(gb))
   # Is the site read with precede() (X A Y), or with follow() (Y A X) ?
   # Unstranded ranges can be read either way.

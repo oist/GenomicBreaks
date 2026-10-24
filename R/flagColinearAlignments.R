@@ -28,10 +28,11 @@
 #' @section Unstranded ranges (experimental):
 #' A range on the `*` strand is compatible with both strands: a pair of
 #' unstranded ranges is colinear when its ranges are adjacent in either
-#' direction.  Ranges of width zero, such as some of the mapped regions
-#' returned by [`bridgeRegions()`], are not handled: they may break the
-#' colinearity of the ranges around them.  This behaviour may change in future
-#' versions.
+#' direction.  This behaviour may change in future versions.
+#'
+#' Ranges of width zero, such as the mapped regions returned by
+#' [`bridgeRegions()`] between adjacent alignments, are placed between the two
+#' bases that surround them.
 #'
 #' @return Returns a modified `GBreaks` object with a new `colinear` metadata
 #' column indicating if an alignment is colinear with the next one.  If the
@@ -112,13 +113,13 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
 
   # Position of the next block minus position of the current block equals
   # to 1 when they are colinear.
-  gb$tfoll <- precede(gb)       - seq_along(gb)
-  gb$qfoll <- precede(gb$query) - seq_along(gb)
+  gb$tfoll <- precedeZW(gb)       - seq_along(gb)
+  gb$qfoll <- precedeZW(gb$query) - seq_along(gb)
 
   # Position of the previous block minus position of the current block equals
   # to 1 when they are anti-colinear.
-  gb$tprev <- follow( gb)       - seq_along(gb)
-  gb$qprev <- follow( gb$query) - seq_along(gb)
+  gb$tprev <- followZW( gb)       - seq_along(gb)
+  gb$qprev <- followZW( gb$query) - seq_along(gb)
 
   # When the reference strand is "+", we want the query blocks to be colinear
   # and when the reference is "-" we want them to be anti-colinear.

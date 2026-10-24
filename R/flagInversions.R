@@ -57,11 +57,11 @@ flagInversions <- function (gb, tol = Inf) {
   gb$tdist2 <- c(gb$tdist[-1], Inf)
   gb$qdist2 <- c(gb$qdist[-1], Inf)
   # Check that the next and next-next are colinear, ignoring strand
-  gb$oneNext <- precede(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
+  gb$oneNext <- precedeZW(gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$twoNext <- c(gb$oneNext[-1], NA)
   gb$colPlus <- strand(gb) %in% c("+", "*") &  gb$oneNext & gb$twoNext
   # Check that the next and next-next are anti-colinear, ignoring strand
-  gb$onePrev <- follow( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
+  gb$onePrev <- followZW( gb$query, ignore.strand = TRUE) - seq_along(gb) == 1
   gb$twoPrev <- c(gb$onePrev[-1], NA)
   gb$colMin  <- strand(gb) %in%     "-"     &  gb$onePrev & gb$twoPrev
   # Is the current strand the same as the next ?
@@ -167,7 +167,7 @@ flagDoubleInversions <- function(gb, details = FALSE) {
   gb.bak <- gb # Backup the object
 
   # Look ahead for the four next alignments
-  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qnext0  <- precedeZW(gb$query) - seq_along(gb$query)
   gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
   gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
   gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
@@ -306,7 +306,7 @@ flagTwinInversions <- function(gb, details = FALSE) {
   gb.bak <- gb # Backup the object
 
   # Look ahead for the three next alignments
-  gb$qnext0  <- precede(gb$query) - seq_along(gb$query)
+  gb$qnext0  <- precedeZW(gb$query) - seq_along(gb$query)
   gb$qnext1  <- c(tail(gb$qnext0, -1), NA)
   gb$qnext2  <- c(tail(gb$qnext0, -2), NA, NA)
   gb$qnext3  <- c(tail(gb$qnext0, -3), NA, NA, NA)
