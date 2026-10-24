@@ -178,6 +178,41 @@ implementation of its definition on the stored simulations):
 - The `show*`, `filter*` and `remove*` helpers use both flags; the moved
   ranges are computed by the internal `translocationPayloads()`.
 
+**Strandless ranges** (strand `*`).  They come from (1) objects that are
+unoriented as a whole, for instance made from reciprocal best hits, and (2)
+_mapped regions_ (`bridgeRegions()`), which materialise the unaligned region
+between two colinear alignments, possibly with a width of zero on one or both
+genomes (in Plessy et al. 2024, some are new short introns).  Rule: process
+when possible, ignore when needed, error when unavoidable.  Current state
+(checked on unstranded examples and on examples with their bridge regions):
+
+- Inversions (simple, double, twin) are never flagged when a range of the
+  pattern is unstranded (done).
+- Colinearity treats `*` as compatible with both strands, as
+  `GenomicRanges` does, and adjacency in either direction counts for `*`
+  pairs.  Works on unoriented objects and on mapped regions of non-zero
+  width.
+- `coalesce_contigs()` merges unoriented objects, but never merges across a
+  mapped region (its `reduce()` is strand-aware), and fails with "2 elements
+  in value to replace 3 elements" when a range has width zero on one genome.
+- Zero-width ranges: `precede()` reports a zero-width range as preceding
+  itself, which breaks the adjacency tests of all flagging functions (a
+  zero-width bridge is not colinear with the next alignment).
+- `flagTranslocations()` treats `*` as `+`, so on an unoriented object the
+  result depends on the arbitrary orientation of the _query_ sequences, and
+  `flagAll()` can then fail.  With adjacency in either direction instead,
+  extra ranges are flagged as moved (target `X Y U A V`, query `X A Y U V`:
+  `Y` and `U` too, because moving `A` over `Y U` is also moving `Y U` over
+  `A`); a stronger criterion is needed for unoriented data.
+- `flagPairs()` returns `Bnd` (boundary) for every pair that involves `*`.
+- `permutationVector()` counts `*` as `+`, so `inversionDistance()` returns
+  a value for unoriented objects.
+- To decide: whether mapped regions should be ignored by the flagging
+  functions and `coalesce_contigs()` (computing on the stranded ranges only,
+  which conflicts with flags located by row offsets), or make them stop with
+  an explicit error; and how to flag translocations and pairs in unoriented
+  objects.
+
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 
 - Double inversions: there is no `showDoubleInversions()`.
