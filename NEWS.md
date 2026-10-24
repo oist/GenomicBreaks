@@ -14,6 +14,8 @@
    and sorting again, which put the flag on the second range of the site when
    it was on the minus strand, and on the wrong row when _target_ ranges were
    duplicated.  `flagAll()` still uses only the `tra` flag.
+ * The `tol` argument of `flagTranslocations()` is now implemented, with the
+   same meaning as in `flagInversions()`.
  * **Breaking change:** `dist2next()` now returns the number of bases between
    two ranges, as `GenomicRanges::distance()` does (`0` for adjacent or
    overlapping ranges), instead of that number plus one.  The `tol` argument

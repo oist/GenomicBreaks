@@ -172,9 +172,11 @@ implementation of its definition on the stored simulations):
   the _query_ ranges computed through `swap()`; that flag was on `Y` for
   minus-strand sites, and on the wrong row when _target_ ranges were
   duplicated.
+- `tol` limits the distances between the ranges that must be adjacent:
+  `U A V` on the _target_ and `U V` on the _query_ for payload regions,
+  `X Y` on the _target_ and `X A Y` on the _query_ for sites.
 - To do: the `show*`, `filter*` and `remove*` helpers only use `tra`, so
-  moves seen only at their site are ignored; `tol` is not implemented (a
-  finite value stops with an error).
+  moves seen only at their site are ignored.
 
 **Helpers** (`show*`, `filter*`, `remove*`, `flip*`):
 

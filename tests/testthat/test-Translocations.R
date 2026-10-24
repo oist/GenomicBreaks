@@ -36,6 +36,38 @@ test_that("a move seen in one genome only is flagged once", {
   expect_equal(as.vector(f$trs), c(TRUE,  FALSE, FALSE))
 })
 
+test_that("tol limits the distances between adjacent ranges", {
+  # exampleTranslocation: U and V are 100 bases apart on the query genome;
+  # in the swapped object, X and Y are 100 bases apart on the target genome.
+  expect_true (flagTranslocations(exampleTranslocation, tol = 100)$tra[1])
+  expect_false(flagTranslocations(exampleTranslocation, tol =  99)$tra[1])
+  sw <- swap(exampleTranslocation, sort = TRUE)
+  expect_true (flagTranslocations(sw, tol = 100)$trs[1])
+  expect_false(flagTranslocations(sw, tol =  99)$trs[1])
+
+  # Target X Y U A V, query X A Y U V, all gaps of 10 bases.  Narrowing A on
+  # one genome widens one of its gaps to 60 bases, which only affects the
+  # flag for which A must be adjacent to its neighbours on that genome.
+  gb <- permutationVectorToGBreaks(c(1, 3, 4, 2, 5))
+  narrowQ <- gb; narrowQ$query[4] <- resize(narrowQ$query[4], 40)
+  narrowT <- gb; ranges(narrowT)[4] <- resize(ranges(narrowT)[4], 40)
+  flags <- function(x, tol) {
+    f <- flagTranslocations(x, tol = tol)
+    c(tra = as.vector(f$tra)[3], trs = as.vector(f$trs)[1])
+  }
+  expect_equal(flags(narrowQ, 60), c(tra = TRUE,  trs = TRUE))
+  expect_equal(flags(narrowQ, 59), c(tra = TRUE,  trs = FALSE))
+  expect_equal(flags(narrowT, 60), c(tra = TRUE,  trs = TRUE))
+  expect_equal(flags(narrowT, 59), c(tra = FALSE, trs = TRUE))
+
+  # In the simulations, all gaps between consecutive blocks are 10 bases.
+  for (gb in loadSimulations(20)) {
+    expect_equal(flagTranslocations(gb, tol = 10), flagTranslocations(gb))
+    f <- flagTranslocations(gb, tol = 9)
+    expect_false(any(f$tra) || any(f$trs))
+  }
+})
+
 test_that("inversions and colinear ranges are not flagged", {
   for (gb in list(exampleColinear3, exampleInversion, exampleDoubleInversion1,
                   exampleTwinInversions)) {

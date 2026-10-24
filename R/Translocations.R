@@ -44,7 +44,10 @@
 #' site in _query_ order.
 #'
 #' @param gb A `GBreaks()` object.
-#' @param tol Tolerance window for the distance between two ranges.
+#' @param tol Ranges separated by more than `tol` unaligned bases are not
+#'        considered adjacent: `U`, `A` and `V` on the _target_ genome and `U`
+#'        and `V` on the _query_ genome for payload regions; `X` and `Y` on the
+#'        _target_ genome and `X`, `A` and `Y` on the _query_ genome for sites.
 #'
 #' @return Returns the `GBreaks` object with two extra metadata columns, `tra`
 #' and `trs`, flagging the payload regions and the sites.
@@ -55,6 +58,9 @@
 #'
 #' @examples
 #' flagTranslocations(exampleTranslocation)
+#' # The ranges U and V are separated by 100 bases on the query genome.
+#' flagTranslocations(exampleTranslocation, tol = 100)
+#' flagTranslocations(exampleTranslocation, tol = 99)
 #' flagTranslocations(exampleTranslocation2)
 #' plotApairOfChrs(exampleTranslocation)
 #'
@@ -82,7 +88,6 @@ flagTranslocations <- function (gb, tol = Inf) {
     gb$tra <- gb$trs <- Rle(FALSE, length(gb))
     return(gb)
   }
-  if (tol < Inf) stop("Not implemented yet")
   # Enforce sorting, to guarantee colinearity on the _target_ ranges
   if (isFALSE(isSorted(gb))) stop ("Can not run on non-sorted objects.")
   gb.bak <- gb # save the original object
@@ -103,13 +108,23 @@ flagTranslocations <- function (gb, tol = Inf) {
   gb$tseq1   <- c(tail(seqnames(gb), -1), factor(NA))
   gb$tseq2   <- c(tail(seqnames(gb), -2), factor(NA), factor(NA))
 
+  # Distances between ranges that must be adjacent (see dist2next()): on the
+  # target genome, from range i to i + 1 (tdist0) and from i + 1 to i + 2
+  # (tdist1); on the query genome, from range i to range i + 2 (qdist02).
+  gb$tdist0  <- dist2next(granges(gb), ignore.strand = TRUE)$dist
+  gb$tdist1  <- c(tail(gb$tdist0, -1), Inf)
+  gb$qdist02 <- dist2next(granges(gb$query), step = 2)$dist
+
   # Payload region U A V: U and V are adjacent on the query, that is
   # precede(IPos(c(1, 3, 2))) - 1:3 -> 2, NA, -1 on the plus strand.
   gb$tra <-
     ( gb$tseq2   == gb$tseq0   &
       gb$strand2 == gb$strand0 &
       ( (plus  & gb$qnext0 == 2) |
-        (minus & gb$qprev0 == 2) ) ) |> sapply(isTRUE) # Turn NAs into FALSE
+        (minus & gb$qprev0 == 2) ) &
+      gb$tdist0  <= tol &
+      gb$tdist1  <= tol &
+      gb$qdist02 <= tol ) |> sapply(isTRUE) # Turn NAs into FALSE
 
   # Site X Y: X precedes the payload A on the query, and A precedes Y, that
   # is precede(IPos(c(1, 3))) - 1:2 -> k, NA with A at position 1 + k, and
@@ -117,11 +132,20 @@ flagTranslocations <- function (gb, tol = Inf) {
   # the offset k of X.  Mirror image with follow() on the minus strand.
   gb$qnextPay <- gb$qnext0[seq_along(gb) + gb$qnext0]
   gb$qprevPay <- gb$qprev0[seq_along(gb) + gb$qprev0]
+  # Distances on the query genome from X to A and from A to Y.
+  pay   <- seq_along(gb) + ifelse(minus, gb$qprev0, gb$qnext0)
+  payOK <- ifelse(is.na(pay), seq_along(gb), pay)    # Index without NAs
+  next1 <- pmin(seq_along(gb) + 1, length(gb))
+  gb$qdistXA <- ifelse(is.na(pay), NA, distance(gb$query,        gb$query[payOK]))
+  gb$qdistAY <- ifelse(is.na(pay), NA, distance(gb$query[payOK], gb$query[next1]))
   gb$trs <-
     ( gb$tseq1   == gb$tseq0   &
       gb$strand1 == gb$strand0 &
       ( (plus  & gb$qnext0 != 1 & gb$qnext0 + gb$qnextPay == 1) |
-        (minus & gb$qprev0 != 1 & gb$qprev0 + gb$qprevPay == 1) ) ) |> sapply(isTRUE)
+        (minus & gb$qprev0 != 1 & gb$qprev0 + gb$qprevPay == 1) ) &
+      gb$tdist0  <= tol &
+      gb$qdistXA <= tol &
+      gb$qdistAY <= tol ) |> sapply(isTRUE)
 
   gb.bak$tra <- Rle(gb$tra)
   gb.bak$trs <- Rle(gb$trs)

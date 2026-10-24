@@ -9,7 +9,10 @@ flagTranslocations(gb, tol = Inf)
 \arguments{
 \item{gb}{A \code{GBreaks()} object.}
 
-\item{tol}{Tolerance window for the distance between two ranges.}
+\item{tol}{Ranges separated by more than \code{tol} unaligned bases are not
+considered adjacent: \code{U}, \code{A} and \code{V} on the \emph{target} genome and \code{U}
+and \code{V} on the \emph{query} genome for payload regions; \code{X} and \code{Y} on the
+\emph{target} genome and \code{X}, \code{A} and \code{Y} on the \emph{query} genome for sites.}
 }
 \value{
 Returns the \code{GBreaks} object with two extra metadata columns, \code{tra}
@@ -62,6 +65,9 @@ site in \emph{query} order.
 }
 \examples{
 flagTranslocations(exampleTranslocation)
+# The ranges U and V are separated by 100 bases on the query genome.
+flagTranslocations(exampleTranslocation, tol = 100)
+flagTranslocations(exampleTranslocation, tol = 99)
 flagTranslocations(exampleTranslocation2)
 plotApairOfChrs(exampleTranslocation)
 
