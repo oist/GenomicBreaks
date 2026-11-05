@@ -4,7 +4,7 @@
 \alias{JC69_distance_allseq}
 \title{Variation of the Jukes-Cantor 1969 distance}
 \usage{
-JC69_distance_allseq(gb, m, adjust_p = FALSE)
+JC69_distance_allseq(gb, m, adjust_p = FALSE, seqSize_func = min)
 }
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
@@ -12,6 +12,12 @@ JC69_distance_allseq(gb, m, adjust_p = FALSE)
 \item{m}{A matrix of \strong{counts} for bases of the \emph{target} genome to be aligned to bases on the \emph{query} genome.}
 
 \item{adjust_p}{A boolean flag. If \code{TRUE}, the distance is scaled between \code{0} and \code{0.75} to ensure the logarithm stays positive.}
+
+\item{seqSize_func}{A function that takes two inputs, the total sequence lengths of the reference and query genomes,
+and determines the total sequence length to use. By default, it returns the minimum of the two lengths,
+which guarantees symmetric distances (\code{d(A, B) = d(B, A)}). An alternative to that could be
+always return the reference sequence length, making distances comparable relative to that reference,
+but not necessarily symmetric. The return value determines the number of unaligned bases.}
 }
 \value{
 Returns a numeric value representing the evolutionary distance between two genomes. The greater the value, the more genetically different the genomes are.
@@ -42,7 +48,8 @@ would incorrectly inflate a distance calculated under a model in which only one 
 # Only the sequence length is used from the GenomicBreaks object.
 gb       <- GRanges(c("Ref:100-35000000:+"))
 gb$query <- GRanges(c("Que:1100-35000500:+"))
-d <- JC69_distance_allseq(gb, exampleSubstitutionMatrix)
+d        <- JC69_distance_allseq(gb, exampleSubstitutionMatrix, 
+                 seqSize_func=function(refSeqSize, qrySeqSize) refSeqSize)
 
 }
 \references{
