@@ -24,6 +24,11 @@
 #' @param gb A [`GBreaks`] object.
 #' @param m  A matrix of **counts** for bases of the _target_ genome to be aligned to bases on the _query_ genome.
 #' @param adjust_p A boolean flag. If `TRUE`, the distance is scaled between `0` and `0.75` to ensure the logarithm stays positive.
+#' @param seqSize_func  A function that takes two inputs, the total sequence lengths of the reference and query genomes, 
+#'                      and determines the total sequence length to use. By default, it returns the minimum of the two lengths, 
+#'                      which guarantees symmetric distances (`d(A, B) = d(B, A)`). An alternative to that could be 
+#'                      always return the reference sequence length, making distances comparable relative to that reference, 
+#'                      but not necessarily symmetric. The return value determines the number of unaligned bases.
 #'
 #' @family Alignment statistics
 #' @family Similarity indexes
@@ -37,16 +42,19 @@
 #' # Only the sequence length is used from the GenomicBreaks object.
 #' gb       <- GRanges(c("Ref:100-35000000:+"))
 #' gb$query <- GRanges(c("Que:1100-35000500:+"))
-#' d <- JC69_distance_allseq(gb, exampleSubstitutionMatrix)
+#' d        <- JC69_distance_allseq(gb, exampleSubstitutionMatrix, 
+#'                  seqSize_func=function(refSeqSize, qrySeqSize) refSeqSize)
 #'
 #' @export
-JC69_distance_allseq <- function(gb, m, adjust_p=FALSE) {
+JC69_distance_allseq <- function(gb, m, adjust_p=FALSE, seqSize_func=min) {
   
   if(length(gb) == 0) return(numeric(0))
   if (all(m == 0)) return(NA)
 
-  # Gets the smallest sequence length.
-  totBps <- min(sum(guessSeqLengths(gb)),sum(guessSeqLengths(gb$query)))
+  # Computes the total sequence length based on the total sequence lengths of the reference and query genomes.
+  refSeqSize <- sum(guessSeqLengths(gb))
+  qrySeqSize <- sum(guessSeqLengths(gb$query))
+  totBps     <- seqSize_func(refSeqSize, qrySeqSize)
 
   # Matrix of aligned base pairs, excluding gaps.
   non_gap    <- c("A", "C", "G", "T")
