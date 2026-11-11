@@ -2,12 +2,13 @@
 
  * New _monkey indices_: `wukong_index()`, `abu_index()`, `albert_index()`,
    `marcel_index()`, `imo_index()`, `rafiki_index()`, `hanuman_index()`,
-   `jack_index()`, `george_index()` and `baker_index()`.  They are ten summary
-   statistics that were not designed to represent a biological fact: they were
-   retained from a screen of 5,420 mechanically assembled functions because
-   their values are reproducible, structured by phylogeny, different from
-   those of shuffled alignments, and not strongly correlated with the existing
-   statistics nor with each other.  See `?monkey_indices`.
+   `jack_index()`, `able_index()`, `mizaru_index()`, `george_index()` and
+   `baker_index()`.  They are twelve summary statistics that were not designed
+   to represent a biological fact: they were retained from a screen of 5,420
+   mechanically assembled functions because their values are reproducible,
+   structured by phylogeny, different from those of shuffled alignments, and
+   not strongly correlated with the existing statistics nor with each other.
+   See `?monkey_indices`.
 
 # GenomicBreaks 0.25.0
 

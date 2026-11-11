@@ -10,6 +10,8 @@
 \alias{rafiki_index}
 \alias{hanuman_index}
 \alias{jack_index}
+\alias{able_index}
+\alias{mizaru_index}
 \alias{george_index}
 \alias{baker_index}
 \title{Monkey indices}
@@ -30,6 +32,10 @@ hanuman_index(gb)
 
 jack_index(gb)
 
+able_index(gb)
+
+mizaru_index(gb)
+
 george_index(gb)
 
 baker_index(gb)
@@ -43,7 +49,7 @@ A numeric value, or \code{NA} when it can not be computed: fewer than
 three values, or no variation.
 }
 \description{
-Ten summary statistics of a pairwise genome alignment that were not designed
+Twelve summary statistics of a pairwise genome alignment that were not designed
 to represent a biological fact.  They were retained from a screen of 5,420
 functions assembled mechanically from the columns of the alignment table
 and from generic descriptive statistics ("monkey typing"), for the following
@@ -57,8 +63,10 @@ below 0.6).  Their biological meaning, if any, is to be found.  Each function
 is named after a famous monkey.
 }
 \details{
-All the functions take the alignments as loaded, without coalescing them, and
-sort them on the \emph{target} genome.  They use the following quantities.
+All the functions take the alignments as loaded and sort them on the \emph{target}
+genome.  \code{mizaru_index()} then coalesces them with \code{\link{coalesce_contigs}} and
+its default arguments; the others use them as they are.  They use the
+following quantities.
 \itemize{
 \item A \emph{junction} is a pair of consecutive alignments on the same \emph{target}
 sequence.  A \emph{same-query junction} is a junction whose two alignments are
@@ -117,6 +125,14 @@ of their edge distances on the \emph{query} genome.}
 \item{\code{jack_index()}}{\emph{Jack: chacma baboon who operated railway signals in
 South Africa in the 1880s.}  Rank correlation, over same-query junctions,
 between the rank step and the direction.}
+\item{\code{able_index()}}{\emph{Able: rhesus macaque, Miss Baker's companion on the
+1959 spaceflight.}  Correlation, over same-query junctions, between the
+rank step and the absolute difference of the edge distances of the two
+alignments on the \emph{query} genome.}
+\item{\code{mizaru_index()}}{\emph{Mizaru: the see-no-evil monkey carved at the
+Toshogu shrine in Nikko.}  Rank correlation, over the junctions of the coalesced
+alignments, between the target gap and the absolute difference of the
+edge distances of the two coalesced alignments on the \emph{query} genome.}
 \item{\code{george_index()}}{\emph{Curious George: inquisitive little monkey of the
 children's books by the Reys.}  Correlation, over junctions, between the
 target gap and the mean score per aligned column of the two alignments.
@@ -157,6 +173,8 @@ imo_index(gb)
 rafiki_index(gb)
 hanuman_index(gb)
 jack_index(gb)
+able_index(gb)
+mizaru_index(gb)
 
 # The orientation of the sequences does not matter.
 marcel_index(reverse(forceSeqLengths(gb)))

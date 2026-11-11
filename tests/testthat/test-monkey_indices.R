@@ -3,8 +3,10 @@ yeast <- load_genomic_breaks(
 yeast$aLength  <- pmax(width(yeast), width(yeast$query))
 yeast$gapOpens <- as.integer(width(yeast) != width(yeast$query))
 
-geometric <- list(wukong_index, abu_index, albert_index, marcel_index, imo_index,
-                  rafiki_index, hanuman_index, jack_index)
+# Indices that only use the coordinates and the strands
+uncoalesced <- list(wukong_index, abu_index, albert_index, marcel_index, imo_index,
+                    rafiki_index, hanuman_index, jack_index, able_index)
+geometric   <- c(uncoalesced, mizaru_index)
 
 test_that("monkey indices give the reference values", {
   # Values checked against the Python implementation used for the screen.
@@ -16,6 +18,8 @@ test_that("monkey indices give the reference values", {
   expect_equal(rafiki_index(yeast),   0.039850511875284)
   expect_equal(hanuman_index(yeast),  0.57776027669833)
   expect_equal(jack_index(yeast),    -0.516659528016429)
+  expect_equal(able_index(yeast),     0.271092468680069)
+  expect_equal(mizaru_index(yeast),   0.00769637063549857)
   expect_equal(george_index(yeast),   0.117812275194519)
   expect_equal(baker_index(yeast),   -0.0141499900111354)
   expect_equal(albert_index(exampleGenomicBreaks), 13.2012180062151)
@@ -39,10 +43,10 @@ test_that("monkey indices do not depend on the representation", {
 })
 
 test_that("monkey indices handle objects that they can not summarise", {
-  for (f in geometric) {
-    expect_true(is.na(f(exampleInversion[1:2])))
+  for (f in uncoalesced) expect_true(is.na(f(exampleInversion[1:2])))
+  expect_true(is.na(mizaru_index(yeast[1:2])))
+  for (f in geometric)
     expect_error(f(unstrand(exampleInversion)), "orientation")
-  }
   expect_error(george_index(exampleGenomicBreaks), "score")
   expect_error(baker_index(exampleGenomicBreaks),  "gapOpens")
 })

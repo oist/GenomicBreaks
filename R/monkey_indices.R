@@ -1,6 +1,6 @@
 #' Monkey indices
 #'
-#' Ten summary statistics of a pairwise genome alignment that were not designed
+#' Twelve summary statistics of a pairwise genome alignment that were not designed
 #' to represent a biological fact.  They were retained from a screen of 5,420
 #' functions assembled mechanically from the columns of the alignment table
 #' and from generic descriptive statistics ("monkey typing"), for the following
@@ -15,8 +15,10 @@
 #'
 #' @details
 #'
-#' All the functions take the alignments as loaded, without coalescing them, and
-#' sort them on the _target_ genome.  They use the following quantities.
+#' All the functions take the alignments as loaded and sort them on the _target_
+#' genome.  `mizaru_index()` then coalesces them with [`coalesce_contigs`] and
+#' its default arguments; the others use them as they are.  They use the
+#' following quantities.
 #'
 #'  - A _junction_ is a pair of consecutive alignments on the same _target_
 #'    sequence.  A _same-query junction_ is a junction whose two alignments are
@@ -74,6 +76,14 @@
 #'   \item{`jack_index()`}{_Jack: chacma baboon who operated railway signals in
 #'     South Africa in the 1880s._  Rank correlation, over same-query junctions,
 #'     between the rank step and the direction.}
+#'   \item{`able_index()`}{_Able: rhesus macaque, Miss Baker's companion on the
+#'     1959 spaceflight._  Correlation, over same-query junctions, between the
+#'     rank step and the absolute difference of the edge distances of the two
+#'     alignments on the _query_ genome.}
+#'   \item{`mizaru_index()`}{_Mizaru: the see-no-evil monkey carved at the
+#'     Toshogu shrine in Nikko._  Rank correlation, over the junctions of the coalesced
+#'     alignments, between the target gap and the absolute difference of the
+#'     edge distances of the two coalesced alignments on the _query_ genome.}
 #'   \item{`george_index()`}{_Curious George: inquisitive little monkey of the
 #'     children's books by the Reys._  Correlation, over junctions, between the
 #'     target gap and the mean score per aligned column of the two alignments.
@@ -124,6 +134,8 @@
 #' rafiki_index(gb)
 #' hanuman_index(gb)
 #' jack_index(gb)
+#' able_index(gb)
+#' mizaru_index(gb)
 #'
 #' # The orientation of the sequences does not matter.
 #' marcel_index(reverse(forceSeqLengths(gb)))
@@ -140,13 +152,19 @@
 #' @aliases monkey_indices
 NULL
 
-# Internal: plain vectors describing the alignments sorted on the target, the
-# junctions, and (if lengths = TRUE) positions relative to sequence ends.
-.mk_blocks <- function(gb, lengths = FALSE) {
+# Internal: the input must be a GBreaks object with oriented ranges.
+.mk_check <- function(gb) {
   if (!inherits(gb, "GBreaks")) stop("`gb` must be a GBreaks object.")
   if (any(decode(strand(gb)) == "*"))
     stop("Monkey indices need the orientation of all ranges, ",
          "but some ranges are on the `*` strand.")
+  invisible(gb)
+}
+
+# Internal: plain vectors describing the alignments sorted on the target, the
+# junctions, and (if lengths = TRUE) positions relative to sequence ends.
+.mk_blocks <- function(gb, lengths = FALSE) {
+  .mk_check(gb)
   gb <- sort(gb, ignore.strand = TRUE)
   n  <- length(gb)
   x  <- list(
@@ -330,6 +348,31 @@ jack_index <- function(gb) {
   if (length(k) < 3) return(NA_real_)
   step <- x$qrank[k + 1] - x$qrank[k]
   .mk_cor(rank(abs(step)), rank(sign(step) * (x$s[k] + x$s[k + 1]) / 2))
+}
+
+#' @rdname monkey_indices
+#' @export
+
+able_index <- function(gb) {
+  x <- .mk_blocks(gb, lengths = TRUE)
+  k <- x$JQ
+  if (length(k) < 3) return(NA_real_)
+  .mk_cor(log(abs(x$qrank[k + 1] - x$qrank[k])),
+          round(abs(x$qedge[k] - x$qedge[k + 1]), 12))
+}
+
+#' @rdname monkey_indices
+#' @export
+
+mizaru_index <- function(gb) {
+  .mk_check(gb)
+  # Sequence lengths are settled before coalescing, so that edge distances
+  # refer to the same lengths as in the other indices.
+  x <- .mk_blocks(coalesce_contigs(forceSeqLengths(gb)), lengths = TRUE)
+  i <- x$J
+  if (length(i) < 3) return(NA_real_)
+  .mk_cor(rank(.mk_tgap(x)),
+          rank(round(abs(x$qedge[i] - x$qedge[i + 1]), 12)))
 }
 
 #' @rdname monkey_indices
