@@ -132,6 +132,7 @@ importFrom(IRanges,
 )
 importFrom(Rcpp,evalCpp)
 importFrom(S4Vectors,
+  "metadata<-",
   DataFrame,
   Pairs,
   Rle,
@@ -139,6 +140,7 @@ importFrom(S4Vectors,
   endoapply,
   first,
   isSorted,
+  metadata,
   queryHits,
   second,
   subjectHits

@@ -42,7 +42,7 @@
 #' set.seed(1)
 #' gb <- simulateRearrangements(n = 10, nEvents = 2)
 #' gb
-#' S4Vectors::metadata(gb)$events
+#' metadata(gb)$events
 #' permutationVector(gb)
 #' flagAll(gb)
 #'
@@ -52,6 +52,7 @@
 #' sims[[1]]
 #' with(sims[[1]], permutationVectorToGBreaks(v, tsplit, qsplit))
 #'
+#' @importFrom S4Vectors metadata metadata<-
 #' @export
 
 simulateRearrangements <- function(n = 14, nEvents = 3,
@@ -96,6 +97,6 @@ simulateRearrangements <- function(n = 14, nEvents = 3,
   v[abs(q)] <- as.integer(sign(q)) * seq_len(n)
   gb <- permutationVectorToGBreaks(v, tsplit = randomSplit(nTargetSeqs),
                                    qsplit = randomSplit(nQuerySeqs), ...)
-  S4Vectors::metadata(gb)$events <- events
+  metadata(gb)$events <- events
   gb
 }

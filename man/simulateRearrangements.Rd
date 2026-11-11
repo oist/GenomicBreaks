@@ -62,7 +62,7 @@ not recorded as events.
 set.seed(1)
 gb <- simulateRearrangements(n = 10, nEvents = 2)
 gb
-S4Vectors::metadata(gb)$events
+metadata(gb)$events
 permutationVector(gb)
 flagAll(gb)
 

@@ -21,7 +21,7 @@ sims <- lapply(seq_len(nsim), function(i) {
   list(v      = permutationVector(gb),
        tsplit = as.vector(table(seqnames(gb))),
        qsplit = as.vector(table(seqnames(gb$query))),
-       events = S4Vectors::metadata(gb)$events,
+       events = metadata(gb)$events,
        params = params)
 })
 names(sims) <- sprintf("sim%03d", seq_len(nsim))

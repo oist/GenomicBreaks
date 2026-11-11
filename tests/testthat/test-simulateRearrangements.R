@@ -34,7 +34,7 @@ test_that("simulateRearrangements() returns a sorted object and its events", {
   expect_true(isSorted(gb))
   expect_equal(nlevels(seqnames(gb)), 2)
   expect_equal(nlevels(seqnames(gb$query)), 3)
-  ev <- S4Vectors::metadata(gb)$events
+  ev <- metadata(gb)$events
   expect_equal(nrow(ev), 4)
   expect_true(all(ev$type %in% c("inversion", "transposition", "inverted transposition")))
   expect_true(all(is.na(ev$after) == (ev$type == "inversion")))
@@ -44,14 +44,14 @@ test_that("simulateRearrangements() without events is colinear", {
   gb <- simulateRearrangements(n = 8, nEvents = 0)
   expect_equal(permutationVector(gb), 1:8)
   expect_length(coalesce_contigs(gb), 1)
-  expect_equal(nrow(S4Vectors::metadata(gb)$events), 0)
+  expect_equal(nrow(metadata(gb)$events), 0)
 })
 
 test_that("one inversion inside the genome is flagged as an inversion", {
   set.seed(3)
   for (k in 1:10) {
     gb <- simulateRearrangements(n = 10, nEvents = 1, types = "inversion")
-    seg <- as.integer(strsplit(S4Vectors::metadata(gb)$events$segment, " ")[[1]])
+    seg <- as.integer(strsplit(metadata(gb)$events$segment, " ")[[1]])
     if (1 %in% seg || 10 %in% seg) next  # An inversion at an end has no left or right flank
     expect_equal(sum(flagInversions(coalesce_contigs(gb))$inv), 1)
   }
