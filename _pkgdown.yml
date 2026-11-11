@@ -26,6 +26,10 @@ reference:
     - has_concept("Nucleotide distances")
     - has_concept("Rearrangement distances")
     - has_concept("Alignment statistics")
+  - title: Monkey indices
+    desc: Summary statistics retained from a hypothesis-free screen, each named after a famous monkey.
+  - contents:
+    - has_concept("Monkey indices")
   - title: Colinearity functions
     desc: Functions to analyse colinearity and synteny.
   - contents:
