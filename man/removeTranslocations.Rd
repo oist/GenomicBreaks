@@ -9,18 +9,21 @@ removeTranslocations(gb, detect = TRUE)
 \arguments{
 \item{gb}{A \code{\link{GBreaks}} object.}
 
-\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the \code{tra}
-flag or fail if it is absent.}
+\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the
+\code{tra} and \code{trs} flags.  If they are absent, an empty object is
+returned.}
 }
 \value{
-Returns the \code{GBreaks} object after removing the ranges that are
-translocated and coalescing the resulting collinear ranges.
+Returns the \code{GBreaks} object after removing the moved ranges
+(see \code{\link[=filterTranslocations]{filterTranslocations()}}) and coalescing the resulting collinear
+ranges.
 }
 \description{
 Remove translocations
 }
 \examples{
 removeTranslocations(exampleTranslocation)
+removeTranslocations(swap(exampleTranslocation, sort = TRUE))
 
 }
 \seealso{

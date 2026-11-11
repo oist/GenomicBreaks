@@ -2,7 +2,7 @@
 % Please edit documentation in R/Translocations.R
 \name{filterTranslocations}
 \alias{filterTranslocations}
-\title{Extract central blocks in translocations}
+\title{Extract moved blocks in translocations}
 \usage{
 filterTranslocations(gb, rename = TRUE, remove = FALSE, detect = TRUE)
 }
@@ -13,21 +13,24 @@ filterTranslocations(gb, rename = TRUE, remove = FALSE, detect = TRUE)
 
 \item{remove}{Filter out instead of filtering in.}
 
-\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the \code{tra}
-flag or fail if it is absent.}
+\item{detect}{Run again \code{flagTranslocations()} if \code{TRUE}, else reuse the
+\code{tra} and \code{trs} flags.  If they are absent, an empty object is
+returned.}
 }
 \value{
 Returns the \code{GBreaks} object in which all ranges that are not
-the central part of an inversion triplet have been discarded.  If the object
-was missing the \code{tra} metadata column, return the object after discarding all
-of its ranges.
+moved ranges have been discarded: the centre of each payload region, and
+the range found between the two ranges of each site on the \emph{query} genome
+(see \code{\link[=flagTranslocations]{flagTranslocations()}}).  A range found by both flags is returned
+once.  With \code{remove = TRUE}, the moved ranges are discarded instead.
 }
 \description{
-Extract central blocks in translocations
+Extract moved blocks in translocations
 }
 \examples{
 filterTranslocations(exampleTranslocation)
 filterTranslocations(remove = TRUE, exampleTranslocation)
+filterTranslocations(swap(exampleTranslocation, sort = TRUE))
 
 }
 \seealso{

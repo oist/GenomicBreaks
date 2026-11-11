@@ -75,3 +75,5 @@ reference:
     - zipWithNext
     - inversionDistance
     - permutationVector
+    - permutationVectorToGBreaks
+    - simulateRearrangements

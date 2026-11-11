@@ -21,7 +21,10 @@ For convenience during analysis sessions, its \emph{score} is set to the width o
 the ranges on the \emph{target} genome.
 }
 \description{
-Coalesce Pairwise Alignments
+This algorithm take in a pairwise genome alignment, represented as a
+collection of intervals in a \emph{target} genome paired with intervals in a
+\emph{query} genome.  It reduces the number of pairs by coalescing pairs that are
+within close proximity on the same strand (user determined).
 }
 \note{
 Fragmented alignments arising from incorrect basecalls, misassembly or
@@ -30,6 +33,17 @@ misalignments can cause us to infer artificial breakpoints
 Internally, \code{coalesce_contigs} uses \code{\link[=flagColinearAlignments]{flagColinearAlignments()}}  See the
 examples for details.
 }
+\section{Unstranded ranges (experimental)}{
+
+In an object that contains both oriented ranges and ranges on the \code{*}
+strand, the latter are treated as \emph{mapped regions}, such as those returned
+by \code{\link[=bridgeRegions]{bridgeRegions()}}: the oriented ranges are coalesced, and a mapped
+region that lies within a coalesced range on both genomes is absorbed by
+it.  Other mapped regions are returned unchanged.  In an object where all
+ranges are on the \code{*} strand, ranges are colinear when they are adjacent in
+either direction.  This behaviour may change in future versions.
+}
+
 \examples{
 flagColinearAlignments(exampleColinear3, details = TRUE)
 coalesce_contigs(exampleColinear3)
@@ -57,6 +71,12 @@ gb4 <- gb2
 strand(gb4) <- strand(gb3) <- "*"
 coalesce_contigs(gb3)
 coalesce_contigs(gb4)
+
+# Coalescing over mapped regions
+br <- bridgeRegions(exampleColinear5)
+br
+gb5 <- c(exampleColinear5, br) |> sort(ignore.strand = TRUE)
+coalesce_contigs(gb5)
 
 }
 \seealso{

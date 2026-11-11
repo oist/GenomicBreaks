@@ -25,6 +25,15 @@
 #' are discarded from the returned object.  This parameter might be removed in
 #' the future if too confusing or useless.
 #'
+#' @section Unstranded ranges (experimental):
+#' A range on the `*` strand is compatible with both strands: a pair of
+#' unstranded ranges is colinear when its ranges are adjacent in either
+#' direction.  This behaviour may change in future versions.
+#'
+#' Ranges of width zero, such as the mapped regions returned by
+#' [`bridgeRegions()`] between adjacent alignments, are placed between the two
+#' bases that surround them.
+#'
 #' @return Returns a modified `GBreaks` object with a new `colinear` metadata
 #' column indicating if an alignment is colinear with the next one.  If the
 #' `details` option is set to `TRUE`, it will also output the relative position
@@ -104,13 +113,13 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
 
   # Position of the next block minus position of the current block equals
   # to 1 when they are colinear.
-  gb$tfoll <- precede(gb)       - seq_along(gb)
-  gb$qfoll <- precede(gb$query) - seq_along(gb)
+  gb$tfoll <- precedeZW(gb)       - seq_along(gb)
+  gb$qfoll <- precedeZW(gb$query) - seq_along(gb)
 
   # Position of the previous block minus position of the current block equals
   # to 1 when they are anti-colinear.
-  gb$tprev <- follow( gb)       - seq_along(gb)
-  gb$qprev <- follow( gb$query) - seq_along(gb)
+  gb$tprev <- followZW( gb)       - seq_along(gb)
+  gb$qprev <- followZW( gb$query) - seq_along(gb)
 
   # When the reference strand is "+", we want the query blocks to be colinear
   # and when the reference is "-" we want them to be anti-colinear.
@@ -123,11 +132,12 @@ flagColinearAlignments <- function(gb, tol = Inf, minwidth = 0, details = FALSE)
               ( decode(strand(gb)) %in% c("-") &  gb$qprev == 1                ) |
               ( decode(strand(gb)) %in% c("*") & (gb$qfoll == 1 | gb$qprev == 1) )
 
-  # Calculate distance and check if it is within tolerance threshold
-  # See 18939aa98b2db83a2360d5a0e92966581de4799e about tol + 1
+  # Calculate distance and check if it is within tolerance threshold.
+  # The last range has an infinite distance, which passes the test when
+  # tol = Inf, but it has no next range, so q_col is not TRUE.
   gb <- dist2next(gb)
-  gb$colinear <- gb$tdist < tol + 1 &
-                 gb$qdist < tol + 1 &
+  gb$colinear <- gb$tdist <= tol &
+                 gb$qdist <= tol &
                  gb$q_col
   gb$colinear[is.na(gb$colinear)] <- FALSE
 

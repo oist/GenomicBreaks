@@ -4,28 +4,50 @@
 \alias{flagTranslocations}
 \title{Flag translocations}
 \usage{
-flagTranslocations(gb, tol = Inf, both = TRUE)
+flagTranslocations(gb, tol = Inf)
 }
 \arguments{
 \item{gb}{A \code{GBreaks()} object.}
 
-\item{tol}{Tolerance window for the distance between two ranges.}
-
-\item{both}{Flag both the \emph{target} and \emph{query} ranges.}
+\item{tol}{Ranges separated by more than \code{tol} unaligned bases are not
+considered adjacent: \code{U}, \code{A} and \code{V} on the \emph{target} genome and \code{U}
+and \code{V} on the \emph{query} genome for payload regions; \code{X} and \code{Y} on the
+\emph{target} genome and \code{X}, \code{A} and \code{Y} on the \emph{query} genome for sites.}
 }
 \value{
-Returns the \code{GBreaks} object with an extra \code{tra} metadata column.
+Returns the \code{GBreaks} object with two extra metadata columns, \code{tra}
+and \code{trs}, flagging the payload regions and the sites.
 }
 \description{
-Flag ranges that start a triplet that would be colinear if the central pair
-were colinear, and that are not an inversion.
+Flag the two places where a range that moved between the two genomes is
+seen in the order of the \emph{target} genome: the \emph{payload region}, where the
+moved range is found on the \emph{target} genome, and the \emph{site}, where it is
+found on the \emph{query} genome.
 }
 \details{
-The result of the flagging differs if the \emph{target} and \emph{query} ranges are
-swapped.  Therefore, by default this function will search for translocations
-on both cases, and flag both ranges.
+A range \code{A} moved between the two genomes when, for instance:
 
-Here is a trivial example of a translocation:
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Target genome:  X Y . . . U A V
+Query genome:   X A Y . . . U V
+}\if{html}{\out{</div>}}
+\itemize{
+\item The \emph{payload region} is a triplet of consecutive ranges \verb{U A V} on one
+\emph{target} sequence, such that \code{U} and \code{V} are on the same strand and would
+be colinear if \code{A} were removed.  The \code{tra} flag is set on \code{U}.
+\item The \emph{site} is a pair of consecutive ranges \verb{X Y} on one \emph{target} sequence,
+on the same strand, such that \code{A} is found between them on the \emph{query}
+genome, and that \verb{X A Y} would be colinear if \code{A} were on the same strand
+as \code{X} and \code{Y}.  The \code{trs} flag is set on \code{X}.
+}
+
+\code{A} can be on either strand, and on any \emph{target} sequence.  When one of the
+two genomes has no context for \code{A}, for instance when it is alone on its
+sequence, only one of the two flags is set.  When both are set, they
+designate the same range \code{A}.  The function therefore detects transpositions
+of single ranges, whether or not they change sequence.
+
+Here is a trivial example of a translocation, where the \emph{query} genome has
+no context for the moved range, so that only the payload region is flagged:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{┌──────────────┬──────────────┬──────────────┐
 │ chrA:101-200 │ chrA:201-300 │ chrA:301-400 │ (Target genome)
@@ -36,15 +58,41 @@ Here is a trivial example of a translocation:
 └──────────────┴──────────────┴──────────────┘
 }\if{html}{\out{</div>}}
 }
+\note{
+Before version 0.25.0, the site was flagged only with the \code{both}
+option, by a \code{tra} flag on the \emph{query} ranges, set on the first range of the
+site in \emph{query} order.
+}
+\section{Unstranded ranges (experimental)}{
+
+Ranges on the \code{*} strand are considered adjacent in either direction.  When
+orientation is unknown, moving one range over a segment can not be told
+apart from moving the segment over the range, so that more ranges are
+flagged as moved: for instance, with the \emph{target} genome \verb{X Y U A V} and the
+\emph{query} genome \verb{X A Y U V}, \code{Y} and \code{U} are flagged in addition to \code{A}.
+This behaviour may change in future versions.
+}
+
 \examples{
 flagTranslocations(exampleTranslocation)
+# The ranges U and V are separated by 100 bases on the query genome.
+flagTranslocations(exampleTranslocation, tol = 100)
+flagTranslocations(exampleTranslocation, tol = 99)
 flagTranslocations(exampleTranslocation2)
 plotApairOfChrs(exampleTranslocation)
+
+# When the genomes are swapped, the moved range has no context on the
+# target genome, and only the site is flagged.
+flagTranslocations(swap(exampleTranslocation, sort = TRUE))
+
+# A move along one sequence is seen at both places.
+gb <- permutationVectorToGBreaks(c(1, 3, 4, 2, 5))
+flagTranslocations(gb)
+
 flagTranslocations(exampleDeletion)
 flagTranslocations(exampleInsertion)
-flagTranslocations(exampleInsertion  |> swap(sort = TRUE))
-flagTranslocations(exampleInsertion) |> swap(sort = TRUE)
-flagTranslocations(sort(reverse(exampleDeletion)))
+flagTranslocations(exampleInsertion |> swap(sort = TRUE))
+flagTranslocations(sort(reverse(exampleDeletion), ignore.strand = TRUE))
 flagTranslocations(exampleInversion)
 flagTranslocations(exampleColinear3)
 
