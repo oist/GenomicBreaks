@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@ West</h4>
                         <h4 data-toc-skip class="author">Charles
 Plessy</h4>
             
-            <h4 data-toc-skip class="date">06 November, 2026</h4>
+            <h4 data-toc-skip class="date">11 November, 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/oist/GenomicBreaks/blob/main/vignettes/GenomicBreaks.Rmd" class="external-link"><code>vignettes/GenomicBreaks.Rmd</code></a></small>
       <div class="d-none name"><code>GenomicBreaks.Rmd</code></div>
@@ -613,30 +613,43 @@ which genome the move happened</em>.</p>
 </h4>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">exampleTranslocation</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## GBreaks object with 3 ranges and 2 metadata columns:</span></span>
-<span><span class="co">##       seqnames    ranges strand |        query   tra</span></span>
-<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span></span>
-<span><span class="co">##   [1]     chrA   100-200      + | chrB:100-200  TRUE</span></span>
-<span><span class="co">##   [2]     chrA   201-300      + | chrC:201-300 FALSE</span></span>
-<span><span class="co">##   [3]     chrA   301-400      + | chrB:301-400 FALSE</span></span>
+<pre><code><span><span class="co">## GBreaks object with 3 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand |        query   tra   trs</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt; &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chrA   100-200      + | chrB:100-200  TRUE FALSE</span></span>
+<span><span class="co">##   [2]     chrA   201-300      + | chrC:201-300 FALSE FALSE</span></span>
+<span><span class="co">##   [3]     chrA   301-400      + | chrB:301-400 FALSE FALSE</span></span>
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 1 sequence from an unspecified genome</span></span></code></pre>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/showTranslocations.html">showTranslocations</a></span><span class="op">(</span><span class="fu"><a href="../reference/flagTranslocations.html">flagTranslocations</a></span><span class="op">(</span><span class="va">coa</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## GBreaks object with 32 ranges and 3 metadata columns:</span></span>
+<pre><code><span><span class="co">## GBreaks object with 43 ranges and 4 metadata columns:</span></span>
 <span><span class="co">##      seqnames        ranges strand |                     query     score   tra</span></span>
 <span><span class="co">##         &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                 &lt;GRanges&gt; &lt;integer&gt; &lt;Rle&gt;</span></span>
 <span><span class="co">##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664  TRUE</span></span>
 <span><span class="co">##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249  TRUE</span></span>
 <span><span class="co">##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157 FALSE</span></span>
 <span><span class="co">##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694 FALSE</span></span>
-<span><span class="co">##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417  TRUE</span></span>
+<span><span class="co">##    5     chrI 189813-204211      + | NC_047487.1:180061-198812     14399 FALSE</span></span>
 <span><span class="co">##   ..      ...           ...    ... .                       ...       ...   ...</span></span>
-<span><span class="co">##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467 FALSE</span></span>
-<span><span class="co">##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072 FALSE</span></span>
-<span><span class="co">##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789  TRUE</span></span>
-<span><span class="co">##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835 FALSE</span></span>
-<span><span class="co">##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450 FALSE</span></span>
+<span><span class="co">##   80   chrXVI 689554-844332      + | NC_047502.1:666789-816912    154779 FALSE</span></span>
+<span><span class="co">##   81   chrXVI 856881-936088      + | NC_047502.1:817361-896238     79208 FALSE</span></span>
+<span><span class="co">##   85     chrM   12828-50712      + |   NC_018044.1:22453-53190     37885 FALSE</span></span>
+<span><span class="co">##   87     chrM   58008-76168      + |       NC_018044.1:1-16261     18161 FALSE</span></span>
+<span><span class="co">##   88     chrM   77356-85779      + |   NC_018044.1:53206-61592      8424 FALSE</span></span>
+<span><span class="co">##        trs</span></span>
+<span><span class="co">##      &lt;Rle&gt;</span></span>
+<span><span class="co">##    1  TRUE</span></span>
+<span><span class="co">##    2 FALSE</span></span>
+<span><span class="co">##    3  TRUE</span></span>
+<span><span class="co">##    4  TRUE</span></span>
+<span><span class="co">##    5 FALSE</span></span>
+<span><span class="co">##   ..   ...</span></span>
+<span><span class="co">##   80  TRUE</span></span>
+<span><span class="co">##   81 FALSE</span></span>
+<span><span class="co">##   85 FALSE</span></span>
+<span><span class="co">##   87  TRUE</span></span>
+<span><span class="co">##   88 FALSE</span></span>
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span></span></code></pre>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">

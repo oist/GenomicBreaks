@@ -1,7 +1,8 @@
 # Flag double inversions
 
-Two consecutive and overlapping inversions will generate patterns that
-can this function aims to detect.
+Flag ranges that start a quintuplet in which two overlapping inversions
+moved the three central ranges, and the two flanking ranges did not
+move.
 
 ## Usage
 
@@ -20,6 +21,29 @@ flagDoubleInversions(gb, details = FALSE)
 - details:
 
   Returns more metadata columns if `TRUE`.
+
+## Value
+
+Returns the `GBreaks` object with an extra `Dbl` metadata column.
+
+## Details
+
+With the five *target* ranges named `X A B C Y` in their order on the
+*target* genome, and lower case meaning the minus strand, the *query*
+genome reads one of the following:
+
+    X b c A Y    ABC -> baC -> bcA
+    X C a b Y    ABC -> Acb -> Cab
+    y B A c x    cba -> BCa -> BAc
+    y a C B x    cba -> cAB -> aCB
+
+The last two are the first two read on the other strand of the *query*
+genome. The flanks `X` and `Y` must be on the strand shown: with flanks
+on the opposite strand, the same central triplet requires three
+inversions. The flag is set on range `X`, as
+[`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+sets its flag on the left flank of an inversion. The five ranges must be
+on the same *target* sequence, and their strand must be known (not `*`).
 
 ## See also
 
@@ -88,8 +112,8 @@ flagDoubleInversions(exampleDoubleInversion1 )
 #> GBreaks object with 5 ranges and 2 metadata columns:
 #>       seqnames    ranges strand |        query       Dbl
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <logical>
-#>   [1]     chrA   100-190      + | chrB:100-190     FALSE
-#>   [2]     chrA   200-290      + | chrB:400-490      TRUE
+#>   [1]     chrA   100-190      + | chrB:100-190      TRUE
+#>   [2]     chrA   200-290      + | chrB:400-490     FALSE
 #>   [3]     chrA   300-390      - | chrB:200-290     FALSE
 #>   [4]     chrA   400-490      - | chrB:300-390     FALSE
 #>   [5]     chrA   500-590      + | chrB:500-590     FALSE

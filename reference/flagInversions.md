@@ -19,13 +19,17 @@ flagInversions(gb, tol = Inf)
 
 - tol:
 
-  Tolerance window for the distance between two ranges.
+  Ranges separated by more than `tol` unaligned bases on either genome
+  are not considered adjacent.
 
 ## Value
 
 Returns the `GBreaks` object with an extra `inv` metadata column.
 
 ## Details
+
+Inversions can not be determined without orientation: triplets that
+contain a range on the `*` strand are never flagged.
 
 Here is a trivial example of an inversion.
 
@@ -80,7 +84,17 @@ flagInversions(exampleInversion)
 #>   [3]     chrA   301-400      + | chrB:301-400 FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
+# The widest gap between the ranges of this example is 19 bases.
 flagInversions(exampleInversion, tol = 19)
+#> GBreaks object with 3 ranges and 2 metadata columns:
+#>       seqnames    ranges strand |        query   inv
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle>
+#>   [1]     chrA   100-190      + | chrB:100-190  TRUE
+#>   [2]     chrA   210-291      - | chrB:210-291 FALSE
+#>   [3]     chrA   301-400      + | chrB:301-400 FALSE
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+flagInversions(exampleInversion, tol = 18)
 #> GBreaks object with 3 ranges and 2 metadata columns:
 #>       seqnames    ranges strand |        query   inv
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle>

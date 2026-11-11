@@ -47,6 +47,14 @@ a `Scr` flag, for *scrambled*, is issued. Lastly, `Bnd` (for *boundary*)
 signals that there is no pair to analyse because the current entry is
 the last one for the current sequence level on the *target* genome.
 
+## Unstranded ranges (experimental)
+
+A pair that involves a range on the `*` strand is flagged `Col` when its
+ranges are adjacent on the *query* genome in an order compatible with
+colinearity, `Scr` when they are not adjacent, and `NA` when they are
+adjacent but their class depends on the unknown strand (`Inv` or `Flp`).
+This behaviour may change in future versions.
+
 ## See also
 
 Other Flagging functions:

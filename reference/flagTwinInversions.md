@@ -2,7 +2,8 @@
 
 Flag ranges that start a quadruplet that would be colinear if the two
 central pairs were aligned to the opposite strand. This implies
-breakpoint reuse.
+breakpoint reuse. The four ranges must be on the same *target* sequence,
+and their strand must be known (not `*`).
 
 ## Usage
 

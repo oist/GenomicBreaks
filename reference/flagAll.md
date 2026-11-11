@@ -19,6 +19,14 @@ flagAll(gb)
 
 Returns the `GBreaks` object with an extra `flag` metadata column.
 
+## Unstranded ranges (experimental)
+
+On ranges of the `*` strand, a range can be both colinear with the next
+one and the start of a payload region of
+[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md);
+it is then flagged as colinear. This behaviour may change in future
+versions.
+
 ## See also
 
 Other Flagging functions:

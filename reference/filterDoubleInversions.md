@@ -54,9 +54,9 @@ filterDoubleInversions(exampleDoubleInversion1)
 #> GBreaks object with 3 ranges and 2 metadata columns:
 #>     seqnames    ranges strand |        query       Dbl
 #>        <Rle> <IRanges>  <Rle> |    <GRanges> <logical>
+#>   2     chrA   200-290      + | chrB:400-490     FALSE
 #>   3     chrA   300-390      - | chrB:200-290     FALSE
 #>   4     chrA   400-490      - | chrB:300-390     FALSE
-#>   5     chrA   500-590      + | chrB:500-590     FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
 ```

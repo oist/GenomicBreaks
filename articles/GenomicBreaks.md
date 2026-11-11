@@ -684,12 +684,12 @@ genome the move happened*.
 flagTranslocations(exampleTranslocation)
 ```
 
-    ## GBreaks object with 3 ranges and 2 metadata columns:
-    ##       seqnames    ranges strand |        query   tra
-    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle>
-    ##   [1]     chrA   100-200      + | chrB:100-200  TRUE
-    ##   [2]     chrA   201-300      + | chrC:201-300 FALSE
-    ##   [3]     chrA   301-400      + | chrB:301-400 FALSE
+    ## GBreaks object with 3 ranges and 3 metadata columns:
+    ##       seqnames    ranges strand |        query   tra   trs
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+    ##   [1]     chrA   100-200      + | chrB:100-200  TRUE FALSE
+    ##   [2]     chrA   201-300      + | chrC:201-300 FALSE FALSE
+    ##   [3]     chrA   301-400      + | chrB:301-400 FALSE FALSE
     ##   -------
     ##   seqinfo: 1 sequence from an unspecified genome
 
@@ -698,20 +698,33 @@ flagTranslocations(exampleTranslocation)
 showTranslocations(flagTranslocations(coa))
 ```
 
-    ## GBreaks object with 32 ranges and 3 metadata columns:
+    ## GBreaks object with 43 ranges and 4 metadata columns:
     ##      seqnames        ranges strand |                     query     score   tra
     ##         <Rle>     <IRanges>  <Rle> |                 <GRanges> <integer> <Rle>
     ##    1     chrI   5860-184523      + |   NC_047487.1:8723-169504    178664  TRUE
     ##    2     chrI 184533-184781      + | NC_047487.1:176430-176696       249  TRUE
     ##    3     chrI 185343-187499      + | NC_047487.1:170368-174401      2157 FALSE
     ##    4     chrI 187502-189195      + | NC_047487.1:177293-179769      1694 FALSE
-    ##   12   chrIII 151968-168384      + | NC_047489.1:179584-195977     16417  TRUE
+    ##    5     chrI 189813-204211      + | NC_047487.1:180061-198812     14399 FALSE
     ##   ..      ...           ...    ... .                       ...       ...   ...
-    ##   64   chrXIV 777507-778973      - |   NC_047491.1:15022-16471      1467 FALSE
-    ##   65   chrXIV 778976-781047      + | NC_047500.1:768251-770345      2072 FALSE
-    ##   72    chrXV 855061-968849      + | NC_047501.1:832989-947263    113789  TRUE
-    ##   73    chrXV 969434-970268      - | NC_047501.1:953757-954546       835 FALSE
-    ##   74    chrXV 976413-980862      + | NC_047501.1:948879-953466      4450 FALSE
+    ##   80   chrXVI 689554-844332      + | NC_047502.1:666789-816912    154779 FALSE
+    ##   81   chrXVI 856881-936088      + | NC_047502.1:817361-896238     79208 FALSE
+    ##   85     chrM   12828-50712      + |   NC_018044.1:22453-53190     37885 FALSE
+    ##   87     chrM   58008-76168      + |       NC_018044.1:1-16261     18161 FALSE
+    ##   88     chrM   77356-85779      + |   NC_018044.1:53206-61592      8424 FALSE
+    ##        trs
+    ##      <Rle>
+    ##    1  TRUE
+    ##    2 FALSE
+    ##    3  TRUE
+    ##    4  TRUE
+    ##    5 FALSE
+    ##   ..   ...
+    ##   80  TRUE
+    ##   81 FALSE
+    ##   85 FALSE
+    ##   87  TRUE
+    ##   88 FALSE
     ##   -------
     ##   seqinfo: 17 sequences (1 circular) from sacCer3 genome
 

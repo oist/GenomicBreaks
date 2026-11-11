@@ -21,7 +21,7 @@ account."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,6 +113,17 @@ are discarded from the returned object.  This parameter might be removed in
 the future if too confusing or useless.</p>
     </div>
     <div class="section level2">
+    <h2 id="unstranded-ranges-experimental-">Unstranded ranges (experimental)<a class="anchor" aria-label="anchor" href="#unstranded-ranges-experimental-"></a></h2>
+
+
+<p>A range on the <code>*</code> strand is compatible with both strands: a pair of
+unstranded ranges is colinear when its ranges are adjacent in either
+direction.  This behaviour may change in future versions.</p>
+<p>Ranges of width zero, such as the mapped regions returned by
+<code><a href="bridgeRegions.html">bridgeRegions()</a></code> between adjacent alignments, are placed between the two
+bases that surround them.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Flagging functions:
 <code><a href="flagAll.html">flagAll()</a></code>,
@@ -157,8 +168,8 @@ the future if too confusing or useless.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400      &lt;NA&gt;      &lt;NA&gt;        -1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           qprev     t_col     q_col     tdist     qdist  colinear</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;integer&gt; &lt;logical&gt; &lt;logical&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;logical&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]      &lt;NA&gt;      TRUE      TRUE         1         1      TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]        -1      TRUE      TRUE         1         1      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]      &lt;NA&gt;      TRUE      TRUE         0         0      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]        -1      TRUE      TRUE         0         0      TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]        -1      &lt;NA&gt;      &lt;NA&gt;       Inf       Inf     FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>

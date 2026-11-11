@@ -1,6 +1,9 @@
 # Coalesce Pairwise Alignments
 
-Coalesce Pairwise Alignments
+This algorithm take in a pairwise genome alignment, represented as a
+collection of intervals in a *target* genome paired with intervals in a
+*query* genome. It reduces the number of pairs by coalescing pairs that
+are within close proximity on the same strand (user determined).
 
 ## Usage
 
@@ -39,6 +42,18 @@ misalignments can cause us to infer artificial breakpoints
 Internally, `coalesce_contigs` uses
 [`flagColinearAlignments()`](https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.md)
 See the examples for details.
+
+## Unstranded ranges (experimental)
+
+In an object that contains both oriented ranges and ranges on the `*`
+strand, the latter are treated as *mapped regions*, such as those
+returned by
+[`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md):
+the oriented ranges are coalesced, and a mapped region that lies within
+a coalesced range on both genomes is absorbed by it. Other mapped
+regions are returned unchanged. In an object where all ranges are on the
+`*` strand, ranges are colinear when they are adjacent in either
+direction. This behaviour may change in future versions.
 
 ## See also
 
@@ -84,8 +99,8 @@ flagColinearAlignments(exampleColinear3, details = TRUE)
 #>   [3]     chrA   301-400      + | chrB:301-400      <NA>      <NA>        -1
 #>           qprev     t_col     q_col     tdist     qdist  colinear
 #>       <integer> <logical> <logical> <numeric> <numeric> <logical>
-#>   [1]      <NA>      TRUE      TRUE         1         1      TRUE
-#>   [2]        -1      TRUE      TRUE         1         1      TRUE
+#>   [1]      <NA>      TRUE      TRUE         0         0      TRUE
+#>   [2]        -1      TRUE      TRUE         0         0      TRUE
 #>   [3]        -1      <NA>      <NA>       Inf       Inf     FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
@@ -115,8 +130,8 @@ flagColinearAlignments(gb2, details = TRUE)
 #>   [3]     chrA   401-501      - | chrB:100-200        -1        -1      <NA>
 #>           qprev     t_col     q_col     tdist     qdist  colinear
 #>       <integer> <logical> <logical> <numeric> <numeric> <logical>
-#>   [1]         1      TRUE      TRUE         1         1      TRUE
-#>   [2]         1      TRUE      TRUE         1         1      TRUE
+#>   [1]         1      TRUE      TRUE         0         0      TRUE
+#>   [2]         1      TRUE      TRUE         0         0      TRUE
 #>   [3]      <NA>      <NA>      <NA>       Inf       Inf     FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
@@ -154,6 +169,27 @@ coalesce_contigs(gb4)
 #>       seqnames    ranges strand |        query     score
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>
 #>   [1]     chrA   201-501      * | chrB:100-400       301
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+
+# Coalescing over mapped regions
+br <- bridgeRegions(exampleColinear5)
+br
+#> GBreaks object with 4 ranges and 1 metadata column:
+#>       seqnames    ranges strand |        query
+#>          <Rle> <IRanges>  <Rle> |    <GRanges>
+#>   [1]     chrA   191-199      * | chrB:191-199
+#>   [2]     chrA   291-299      * | chrB:291-299
+#>   [3]     chrA   391-399      * | chrB:391-399
+#>   [4]     chrA   491-499      * | chrB:491-499
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+gb5 <- c(exampleColinear5, br) |> sort(ignore.strand = TRUE)
+coalesce_contigs(gb5)
+#> GBreaks object with 1 range and 2 metadata columns:
+#>       seqnames    ranges strand |        query     score
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>
+#>   [1]     chrA   100-590      + | chrB:100-590       491
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
 ```

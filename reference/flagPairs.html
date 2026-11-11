@@ -15,7 +15,7 @@ between the current entry and the next entry."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,6 +89,16 @@ ranges are not next to each other, a <code>Scr</code> flag, for <em>scrambled</e
 Lastly, <code>Bnd</code> (for <em>boundary</em>) signals that there is no pair to analyse
 because the current entry is the last one for the current sequence level on
 the <em>target</em> genome.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="unstranded-ranges-experimental-">Unstranded ranges (experimental)<a class="anchor" aria-label="anchor" href="#unstranded-ranges-experimental-"></a></h2>
+
+
+<p>A pair that involves a range on the <code>*</code> strand is flagged <code>Col</code> when its
+ranges are adjacent on the <em>query</em> genome in an order compatible with
+colinearity, <code>Scr</code> when they are not adjacent, and <code>NA</code> when they are
+adjacent but their class depends on the unknown strand (<code>Inv</code> or <code>Flp</code>).
+This behaviour may change in future versions.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

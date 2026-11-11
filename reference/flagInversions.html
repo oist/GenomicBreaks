@@ -15,7 +15,7 @@ were aligned to the opposite strand."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,8 @@ were aligned to the opposite strand.</p>
 
 
 <dt id="arg-tol">tol<a class="anchor" aria-label="anchor" href="#arg-tol"></a></dt>
-<dd><p>Tolerance window for the distance between two ranges.</p></dd>
+<dd><p>Ranges separated by more than <code>tol</code> unaligned bases on either
+genome are not considered adjacent.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -74,7 +75,9 @@ were aligned to the opposite strand.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Here is a trivial example of an inversion.</p>
+    <p>Inversions can not be determined without orientation: triplets that contain
+a range on the <code>*</code> strand are never flagged.</p>
+<p>Here is a trivial example of an inversion.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>┌──────────────┬──────────────┬──────────────┐</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>│ chrA<span class="sc">:</span><span class="dv">101-200</span> │ chrA<span class="sc">:</span><span class="dv">201-300</span> │ chrA<span class="sc">:</span><span class="dv">301-400</span> │ (Target genome)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>└──────────────┴──────────────┴──────────────┘</span>
@@ -124,7 +127,17 @@ were aligned to the opposite strand.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="co"># The widest gap between the ranges of this example is 19 bases.</span></span></span>
 <span class="r-in"><span><span class="fu">flagInversions</span><span class="op">(</span><span class="va">exampleInversion</span>, tol <span class="op">=</span> <span class="fl">19</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   inv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="fu">flagInversions</span><span class="op">(</span><span class="va">exampleInversion</span>, tol <span class="op">=</span> <span class="fl">18</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query   inv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;Rle&gt;</span>

@@ -93,6 +93,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/orderQuerySeqLevels.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/pairwiseAlignment.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/permutationVector.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/permutationVectorToGBreaks.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/plotApairOfChrs.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/range.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/readMAF.html</loc></url>
@@ -105,6 +106,7 @@
 <url><loc>https://oist.github.io/GenomicBreaks/reference/scaffoldByFlipAndMerge.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/showInversions.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/showTranslocations.html</loc></url>
+<url><loc>https://oist.github.io/GenomicBreaks/reference/simulateRearrangements.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/slidingWindow.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/splitSeqLevel.html</loc></url>
 <url><loc>https://oist.github.io/GenomicBreaks/reference/strandNames.html</loc></url>

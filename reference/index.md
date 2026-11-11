@@ -204,7 +204,7 @@ Functions to flag patterns of alignments and filter them.
   : Extract central blocks in inversions
 
 - [`filterTranslocations()`](https://oist.github.io/GenomicBreaks/reference/filterTranslocations.md)
-  : Extract central blocks in translocations
+  : Extract moved blocks in translocations
 
 - [`showInversions()`](https://oist.github.io/GenomicBreaks/reference/showInversions.md)
   : Show inversions and their flanking blocks.
@@ -430,3 +430,11 @@ Functions that compute properties of breakpoint graphs.
 
 - [`permutationVector()`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md)
   : Permutation vector
+
+- [`permutationVectorToGBreaks()`](https://oist.github.io/GenomicBreaks/reference/permutationVectorToGBreaks.md)
+  :
+
+  Construct a `GBreaks` object from a permutation vector
+
+- [`simulateRearrangements()`](https://oist.github.io/GenomicBreaks/reference/simulateRearrangements.md)
+  : Simulate rearranged genomes

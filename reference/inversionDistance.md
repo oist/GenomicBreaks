@@ -15,7 +15,8 @@ inversionDistance(x)
 
   Either a GBreaks object or a signed permutation vector. If `x` is a
   GBreaks object, a permutation vector will be extracted using
-  [`permutationVector`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md).
+  [`permutationVector`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md),
+  which stops with an error if a range is on the `*` strand.
 
 ## Value
 

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,14 +62,16 @@
 
 
 <dt id="arg-detect">detect<a class="anchor" aria-label="anchor" href="#arg-detect"></a></dt>
-<dd><p>Run again <code><a href="flagTranslocations.html">flagTranslocations()</a></code> if <code>TRUE</code>, else reuse the <code>tra</code>
-flag or fail if it is absent.</p></dd>
+<dd><p>Run again <code><a href="flagTranslocations.html">flagTranslocations()</a></code> if <code>TRUE</code>, else reuse the
+<code>tra</code> and <code>trs</code> flags.  If they are absent, an empty object is
+returned.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns the <code>GBreaks</code> object after removing the ranges that are
-translocated and coalescing the resulting collinear ranges.</p>
+    <p>Returns the <code>GBreaks</code> object after removing the moved ranges
+(see <code><a href="filterTranslocations.html">filterTranslocations()</a></code>) and coalescing the resulting collinear
+ranges.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -102,6 +104,13 @@ translocated and coalescing the resulting collinear ranges.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-400      + | chrB:100-400       301</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="fu">removeTranslocations</span><span class="op">(</span><span class="fu"><a href="swap.html">swap</a></span><span class="op">(</span><span class="va">exampleTranslocation</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 1 range and 2 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrB   100-400      + | chrA:100-400       301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 2 sequences from an unspecified genome</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

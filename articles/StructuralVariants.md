@@ -88,8 +88,21 @@ flagColinearAlignments(reverse(exampleColinear))
 
 ``` r
 
-# Note the tolerance window
+# Note the tolerance window: the ranges are separated by 100 unaligned bases
 flagColinearAlignments(exampleColinear, tol = 100)
+```
+
+    ## GBreaks object with 2 ranges and 2 metadata columns:
+    ##       seqnames    ranges strand |        query  colinear
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <logical>
+    ##   [1]     chrA   100-150      + | chrB:100-150      TRUE
+    ##   [2]     chrA   251-300      + | chrB:251-300     FALSE
+    ##   -------
+    ##   seqinfo: 1 sequence from an unspecified genome
+
+``` r
+
+flagColinearAlignments(exampleColinear, tol = 99)
 ```
 
     ## GBreaks object with 2 ranges and 2 metadata columns:
@@ -525,19 +538,23 @@ exampleClownInversion |> makeOxfordPlots(col = "strand") + ggplot2::theme_bw()
 ### Translocations
 
 If a region has moved, but is not an inversion, then it is a
-translocation.
+translocation. A moved range is seen at two places of the *target*
+genome: its *payload region*, where it is found on the *target* genome
+between two ranges that are adjacent on the *query* genome (`tra` flag),
+and its *site*, a pair of adjacent ranges between which it is found on
+the *query* genome (`trs` flag).
 
 ``` r
 
-exampleTranslocation |> flagColinearAlignments() |> flagInversions()
+exampleTranslocation |> flagTranslocations()
 ```
 
     ## GBreaks object with 3 ranges and 3 metadata columns:
-    ##       seqnames    ranges strand |        query  colinear   inv
-    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <logical> <Rle>
-    ##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
-    ##   [2]     chrA   201-300      + | chrC:201-300     FALSE FALSE
-    ##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
+    ##       seqnames    ranges strand |        query   tra   trs
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+    ##   [1]     chrA   100-200      + | chrB:100-200  TRUE FALSE
+    ##   [2]     chrA   201-300      + | chrC:201-300 FALSE FALSE
+    ##   [3]     chrA   301-400      + | chrB:301-400 FALSE FALSE
     ##   -------
     ##   seqinfo: 1 sequence from an unspecified genome
 
@@ -548,19 +565,37 @@ plotApairOfChrs(exampleTranslocation)
 
 ![](StructuralVariants_files/figure-html/translocation-1.png)
 
+Here, the moved range is alone on its *query* sequence, so there is no
+site. When the genomes are swapped, there is a site but no payload
+region.
+
+``` r
+
+exampleTranslocation |> swap(sort = TRUE) |> flagTranslocations()
+```
+
+    ## GBreaks object with 3 ranges and 3 metadata columns:
+    ##       seqnames    ranges strand |        query   tra   trs
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+    ##   [1]     chrB   100-200      + | chrA:100-200 FALSE  TRUE
+    ##   [2]     chrB   301-400      + | chrA:301-400 FALSE FALSE
+    ##   [3]     chrC   201-300      + | chrA:201-300 FALSE FALSE
+    ##   -------
+    ##   seqinfo: 2 sequences from an unspecified genome
+
 It does not matter if the region moved on the minus strand
 
 ``` r
 
-exampleTranslocation2 |> flagColinearAlignments() |> flagInversions()
+exampleTranslocation2 |> flagTranslocations()
 ```
 
     ## GBreaks object with 3 ranges and 3 metadata columns:
-    ##       seqnames    ranges strand |        query  colinear   inv
-    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <logical> <Rle>
-    ##   [1]     chrA   100-200      + | chrB:100-200     FALSE FALSE
-    ##   [2]     chrA   201-300      - | chrC:201-300     FALSE FALSE
-    ##   [3]     chrA   301-400      + | chrB:301-400     FALSE FALSE
+    ##       seqnames    ranges strand |        query   tra   trs
+    ##          <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+    ##   [1]     chrA   100-200      + | chrB:100-200  TRUE FALSE
+    ##   [2]     chrA   201-300      - | chrC:201-300 FALSE FALSE
+    ##   [3]     chrA   301-400      + | chrB:301-400 FALSE FALSE
     ##   -------
     ##   seqinfo: 1 sequence from an unspecified genome
 
@@ -570,6 +605,25 @@ plotApairOfChrs(exampleTranslocation2)
 ```
 
 ![](StructuralVariants_files/figure-html/translocationOnMinus-1.png)
+
+When a range moves along a sequence, both places are flagged.
+
+``` r
+
+# Target: X Y U A V ; query: X A Y U V
+permutationVectorToGBreaks(c(1, 3, 4, 2, 5)) |> flagTranslocations()
+```
+
+    ## GBreaks object with 5 ranges and 3 metadata columns:
+    ##       seqnames    ranges strand |         query   tra   trs
+    ##          <Rle> <IRanges>  <Rle> |     <GRanges> <Rle> <Rle>
+    ##   [1]    chrT1   100-189      + | chrQ1:100-189 FALSE  TRUE
+    ##   [2]    chrT1   200-289      + | chrQ1:300-389 FALSE FALSE
+    ##   [3]    chrT1   300-389      + | chrQ1:400-489  TRUE FALSE
+    ##   [4]    chrT1   400-489      + | chrQ1:200-289 FALSE FALSE
+    ##   [5]    chrT1   500-589      + | chrQ1:500-589 FALSE FALSE
+    ##   -------
+    ##   seqinfo: 1 sequence from an unspecified genome
 
 ### Insertions / Deletions (indels)
 

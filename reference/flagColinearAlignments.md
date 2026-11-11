@@ -62,6 +62,17 @@ Pay attention that if the `mindwidth` option is passed, some intervals
 are discarded from the returned object. This parameter might be removed
 in the future if too confusing or useless.
 
+## Unstranded ranges (experimental)
+
+A range on the `*` strand is compatible with both strands: a pair of
+unstranded ranges is colinear when its ranges are adjacent in either
+direction. This behaviour may change in future versions.
+
+Ranges of width zero, such as the mapped regions returned by
+[`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+between adjacent alignments, are placed between the two bases that
+surround them.
+
 ## See also
 
 Other Flagging functions:
@@ -109,8 +120,8 @@ flagColinearAlignments(exampleColinear3, details = TRUE)
 #>   [3]     chrA   301-400      + | chrB:301-400      <NA>      <NA>        -1
 #>           qprev     t_col     q_col     tdist     qdist  colinear
 #>       <integer> <logical> <logical> <numeric> <numeric> <logical>
-#>   [1]      <NA>      TRUE      TRUE         1         1      TRUE
-#>   [2]        -1      TRUE      TRUE         1         1      TRUE
+#>   [1]      <NA>      TRUE      TRUE         0         0      TRUE
+#>   [2]        -1      TRUE      TRUE         0         0      TRUE
 #>   [3]        -1      <NA>      <NA>       Inf       Inf     FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome

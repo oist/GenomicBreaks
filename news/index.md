@@ -1,5 +1,153 @@
 # Changelog
 
+## GenomicBreaks 0.25.0
+
+- The handling of ranges on the `*` strand (unoriented objects, and
+  mapped regions such as the output of
+  [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md))
+  is experimental: it may change in later versions without being
+  considered a breaking change. Inversions are never flagged on such
+  ranges, and functions that need orientation, such as
+  [`permutationVector()`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md),
+  stop with an error.
+- New
+  [`simulateRearrangements()`](https://oist.github.io/GenomicBreaks/reference/simulateRearrangements.md)
+  function, which simulates a pair of genomes rearranged by random
+  inversions and transpositions and records the events, and new
+  [`permutationVectorToGBreaks()`](https://oist.github.io/GenomicBreaks/reference/permutationVectorToGBreaks.md)
+  function, the inverse of
+  [`permutationVector()`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md).
+  A set of 200 simulations is provided in
+  `inst/extdata/simulatedRearrangements.rds` for tests and benchmarks.
+- **Breaking change:**
+  [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+  now flags the two places where a moved range is seen in the order of
+  the *target* genome: its payload region (`tra` flag, as before) and
+  its site, the pair of adjacent ranges between which it is found on the
+  *query* genome (new `trs` flag, on the first range of the pair). The
+  `both` argument and the `tra` flag on the *query* ranges are removed:
+  they computed the site by swapping the genomes and sorting again,
+  which put the flag on the second range of the site when it was on the
+  minus strand, and on the wrong row when *target* ranges were
+  duplicated.
+  [`flagAll()`](https://oist.github.io/GenomicBreaks/reference/flagAll.md)
+  still uses only the `tra` flag.
+- The `tol` argument of
+  [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+  is now implemented, with the same meaning as in
+  [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md).
+- [`coalesce_contigs()`](https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.md)
+  now coalesces over *mapped regions*: in an object that mixes oriented
+  ranges and ranges on the `*` strand, such as the output of
+  [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+  added to the alignments, the oriented ranges are coalesced and absorb
+  the unstranded ranges that they contain on both genomes
+  (experimental). Before, such objects were not coalesced at all, and
+  mapped regions of width zero on one genome caused an error.
+- [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  no longer flags triplets that contain a range on the `*` strand, such
+  as a colinear `+ * +` triplet made by adding the output of
+  [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+  to an object: inversions can not be determined without orientation.
+  [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md)
+  and
+  [`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
+  already required known strands; this is now documented.
+- [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
+  now tests unstranded ranges in both directions, instead of as
+  plus-strand ranges, so that its result on unoriented objects no longer
+  depends on the orientation of the *query* sequences. As orientation is
+  unknown, more ranges can be flagged as moved (see the help page).
+  [`flagAll()`](https://oist.github.io/GenomicBreaks/reference/flagAll.md)
+  gives precedence to colinearity on such ranges, instead of failing
+  (experimental).
+- [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+  no longer flags all pairs that involve a range on the `*` strand as
+  boundaries (`Bnd`): they are now `Col` when adjacent in an order
+  compatible with colinearity, `Scr` when not adjacent, and `NA` when
+  adjacent but undetermined (experimental). The factor levels are
+  unchanged.
+- Ranges of width zero on one or both genomes, such as the mapped
+  regions that
+  [`bridgeRegions()`](https://oist.github.io/GenomicBreaks/reference/bridgeRegions.md)
+  returns between adjacent alignments, broke the adjacency tests of
+  [`flagColinearAlignments()`](https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.md),
+  [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+  and the functions that flag structural variants:
+  [`GenomicRanges::precede()`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
+  and [`follow()`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
+  report a zero-width range as adjacent to itself. The adjacency tests
+  now place such ranges between the bases that surround them. Results on
+  objects without zero-width ranges are unchanged.
+- [`permutationVector()`](https://oist.github.io/GenomicBreaks/reference/permutationVector.md),
+  and therefore
+  [`inversionDistance()`](https://oist.github.io/GenomicBreaks/reference/inversionDistance.md)
+  and
+  [`breakpointGraphProperties()`](https://oist.github.io/GenomicBreaks/reference/breakpointGraphProperties.md),
+  now stop with an error when a range is on the `*` strand, instead of
+  counting it as a plus-strand range.
+- [`showTranslocations()`](https://oist.github.io/GenomicBreaks/reference/showTranslocations.md),
+  [`filterTranslocations()`](https://oist.github.io/GenomicBreaks/reference/filterTranslocations.md)
+  and
+  [`removeTranslocations()`](https://oist.github.io/GenomicBreaks/reference/removeTranslocations.md)
+  now use both the `tra` and `trs` flags, so that moves seen only at
+  their site are no longer ignored. A moved range seen at both places is
+  counted once.
+- **Breaking change:**
+  [`dist2next()`](https://oist.github.io/GenomicBreaks/reference/dist2next.md)
+  now returns the number of bases between two ranges, as
+  [`GenomicRanges::distance()`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
+  does (`0` for adjacent or overlapping ranges), instead of that number
+  plus one. The `tol` argument of
+  [`coalesce_contigs()`](https://oist.github.io/GenomicBreaks/reference/coalesce_contigs.md),
+  [`flagColinearAlignments()`](https://oist.github.io/GenomicBreaks/reference/flagColinearAlignments.md)
+  and
+  [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  now bridges gaps of up to `tol` bases, as documented, instead of gaps
+  shorter than `tol`. With a finite `tol`, results change where a gap is
+  exactly `tol` bases wide; for example `coalesce_contigs(gb, tol = 0)`
+  now merges adjacent colinear ranges. Results with the default
+  `tol = Inf` are unchanged.
+- [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md)
+  now requires the ranges before and after the triplet to be colinear
+  with it: on the plus strand for the `bcA` and `Cab` patterns, and on
+  the minus strand for `BAc` and `aCB`. Previously, it also flagged
+  triplets that require three inversions, and triplets whose neighbours
+  map elsewhere in the *query* genome. The flag is now set on the left
+  flank, as in
+  [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  and
+  [`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md).
+  As a consequence,
+  [`filterDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/filterDoubleInversions.md)
+  now returns the central triplet (it returned its last two ranges and
+  the right flank), and
+  [`removeDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/removeDoubleInversions.md)
+  was adjusted to remove the same three ranges.
+- [`flagDoubleInversions()`](https://oist.github.io/GenomicBreaks/reference/flagDoubleInversions.md)
+  and
+  [`flagTwinInversions()`](https://oist.github.io/GenomicBreaks/reference/flagTwinInversions.md)
+  now require all the ranges of a pattern to be on the same *target*
+  sequence, like
+  [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  does.
+- [`flagInversions()`](https://oist.github.io/GenomicBreaks/reference/flagInversions.md)
+  and
+  [`flagPairs()`](https://oist.github.io/GenomicBreaks/reference/flagPairs.md)
+  ignored the first range of the object when testing whether two ranges
+  are adjacent on the *query* genome. For example,
+  `flagPairs(exampleInversionGarg2019)` now returns `Scr` instead of
+  `Inv` for ranges 4 and 5, which are separated by range 1 on the
+  *query*.
+- `filterTranslocations(remove = TRUE)` returned an empty object when no
+  translocation was flagged; it now returns all the ranges.
+- [`leftInversionGaps()`](https://oist.github.io/GenomicBreaks/reference/leftInversionGaps.md)
+  now returns one gap per inversion, as a zero-width range when the left
+  flank and the central range are adjacent or overlap (these inversions
+  were dropped), with a new `flagIndex` metadata column giving the
+  position of the left flank. A new `detect` argument allows to reuse
+  existing `inv` flags, for instance computed with a `tol` value.
+
 ## GenomicBreaks 0.24.0
 
 - Support correction for unaligned bases in

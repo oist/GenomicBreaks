@@ -20,12 +20,14 @@ removeTranslocations(gb, detect = TRUE)
 
   Run again
   [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
-  if `TRUE`, else reuse the `tra` flag or fail if it is absent.
+  if `TRUE`, else reuse the `tra` and `trs` flags. If they are absent,
+  an empty object is returned.
 
 ## Value
 
-Returns the `GBreaks` object after removing the ranges that are
-translocated and coalescing the resulting collinear ranges.
+Returns the `GBreaks` object after removing the moved ranges (see
+[`filterTranslocations()`](https://oist.github.io/GenomicBreaks/reference/filterTranslocations.md))
+and coalescing the resulting collinear ranges.
 
 ## See also
 
@@ -59,4 +61,11 @@ removeTranslocations(exampleTranslocation)
 #>   [1]     chrA   100-400      + | chrB:100-400       301
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
+removeTranslocations(swap(exampleTranslocation, sort = TRUE))
+#> GBreaks object with 1 range and 2 metadata columns:
+#>       seqnames    ranges strand |        query     score
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>
+#>   [1]     chrB   100-400      + | chrA:100-400       301
+#>   -------
+#>   seqinfo: 2 sequences from an unspecified genome
 ```

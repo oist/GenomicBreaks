@@ -5,7 +5,11 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Isolate the left-side gaps in inversions — leftInversionGaps"><meta name="description" content="Isolate the left-side gaps in inversions"><meta property="og:description" content="Isolate the left-side gaps in inversions"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Isolate the left-side gaps in inversions — leftInversionGaps"><meta name="description" content="For each inversion flagged by flagInversions(), returns the region of
+the target genome between the left flank of the inversion triplet (the
+range carrying the flag) and its central range."><meta property="og:description" content="For each inversion flagged by flagInversions(), returns the region of
+the target genome between the left flank of the inversion triplet (the
+range carrying the flag) and its central range."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +17,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,12 +49,14 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Isolate the left-side gaps in inversions</p>
+    <p>For each inversion flagged by <code><a href="flagInversions.html">flagInversions()</a></code>, returns the region of
+the <em>target</em> genome between the left flank of the inversion triplet (the
+range carrying the flag) and its central range.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">leftInversionGaps</span><span class="op">(</span><span class="va">gb</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">leftInversionGaps</span><span class="op">(</span><span class="va">gb</span>, detect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -60,11 +66,23 @@
 <dl><dt id="arg-gb">gb<a class="anchor" aria-label="anchor" href="#arg-gb"></a></dt>
 <dd><p>A <code><a href="GBreaks-class.html">GBreaks</a></code> object.</p></dd>
 
+
+<dt id="arg-detect">detect<a class="anchor" aria-label="anchor" href="#arg-detect"></a></dt>
+<dd><p>Run again <code><a href="flagInversions.html">flagInversions()</a></code> if <code>TRUE</code>, else reuse the <code>inv</code>
+flag.  If the flag is absent, no gap is returned.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns a <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GenomicRanges::GRanges</a></code> object representing the left-side gaps in the
-<code>GBreaks</code> object.</p>
+    <p>Returns a <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GenomicRanges::GRanges</a></code> object representing the
+left-side gaps in the <code>GBreaks</code> object, one per inversion.  Its <code>flagIndex</code>
+metadata column contains the position in <code>gb</code> of the left flank of each
+inversion.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>When these two ranges are adjacent or overlap on the <em>target</em> genome,
+the gap is a zero-width range that starts after the end of the left flank.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -83,11 +101,26 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">leftInversionGaps</span><span class="op">(</span><span class="fu"><a href="flagInversions.html">flagInversions</a></span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 1 range and 0 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   191-209      *</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">leftInversionGaps</span><span class="op">(</span><span class="va">exampleInversion</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 1 range and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand | flagIndex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   191-209      * |         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Reuse flags computed with a tolerance threshold</span></span></span>
+<span class="r-in"><span><span class="va">exampleInversion</span> <span class="op">|&gt;</span> <span class="fu"><a href="flagInversions.html">flagInversions</a></span><span class="op">(</span>tol <span class="op">=</span> <span class="fl">19</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">leftInversionGaps</span><span class="op">(</span>detect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 1 range and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand | flagIndex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   191-209      * |         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="va">exampleInversion</span> <span class="op">|&gt;</span> <span class="fu"><a href="flagInversions.html">flagInversions</a></span><span class="op">(</span>tol <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">leftInversionGaps</span><span class="op">(</span>detect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 0 ranges and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    seqnames    ranges strand | flagIndex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
 <span class="r-in"><span></span></span>

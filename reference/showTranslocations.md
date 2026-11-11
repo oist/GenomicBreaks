@@ -24,14 +24,15 @@ showTranslocations(gb, rename = TRUE, detect = TRUE)
 
   Run again
   [`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)
-  if `TRUE`, else reuse the `tra` flag or fail if it is absent.
+  if `TRUE`, else reuse the `tra` and `trs` flags. If they are absent,
+  an empty object is returned.
 
 ## Value
 
 Returns the `GBreaks` object in which all ranges that are not part of a
-translocation triplet have been discarded. If the object was missing the
-`tra` metadata column, return the object after discarding all of its
-ranges.
+payload region (`U A V`), of a site (`X Y`), or the moved range of a
+site, have been discarded (see
+[`flagTranslocations()`](https://oist.github.io/GenomicBreaks/reference/flagTranslocations.md)).
 
 ## See also
 
@@ -44,12 +45,21 @@ Other Translocation functions:
 
 ``` r
 showTranslocations(exampleTranslocation)
-#> GBreaks object with 3 ranges and 2 metadata columns:
-#>     seqnames    ranges strand |        query   tra
-#>        <Rle> <IRanges>  <Rle> |    <GRanges> <Rle>
-#>   1     chrA   100-200      + | chrB:100-200  TRUE
-#>   2     chrA   201-300      + | chrC:201-300 FALSE
-#>   3     chrA   301-400      + | chrB:301-400 FALSE
+#> GBreaks object with 3 ranges and 3 metadata columns:
+#>     seqnames    ranges strand |        query   tra   trs
+#>        <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+#>   1     chrA   100-200      + | chrB:100-200  TRUE FALSE
+#>   2     chrA   201-300      + | chrC:201-300 FALSE FALSE
+#>   3     chrA   301-400      + | chrB:301-400 FALSE FALSE
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
+showTranslocations(swap(exampleTranslocation, sort = TRUE))
+#> GBreaks object with 3 ranges and 3 metadata columns:
+#>     seqnames    ranges strand |        query   tra   trs
+#>        <Rle> <IRanges>  <Rle> |    <GRanges> <Rle> <Rle>
+#>   1     chrB   100-200      + | chrA:100-200 FALSE  TRUE
+#>   2     chrB   301-400      + | chrA:301-400 FALSE FALSE
+#>   3     chrC   201-300      + | chrA:201-300 FALSE FALSE
+#>   -------
+#>   seqinfo: 2 sequences from an unspecified genome
 ```

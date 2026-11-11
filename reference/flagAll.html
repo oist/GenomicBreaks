@@ -15,7 +15,7 @@ or a translocation triplet."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,14 @@ or a translocation triplet.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns the <code>GBreaks</code> object with an extra <code>flag</code> metadata column.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="unstranded-ranges-experimental-">Unstranded ranges (experimental)<a class="anchor" aria-label="anchor" href="#unstranded-ranges-experimental-"></a></h2>
+
+
+<p>On ranges of the <code>*</code> strand, a range can be both colinear with the next
+one and the start of a payload region of <code><a href="flagTranslocations.html">flagTranslocations()</a></code>; it is
+then flagged as colinear.  This behaviour may change in future versions.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

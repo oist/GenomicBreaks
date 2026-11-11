@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.24.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,10 @@ respectively.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The distance is defined by the <code><a href="https://rdrr.io/pkg/IRanges/man/nearest-methods.html" class="external-link">GenomicRanges::distance</a></code> function.  Note
+    <p>The distance is defined by the <code><a href="https://rdrr.io/pkg/IRanges/man/nearest-methods.html" class="external-link">GenomicRanges::distance</a></code> function: it is
+the number of bases between the two ranges, so it is <code>0</code> for adjacent
+ranges, and also for overlapping ranges.  It is <code>NA</code> for ranges on different
+sequences, or on different strands unless <code>ignore.strand = TRUE</code>.  Note
 that because the last range has not next neighbor, the last value is set
 to <code>Inf</code> arbitrarily.</p>
     </div>
@@ -107,8 +110,8 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190        NA        20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291        NA        10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190        NA        19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291        NA         9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
@@ -125,8 +128,8 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190        20        20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291        10        10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190        19        19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291         9         9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
@@ -134,8 +137,8 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   120-170      + | chrB:100-190        60        20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   230-271      - | chrB:210-291        50        10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   120-170      + | chrB:100-190        59        19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   230-271      - | chrB:210-291        49         9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   321-380      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
@@ -143,7 +146,7 @@ to <code>Inf</code> arbitrarily.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query     tdist     qdist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190       111       111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190       110       110</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>

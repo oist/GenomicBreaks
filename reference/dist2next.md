@@ -44,8 +44,11 @@ genomes respectively.
 
 The distance is defined by the
 [`GenomicRanges::distance`](https://rdrr.io/pkg/IRanges/man/nearest-methods.html)
-function. Note that because the last range has not next neighbor, the
-last value is set to `Inf` arbitrarily.
+function: it is the number of bases between the two ranges, so it is `0`
+for adjacent ranges, and also for overlapping ranges. It is `NA` for
+ranges on different sequences, or on different strands unless
+`ignore.strand = TRUE`. Note that because the last range has not next
+neighbor, the last value is set to `Inf` arbitrarily.
 
 ## See also
 
@@ -65,8 +68,8 @@ dist2next(exampleInversion)
 #> GBreaks object with 3 ranges and 3 metadata columns:
 #>       seqnames    ranges strand |        query     tdist     qdist
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <numeric> <numeric>
-#>   [1]     chrA   100-190      + | chrB:100-190        NA        20
-#>   [2]     chrA   210-291      - | chrB:210-291        NA        10
+#>   [1]     chrA   100-190      + | chrB:100-190        NA        19
+#>   [2]     chrA   210-291      - | chrB:210-291        NA         9
 #>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
@@ -83,8 +86,8 @@ dist2next(exampleInversion, ignore.strand = TRUE)
 #> GBreaks object with 3 ranges and 3 metadata columns:
 #>       seqnames    ranges strand |        query     tdist     qdist
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <numeric> <numeric>
-#>   [1]     chrA   100-190      + | chrB:100-190        20        20
-#>   [2]     chrA   210-291      - | chrB:210-291        10        10
+#>   [1]     chrA   100-190      + | chrB:100-190        19        19
+#>   [2]     chrA   210-291      - | chrB:210-291         9         9
 #>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
@@ -92,8 +95,8 @@ dist2next(exampleInversion - 20, ignore.strand = TRUE)
 #> GBreaks object with 3 ranges and 3 metadata columns:
 #>       seqnames    ranges strand |        query     tdist     qdist
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <numeric> <numeric>
-#>   [1]     chrA   120-170      + | chrB:100-190        60        20
-#>   [2]     chrA   230-271      - | chrB:210-291        50        10
+#>   [1]     chrA   120-170      + | chrB:100-190        59        19
+#>   [2]     chrA   230-271      - | chrB:210-291        49         9
 #>   [3]     chrA   321-380      + | chrB:301-400       Inf       Inf
 #>   -------
 #>   seqinfo: 1 sequence from an unspecified genome
@@ -101,7 +104,7 @@ dist2next(exampleInversion, 2)
 #> GBreaks object with 3 ranges and 3 metadata columns:
 #>       seqnames    ranges strand |        query     tdist     qdist
 #>          <Rle> <IRanges>  <Rle> |    <GRanges> <numeric> <numeric>
-#>   [1]     chrA   100-190      + | chrB:100-190       111       111
+#>   [1]     chrA   100-190      + | chrB:100-190       110       110
 #>   [2]     chrA   210-291      - | chrB:210-291       Inf       Inf
 #>   [3]     chrA   301-400      + | chrB:301-400       Inf       Inf
 #>   -------
