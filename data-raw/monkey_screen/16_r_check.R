@@ -1,7 +1,7 @@
 suppressMessages(library(GenomicBreaks))
 args <- commandArgs(trailingOnly = TRUE)
 funs <- c("albert_index", "marcel_index", "rafiki_index", "wukong_index", "abu_index", "imo_index",
-          "george_index", "jack_index", "baker_index", "hanuman_index")
+          "george_index", "jack_index", "baker_index", "hanuman_index", "mizaru_index", "able_index")
 geom <- setdiff(funs, c("george_index", "baker_index"))
 out <- file(args[1], "w")
 for (f in readLines(args[2])) {

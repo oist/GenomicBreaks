@@ -1,4 +1,4 @@
-"""Selection of 10 functions.
+"""Selection of the functions (10 by default; the number is the first argument).
 
 Fixed filters:
   defined        finite in >= 95 % of pairs, and in >= 90 % of the pairs of
@@ -10,7 +10,7 @@ Fixed filters:
   nodes          pairs sharing an ancestor node are more alike than chance
                  (z >= 5), also after removing the rank of P (z >= 3)
 
-Two requirements are relaxed step by step until 10 functions remain.
+Two requirements are relaxed step by step until enough functions remain.
   tau   common ceiling, from 0.2 upwards by 0.1, on
           - |rank correlation| with every reference statistic (pooled,
             within Branch, each also partial on P);
@@ -74,7 +74,10 @@ def tmr_trees(name):
     return float(np.sqrt(tree[name]))
 
 
-def greedy(tau, nullmin, limit=10):
+LIMIT = int(sys.argv[1]) if len(sys.argv) > 1 else 10      # number of functions wanted
+
+
+def greedy(tau, nullmin, limit=LIMIT):
     c = m.loc[pool]
     c = c[(c.null_frac3 >= nullmin) & (c.ref_max < tau) & (c.tmr_r < tau) & (c.null_r < tau)].copy()
     c["score"] = (c.recip_q25.rank(pct=True) + c.nodeR_eta.rank(pct=True)) / 2
@@ -102,7 +105,7 @@ for tau in (0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8):
         grid.append((tau, nullmin, len(c), len(picked)))
         print("tau = %.1f, null >= %.2f: %d candidates before the mutual and tree filters, %d selected"
               % (tau, nullmin, len(c), len(picked)), flush=True)
-        if len(picked) == 10 and result is None:
+        if len(picked) == LIMIT and result is None:
             result = (tau, nullmin, picked, c, log)
     if result is not None and tau >= result[0] + 0.1 - 1e-9:
         break
@@ -113,7 +116,7 @@ sel["tmr_trees_r"] = [tmr_trees(n) for n in picked]
 sel["mutual_max"] = [mut.loc[n, [p for p in picked if p != n]].max() for n in picked]
 sel.to_csv(R + "/selected.tsv", sep="\t")
 c.to_csv(R + "/passing_at_tau.tsv", sep="\t")
-pd.DataFrame(log, columns=["candidate", "reason"]).to_csv(R + "/skipped_before_10th.tsv", sep="\t", index=False)
+pd.DataFrame(log, columns=["candidate", "reason"]).to_csv(R + "/skipped_before_last.tsv", sep="\t", index=False)
 mut.loc[picked, picked].to_csv(R + "/selected_mutual.tsv", sep="\t")
 json.dump({"tau": tau, "nullmin": nullmin, "funnel": funnel, "pool": len(pool), "passing_at_tau": len(c),
            "grid": grid},

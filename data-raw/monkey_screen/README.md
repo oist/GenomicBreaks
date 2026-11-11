@@ -1,7 +1,7 @@
 # Screen that produced the monkey indices
 
 These scripts screened 5,420 mechanically assembled summary functions of a
-pairwise genome alignment and retained the ten that are exported by the
+pairwise genome alignment and retained the twelve that are exported by the
 package as `?monkey_indices`.  They are kept for the record: they do not
 regenerate anything in `data/` or `inst/extdata/`.
 
@@ -42,10 +42,11 @@ the scripts in order.  `mk_*.py` are modules.
 | `11_redundancy.py` | predictability from all references together (ridge, leave one Branch out) | 2 min |
 | `12_shortlist.py` | joins the metrics (`results/metrics_all.tsv`) | 1 min |
 | `13_null_metrics.py` | departure from the shuffles | 1 min |
-| `14_select.py` | filters, relaxation, greedy selection of 10 (`results/selected.tsv`) | 2 min |
+| `14_select.py 12` | filters, relaxation, greedy selection of the number of functions given as argument (`results/selected.tsv`) | 2 min |
 | `15_final.py` | recomputes the selected candidates on every alignment (`results/final_values.tsv`) | 5 min |
 | `16_r_check.R` | values of the R functions on a list of alignments, also after `swap()` and `reverse()` | 2 min |
 | `17_final_metrics.py` | all metrics of the selected candidates, from the final values | 2 min |
+| `18_figure.py` | each selected function against the P distance, one dot per alignment | 1 min |
 
 ## Candidates
 
@@ -63,15 +64,19 @@ for the vectors and the reducers.  The exported functions are:
 | `rafiki_index()` | `raw.rcor.qstep~jm_qedge` |
 | `hanuman_index()` | `raw.rcor.jm_tw~jd_qedge` |
 | `jack_index()` | `raw.rcor.rstep~dirc` |
+| `able_index()` | `raw.pcor.rstep~jd_qedge` |
+| `mizaru_index()` | `coa.rcor.tgap~jd_qedge` |
 | `george_index()` | `raw.pcor.tgap~jm_sdens` |
 | `baker_index()` | `raw.wcor.gapf~bgap` |
 
 ## Filters
 
 The docstring of `14_select.py` lists the filters and the two settings that
-were relaxed until ten functions remained: the common ceiling on correlations
+were relaxed until enough functions remained: the common ceiling on correlations
 (0.6 in the end) and the share of genome pairs in which a function must depart
-from the shuffles (one half in the end).
+from the shuffles (one half in the end).  Ten functions were selected first;
+the eleventh and the twelfth (`mizaru_index()`, `able_index()`) are the next
+two of the same ranking at the same settings.
 
 ## Notes
 
