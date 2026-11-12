@@ -166,49 +166,67 @@ NULL
   invisible(gb)
 }
 
-# Internal: plain vectors describing the alignments sorted on the target, the
-# junctions, and (if lengths = TRUE) positions relative to sequence ends.
+# Internal: the alignments sorted on the target genome, with metadata columns
+# for the quantities that the indices use.
+#  - tdist, qdist: number of bases between an alignment and the next one on
+#    each genome, as in dist2next(gb, ignore.strand = TRUE): NA when the next
+#    alignment is on another sequence, and Inf for the last alignment.  An
+#    alignment and the next one form a junction when tdist is finite, and a
+#    same-query junction when qdist is finite too.  Target and query gaps are
+#    these distances plus one.
+#  - qrank: rank of the alignment in the order of the query genome.
+#  - tpos, qpos, tedge, qedge (if lengths = TRUE): relative position and edge
+#    distance of the alignment on each genome.
+# The columns are added in one assignment, which replaces columns of the same
+# names.  Each modification of a GRanges object can run a validity check that
+# takes longer than computing an index (dist2next() makes three).
 .mk_blocks <- function(gb, lengths = FALSE) {
   .mk_check(gb)
   gb <- sort(gb, ignore.strand = TRUE)
-  n  <- length(gb)
-  x  <- list(
-    n = n, gb = gb,
-    tseq = as.integer(seqnames(gb)), qseq = as.integer(seqnames(gb$query)),
-    ts = as.numeric(start(gb)),       te = as.numeric(end(gb)),
-    qs = as.numeric(start(gb$query)), qe = as.numeric(end(gb$query)),
-    s  = ifelse(decode(strand(gb)) == "-", -1, 1))
-  x$tw <- x$te - x$ts + 1
-  x$qw <- x$qe - x$qs + 1
-  # Rank of each alignment in the order of the query genome
-  x$qrank <- integer(n)
-  x$qrank[order(x$qseq, x$qs, x$qe)] <- seq_len(n)
-  # Junctions: index of their first alignment
-  i <- if (n > 1) which(x$tseq[-n] == x$tseq[-1]) else integer(0)
-  x$J   <- i
-  x$sameq <- x$qseq[i] == x$qseq[i + 1]
-  x$JQ  <- i[x$sameq]
+  if (isTRUE(lengths)) gb <- forceSeqLengths(gb)
+  target <- granges(gb)
+  query  <- gb$query
+  cols <- DataFrame(tdist = .mk_dist2next(target),
+                    qdist = .mk_dist2next(query),
+                    qrank = rank(unstrand(query), ties.method = "first"))
   if (isTRUE(lengths)) {
-    gb <- forceSeqLengths(gb)
-    tL <- as.numeric(seqlengths(gb))[x$tseq]
-    qL <- as.numeric(seqlengths(gb$query))[x$qseq]
-    x$tpos  <- ((x$ts + x$te) / 2 - 0.5) / tL
-    x$qpos  <- ((x$qs + x$qe) / 2 - 0.5) / qL
-    x$tedge <- round(1 - abs(2 * x$tpos - 1), 12)
-    x$qedge <- round(1 - abs(2 * x$qpos - 1), 12)
+    tpos <- .mk_pos(target)
+    qpos <- .mk_pos(query)
+    cols <- cbind(cols, DataFrame(tpos, qpos,
+                                  tedge = round(1 - abs(2 * tpos - 1), 12),
+                                  qedge = round(1 - abs(2 * qpos - 1), 12)))
   }
-  x
+  mcols(gb)[names(cols)] <- cols
+  gb
 }
 
-# Internal: gaps of the junctions (number of bases between the alignments + 1)
-.mk_tgap  <- function(x, i = x$J)
-  pmax(x$ts[i + 1] - x$te[i] - 1, 0) + 1
-.mk_qstep <- function(x, k = x$JQ)
-  pmax(pmax(x$qs[k], x$qs[k + 1]) - pmin(x$qe[k], x$qe[k + 1]) - 1, 0) + 1
-.mk_gdiff <- function(x) {
-  tg <- .mk_tgap(x, x$JQ)
-  qg <- .mk_qstep(x)
-  round((tg - qg) / (tg + qg), 12)
+# Internal: number of bases between each range and the next one, whatever
+# their strands; NA when the next range is on another sequence, and Inf for
+# the last range.
+.mk_dist2next <- function(gr) {
+  if (length(gr) == 0) return(numeric(0))
+  c(distance(head(gr, -1), tail(gr, -1), ignore.strand = TRUE), Inf)
+}
+
+# Internal: relative position of the centre of each range on its sequence,
+# from 0 (first base) to 1 (last base).
+.mk_pos <- function(gr)
+  (start(gr) + (width(gr) - 1) / 2 - 0.5) /
+    as.numeric(seqlengths(gr))[as.integer(seqnames(gr))]
+
+# Internal: index of the first alignment of each junction, or of each
+# same-query junction.
+.mk_junctions <- function(gb, sameQuery = FALSE) {
+  j <- is.finite(gb$tdist)
+  if (isTRUE(sameQuery)) j <- j & is.finite(gb$qdist)
+  which(j)
+}
+
+# Internal: gap contrast of the same-query junctions k.
+.mk_gdiff <- function(gb, k) {
+  tgap <- gb$tdist[k] + 1
+  qgap <- gb$qdist[k] + 1
+  round((tgap - qgap) / (tgap + qgap), 12)
 }
 
 # Internal: TRUE when a sum of squares of n values of mean m is only
@@ -221,7 +239,8 @@ NULL
   ok <- is.finite(a) & is.finite(b)
   a <- a[ok]; b <- b[ok]
   if (length(a) < 3) return(NA_real_)
-  w  <- if (is.null(w)) rep(1, length(a)) else w[ok]
+  # Weights such as widths are integers: sum them as doubles, without overflow
+  w  <- if (is.null(w)) rep(1, length(a)) else as.numeric(w[ok])
   sw <- sum(w)
   ma <- sum(w * a) / sw
   mb <- sum(w * b) / sw
@@ -243,8 +262,9 @@ NULL
 #' @export
 
 wukong_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  y <- log(.mk_qstep(x))
+  gb <- .mk_blocks(gb)
+  k  <- .mk_junctions(gb, sameQuery = TRUE)
+  y  <- log(gb$qdist[k] + 1)
   if (length(y) < 3) return(NA_real_)
   q <- unname(quantile(y, c(.1, .25, .75, .9)))
   if (q[3] <= q[2]) return(NA_real_)
@@ -255,8 +275,8 @@ wukong_index <- function(gb) {
 #' @export
 
 abu_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  y <- .mk_gdiff(x)
+  gb <- .mk_blocks(gb)
+  y  <- .mk_gdiff(gb, .mk_junctions(gb, sameQuery = TRUE))
   if (length(y) < 3) return(NA_real_)
   q <- unname(quantile(y, c(.25, .5, .75)))
   if (q[3] <= q[1]) return(NA_real_)
@@ -267,8 +287,8 @@ abu_index <- function(gb) {
 #' @export
 
 albert_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  y <- .mk_gdiff(x)
+  gb <- .mk_blocks(gb)
+  y  <- .mk_gdiff(gb, .mk_junctions(gb, sameQuery = TRUE))
   if (length(y) < 3) return(NA_real_)
   d <- y - mean(y)
   v <- mean(d^2)
@@ -280,22 +300,24 @@ albert_index <- function(gb) {
 #' @export
 
 marcel_index <- function(gb) {
-  x <- .mk_blocks(gb, lengths = TRUE)
-  if (x$n < 3) return(NA_real_)
+  gb <- .mk_blocks(gb, lengths = TRUE)
+  if (length(gb) < 3) return(NA_real_)
   # Majority strand of each pair of sequences, by aligned target bases.  Exact
   # ties are broken with other properties that do not depend on the
   # orientation of the sequences.
-  g    <- as.integer(factor(paste(x$tseq, x$qseq)))
+  s    <- ifelse(decode(strand(gb)) == "-", -1, 1)
+  g    <- as.integer(factor(paste(as.integer(seqnames(gb)),
+                                  as.integer(seqnames(gb$query)))))
   gmaj <- rep(1, max(g))
   todo <- rep(TRUE, max(g))
-  for (w in list(x$tw, x$qw, x$tedge, x$qedge)) {
+  for (w in list(width(gb), width(gb$query), gb$tedge, gb$qedge)) {
     if (!any(todo)) break
-    S <- as.vector(rowsum(w * x$s, g, reorder = TRUE))
+    S <- as.vector(rowsum(w * s, g, reorder = TRUE))
     gmaj[todo & S < 0] <- -1
     todo <- todo & S == 0
   }
-  qpos <- ifelse(gmaj[g] > 0, x$qpos, 1 - x$qpos)
-  y <- round(abs(x$tpos - qpos), 12)
+  qpos <- ifelse(gmaj[g] > 0, gb$qpos, 1 - gb$qpos)
+  y <- round(abs(gb$tpos - qpos), 12)
   v <- mean((y - mean(y))^2)
   if (.mk_zero(v * length(y), length(y), mean(y))) return(0)
   sqrt(v)
@@ -305,15 +327,15 @@ marcel_index <- function(gb) {
 #' @export
 
 imo_index <- function(gb) {
-  x <- .mk_blocks(gb, lengths = TRUE)
-  i <- x$J
+  gb <- .mk_blocks(gb, lengths = TRUE)
+  i  <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
   # The two members of a junction are exchangeable: one mean and one variance
   # for both, so that the reading direction does not matter.
-  mt <- (sum(x$tedge[i]) + sum(x$tedge[i + 1])) / (2 * length(i))
-  mq <- (sum(x$qedge[i]) + sum(x$qedge[i + 1])) / (2 * length(i))
-  te <- x$tedge - mt
-  qe <- x$qedge - mq
+  mt <- (sum(gb$tedge[i]) + sum(gb$tedge[i + 1])) / (2 * length(i))
+  mq <- (sum(gb$qedge[i]) + sum(gb$qedge[i + 1])) / (2 * length(i))
+  te <- gb$tedge - mt
+  qe <- gb$qedge - mq
   st <- (sum(te[i]^2) + sum(te[i + 1]^2)) / 2
   sq <- (sum(qe[i]^2) + sum(qe[i + 1]^2)) / 2
   if (.mk_zero(st, length(i), mt) || .mk_zero(sq, length(i), mq)) return(NA_real_)
@@ -324,46 +346,48 @@ imo_index <- function(gb) {
 #' @export
 
 rafiki_index <- function(gb) {
-  x <- .mk_blocks(gb, lengths = TRUE)
-  i <- x$J
-  if (length(x$JQ) < 3) return(NA_real_)
+  gb <- .mk_blocks(gb, lengths = TRUE)
+  i  <- .mk_junctions(gb)
+  sameq <- is.finite(gb$qdist[i])
+  if (sum(sameq) < 3) return(NA_real_)
   # Mean edge distance on the query, ranked among all junctions
-  edge <- rank(round((x$qedge[i] + x$qedge[i + 1]) / 2, 12))[x$sameq]
-  .mk_cor(rank(.mk_qstep(x)), edge)
+  edge <- rank(round((gb$qedge[i] + gb$qedge[i + 1]) / 2, 12))[sameq]
+  .mk_cor(rank(gb$qdist[i][sameq]), edge)
 }
 
 #' @rdname monkey_indices
 #' @export
 
 hanuman_index <- function(gb) {
-  x <- .mk_blocks(gb, lengths = TRUE)
-  i <- x$J
+  gb <- .mk_blocks(gb, lengths = TRUE)
+  i  <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
-  lw <- log(x$tw)
+  lw <- log(width(gb))
   .mk_cor(rank(round((lw[i] + lw[i + 1]) / 2, 12)),
-          rank(round(abs(x$qedge[i] - x$qedge[i + 1]), 12)))
+          rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12)))
 }
 
 #' @rdname monkey_indices
 #' @export
 
 jack_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  k <- x$JQ
+  gb <- .mk_blocks(gb)
+  k  <- .mk_junctions(gb, sameQuery = TRUE)
   if (length(k) < 3) return(NA_real_)
-  step <- x$qrank[k + 1] - x$qrank[k]
-  .mk_cor(rank(abs(step)), rank(sign(step) * (x$s[k] + x$s[k + 1]) / 2))
+  s    <- ifelse(decode(strand(gb)) == "-", -1, 1)
+  step <- gb$qrank[k + 1] - gb$qrank[k]
+  .mk_cor(rank(abs(step)), rank(sign(step) * (s[k] + s[k + 1]) / 2))
 }
 
 #' @rdname monkey_indices
 #' @export
 
 able_index <- function(gb) {
-  x <- .mk_blocks(gb, lengths = TRUE)
-  k <- x$JQ
+  gb <- .mk_blocks(gb, lengths = TRUE)
+  k  <- .mk_junctions(gb, sameQuery = TRUE)
   if (length(k) < 3) return(NA_real_)
-  .mk_cor(log(abs(x$qrank[k + 1] - x$qrank[k])),
-          round(abs(x$qedge[k] - x$qedge[k + 1]), 12))
+  .mk_cor(log(abs(gb$qrank[k + 1] - gb$qrank[k])),
+          round(abs(gb$qedge[k] - gb$qedge[k + 1]), 12))
 }
 
 #' @rdname monkey_indices
@@ -373,41 +397,41 @@ mizaru_index <- function(gb) {
   .mk_check(gb)
   # Sequence lengths are settled before coalescing, so that edge distances
   # refer to the same lengths as in the other indices.
-  x <- .mk_blocks(coalesce_contigs(forceSeqLengths(gb)), lengths = TRUE)
-  i <- x$J
+  gb <- .mk_blocks(coalesce_contigs(forceSeqLengths(gb)), lengths = TRUE)
+  i  <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
-  .mk_cor(rank(.mk_tgap(x)),
-          rank(round(abs(x$qedge[i] - x$qedge[i + 1]), 12)))
+  .mk_cor(rank(gb$tdist[i]),
+          rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12)))
 }
 
 #' @rdname monkey_indices
 #' @export
 
 george_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  score   <- .mk_col(x$gb, "score")
-  aLength <- .mk_col(x$gb, "aLength")
-  i <- x$J
+  gb <- .mk_blocks(gb)
+  score   <- .mk_col(gb, "score")
+  aLength <- .mk_col(gb, "aLength")
+  i <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
   sdens <- round(score / aLength, 12)
-  .mk_cor(log(.mk_tgap(x)), round((sdens[i] + sdens[i + 1]) / 2, 12))
+  .mk_cor(log(gb$tdist[i] + 1), round((sdens[i] + sdens[i + 1]) / 2, 12))
 }
 
 #' @rdname monkey_indices
 #' @export
 
 baker_index <- function(gb) {
-  x <- .mk_blocks(gb)
-  gapOpens <- .mk_col(x$gb, "gapOpens")
-  aLength  <- .mk_col(x$gb, "aLength")
-  i <- x$J
+  gb <- .mk_blocks(gb)
+  gapOpens <- .mk_col(gb, "gapOpens")
+  aLength  <- .mk_col(gb, "aLength")
+  i <- .mk_junctions(gb)
   # Mean, on the logarithmic scale, of the target gaps that flank each alignment
-  lg  <- log(.mk_tgap(x))
-  sum <- cnt <- numeric(x$n)
+  lg  <- log(gb$tdist[i] + 1)
+  sum <- cnt <- numeric(length(gb))
   sum[i]     <- sum[i] + lg
   cnt[i]     <- cnt[i] + 1
   sum[i + 1] <- sum[i + 1] + lg
   cnt[i + 1] <- cnt[i + 1] + 1
   bgap <- ifelse(cnt > 0, sum / cnt, NA_real_)
-  .mk_cor(round(gapOpens / aLength, 12), bgap, w = x$tw)
+  .mk_cor(round(gapOpens / aLength, 12), bgap, w = width(gb))
 }

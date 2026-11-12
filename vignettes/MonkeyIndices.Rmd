@@ -655,8 +655,8 @@ several of the settings that selected them are arbitrary.
    _GenomicBreaks_ were not in the references, nor was the inversion distance
    with hurdles.
  - **Run time.**  On 47 alignments holding 2.25 million alignment blocks, each
-   function took 1.2 to 2.6 seconds, except `mizaru_index()`, which coalesces
-   the alignments first and took 44 seconds.
+   function took 2.0 to 3.7 seconds, except `mizaru_index()`, which coalesces
+   the alignments first and took 42 seconds (R 4.3.3, Bioconductor 3.18).
 
 The R functions give the same values as the Python code of the screen on
 these 47 alignments, drawn from all clades: the largest relative difference is
