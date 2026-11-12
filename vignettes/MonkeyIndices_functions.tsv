@@ -1,0 +1,13 @@
+fun	candidate	median	shuffled	departs	reciprocal	symmetry	closest	closest_label	closest_r	others_r	ridge_r	trees_r
+wukong_index	raw.tailw.qstep	1.89931	1.98342	0.6838	0.941	0.4557	index_synteny_query	synteny index (query)	0.4544	0.5543	0.2995	0.06967
+abu_index	raw.bowley.gdiff	0.0546813	0.547699	0.8178	0.94	-0.2698	bpg_reuse	breakpoint reuse	0.5277	0.5311	0.1958	0.2678
+albert_index	raw.kurt.gdiff	-0.172499	156.253	0.5047	0.9616	0.6894	index_synteny_query	synteny index (query)	0.5393	0.4612	0.487	0.517
+marcel_index	raw.sd.pdisp	0.226338	0.229509	0.5372	0.9801	0.9766	index_strandRand_target	strand randomisation index (target)	0.4729	0.2575	0.1869	0.1122
+imo_index	raw.xcor.tedge~qedge	0.0349589	-0.000137964	0.5602	0.9881	0.9858	index_strandRand_query	strand randomisation index (query)	0.5925	0.4035	0.2906	0.2489
+rafiki_index	raw.rcor.qstep~jm_qedge	-0.0585508	-0.328334	0.8094	0.9674	0.0777	bpg_dist_frac	breakpoint-graph distance per alignment	0.5273	0.5805	0.3377	0.233
+hanuman_index	raw.rcor.jm_tw~jd_qedge	0.0952304	4.80445e-06	0.6901	0.9089	0.6448	chain_width_target_L50	chain width (target, L50)	0.571	0.4379	0.5791	0.5322
+jack_index	raw.rcor.rstep~dirc	-0.492896	0.000363369	0.8702	0.9298	0.5702	index_synteny_target	synteny index (target)	0.5521	0.5543	0.5365	0.54
+able_index	raw.pcor.rstep~jd_qedge	0.769033	0.453916	0.8534	0.9155	0.5224	index_synteny_target	synteny index (target)	0.5624	0.5805	0.4815	0.3601
+mizaru_index	coa.rcor.tgap~jd_qedge	0.0426629	-0.000150093	0.5068	0.9433	0.08729	twin_inv_width_target_Min	twin inversion width (target, minimum)	0.282	0.2456	0.2661	0.3307
+george_index	raw.pcor.tgap~jm_sdens	-0.103842	-7.08063e-05	0.6136	0.9019	0.2123	guessed_query_length_Q1	query sequence length (first quartile)	0.5299	0.5228	0.1022	0.08175
+baker_index	raw.wcor.gapf~bgap	0.01623	6.10612e-05	0.511	0.9318	0.3381	translocated_width_target_Median	translocated width (target, median)	0.4525	0.5228	0.2628	0.1428

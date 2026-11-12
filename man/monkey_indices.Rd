@@ -188,6 +188,12 @@ george_index(gb)
 baker_index(gb)
 
 }
+\seealso{
+The vignette \code{vignette("MonkeyIndices", package = "GenomicBreaks")}
+reports how the functions were selected and how they behave on the
+alignments of the screen.  The code of the screen is in
+\code{system.file("scripts", "monkey_screen", package = "GenomicBreaks")}.
+}
 \author{
 Claude (Anthropic), from a screen requested by Charles Plessy.
 }

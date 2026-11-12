@@ -47,6 +47,7 @@ Oxford / pair-of-chromosome figures.
 | `data-raw/` | Scripts that regenerate `data/` and some `inst/extdata/` files. |
 | `inst/extdata/` | Small fixture files (GFF3, MAF, train) used by examples, and `simulatedRearrangements.rds` (200 simulated genome pairs stored as permutation vectors; see `?simulateRearrangements`). |
 | `inst/CITATION` | Published-paper citation. |
+| `inst/scripts/monkey_screen/` | Python code of the screen that selected the monkey indices (`?monkey_indices`). A record: nothing in the package runs it. Described in `vignettes/MonkeyIndices.Rmd`, which reads the two `MonkeyIndices_*.tsv` tables kept next to it. |
 | `man/` | roxygen-generated `.Rd` (do not edit by hand). |
 | `vignettes/` | Long-form documentation (`*.Rmd`). |
 | `CODE_REVIEW.md` | Reusability/code-review study. Excluded from the build. |

@@ -9,6 +9,10 @@
    structured by phylogeny, different from those of shuffled alignments, and
    not strongly correlated with the existing statistics nor with each other.
    See `?monkey_indices`.
+ * New vignette _Monkey indices_ (`vignette("MonkeyIndices")`), which defines
+   the monkey indices and reports how they were selected and how they behave
+   on the alignments of the screen.  The code of the screen is in
+   `inst/scripts/monkey_screen/`.
 
 # GenomicBreaks 0.25.0
 
