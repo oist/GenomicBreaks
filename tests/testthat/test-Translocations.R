@@ -39,11 +39,11 @@ test_that("a move seen in one genome only is flagged once", {
 test_that("tol limits the distances between adjacent ranges", {
   # exampleTranslocation: U and V are 100 bases apart on the query genome;
   # in the swapped object, X and Y are 100 bases apart on the target genome.
-  expect_true (flagTranslocations(exampleTranslocation, tol = 100)$tra[1])
-  expect_false(flagTranslocations(exampleTranslocation, tol =  99)$tra[1])
+  expect_true (as.vector(flagTranslocations(exampleTranslocation, tol = 100)$tra)[1])
+  expect_false(as.vector(flagTranslocations(exampleTranslocation, tol =  99)$tra)[1])
   sw <- swap(exampleTranslocation, sort = TRUE)
-  expect_true (flagTranslocations(sw, tol = 100)$trs[1])
-  expect_false(flagTranslocations(sw, tol =  99)$trs[1])
+  expect_true (as.vector(flagTranslocations(sw, tol = 100)$trs)[1])
+  expect_false(as.vector(flagTranslocations(sw, tol =  99)$trs)[1])
 
   # Target X Y U A V, query X A Y U V, all gaps of 10 bases.  Narrowing A on
   # one genome widens one of its gaps to 60 bases, which only affects the

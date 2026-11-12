@@ -177,6 +177,7 @@ NULL
 #  - qrank: rank of the alignment in the order of the query genome.
 #  - tpos, qpos, tedge, qedge (if lengths = TRUE): relative position and edge
 #    distance of the alignment on each genome.
+#' @importFrom BiocGenerics unstrand
 .mk_blocks <- function(gb, lengths = FALSE) {
   .mk_check(gb)
   gb <- sort(gb, ignore.strand = TRUE)
@@ -392,7 +393,7 @@ george_index <- function(gb) {
 }
 
 #' @rdname monkey_indices
-#' @importFrom stats cov.wt
+#' @importFrom stats complete.cases cov.wt
 #' @export
 
 baker_index <- function(gb) {
