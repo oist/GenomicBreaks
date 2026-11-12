@@ -1,3 +1,19 @@
+# GenomicBreaks 0.26.0
+
+ * New _monkey indices_: `wukong_index()`, `abu_index()`, `albert_index()`,
+   `marcel_index()`, `imo_index()`, `rafiki_index()`, `hanuman_index()`,
+   `jack_index()`, `able_index()`, `mizaru_index()`, `george_index()` and
+   `baker_index()`.  They are twelve summary statistics that were not designed
+   to represent a biological fact: they were retained from a screen of 5,420
+   mechanically assembled functions because their values are reproducible,
+   structured by phylogeny, different from those of shuffled alignments, and
+   not strongly correlated with the existing statistics nor with each other.
+   See `?monkey_indices`.
+ * New vignette _Monkey indices_ (`vignette("MonkeyIndices")`), which defines
+   the monkey indices and reports how they were selected and how they behave
+   on the alignments of the screen.  The code of the screen is in
+   `inst/scripts/monkey_screen/`.
+
 # GenomicBreaks 0.25.0
 
  * The handling of ranges on the `*` strand (unoriented objects, and mapped

@@ -1,0 +1,731 @@
+---
+title: "Monkey indices"
+author:
+ - "Claude (Anthropic), from a screen requested by Charles Plessy"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Monkey indices}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center", dpi = 110,
+                      out.width = "100%")
+knitr::opts_knit$set(verbose = TRUE)
+library("GenomicBreaks") |> suppressPackageStartupMessages()
+library("ggplot2")
+```
+
+# Introduction
+
+The other summary statistics of _GenomicBreaks_ were each written to measure
+something that has a biological meaning, such as synteny or strand
+randomisation.  The twelve _monkey indices_ were not.  They were retained from
+a screen of 5,420 candidate functions assembled mechanically ("monkey typing")
+from the columns of an alignment table and from generic descriptive
+statistics.  A candidate was retained when its value was:
+
+ - reproducible between the alignment of _A_ to _B_ and the alignment of _B_
+   to _A_;
+ - more alike between genome pairs that share an ancestor than between other
+   pairs;
+ - different from the value obtained after shuffling the order and the strand
+   of the alignments;
+ - not strongly correlated with the statistics that already existed, nor with
+   the other candidates retained (absolute rank correlation below 0.6).
+
+What the indices mean biologically, if anything, is to be found.  Each one is
+named after a famous monkey.
+
+This vignette shows how to compute the indices, defines them, and reports how
+they were selected and how they behave on the 1,910 alignments of the screen.
+The screen was run on 2026-11-11 by Claude, an AI model made by Anthropic; the R
+functions, their tests and this vignette were written in the same session.
+The numbers reported here describe the alignments of the screen, and will
+differ on other data.
+
+# Computing the indices
+
+Each function takes a `GBreaks` object that was not coalesced, and returns one
+number.  No function has a parameter.  We use the alignment of two yeast
+genomes that is distributed with the package.
+
+```{r load_yeast}
+gb <- load_genomic_breaks(
+  system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks"))
+gb
+```
+
+Ten functions only use the coordinates and the strand of the alignments.
+
+```{r ten_indices}
+monkeys <- list(wukong = wukong_index, abu = abu_index, albert = albert_index,
+                marcel = marcel_index, imo = imo_index, rafiki = rafiki_index,
+                hanuman = hanuman_index, jack = jack_index, able = able_index,
+                mizaru = mizaru_index)
+sapply(monkeys, \(f) f(gb))
+```
+
+`george_index()` and `baker_index()` also use the alignment score, the number
+of alignment columns and the number of gap openings (metadata columns `score`,
+`aLength` and `gapOpens`), which `load_genomic_breaks()` provides for files in
+_blasttab+_ format.  They stop with an error when a column is missing.  The
+GFF3 file of this example records the score only: lower bounds of the two other
+columns are used here for illustration.
+
+```{r two_indices}
+gb$aLength  <- pmax(width(gb), width(gb$query))
+gb$gapOpens <- as.integer(width(gb) != width(gb$query))
+c(george = george_index(gb), baker = baker_index(gb))
+```
+
+## Representation of the genomes
+
+The values do not depend on the order of the sequences, nor on the orientation
+in which each sequence is written: reversing sequences with `reverse()` does
+not change them.  The _target_ and the _query_ genomes are not exchangeable:
+the values on `swap(gb)` differ, more for some indices than for others.  Note
+that `swap()` drops the metadata columns that `george_index()` and
+`baker_index()` need.
+
+```{r representation}
+gbl <- forceSeqLengths(gb)
+rbind(
+  loaded          = sapply(monkeys, \(f) f(gbl)),
+  reversed_target = sapply(monkeys, \(f) f(reverse(gbl))),
+  reversed_query  = sapply(monkeys, \(f) f(reverse(gbl, query = TRUE))),
+  swapped         = sapply(monkeys, \(f) f(swap(gbl)))
+) |> round(3)
+```
+
+## Values that can not be computed
+
+A function returns `NA` when it has fewer than three values to summarise, or
+when one of the vectors that it uses does not vary.  This happens with very
+few alignments.  It also happens to `jack_index()` and `able_index()` when the
+alignments are perfectly colinear, because every rank step is then 1, and to
+`mizaru_index()` when fewer than three junctions remain after coalescing.
+
+```{r undefined}
+sapply(monkeys, \(f) f(gb[1:2]))
+```
+
+The functions stop with an error when ranges are on the `*` strand.
+
+# The twelve functions
+
+| Function | Monkey | What it computes |
+|----------------|--------------------------------------|----------------------------------------------|
+| `wukong_index()`  | Sun Wukong: the Monkey King of the Chinese novel _Journey to the West_ | Tail weight of the query gaps between consecutive alignments |
+| `abu_index()`     | Abu: kleptomaniac pet monkey of the street thief in the _Aladdin_ films | Quartile skewness of the gap contrast (target gap against query gap) |
+| `albert_index()`  | Albert II: rhesus macaque, first primate to reach space, in 1949 | Excess kurtosis of the gap contrast |
+| `marcel_index()`  | Marcel: white-headed capuchin kept by Ross in the sitcom _Friends_ | Spread of the shift in relative position between the two genomes |
+| `imo_index()`     | Imo: Japanese macaque of Koshima who started washing sweet potatoes | Correlation of distance to the sequence end between neighbouring alignments, across genomes |
+| `rafiki_index()`  | Rafiki: mandrill shaman who presents the newborn cub in _The Lion King_ | Rank correlation of the query gap with the distance to the query sequence end |
+| `hanuman_index()` | Hanuman: monkey-faced Hindu deity, devoted companion of Rama in the _Ramayana_ | Rank correlation of alignment width with the jump in distance to the query sequence end |
+| `jack_index()`    | Jack: chacma baboon who operated railway signals in South Africa in the 1880s | Rank correlation of the size of a jump on the query with its direction |
+| `able_index()`    | Able: rhesus macaque, Miss Baker's companion on the 1959 spaceflight | Correlation of the size of a jump on the query with the jump in distance to the query sequence end |
+| `mizaru_index()`  | Mizaru: the see-no-evil monkey carved at the Toshogu shrine in Nikko | Rank correlation of the target gap between coalesced alignments with the jump in distance to the query sequence end |
+| `george_index()`  | Curious George: inquisitive little monkey of the children's books by the Reys | Correlation of the target gap with the score density of the flanking alignments |
+| `baker_index()`   | Miss Baker: squirrel monkey who survived a suborbital spaceflight in 1959 | Width-weighted correlation of gap openings per column with the size of the flanking gaps |
+
+The exact definitions are in `?monkey_indices`.
+
+## Terms
+
+All the functions sort the alignments on the _target_ genome.
+`mizaru_index()` then coalesces them; the others use them as they are.
+
+ - **Junction**: two consecutive alignments on the same _target_ sequence.
+   **Same-query junction**: a junction whose two alignments are also on the
+   same _query_ sequence.
+ - **Target gap**, **query gap**: number of bases between the two alignments
+   of a junction on that genome, plus one.
+ - **Gap contrast** of a same-query junction: (_t_ - _q_) / (_t_ + _q_), where
+   _t_ and _q_ are its target gap and its query gap.  It is near -1 when the
+   two alignments are neighbours on the _target_ and far apart on the _query_.
+ - **Rank step**: number of positions between the two alignments in the order
+   of the _query_ genome (1 for neighbours).  **Direction**: +1 when they
+   follow each other on the _query_ as their common strand implies, -1 in the
+   opposite case, 0 when they are on opposite strands.
+ - **Edge distance**: distance from the centre of an alignment to the nearest
+   end of its sequence, from 0 at the ends to 1 in the middle.  **Relative
+   position**: position of the centre, from 0 to 1.
+ - **Coalesced alignments**: runs of consecutive colinear alignments merged
+   into one, as `coalesce_contigs()` does.  The junctions that remain between
+   them are those where colinearity breaks.
+ - Sizes (widths, gaps, rank steps) are used on the logarithmic scale.
+
+## Reading of the numbers
+
+The readings follow from the definitions and from the values after shuffling;
+they are not biological interpretations.  The observed values are medians of
+the clades of the screen (see [Behaviour on the alignments of the screen]).
+
+`wukong_index()`
+
+:   Tail weight of the query gaps: range between the 10th and the 90th
+    percentiles, divided by the interquartile range.  A log-normal
+    distribution gives 1.90; heavier tails give more.  Observed: 1.3 in the
+    molluscs and Pezizomycotina, 1.9 to 2.0 in insects and fishes, 2.6 to 3.3
+    in Rickettsiales, Nanobdellati and Deinococcota.
+
+`abu_index()`
+
+:   Quartile skewness of the gap contrast.  Near 0 when the gaps of most
+    junctions are similar on the two genomes; negative when a quarter to a
+    half of the junctions have a much wider query gap; towards +1 when more
+    than half have.  Observed: within 0.06 of 0 in insects, fishes, Primates,
+    Gastropoda, Buchnera and Saccharomycotina; -0.10 in Discoba, -0.16 in
+    Bivalvia; 0.52 to 0.91 in the other bacteria, Nanobdellati and
+    Pezizomycotina.  This reading was checked on 182 alignments: the median
+    is 0.04, -0.08, -0.18, 0.68 and 0.68 when the share of junctions with a
+    contrast below -0.5 is under 10 %, 10 to 25 %, 25 to 50 %, 50 to 75 % and
+    over 75 %.
+
+`albert_index()`
+
+:   Excess kurtosis of the gap contrast.  Negative when the contrasts spread
+    between -1 and 1; high when nearly all sit at one value.  Observed: -1.4
+    in Primates, -1.1 to 0.6 in the other eukaryotes, 1.8 to 10.7 in the
+    bacteria other than Buchnera and in Nanobdellati.  156 after shuffling.
+
+`marcel_index()`
+
+:   Standard deviation of the shift in relative position between the genomes.
+    0 when every alignment is at the same relative position on both; 0.236
+    when the two positions are independent.  Observed: 0.007 in Buchnera,
+    0.21 to 0.24 in every other clade; 0.17 for pairs with a P distance below
+    0.05.
+
+`imo_index()`
+
+:   Correlation between the edge distance of an alignment on the _target_ and
+    that of its neighbours on the _query_.  1 when the distance to the
+    sequence end is kept, 0 when it is not.  Observed: 0.995 in Buchnera; 0.22
+    to 0.31 in Eupercaria, Ovalentaria and Primates; 0.09 in
+    Other_Neoteleostei; 0.04 or less elsewhere.  0.76 for pairs with a P
+    distance below 0.05, 0.03 or less above 0.25.
+
+`rafiki_index()`
+
+:   Rank correlation of the query gap with the mean edge distance on the
+    _query_.  -0.33 after shuffling, for a geometric reason: two alignments
+    that are far apart can not both be in the middle of the sequence.
+    Observed: -0.17 to -0.29 in the bacteria other than Buchnera and in
+    Nanobdellati; -0.08 to 0.04 elsewhere.  Mostly a property of the _query_
+    genome (symmetry 0.08).
+
+`hanuman_index()`
+
+:   Rank correlation of the mean width of two consecutive alignments with the
+    jump in edge distance on the _query_.  Between colinear neighbours the
+    jump is the distance between their centres, which grows with their
+    widths: positive values.  Elsewhere the jump is unrelated to the widths:
+    0.  Observed: 0.77 in Buchnera; 0.24 to 0.32 in Eupercaria, Primates and
+    Bivalvia; 0.18 or less elsewhere, about 0 in the other prokaryotes.
+
+`jack_index()`
+
+:   Rank correlation of the rank step with the direction.  Negative when the
+    long steps are those that go against the strand.  0 after shuffling.
+    Observed: -0.70 and -0.72 in the two mollusc clades, -0.21 in
+    Rickettsiales, -0.27 to -0.59 elsewhere.  Undefined for 89 alignments, 82
+    of them in Buchnera, where steps or directions do not vary.
+
+`able_index()`
+
+:   Correlation, over same-query junctions, of the rank step with the jump in
+    edge distance on the _query_.  Positive when the junctions that jump
+    furthest in the order of the _query_ are also those where the distance to
+    the sequence end changes most.  0.45 after shuffling: alignments close in
+    the _query_ order are close on the sequence, so their edge distances are
+    alike.  Observed: 0.94 in Buchnera, over the 50 alignments where it is
+    defined; 0.57 to 0.67 in the other bacteria and Nanobdellati; 0.72 in
+    Discoba; 0.76 to 0.82 in the other eukaryotes.  Undefined for 87
+    alignments, 82 of them in Buchnera, where the rank steps do not vary.
+
+`mizaru_index()`
+
+:   Rank correlation, over the junctions between coalesced alignments, of the
+    target gap with the jump in edge distance on the _query_.  Positive when
+    the widest target gaps lie between coalesced alignments whose distances to
+    the _query_ sequence end differ most.  0 after shuffling.  Observed: 0.31
+    in Apoidea; -0.03 to 0.09 in the other clades except Buchnera.  In
+    Buchnera, -0.15 over the 50 alignments that have at least three such
+    junctions, with quartiles at -0.60 and 0.29.  Undefined for 83
+    alignments, 82 of them in Buchnera.
+
+`george_index()`
+
+:   Correlation of the target gap with the mean score per alignment column of
+    the two flanking alignments.  Negative when wide gaps lie between
+    low-scoring alignments.  0 after shuffling.  Observed: -0.28 in the two
+    mollusc clades; -0.10 to -0.15 in fishes, Primates, Pezizomycotina and
+    Buchnera; -0.01 to -0.08 elsewhere.
+
+`baker_index()`
+
+:   Correlation, weighted by alignment width, of the gap openings per
+    alignment column with the size of the flanking target gaps.  Positive
+    when alignments with many gap openings lie next to wide gaps.  0 after
+    shuffling.  Observed: 0.16 and 0.17 in the two mollusc clades; 0.07 and
+    0.09 in Eupercaria and Primates; -0.06 in Buchnera; within 0.05 of 0
+    elsewhere.
+
+## Metrics in the screen
+
+```{r metrics, echo=FALSE}
+f <- read.delim("MonkeyIndices_functions.tsv")
+dec <- function(x, digits = 3) {
+  x[abs(x) < 0.5 * 10^-digits] <- 0
+  ifelse(abs(x) >= 10, sprintf("%.0f", x), sprintf(paste0("%.", digits, "f"), x))
+}
+knitr::kable(
+  data.frame(
+    paste0("`", f$fun, "()`"), dec(f$median), dec(f$shuffled),
+    sprintf("%.1f %%", 100 * f$departs), dec(f$reciprocal, 2), dec(f$symmetry, 2),
+    paste0(f$closest_label, ": ", dec(f$closest_r, 2)), dec(f$others_r, 2)),
+  col.names = c("Function", "Median", "Shuffled", "Departs", "Reciprocal",
+                "Symmetry", "Closest existing statistic", "Others"),
+  align = "lrrrrrlr")
+```
+
+ - **Median**, **Shuffled**: median of the function over one alignment of each
+   of the 955 genome pairs of the screen, and median after shuffling these
+   alignments.
+ - **Departs**: share of the genome pairs in which the value differs from 5
+   shuffles by at least 3 standard deviations.
+ - **Reciprocal**: rank correlation between the value on the alignment of _A_
+   to _B_ and the value on the alignment of _B_ to _A_ after exchanging
+   _target_ and _query_ (median of the 16 clades).
+ - **Symmetry**: rank correlation between the values on the two alignments
+   without exchanging _target_ and _query_: near 1 for a property of the pair
+   of genomes, near 0 for a property of the _target_ genome.
+ - **Closest existing statistic**: largest absolute rank correlation with any
+   of 192 reference statistics, over four ways to compute it: on all
+   alignments or within clades, and each also after removing the P distance.
+ - **Others**: largest absolute rank correlation with another monkey index,
+   computed in the same ways.
+
+# The screen
+
+## Alignments
+
+The screen used 1,910 alignments: 955 genome pairs in both orders, from 182
+genomes of 16 clades of the project _Scrambling in the Tree of Life_, 156.8
+million alignment blocks in total.  In each clade, the script
+`extractMonkeySubset.py` computed the P distance of every ordered pair of
+genomes (proportion of the aligned bases that differ, as in `P_distance()`),
+built a UPGMA tree, cut it in two, and picked 12 genomes when possible so
+that the selection contains close, intermediate and distant pairs.
+
+| Clade | Seed | Genomes | Alignments | Median blocks per alignment | P, minimum | P, median | P, maximum |
+|-------|------|--------:|-----------:|----------------------------:|-----------:|----------:|-----------:|
+| Buchnera           | MAM8 | 12 | 132 |     142 | 0.002 | 0.331 | 0.360 |
+| Deinococcota       | MAM8 | 12 | 132 |     911 | 0.006 | 0.396 | 0.420 |
+| Nanobdellati       | MAM8 |  9 |  72 |     142 | 0.242 | 0.480 | 0.537 |
+| Neisseriales       | MAM8 | 12 | 132 |     758 | 0.004 | 0.397 | 0.474 |
+| Pezizomycotina     | MAM8 |  9 |  72 |   5,441 | 0.003 | 0.386 | 0.403 |
+| Rickettsiales      | MAM8 | 12 | 132 |     353 | 0.007 | 0.427 | 0.461 |
+| Saccharomycotina   | MAM8 | 12 | 132 |   2,664 | 0.003 | 0.412 | 0.434 |
+| Apoidea            | RY4  | 12 | 132 |  72,091 | 0.003 | 0.215 | 0.230 |
+| Bivalvia           | RY4  | 12 | 132 |  10,388 | 0.019 | 0.354 | 0.424 |
+| Discoba            | RY4  | 12 | 132 |     311 | 0.004 | 0.413 | 0.473 |
+| Eupercaria         | RY4  | 12 | 132 | 164,986 | 0.005 | 0.199 | 0.229 |
+| Gastropoda         | RY4  | 12 | 132 |   6,459 | 0.019 | 0.307 | 0.442 |
+| Other_Neoteleostei | RY4  | 11 | 110 | 118,600 | 0.003 | 0.222 | 0.245 |
+| Otomorpha          | RY4  | 12 | 132 | 104,504 | 0.011 | 0.228 | 0.266 |
+| Ovalentaria        | RY4  | 12 | 132 | 184,655 | 0.002 | 0.217 | 0.246 |
+| Primates           | RY4  |  9 |  72 | 926,489 | 0.002 | 0.186 | 0.222 |
+
+The seed is the seeding scheme given to the aligner (LAST).  Most pairs are
+distant: the median P distance is 0.33, and 84 alignments (4 %) have a P
+distance below 0.1.  Close pairs are therefore few in every test below.
+
+The existing statistics were represented by 192 reference columns per
+alignment:
+
+ - 156 values from the YAML files of the statistics pipeline of the project;
+ - 9 values of package functions absent from these files (karyotype index,
+   tau index, totals of the breakpoint graph), computed with Python versions
+   that give the same values as the R package on 16 alignments;
+ - 27 simple derivations: percent aligned, averages of the _target_ and
+   _query_ versions of a statistic, and contrasts between them.
+
+## Candidates
+
+A candidate is a level, one or two vectors and a reducer; none takes a
+parameter, and nothing in the list encodes a biological hypothesis.
+
+ - **Level**: the alignments as loaded (2,484 candidates) or coalesced (2,936
+   candidates).
+ - **Vectors per alignment** (24 or 25): widths on each genome and their
+   contrast, distance to the sequence end on each genome, sequence lengths,
+   strand relative to the majority strand of the pair of sequences, shift in
+   relative position between the genomes, identity, mismatches, gap openings
+   and gap columns per alignment column, score per column, share of the
+   aligned bases of the sequence, and the gaps and changes found at the two
+   flanks.
+ - **Vectors per junction** (15 or 19): target gap, change of strand, change
+   of _query_ sequence, and the mean and the absolute difference of six or
+   eight alignment properties.
+ - **Vectors per same-query junction** (5): query gap, rank step on the
+   _query_, direction, contrast between target and query gaps, colinearity.
+
+| Reducer family | Candidates | Statistics |
+|--------------------------------|-----------:|--------------------------------------------------------|
+| Distribution of one vector | 782 | mean, standard deviation, skewness, kurtosis, quartile statistics, Gini, concentration, width-weighted mean and deviation |
+| Order along the _target_ genome | 488 | correlation between values 1, 2, 4, 8 and 16 positions apart; proportion of local extrema |
+| Differences between sequences | 181 | share of the variance between _target_ sequences, _query_ sequences or pairs of sequences |
+| Correlation of two vectors | 3,913 | Pearson, rank, width-weighted, within _target_ sequence, between neighbours |
+| Table of aligned bases by pair of sequences | 14 | mutual information, conditional entropy, Cramér's V, singular values |
+| Permutation of the alignment order | 14 | cycles, fixed points, descents, records, longest increasing subsequence, footrule |
+| Patterns of 3 or 4 consecutive alignments | 28 | frequencies and entropies of order patterns and strand patterns |
+
+Two requirements were built in, for well-definedness rather than biology: a
+value must not depend on the order of the sequences in the files, nor on the
+orientation in which each sequence was written.  On 302 alignments rewritten
+with sequences reversed at random, all 5,420 candidates gave the same value
+within a relative difference of 2 × 10^-5^.
+
+A candidate is named `<level>.<reducer>.<vector>[~<vector>]`.  The names of
+the twelve functions in the screen are:
+
+```{r candidates, echo=FALSE}
+knitr::kable(data.frame(paste0("`", f$fun, "()`"), paste0("`", f$candidate, "`")),
+             col.names = c("Function", "Candidate"))
+```
+
+In these names, the level is `raw` (as loaded) or `coa` (coalesced).  The
+reducers are `tailw` (tail weight), `bowley` (quartile skewness), `kurt`
+(excess kurtosis), `sd` (standard deviation), `pcor` (Pearson correlation),
+`rcor` (rank correlation), `wcor` (correlation weighted by alignment width)
+and `xcor` (correlation between neighbours).  The vectors are `qstep` (query
+gap), `gdiff` (gap contrast), `pdisp` (shift in relative position), `tedge`
+and `qedge` (edge distance on the _target_ and on the _query_), `tw` (width on
+the _target_), `rstep` (rank step), `dirc` (direction), `tgap` (target gap),
+`sdens` (score per alignment column), `gapf` (gap openings per alignment
+column) and `bgap` (geometric mean of the target gaps at the two flanks);
+`jm_` and `jd_` are the mean and the absolute difference of a vector over the
+two alignments of a junction.
+
+## Filters
+
+The largest losses are at definedness, reciprocal agreement and the shuffling
+test.  Novelty then leaves 43 candidates, of which 12 are taken.
+
+```{r funnel, echo=FALSE, fig.width=7, fig.height=3, fig.cap="Candidates left after each filter, applied in this order."}
+funnel <- data.frame(
+  filter = c("All candidates",
+             "Defined in at least 95 % of the alignments",
+             "Not uniform: 95 % distinct values",
+             "Same value however the sequences are written",
+             "Reproduced by the reciprocal alignment",
+             "Alike for genome pairs that share an ancestor",
+             "Departs from shuffles in half of the pairs",
+             "Below 0.6 with the existing statistics",
+             "Selected: below 0.6 with each other"),
+  left = c(5420, 3279, 2836, 2836, 1245, 1218, 197, 43, 12))
+funnel$filter <- factor(funnel$filter, levels = rev(funnel$filter))
+ggplot(funnel) +
+  aes(left, filter) +
+  geom_col(fill = "grey65", width = 0.65) +
+  geom_text(aes(label = formatC(left, format = "d", big.mark = ",")),
+            hjust = -0.2, size = 3) +
+  scale_x_continuous("Candidates left", expand = expansion(mult = c(0, 0.1))) +
+  ylab(NULL) +
+  theme_minimal(base_size = 10) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank())
+```
+
+The shuffling test keeps 16 % of the candidates that reach it: most functions
+that are reproducible and structured by phylogeny describe the alignments
+themselves, not their arrangement.  The filters are, in the order applied:
+
+ 1. **Defined.**  Finite in at least 95 % of the alignments, and in at least
+    90 % of the alignments of every clade but one.  The exception is for
+    Buchnera, where 62 % of the alignments coalesce into three chains or
+    fewer, which leaves coalesced-level candidates undefined.
+ 2. **Not uniform.**  At least 95 % distinct values; the most frequent value
+    in at most 2 % of the alignments.
+ 3. **Representation.**  Same value after reversing sequences at random and
+    renaming them.
+ 4. **Reciprocal agreement.**  Rank correlation between the value on the
+    alignment of _A_ to _B_ and the value on the alignment of _B_ to _A_ with
+    _target_ and _query_ exchanged: median over the clades at least 0.9, first
+    quartile at least 0.8.
+ 5. **Ancestor nodes.**  Within each clade, genome pairs that share their last
+    common ancestor in a UPGMA tree built on the P distance have more similar
+    values than permuted pairs (_z_ of at least 5 over the 16 clades), also
+    after removing the rank of the P distance (_z_ of at least 3).
+ 6. **Shuffling.**  In each genome pair, the order of the alignments along
+    both genomes and their strands are shuffled 5 times; each alignment keeps
+    its widths and alignment columns.  The value must differ from the shuffles
+    by at least 3 standard deviations in at least half of the 955 pairs.
+ 7. **Novelty**, with a common ceiling of 0.6 on: the absolute rank
+    correlation with each of the 192 references (pooled, within clade, and
+    each also partial on the P distance); the predictability from all
+    references together, fitted on 15 clades and tested on the 16th (ridge
+    regression on ranks, then boosted trees for the finalists); the rank
+    correlation with the function's own shuffled value.
+ 8. **Selection.**  Candidates are ranked by the mean percentile of their
+    reciprocal agreement and of their node effect after removing the P
+    distance.  They are taken in that order unless correlated at 0.6 or more
+    with one already taken.
+
+## Settings that were relaxed
+
+Ten functions were asked for first.  Two settings had to be relaxed to reach
+them: the ceiling, raised from 0.2 in steps of 0.1, and the share of pairs in
+the shuffling test, lowered from three quarters to one half.  The request was
+then extended to twelve functions: the same settings give them, and the first
+ten are unchanged.  The table gives the number of functions selected, by
+ceiling and by share of the genome pairs in which the shuffling test must be
+passed.
+
+| Ceiling | 3/4 of the pairs | 1/2 of the pairs |
+|--------:|-----------------:|-----------------:|
+| 0.2 |  0 |  0 |
+| 0.3 |  0 |  1 |
+| 0.4 |  0 |  2 |
+| 0.5 |  0 |  6 |
+| 0.6 |  5 | 12 |
+| 0.7 | 10 | 12 |
+
+The share of pairs was lowered before the ceiling was raised, because low
+correlation with existing statistics was the explicit request and the share
+of pairs is a setting of this screen.  With three quarters of the pairs, a
+ceiling of 0.7 gives ten functions and no more; with one half, selection
+stops at the twelve asked for.
+
+Eleven of the twelve functions are at the level of the alignments as loaded.
+At the coalesced level, 579 candidates pass the first five filters, 10 depart
+from shuffled chains, and one stays below 0.6: `mizaru_index()`, ranked 23rd
+of the 43 and the eleventh function taken.  The twelfth, `able_index()`, is
+ranked 26th.
+
+# Behaviour on the alignments of the screen
+
+The file `MonkeyIndices_values.tsv`, next to the source of this vignette,
+gives the value of each function on each alignment of the screen, as computed
+by the Python code of the screen, with the clade, the P distance and a number
+that identifies the pair of genomes: each pair has two rows, one per
+alignment.  The figures and the table of this section are computed from it;
+their code is in the source of the vignette.
+
+```{r values}
+v <- read.delim("MonkeyIndices_values.tsv")
+dim(v)
+length(unique(v$pair))
+```
+
+```{r long, echo=FALSE}
+funs   <- f$fun
+clades <- c("Buchnera", "Rickettsiales", "Neisseriales", "Deinococcota", "Nanobdellati",
+            "Discoba", "Saccharomycotina", "Pezizomycotina",
+            "Apoidea", "Gastropoda", "Bivalvia", "Otomorpha", "Eupercaria",
+            "Ovalentaria", "Other_Neoteleostei", "Primates")
+group  <- rep(c("Prokaryotes (5 clades)", "Fungi and Discoba (3 clades)", "Animals (8 clades)"),
+              c(5, 3, 8))
+long <- data.frame(
+  clade = factor(v$clade, levels = rev(clades)),
+  P     = v$P,
+  fun   = factor(rep(funs, each = nrow(v)), levels = funs),
+  value = unlist(v[funs], use.names = FALSE))
+long$group <- factor(group[match(long$clade, clades)], levels = unique(group))
+shuffled <- data.frame(fun = factor(funs, levels = funs), shuffled = f$shuffled)
+monkey_theme <- theme_bw(base_size = 10) +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(linewidth = 0.2),
+        strip.background = element_blank(),
+        strip.text = element_text(face = "bold", hjust = 0))
+```
+
+## Clades
+
+Every function separates clades: between 35 % and 85 % of its variance lies
+between them.  Buchnera, whose genomes are nearly colinear, has the highest or
+the lowest median for 7 functions, and Bivalvia and Rickettsiales for 4 each.
+
+```{r clades, echo=FALSE, fig.width=7, fig.height=7.6, fig.cap="Median (dot) and interquartile range (bar) of each function in each clade.  Each panel has its own scale.  Dashed line: median after shuffling, when it falls within the scale."}
+q <- aggregate(value ~ clade + fun, long, quantile, probs = c(0.25, 0.5, 0.75))
+q <- data.frame(q[c("clade", "fun")], q1 = q$value[, 1], med = q$value[, 2], q3 = q$value[, 3])
+inside <- shuffled$shuffled >= tapply(q$q1, q$fun, min) &
+          shuffled$shuffled <= tapply(q$q3, q$fun, max)
+ggplot(q) +
+  aes(y = clade) +
+  geom_vline(aes(xintercept = shuffled), shuffled[inside, ],
+             colour = "grey45", linetype = "dashed", linewidth = 0.4) +
+  geom_linerange(aes(xmin = q1, xmax = q3), colour = "grey70", linewidth = 1.4) +
+  geom_point(aes(x = med), size = 1.2) +
+  facet_wrap(~ fun, ncol = 4, scales = "free_x") +
+  scale_x_continuous(NULL, n.breaks = 3) +
+  scale_y_discrete(NULL, labels = \(x) gsub("_", " ", x)) +
+  monkey_theme
+```
+
+```{r behaviour, echo=FALSE}
+med  <- sapply(funs, \(n) tapply(v[[n]], v$clade, median, na.rm = TRUE))
+rhoP <- sapply(funs, \(n) median(sapply(split(v, v$clade), \(d)
+          suppressWarnings(cor(d$P, d[[n]], method = "spearman", use = "complete.obs"))),
+          na.rm = TRUE))
+eta2 <- sapply(funs, \(n) summary(lm(v[[n]] ~ v$clade))$r.squared)
+knitr::kable(
+  data.frame(
+    paste0("`", funs, "()`"),
+    sapply(funs, \(n) sum(is.na(v[[n]]))),
+    paste(round(100 * eta2), "%"),
+    sprintf("%.2f", rhoP),
+    gsub("_", " ", rownames(med)[apply(med, 2, which.max)]),
+    gsub("_", " ", rownames(med)[apply(med, 2, which.min)])),
+  col.names = c("Function", "Undefined", "Variance between clades",
+                "Correlation with P", "Highest clade", "Lowest clade"),
+  align = "lrrrll", row.names = FALSE)
+```
+
+ - **Undefined**: number of alignments, out of 1,910, where the function
+   returns no value.
+ - **Variance between clades**: share of the variance of the function that
+   lies between the clades.
+ - **Correlation with P**: rank correlation with the P distance within a
+   clade, median of the 16 clades.
+
+## Divergence
+
+Within clades, the rank correlation with the P distance is weak for ten
+functions (between -0.15 and 0.11); it is 0.30 for `albert_index()` and -0.35
+for `hanuman_index()`.  Across clades, divergence and kind of organism are
+confounded: all the alignments of insects, fishes and primates have a P
+distance below 0.27, and 90 % of the alignments of the ten other clades have
+one above 0.3.
+
+```{r divergence, echo=FALSE, fig.width=7, fig.height=8.8, fig.cap="Each function against the P distance, one dot per alignment.  Vertical axes cover the 1st to 99th percentiles of each function.  Dashed line: median after shuffling, when it falls within the axis."}
+lim  <- sapply(funs, \(n) quantile(v[[n]], c(0.01, 0.99), na.rm = TRUE))
+keep <- which(long$value >= lim[1, as.integer(long$fun)] &
+              long$value <= lim[2, as.integer(long$fun)])
+set.seed(1)  # no group systematically on top
+keep <- sample(keep)
+inside <- shuffled$shuffled >= lim[1, ] & shuffled$shuffled <= lim[2, ]
+ggplot(long[keep, ]) +
+  aes(P, value, colour = group) +
+  geom_hline(aes(yintercept = shuffled), shuffled[inside, ],
+             colour = "grey35", linetype = "dashed", linewidth = 0.4) +
+  geom_point(size = 0.35, alpha = 0.7) +
+  facet_wrap(~ fun, ncol = 3, scales = "free_y") +
+  scale_colour_manual(NULL, values = c("#2a78d6", "#eb6834", "#1baf7a")) +
+  guides(colour = guide_legend(override.aes = list(size = 2.5, alpha = 1))) +
+  labs(x = "P distance", y = NULL) +
+  monkey_theme +
+  theme(legend.position = "top")
+```
+
+# Limits
+
+The twelve functions are sound as computations.  What they mean is open, and
+several of the settings that selected them are arbitrary.
+
+ - **Sample.**  Close pairs are few: 4 % of the alignments have a P distance
+   below 0.1.  The seed and the kind of organism are confounded: MAM8 for
+   prokaryotes and fungi, RY4 for animals and Discoba.  No alignment has more
+   than 250 sequences, so the filter of the statistics pipeline of the
+   project (the 250 sequences with the most aligned bases) was never applied.
+ - **Settings near their limits.**  The shuffling test uses 5 shuffles per
+   pair.  `albert_index()`, `mizaru_index()`, `baker_index()` and
+   `marcel_index()` pass it in 50.5 %, 50.7 %, 51.1 % and 53.7 % of the pairs,
+   for a requirement of 50 %.  `imo_index()` is at 0.59 with the strand
+   randomisation index, and `able_index()` at 0.58 with `rafiki_index()`, for
+   a ceiling of 0.6.
+ - **Excluded by construction.**  623 candidates can not change when
+   alignments are shuffled: the distributions of alignment widths, identity
+   and gaps, and the correlations between them.  213 of them pass the first
+   five filters; they are flagged in the column `free` of the table of metrics
+   that the scripts write (`results/metrics_all.tsv`), and can be screened
+   separately.
+ - **Readings.**  `abu_index()`, `albert_index()`, `rafiki_index()`,
+   `hanuman_index()`, `jack_index()` and `able_index()` respond to the share
+   of junctions that are not colinear, each in a different way; their largest
+   correlations with the synteny, breakpoint and chain statistics are between
+   0.53 and 0.57.  They may be partial readouts of colinearity.
+ - **Reference set.**  Functions that exist only on development branches of
+   _GenomicBreaks_ were not in the references, nor was the inversion distance
+   with hurdles.
+ - **Run time.**  On 47 alignments holding 2.25 million alignment blocks, each
+   function took 2.7 to 5.5 seconds, except `mizaru_index()`, which coalesces
+   the alignments first and took 43 seconds (R 4.3.3, Bioconductor 3.18).
+
+The R functions give the same values as the Python code of the screen on
+these 47 alignments, drawn from all clades: the largest relative difference is
+6 × 10^-8^.  Their values are unchanged by `reverse()` on the _target_, and
+change by at most 3 × 10^-7^ with `reverse(query = TRUE)`.
+
+# Reproducing the screen
+
+The code of the screen is distributed with the package, for the record: no
+function of the package uses it.
+
+```{r scripts}
+list.files(system.file("scripts", "monkey_screen", package = "GenomicBreaks"))
+```
+
+It needs Python 3 with _numpy_, _scipy_, _pandas_, _scikit-learn_ and
+_PyYAML_.  The run of 2026-11-11 used Python 3.13, two cores and 7 GB of
+memory, and took about 2.5 hours of computation.
+
+**Input.**  `extractMonkeySubset.py` selects the genomes and writes one tar
+file per clade.  For each clade that has both alignments and up-to-date
+statistics, it computes the P distance of every ordered pair from the
+`.o2o.matrix.txt` files, builds a UPGMA tree, cuts it in a given number of
+clades (2 in the run that was used), picks a given number of genomes (12) and
+exports, for every ordered pair of them, the `.blasttabplus.gz`,
+`.o2o.matrix.txt`, `.o2o.tsv` and `.yaml` files.  The paths in this script are those of the
+project on its computing cluster.  The tar files are unpacked in
+`$MONKEY_ROOT/data/monkey/`.
+
+**Steps.**  Set the environment variable `MONKEY_ROOT` to a working directory
+that contains `data/monkey/`, and run the scripts in order.  The `mk_*.py`
+files are modules.
+
+| Script | Does | Time |
+|------------------------|------------------------------------------------------------------|---------:|
+| `01_build_cache.py` | parses the alignments once and applies the filter of the statistics pipeline (250 sequences with the most aligned bases) | 3 min |
+| `02_existing.py` | table of the YAML statistics | 1 min |
+| `03_validate.py` | checks the loader and the coalescing against the YAML counts and totals | 1 min |
+| `04_test_engine.py` | checks the candidate engine on four alignments | 1 min |
+| `05_stage1.py` | all candidates on all alignments, as they are and with _target_ and _query_ exchanged | 50 min |
+| `06_extras.py` | adds to the reference table the package indices that are not in the YAML files, and simple derivations | 3 min |
+| `07_check_existing.R` | values of the R package, to compare with `mk_existing.py` | 1 min |
+| `08_metrics.py` | definedness, reciprocal agreement, ancestor-node agreement, correlation with the references | 5 min |
+| `09_invariance.py` | same value when sequences are reversed and renamed | 1 min |
+| `10_null.py` | all candidates on 5 shuffles of each genome pair | 65 min |
+| `11_redundancy.py` | predictability from all references together (ridge, leave one clade out) | 2 min |
+| `12_shortlist.py` | joins the metrics (`results/metrics_all.tsv`) | 1 min |
+| `13_null_metrics.py` | departure from the shuffles | 1 min |
+| `14_select.py 12` | filters, relaxation, selection of the number of functions given as argument (`results/selected.tsv`) | 2 min |
+| `15_final.py` | recomputes the selected candidates on every alignment (`results/final_values.tsv`) | 5 min |
+| `16_r_check.R` | values of the R functions on a list of alignments, also after `swap()` and `reverse()` | 2 min |
+| `17_final_metrics.py` | all metrics of the selected candidates, from the final values | 2 min |
+| `18_figure.py` | each selected function against the P distance, as a PDF file | 1 min |
+| `19_vignette_tables.py` | the two tables read by this vignette | 1 min |
+
+**Notes.**
+
+ - The values of step 5 were computed before late changes of `mk_engine.py`
+   (ties of the majority strand; a zero-variance guard).  The selected
+   candidates were recomputed afterwards: one of them, `raw.sd.pdisp`, changed
+   by at most 0.13 %.
+ - The shuffles of the coalesced level shuffle the coalesced alignments and
+   do not coalesce them again.
+ - The docstring of `14_select.py` lists the filters and the two settings that
+   were relaxed; the header of `mk_engine.py` lists the vectors and the
+   reducers.
+
+# Session information
+
+```{r sessionInfo}
+sessionInfo()
+```
