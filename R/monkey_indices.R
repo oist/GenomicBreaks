@@ -177,26 +177,19 @@ NULL
 #  - qrank: rank of the alignment in the order of the query genome.
 #  - tpos, qpos, tedge, qedge (if lengths = TRUE): relative position and edge
 #    distance of the alignment on each genome.
-# The columns are added in one assignment, which replaces columns of the same
-# names.  Each modification of a GRanges object can run a validity check that
-# takes longer than computing an index (dist2next() makes three).
 .mk_blocks <- function(gb, lengths = FALSE) {
   .mk_check(gb)
   gb <- sort(gb, ignore.strand = TRUE)
-  if (isTRUE(lengths)) gb <- forceSeqLengths(gb)
-  target <- granges(gb)
-  query  <- gb$query
-  cols <- DataFrame(tdist = .mk_dist2next(target),
-                    qdist = .mk_dist2next(query),
-                    qrank = rank(unstrand(query), ties.method = "first"))
+  gb$tdist <- .mk_dist2next(granges(gb))
+  gb$qdist <- .mk_dist2next(gb$query)
+  gb$qrank <- rank(unstrand(gb$query), ties.method = "first")
   if (isTRUE(lengths)) {
-    tpos <- .mk_pos(target)
-    qpos <- .mk_pos(query)
-    cols <- cbind(cols, DataFrame(tpos, qpos,
-                                  tedge = round(1 - abs(2 * tpos - 1), 12),
-                                  qedge = round(1 - abs(2 * qpos - 1), 12)))
+    gb <- forceSeqLengths(gb)
+    gb$tpos  <- .mk_pos(gb)
+    gb$qpos  <- .mk_pos(gb$query)
+    gb$tedge <- round(1 - abs(2 * gb$tpos - 1), 12)
+    gb$qedge <- round(1 - abs(2 * gb$qpos - 1), 12)
   }
-  mcols(gb)[names(cols)] <- cols
   gb
 }
 
