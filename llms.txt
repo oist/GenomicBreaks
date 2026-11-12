@@ -198,6 +198,25 @@ Various ways to estimate the similarity between two genomes.
 - [`gapProportion()`](https://oist.github.io/GenomicBreaks/reference/gapProportion.md)
   : Proportion of gaps in alignment
 
+## Monkey indices
+
+Summary statistics retained from a hypothesis-free screen, each named
+after a famous monkey.
+
+- [`wukong_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`abu_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`albert_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`marcel_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`imo_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`rafiki_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`hanuman_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`jack_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`able_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`mizaru_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`george_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  [`baker_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  : Monkey indices
+
 ## Colinearity functions
 
 Functions to analyse colinearity and synteny.
@@ -509,5 +528,7 @@ Functions that compute properties of breakpoint graphs.
 
 - [Introduction to
   GenomicBreaks](https://oist.github.io/GenomicBreaks/articles/GenomicBreaks.md):
+- [Monkey
+  indices](https://oist.github.io/GenomicBreaks/articles/MonkeyIndices.md):
 - [Structural
   Variants](https://oist.github.io/GenomicBreaks/articles/StructuralVariants.md):

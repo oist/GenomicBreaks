@@ -50,6 +50,7 @@ pair-of-chromosome figures.
 | `data-raw/` | Scripts that regenerate `data/` and some `inst/extdata/` files. |
 | `inst/extdata/` | Small fixture files (GFF3, MAF, train) used by examples, and `simulatedRearrangements.rds` (200 simulated genome pairs stored as permutation vectors; see [`?simulateRearrangements`](https://oist.github.io/GenomicBreaks/reference/simulateRearrangements.md)). |
 | `inst/CITATION` | Published-paper citation. |
+| `inst/scripts/monkey_screen/` | Python code of the screen that selected the monkey indices ([`?monkey_indices`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)). A record: nothing in the package runs it. Described in `vignettes/MonkeyIndices.Rmd`, which reads the two `MonkeyIndices_*.tsv` tables kept next to it. |
 | `man/` | roxygen-generated `.Rd` (do not edit by hand). |
 | `vignettes/` | Long-form documentation (`*.Rmd`). |
 | `CODE_REVIEW.md` | Reusability/code-review study. Excluded from the build. |
@@ -83,6 +84,19 @@ GitHub Actions currently only builds/deploys the pkgdown site
   grouped by them (`_pkgdown.yml`). Keep them on new exported functions.
 - **S4 classes/methods** via
   [`methods::setClass`](https://rdrr.io/r/methods/setClass.html)/`setGeneric`/`setMethod`.
+- **Bioconductor features and classes** are used as long as they do not
+  significantly reduce speed and readability: keep data in the `GBreaks`
+  object and use accessors
+  ([`start()`](https://rdrr.io/r/stats/start.html), `width()`,
+  `strand()`, `seqnames()`) and functions such as `distance()`, rather
+  than plain vectors copied out of the object.
+- **Metadata columns**: read and create them with `gb$name` and
+  `gb$name <- value`, rather than by manipulating the `mcols(gb)`
+  DataFrame, unless this is cumbersome (for example, when the name of
+  the column is in a variable). Do not write accessor helpers for them:
+  when a column is required, test for it directly
+  (`"name" %in% colnames(mcols(gb))`); when a missing column (`NULL`)
+  leads to an acceptable result, no test is needed.
 - **Semantic versioning** since 0.17.0; record every user-visible change
   in `NEWS.md` and bump the `Version:` in `DESCRIPTION`.
 - Keep roxygen `@examples` runnable on the bundled example data — they

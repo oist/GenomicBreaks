@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,8 @@
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/StructuralVariants.html">Structural Variants</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/MonkeyIndices.html">Monkey indices</a></li>
+    <li><a class="dropdown-item" href="../articles/StructuralVariants.html">Structural Variants</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -43,6 +44,11 @@
       <small>Source: <a href="https://github.com/oist/GenomicBreaks/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.26.0" id="genomicbreaks-0260">GenomicBreaks 0.26.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0260"></a></h2>
+<ul><li>New <em>monkey indices</em>: <code><a href="../reference/monkey_indices.html">wukong_index()</a></code>, <code><a href="../reference/monkey_indices.html">abu_index()</a></code>, <code><a href="../reference/monkey_indices.html">albert_index()</a></code>, <code><a href="../reference/monkey_indices.html">marcel_index()</a></code>, <code><a href="../reference/monkey_indices.html">imo_index()</a></code>, <code><a href="../reference/monkey_indices.html">rafiki_index()</a></code>, <code><a href="../reference/monkey_indices.html">hanuman_index()</a></code>, <code><a href="../reference/monkey_indices.html">jack_index()</a></code>, <code><a href="../reference/monkey_indices.html">able_index()</a></code>, <code><a href="../reference/monkey_indices.html">mizaru_index()</a></code>, <code><a href="../reference/monkey_indices.html">george_index()</a></code> and <code><a href="../reference/monkey_indices.html">baker_index()</a></code>. They are twelve summary statistics that were not designed to represent a biological fact: they were retained from a screen of 5,420 mechanically assembled functions because their values are reproducible, structured by phylogeny, different from those of shuffled alignments, and not strongly correlated with the existing statistics nor with each other. See <code><a href="../reference/monkey_indices.html">?monkey_indices</a></code>.</li>
+<li>New vignette <em>Monkey indices</em> (<code><a href="../articles/MonkeyIndices.html">vignette("MonkeyIndices")</a></code>), which defines the monkey indices and reports how they were selected and how they behave on the alignments of the screen. The code of the screen is in <code>inst/scripts/monkey_screen/</code>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.25.0" id="genomicbreaks-0250">GenomicBreaks 0.25.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0250"></a></h2>
 <ul><li>The handling of ranges on the <code>*</code> strand (unoriented objects, and mapped regions such as the output of <code><a href="../reference/bridgeRegions.html">bridgeRegions()</a></code>) is experimental: it may change in later versions without being considered a breaking change. Inversions are never flagged on such ranges, and functions that need orientation, such as <code><a href="../reference/permutationVector.html">permutationVector()</a></code>, stop with an error.</li>

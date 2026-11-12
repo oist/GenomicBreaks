@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="index.html">GenomicBreaks</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.25.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.26.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,8 @@
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="articles/StructuralVariants.html">Structural Variants</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="articles/MonkeyIndices.html">Monkey indices</a></li>
+    <li><a class="dropdown-item" href="articles/StructuralVariants.html">Structural Variants</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -84,6 +85,8 @@
 <td>Small fixture files (GFF3, MAF, train) used by examples, and <code>simulatedRearrangements.rds</code> (200 simulated genome pairs stored as permutation vectors; see <code><a href="reference/simulateRearrangements.html">?simulateRearrangements</a></code>).</td>
 </tr><tr><td><code>inst/CITATION</code></td>
 <td>Published-paper citation.</td>
+</tr><tr><td><code>inst/scripts/monkey_screen/</code></td>
+<td>Python code of the screen that selected the monkey indices (<code><a href="reference/monkey_indices.html">?monkey_indices</a></code>). A record: nothing in the package runs it. Described in <code>vignettes/MonkeyIndices.Rmd</code>, which reads the two <code>MonkeyIndices_*.tsv</code> tables kept next to it.</td>
 </tr><tr><td><code>man/</code></td>
 <td>roxygen-generated <code>.Rd</code> (do not edit by hand).</td>
 </tr><tr><td><code>vignettes/</code></td>
@@ -110,6 +113,10 @@
 <strong><code>@family</code> / <code>@concept</code> tags matter</strong>: the pkgdown reference index is grouped by them (<code>_pkgdown.yml</code>). Keep them on new exported functions.</li>
 <li>
 <strong>S4 classes/methods</strong> via <code><a href="https://rdrr.io/r/methods/setClass.html" class="external-link">methods::setClass</a></code>/<code>setGeneric</code>/<code>setMethod</code>.</li>
+<li>
+<strong>Bioconductor features and classes</strong> are used as long as they do not significantly reduce speed and readability: keep data in the <code>GBreaks</code> object and use accessors (<code><a href="https://rdrr.io/r/stats/start.html" class="external-link">start()</a></code>, <code>width()</code>, <code>strand()</code>, <code>seqnames()</code>) and functions such as <code>distance()</code>, rather than plain vectors copied out of the object.</li>
+<li>
+<strong>Metadata columns</strong>: read and create them with <code>gb$name</code> and <code>gb$name &lt;- value</code>, rather than by manipulating the <code>mcols(gb)</code> DataFrame, unless this is cumbersome (for example, when the name of the column is in a variable). Do not write accessor helpers for them: when a column is required, test for it directly (<code>"name" %in% colnames(mcols(gb))</code>); when a missing column (<code>NULL</code>) leads to an acceptable result, no test is needed.</li>
 <li>
 <strong>Semantic versioning</strong> since 0.17.0; record every user-visible change in <code>NEWS.md</code> and bump the <code>Version:</code> in <code>DESCRIPTION</code>.</li>
 <li>Keep roxygen <code>@examples</code> runnable on the bundled example data — they are currently a primary form of verification.</li>

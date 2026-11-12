@@ -1,5 +1,34 @@
 # Changelog
 
+## GenomicBreaks 0.26.0
+
+- New *monkey indices*:
+  [`wukong_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`abu_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`albert_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`marcel_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`imo_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`rafiki_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`hanuman_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`jack_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`able_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`mizaru_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md),
+  [`george_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md)
+  and
+  [`baker_index()`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md).
+  They are twelve summary statistics that were not designed to represent
+  a biological fact: they were retained from a screen of 5,420
+  mechanically assembled functions because their values are
+  reproducible, structured by phylogeny, different from those of
+  shuffled alignments, and not strongly correlated with the existing
+  statistics nor with each other. See
+  [`?monkey_indices`](https://oist.github.io/GenomicBreaks/reference/monkey_indices.md).
+- New vignette *Monkey indices*
+  ([`vignette("MonkeyIndices")`](https://oist.github.io/GenomicBreaks/articles/MonkeyIndices.md)),
+  which defines the monkey indices and reports how they were selected
+  and how they behave on the alignments of the screen. The code of the
+  screen is in `inst/scripts/monkey_screen/`.
+
 ## GenomicBreaks 0.25.0
 
 - The handling of ranges on the `*` strand (unoriented objects, and
