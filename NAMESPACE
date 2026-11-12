@@ -122,7 +122,7 @@ import(GenomicRanges)
 import(IRanges)
 import(ggplot2)
 importFrom(BSgenome,getBSgenome)
-importFrom(BiocGenerics,`%in%`)
+importFrom(BiocGenerics,"%in%")
 importFrom(BiocParallel,bplapply)
 importFrom(Biostrings,
   getSeq,
