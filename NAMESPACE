@@ -195,6 +195,7 @@ importFrom(methods,
 importFrom(pwalign,pairwiseAlignment)
 importFrom(rtracklayer,import.gff3)
 importFrom(stats,
+  cov.wt,
   na.omit,
   runif,
   weighted.mean

@@ -226,30 +226,9 @@ NULL
 # floating-point noise.
 .mk_zero <- function(ss, n, m) ss <= 1e-18 * n * (m * m + 1)
 
-# Internal: Pearson correlation, optionally weighted; NA if fewer than three
-# values or no variation.
-.mk_cor <- function(a, b, w = NULL) {
-  ok <- is.finite(a) & is.finite(b)
-  a <- a[ok]; b <- b[ok]
-  if (length(a) < 3) return(NA_real_)
-  # Weights such as widths are integers: sum them as doubles, without overflow
-  w  <- if (is.null(w)) rep(1, length(a)) else as.numeric(w[ok])
-  sw <- sum(w)
-  ma <- sum(w * a) / sw
-  mb <- sum(w * b) / sw
-  sa <- sum(w * (a - ma)^2)
-  sb <- sum(w * (b - mb)^2)
-  if (.mk_zero(sa, sw, ma) || .mk_zero(sb, sw, mb)) return(NA_real_)
-  sum(w * (a - ma) * (b - mb)) / sqrt(sa * sb)
-}
-
-# Internal: metadata column, with an error if it is missing.
-.mk_col <- function(gb, name) {
-  col <- if (name == "score") score(gb) else mcols(gb)[[name]]
-  if (is.null(col))
-    stop("This index needs the `", name, "` metadata column, which is missing.")
-  col
-}
+# Correlations below are computed with cor() inside suppressWarnings(): cor()
+# returns NA with a warning when a vector does not vary, and the indices are
+# then undefined, which their documentation states.
 
 #' @rdname monkey_indices
 #' @export
@@ -345,7 +324,7 @@ rafiki_index <- function(gb) {
   if (sum(sameq) < 3) return(NA_real_)
   # Mean edge distance on the query, ranked among all junctions
   edge <- rank(round((gb$qedge[i] + gb$qedge[i + 1]) / 2, 12))[sameq]
-  .mk_cor(rank(gb$qdist[i][sameq]), edge)
+  suppressWarnings(cor(rank(gb$qdist[i][sameq]), edge))
 }
 
 #' @rdname monkey_indices
@@ -356,8 +335,8 @@ hanuman_index <- function(gb) {
   i  <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
   lw <- log(width(gb))
-  .mk_cor(rank(round((lw[i] + lw[i + 1]) / 2, 12)),
-          rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12)))
+  suppressWarnings(cor(rank(round((lw[i] + lw[i + 1]) / 2, 12)),
+                       rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12))))
 }
 
 #' @rdname monkey_indices
@@ -369,7 +348,7 @@ jack_index <- function(gb) {
   if (length(k) < 3) return(NA_real_)
   s    <- ifelse(decode(strand(gb)) == "-", -1, 1)
   step <- gb$qrank[k + 1] - gb$qrank[k]
-  .mk_cor(rank(abs(step)), rank(sign(step) * (s[k] + s[k + 1]) / 2))
+  suppressWarnings(cor(rank(abs(step)), rank(sign(step) * (s[k] + s[k + 1]) / 2)))
 }
 
 #' @rdname monkey_indices
@@ -379,8 +358,8 @@ able_index <- function(gb) {
   gb <- .mk_blocks(gb, lengths = TRUE)
   k  <- .mk_junctions(gb, sameQuery = TRUE)
   if (length(k) < 3) return(NA_real_)
-  .mk_cor(log(abs(gb$qrank[k + 1] - gb$qrank[k])),
-          round(abs(gb$qedge[k] - gb$qedge[k + 1]), 12))
+  suppressWarnings(cor(log(abs(gb$qrank[k + 1] - gb$qrank[k])),
+                       round(abs(gb$qedge[k] - gb$qedge[k + 1]), 12)))
 }
 
 #' @rdname monkey_indices
@@ -393,8 +372,8 @@ mizaru_index <- function(gb) {
   gb <- .mk_blocks(coalesce_contigs(forceSeqLengths(gb)), lengths = TRUE)
   i  <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
-  .mk_cor(rank(gb$tdist[i]),
-          rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12)))
+  suppressWarnings(cor(rank(gb$tdist[i]),
+                       rank(round(abs(gb$qedge[i] - gb$qedge[i + 1]), 12))))
 }
 
 #' @rdname monkey_indices
@@ -402,29 +381,38 @@ mizaru_index <- function(gb) {
 
 george_index <- function(gb) {
   gb <- .mk_blocks(gb)
-  score   <- .mk_col(gb, "score")
-  aLength <- .mk_col(gb, "aLength")
+  if (!all(c("score", "aLength") %in% colnames(mcols(gb))))
+    stop("george_index() needs the score and aLength metadata columns.")
   i <- .mk_junctions(gb)
   if (length(i) < 3) return(NA_real_)
-  sdens <- round(score / aLength, 12)
-  .mk_cor(log(gb$tdist[i] + 1), round((sdens[i] + sdens[i + 1]) / 2, 12))
+  sdens <- round(gb$score / gb$aLength, 12)
+  suppressWarnings(cor(log(gb$tdist[i] + 1),
+                       round((sdens[i] + sdens[i + 1]) / 2, 12),
+                       use = "na.or.complete"))
 }
 
 #' @rdname monkey_indices
+#' @importFrom stats cov.wt
 #' @export
 
 baker_index <- function(gb) {
   gb <- .mk_blocks(gb)
-  gapOpens <- .mk_col(gb, "gapOpens")
-  aLength  <- .mk_col(gb, "aLength")
+  if (!all(c("gapOpens", "aLength") %in% colnames(mcols(gb))))
+    stop("baker_index() needs the gapOpens and aLength metadata columns.")
   i <- .mk_junctions(gb)
   # Mean, on the logarithmic scale, of the target gaps that flank each alignment
   lg  <- log(gb$tdist[i] + 1)
-  sum <- cnt <- numeric(length(gb))
-  sum[i]     <- sum[i] + lg
+  tot <- cnt <- numeric(length(gb))
+  tot[i]     <- tot[i] + lg
   cnt[i]     <- cnt[i] + 1
-  sum[i + 1] <- sum[i + 1] + lg
+  tot[i + 1] <- tot[i + 1] + lg
   cnt[i + 1] <- cnt[i + 1] + 1
-  bgap <- ifelse(cnt > 0, sum / cnt, NA_real_)
-  .mk_cor(round(gapOpens / aLength, 12), bgap, w = width(gb))
+  bgap <- ifelse(cnt > 0, tot / cnt, NA_real_)
+  # Correlation weighted by width, over the alignments that flank a junction.
+  # The widths are summed as doubles: their total can exceed the integer range.
+  x  <- cbind(round(gb$gapOpens / gb$aLength, 12), bgap)
+  ok <- complete.cases(x)
+  if (sum(ok) < 3) return(NA_real_)
+  r <- cov.wt(x[ok, ], wt = as.numeric(width(gb))[ok], cor = TRUE)$cor[1, 2]
+  if (is.nan(r)) NA_real_ else r  # NaN when a column does not vary
 }

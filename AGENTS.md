@@ -86,7 +86,9 @@ GitHub Actions currently only builds/deploys the pkgdown site
 - **Metadata columns**: read and create them with `gb$name` and
   `gb$name <- value`, rather than by manipulating the `mcols(gb)` DataFrame,
   unless this is cumbersome (for example, when the name of the column is in a
-  variable).
+  variable).  Do not write accessor helpers for them: when a column is
+  required, test for it directly (`"name" %in% colnames(mcols(gb))`); when a
+  missing column (`NULL`) leads to an acceptable result, no test is needed.
 - **Semantic versioning** since 0.17.0; record every user-visible change in
   `NEWS.md` and bump the `Version:` in `DESCRIPTION`.
 - Keep roxygen `@examples` runnable on the bundled example data — they are
