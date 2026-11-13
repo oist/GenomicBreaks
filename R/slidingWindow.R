@@ -10,17 +10,27 @@
 #' @param merged set TRUE to output a `GBreaks` object
 #' @param cut whether cut the alignments out of the window
 #'
-#' @returns Returns a list of `GBreaks` objects, one for each window.
+#' @returns Returns a [`GenomicRanges::GRangesList`] containing one `GBreaks`
+#' object for each window, or a single `GBreaks` object if `merged` is `TRUE`.
+#'
+#' @details When `cut` is `TRUE`, an alignment that crosses a window boundary
+#' is cut at that boundary on the _target_ genome.  Its _query_ range is cut by
+#' the same proportion, on the side given by the strand of the _target_ range,
+#' and its score, if any, is scaled by that proportion.
+#'
+#' @section Unstranded ranges (experimental):
+#' The _query_ ranges of alignments on the `*` strand are not cut.
 #'
 #' @family Similarity indexes
 #'
 #' @author Zhang Kun
+#' @author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy
 #'
 #' @examples
-#' exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
-#' gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
-#' slided_gb <- slidingWindow(gb, windowSize = 1e5, stepSize = 5e4)
-#' slided_gb[[1]]
+#' exampleInversion
+#' slided_gb <- slidingWindow(exampleInversion, windowSize = 250, stepSize = 125)
+#' slided_gb
+#' sapply(slided_gb, strand_randomisation_index)
 #'
 #' @export
 
@@ -97,16 +107,9 @@ slidingWindow <- function(gb,
 
   if (merged) return(gb_hits)
 
-  gb_list <- split(gb_hits, mcols(gb_hits)$window_id)
-  if (!cut) return(gb_list)
-
-  trim_func <- function(gr) {
-    window <- GRanges(
-      seqnames = unique(gr$window_seqname),
-      ranges = IRanges(start = unique(gr$window_start),
-                       end   = unique(gr$window_end))
-    )
-
+  # Cuts each range of `gr` to the parallel range of `window`.  All operations
+  # are element-wise, so all the alignment-window pairs are cut in one call.
+  trim_func <- function(gr, window) {
     gr_ref_cut <- GenomicRanges::pintersect(gr, window)
 
     ref_start_orig <- start(gr)
@@ -120,15 +123,15 @@ slidingWindow <- function(gb,
     query <- gr$query
     q_start <- start(query)
     q_end   <- end(query)
-    q_strand <- as.character(strand(query))
     q_width <- width(query)
     ref_width <- width(gr)
 
     new_q_start <- q_start
     new_q_end   <- q_end
 
-    is_fwd <- q_strand == "+"
-    is_rev <- q_strand == "-"
+    # The orientation of an alignment is the strand of its target range.
+    is_fwd <- decode(strand(gr)) == "+"
+    is_rev <- decode(strand(gr)) == "-"
 
     new_q_start[is_fwd] <- q_start[is_fwd] + round(q_width[is_fwd] * cut_5p[is_fwd] / ref_width[is_fwd])
     new_q_end[is_fwd]   <- q_end[is_fwd]   - round(q_width[is_fwd] * cut_3p[is_fwd] / ref_width[is_fwd])
@@ -145,16 +148,15 @@ slidingWindow <- function(gb,
       seqinfo = seqinfo(query)
     )
 
-    ref_retained_frac <- width(gr_ref_cut) / ref_width
-    mcols_new <- mcols(gr)
-    mcols_new$score <- round(mcols(gr)$score * ref_retained_frac)
-    mcols(gr_ref_cut) <- mcols_new
+    mcols(gr_ref_cut) <- mcols(gr)
     gr_ref_cut$query <- new_query
+    # Scale the alignment scores, if any, to the retained fraction of the target
+    if (!is.null(score(gr)))
+      score(gr_ref_cut) <- round(score(gr) * width(gr_ref_cut) / ref_width)
     gr_ref_cut
   }
 
+  if (cut) gb_hits <- trim_func(gb_hits, overlapping_windows)
 
-  gb_list <- lapply(gb_list, trim_func)
-
-  return(gb_list)
+  split(gb_hits, gb_hits$window_id)
 }

@@ -13,6 +13,15 @@
    the monkey indices and reports how they were selected and how they behave
    on the alignments of the screen.  The code of the screen is in
    `inst/scripts/monkey_screen/`.
+ * `slidingWindow()` cuts the alignments of all windows in one call instead of
+   one call per window (13 s to 0.2 s on the yeast example alignment).
+ * **Breaking change:** `slidingWindow()` now returns a `GRangesList`, as it
+   already did with `cut = FALSE`, instead of a list of `GBreaks` objects.
+ * Fix `slidingWindow()`, which did not cut the _query_ ranges of objects
+   loaded by `load_genomic_breaks()`: it read the orientation of the
+   alignments on the _query_ ranges instead of the _target_ ranges.
+ * `slidingWindow()` accepts objects without a `score` column, and its example
+   runs on the lazy-loaded `exampleInversion` object.
 
 # GenomicBreaks 0.25.0
 

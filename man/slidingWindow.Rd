@@ -27,17 +27,29 @@ slidingWindow(
 \item{cut}{whether cut the alignments out of the window}
 }
 \value{
-Returns a list of \code{GBreaks} objects, one for each window.
+Returns a \code{\link[GenomicRanges:GRangesList]{GenomicRanges::GRangesList}} containing one \code{GBreaks}
+object for each window, or a single \code{GBreaks} object if \code{merged} is \code{TRUE}.
 }
 \description{
 This function is used to subset a \code{GBreaks} object into a list of \code{GBreaks}
 using a sliding window.
 }
+\details{
+When \code{cut} is \code{TRUE}, an alignment that crosses a window boundary
+is cut at that boundary on the \emph{target} genome.  Its \emph{query} range is cut by
+the same proportion, on the side given by the strand of the \emph{target} range,
+and its score, if any, is scaled by that proportion.
+}
+\section{Unstranded ranges (experimental)}{
+
+The \emph{query} ranges of alignments on the \code{*} strand are not cut.
+}
+
 \examples{
-exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
-gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
-slided_gb <- slidingWindow(gb, windowSize = 1e5, stepSize = 5e4)
-slided_gb[[1]]
+exampleInversion
+slided_gb <- slidingWindow(exampleInversion, windowSize = 250, stepSize = 125)
+slided_gb
+sapply(slided_gb, strand_randomisation_index)
 
 }
 \seealso{
@@ -64,5 +76,7 @@ Other Similarity indexes:
 }
 \author{
 Zhang Kun
+
+Claude Opus 5.5 (Anthropic), prompted by Charles Plessy
 }
 \concept{Similarity indexes}
