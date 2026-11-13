@@ -106,6 +106,21 @@ GitHub Actions currently only builds/deploys the pkgdown site
   ([`start()`](https://rdrr.io/r/stats/start.html), `width()`,
   `strand()`, `seqnames()`) and functions such as `distance()`, rather
   than plain vectors copied out of the object.
+- **Recursive dispatch** (preferred style): a method for an object that
+  contains other objects unwraps it, calls the same generic on each
+  part, which dispatches again to the method of that part’s class, and
+  puts the results back into the object; the method of the innermost
+  class does the computation. For example, the `GBreaks` method of
+  [`reverse()`](https://oist.github.io/GenomicBreaks/reference/reverse.md)
+  calls
+  [`reverse()`](https://oist.github.io/GenomicBreaks/reference/reverse.md)
+  on the *target* ranges or on the `query` column, which are `GRanges`
+  objects. Keep this pattern although each dispatch and each
+  modification of an object costs time (validity checks). Depart from it
+  only when that cost is a deal breaker on real data, and explain why in
+  a comment, as in the `GBreaks` method of
+  [`dist2next()`](https://oist.github.io/GenomicBreaks/reference/dist2next.md)
+  (#69).
 - **Metadata columns**: read and create them with `gb$name` and
   `gb$name <- value`, rather than by manipulating the `mcols(gb)`
   DataFrame, unless this is cumbersome (for example, when the name of
