@@ -13,6 +13,14 @@
 #' deletion, and rearrangement in the mouse and human genomes._ Proc Natl Acad
 #' Sci U S A. 2003;100(20):11484-11489. doi:10.1073/pnas.1932072100)
 #'
+#' Bridge regions were used to compare the genomes of _Oikopleura dioica_
+#' cryptic species in: Plessy C, Mansfield MJ, Bliznina A, Masunaga A, West C,
+#' Tan Y, Liu AW, Grašič J, Del Río Pisula MS, Sánchez-Serna G, Fabrega-Torrus
+#' M, Ferrández-Roldán A, Roncalli V, Navratilova P, Thompson EM, Onuma T,
+#' Nishida H, Cañestro C, Luscombe NM (2024). Extreme genome scrambling in
+#' marine planktonic _Oikopleura dioica_ cryptic species. *Genome Research*,
+#' 34(3), 426–440. \url{https://doi.org/10.1101/gr.278295.123}. PMID: 38621828
+#'
 #' @param gb A [`GBreaks`] object.
 #'
 #' @return Returns a new `GBreaks` object of shorter length.  Its length will

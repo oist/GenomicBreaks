@@ -37,6 +37,14 @@ in the comparison of the mouse and human genomes by Kent WJ, Baertsch R,
 Hinrichs A, Miller W, Haussler D. (\emph{Evolution's cauldron: duplication,
 deletion, and rearrangement in the mouse and human genomes.} Proc Natl Acad
 Sci U S A. 2003;100(20):11484-11489. doi:10.1073/pnas.1932072100)
+
+Bridge regions were used to compare the genomes of \emph{Oikopleura dioica}
+cryptic species in: Plessy C, Mansfield MJ, Bliznina A, Masunaga A, West C,
+Tan Y, Liu AW, Grašič J, Del Río Pisula MS, Sánchez-Serna G, Fabrega-Torrus
+M, Ferrández-Roldán A, Roncalli V, Navratilova P, Thompson EM, Onuma T,
+Nishida H, Cañestro C, Luscombe NM (2024). Extreme genome scrambling in
+marine planktonic \emph{Oikopleura dioica} cryptic species. \emph{Genome Research},
+34(3), 426–440. \url{https://doi.org/10.1101/gr.278295.123}. PMID: 38621828
 }
 \seealso{
 Other Colinearity functions:
