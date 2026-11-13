@@ -6,8 +6,8 @@
 #' the number of bases between the two ranges, so it is `0` for adjacent
 #' ranges, and also for overlapping ranges.  It is `NA` for ranges on different
 #' sequences, or on different strands unless `ignore.strand = TRUE`.  Note
-#' that because the last range has not next neighbor, the last value is set
-#' to `Inf` arbitrarily.
+#' that because the last `step` ranges (all of them if there are fewer) have
+#' no next neighbor at that distance, their value is set to `Inf` arbitrarily.
 #'
 #' @param x A [`GenomicRanges::GRanges`] or a [`GBreaks`] object.
 #' @param step Distance to the \ifelse{html}{\out{n<sup>th</sup>}}{\eqn{2n^th}}
@@ -35,20 +35,28 @@
 
 setGeneric("dist2next", function(x, step = 1, ignore.strand = FALSE) standardGeneric("dist2next"))
 
+# Number of bases between each range and the range `step` positions after it;
+# Inf for the last `step` ranges (all of them if there are fewer), which have
+# no such range.
+.dist2next <- function(x, step, ignore.strand) {
+  c( distance( head(x, -step)
+             , tail(x, -step)
+             , ignore.strand = ignore.strand)
+   , rep(Inf, min(step, length(x)))
+   )
+}
+
 dist2next_GRanges <- function(x, step = 1, ignore.strand = FALSE) {
-  x$dist <-
-    c( distance( head(x, -step)
-               , tail(x, -step)
-               , ignore.strand)
-     , rep(Inf, step)
-     )
+  x$dist <- .dist2next(x, step, ignore.strand)
   x
 }
 
 dist2next_GBreaks <- function(x, step = 1, ignore.strand = FALSE) {
-  x$tdist <- dist2next(granges(x)      , step, ignore.strand = ignore.strand)$dist
-  x$qdist <- dist2next(granges(x$query), step, ignore.strand = ignore.strand)$dist
-  x$query$dist <- NULL
+  # Both columns are set in one assignment because each modification of the
+  # object runs its validity checks.
+  mcols(x)[c("tdist", "qdist")] <-
+    DataFrame( tdist = .dist2next(x,       step, ignore.strand)
+             , qdist = .dist2next(x$query, step, ignore.strand))
   x
 }
 

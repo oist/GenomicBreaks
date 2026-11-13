@@ -13,6 +13,19 @@ test_that("dist2next() on GBreaks objects", {
   expect_equal(d$qdist, c(19, 9, Inf))
 })
 
+test_that("dist2next() accepts objects with fewer ranges than step", {
+  expect_length(dist2next(exampleInversion[0])$tdist, 0)
+  expect_length(dist2next(granges(exampleInversion)[0])$dist, 0)
+  expect_equal(dist2next(exampleInversion[1], step = 2)$qdist, Inf)
+  expect_equal(dist2next(exampleInversion, step = 4)$tdist, rep(Inf, 3))
+})
+
+test_that("dist2next() leaves the metadata of the query ranges unchanged", {
+  gb <- exampleInversion
+  gb$query$dist <- 1:3
+  expect_equal(dist2next(gb)$query$dist, 1:3)
+})
+
 test_that("tol bridges gaps of up to tol bases", {
   # exampleColinear: ranges separated by 100 bases on both genomes
   expect_true (flagColinearAlignments(exampleColinear, tol = 100)$colinear[1])
