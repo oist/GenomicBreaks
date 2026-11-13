@@ -29,6 +29,10 @@
    alignments on the _query_ ranges instead of the _target_ ranges.
  * `slidingWindow()` accepts objects without a `score` column, and its example
    runs on the lazy-loaded `exampleInversion` object.
+ * Fix `dist2next()`, which stopped with an error on objects with fewer ranges
+   than `step`, including empty ones (#69).  Its `GBreaks` method sets its two
+   columns in one assignment (3.7 s to 1.2 s on 2.26 million ranges), and no
+   longer removes a `dist` column from the _query_ ranges.
 
 # GenomicBreaks 0.25.0
 

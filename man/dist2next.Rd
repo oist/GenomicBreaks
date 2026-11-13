@@ -34,8 +34,8 @@ The distance is defined by the \code{\link[GenomicRanges:distance]{GenomicRanges
 the number of bases between the two ranges, so it is \code{0} for adjacent
 ranges, and also for overlapping ranges.  It is \code{NA} for ranges on different
 sequences, or on different strands unless \code{ignore.strand = TRUE}.  Note
-that because the last range has not next neighbor, the last value is set
-to \code{Inf} arbitrarily.
+that because the last \code{step} ranges (all of them if there are fewer) have
+no next neighbor at that distance, their value is set to \code{Inf} arbitrarily.
 }
 \examples{
 dist2next(exampleInversion)
