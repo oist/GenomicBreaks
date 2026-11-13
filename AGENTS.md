@@ -96,6 +96,8 @@ GitHub Actions currently only builds/deploys the pkgdown site
   variable).  Do not write accessor helpers for them: when a column is
   required, test for it directly (`"name" %in% colnames(mcols(gb))`); when a
   missing column (`NULL`) leads to an acceptable result, no test is needed.
+  Exception: the `score` column has Bioconductor accessors; use `score(gb)`
+  and `score(gb) <- value` when possible.
 - **Semantic versioning** since 0.17.0; record every user-visible change in
   `NEWS.md`.  Bump the `Version:` in `DESCRIPTION` only when the current
   version is already released, that is, tagged (`git tag --list`); otherwise
