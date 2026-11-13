@@ -57,6 +57,7 @@
 <li>Fix <code><a href="../reference/slidingWindow.html">slidingWindow()</a></code>, which did not cut the <em>query</em> ranges of objects loaded by <code><a href="../reference/load_genomic_breaks.html">load_genomic_breaks()</a></code>: it read the orientation of the alignments on the <em>query</em> ranges instead of the <em>target</em> ranges.</li>
 <li>
 <code><a href="../reference/slidingWindow.html">slidingWindow()</a></code> accepts objects without a <code>score</code> column, and its example runs on the lazy-loaded <code>exampleInversion</code> object.</li>
+<li>Fix <code><a href="../reference/dist2next.html">dist2next()</a></code>, which stopped with an error on objects with fewer ranges than <code>step</code>, including empty ones (<a href="https://github.com/oist/GenomicBreaks/issues/69" class="external-link">#69</a>). Its <code>GBreaks</code> method sets its two columns in one assignment (3.7 s to 1.2 s on 2.26 million ranges), and no longer removes a <code>dist</code> column from the <em>query</em> ranges.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.25.0" id="genomicbreaks-0250">GenomicBreaks 0.25.0<a class="anchor" aria-label="anchor" href="#genomicbreaks-0250"></a></h2>

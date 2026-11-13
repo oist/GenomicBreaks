@@ -47,8 +47,9 @@ The distance is defined by the
 function: it is the number of bases between the two ranges, so it is `0`
 for adjacent ranges, and also for overlapping ranges. It is `NA` for
 ranges on different sequences, or on different strands unless
-`ignore.strand = TRUE`. Note that because the last range has not next
-neighbor, the last value is set to `Inf` arbitrarily.
+`ignore.strand = TRUE`. Note that because the last `step` ranges (all of
+them if there are fewer) have no next neighbor at that distance, their
+value is set to `Inf` arbitrarily.
 
 ## See also
 

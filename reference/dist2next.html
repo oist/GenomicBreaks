@@ -90,8 +90,8 @@ respectively.</p>
 the number of bases between the two ranges, so it is <code>0</code> for adjacent
 ranges, and also for overlapping ranges.  It is <code>NA</code> for ranges on different
 sequences, or on different strands unless <code>ignore.strand = TRUE</code>.  Note
-that because the last range has not next neighbor, the last value is set
-to <code>Inf</code> arbitrarily.</p>
+that because the last <code>step</code> ranges (all of them if there are fewer) have
+no next neighbor at that distance, their value is set to <code>Inf</code> arbitrarily.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
