@@ -14,9 +14,9 @@ test_that("slidingWindow cuts target and query ranges at window boundaries", {
 
 test_that("slidingWindow scales scores and can return uncut or merged ranges", {
   gb <- exampleInversion
-  gb$score <- c(91, 82, 100)
+  score(gb) <- c(91, 82, 100)
   sw <- slidingWindow(gb, windowSize = 250, stepSize = 125)
-  expect_equal(sw[[1]]$score, c(91, 41))
+  expect_equal(score(sw[[1]]), c(91, 41))
   uncut <- slidingWindow(gb, windowSize = 250, stepSize = 125, cut = FALSE)
   expect_equal(granges(unlist(uncut, use.names = FALSE)), granges(gb)[c(1, 2, 1, 2, 3, 2, 3)])
   merged <- slidingWindow(gb, windowSize = 250, stepSize = 125, merged = TRUE)

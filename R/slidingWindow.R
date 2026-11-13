@@ -150,8 +150,8 @@ slidingWindow <- function(gb,
     mcols(gr_ref_cut) <- mcols(gr)
     gr_ref_cut$query <- new_query
     # Scale the alignment scores, if any, to the retained fraction of the target
-    if (!is.null(gr$score))
-      gr_ref_cut$score <- round(gr$score * width(gr_ref_cut) / ref_width)
+    if (!is.null(score(gr)))
+      score(gr_ref_cut) <- round(score(gr) * width(gr_ref_cut) / ref_width)
     gr_ref_cut
   }
 
