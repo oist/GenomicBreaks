@@ -84,6 +84,12 @@ GitHub Actions currently only builds/deploys the pkgdown site
   Document above each function; regenerate with `devtools::document()`.
 - **`@family` / `@concept` tags matter**: the pkgdown reference index is grouped
   by them (`_pkgdown.yml`). Keep them on new exported functions.
+- **`@author` of functions written by an AI model**: when a model wrote most
+  of a function and the developer only made small corrections, write
+  `@author <model>, prompted by <developer>`, for example
+  `@author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy`.  In other
+  cases (shared work, code not reviewed, changes to a function written by
+  someone else), ask the developer.
 - **S4 classes/methods** via `methods::setClass`/`setGeneric`/`setMethod`.
 - **Bioconductor features and classes** are used as long as they do not
   significantly reduce speed and readability: keep data in the `GBreaks`
