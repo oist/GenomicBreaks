@@ -16,7 +16,7 @@
 #'        features_ not covered by the original alignment.
 #'
 #' @returns A [`GenomicRanges::GRanges`] object representing the _target_
-#' genome, inheriting its _sequence information_ ([`GenomeInfoDb::Seqinfo`]).
+#' genome, inheriting its _sequence information_ ([`Seqinfo::Seqinfo`]).
 #' The class of each region is indicated by a factor in the `type` metadata
 #' column.
 #'

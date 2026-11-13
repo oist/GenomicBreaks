@@ -8,7 +8,7 @@
 #' @export
 #' @import GenomicRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 
 int_frag <- function(og_r, og_q, sub_r, sub_q){
   if(isEmpty(intersect(og_r, sub_r)) | isEmpty(intersect(og_q, sub_q))){

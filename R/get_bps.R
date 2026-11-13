@@ -23,7 +23,7 @@
 #'
 #' @importFrom GenomicRanges resize start end GRanges
 #' @importFrom IRanges IRanges
-#' @importFrom GenomeInfoDb seqnames
+#' @importFrom Seqinfo seqnames
 #'
 #' @export
 

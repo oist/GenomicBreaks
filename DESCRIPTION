@@ -28,7 +28,7 @@ Imports:
   S4Vectors,
   heatmaps,
   IRanges,
-  GenomeInfoDb,
+  Seqinfo,
   stats,
   graphics,
   Biostrings,

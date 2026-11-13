@@ -10,7 +10,7 @@
 #' @export
 #' @import GenomicRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 
 tan_bp <- function(gr_ob, tan, tol, query_tf = FALSE){
 

@@ -117,9 +117,9 @@ exportMethods(pairwiseAlignment)
 exportMethods(range)
 exportMethods(reverse)
 exportMethods(subsetByOverlaps)
-import(GenomeInfoDb)
 import(GenomicRanges)
 import(IRanges)
+import(Seqinfo)
 import(ggplot2)
 importFrom(BSgenome,getBSgenome)
 importFrom(BiocGenerics,
@@ -131,7 +131,6 @@ importFrom(Biostrings,
   getSeq,
   readDNAStringSet
 )
-importFrom(GenomeInfoDb,seqnames)
 importFrom(GenomicRanges,
   GRanges,
   distance,
@@ -160,6 +159,7 @@ importFrom(S4Vectors,
   second,
   subjectHits
 )
+importFrom(Seqinfo,seqnames)
 importFrom(genoPlotR,
   as.comparison,
   dna_seg,

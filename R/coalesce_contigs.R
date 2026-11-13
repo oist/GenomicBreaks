@@ -73,7 +73,7 @@
 #' @export
 #' @importFrom GenomicRanges GRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom S4Vectors first second
 #' @importFrom stats na.omit
 #' @include dist2next.R
