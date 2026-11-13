@@ -30,6 +30,14 @@ returned `GBreaks` object may contain ranges of width zero, where the
 
 ## References
 
+The term “bridge region” was introduced in: Plessy C, Mansfield MJ,
+Bliznina A, Masunaga A, West C, Tan Y, Liu AW, Grašič J, Del Río Pisula
+MS, Sánchez-Serna G, Fabrega-Torrus M, Ferrández-Roldán A, Roncalli V,
+Navratilova P, Thompson EM, Onuma T, Nishida H, Cañestro C, Luscombe NM
+(2024). Extreme genome scrambling in marine planktonic *Oikopleura
+dioica* cryptic species. *Genome Research*, 34(3), 426–440.
+<https://doi.org/10.1101/gr.278295.123>. PMID: 38621828
+
 Bridge regions have also been called “simultaneous gaps” in the
 comparison of the mouse and human genomes by Kent WJ, Baertsch R,
 Hinrichs A, Miller W, Haussler D. (*Evolution's cauldron: duplication,
