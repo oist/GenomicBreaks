@@ -89,7 +89,10 @@ GitHub Actions currently only builds/deploys the pkgdown site
   `@author <model>, prompted by <developer>`, for example
   `@author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy`.  In other
   cases (shared work, code not reviewed, changes to a function written by
-  someone else), ask the developer.
+  someone else), ask the developer.  The developers understand that AI
+  agents are not authors in the strict sense: `@author` is used only to
+  signal agentic work, and this documentation will be updated once better
+  standards for signalling it are available.
 - **S4 classes/methods** via `methods::setClass`/`setGeneric`/`setMethod`.
 - **Bioconductor features and classes** are used as long as they do not
   significantly reduce speed and readability: keep data in the `GBreaks`
