@@ -139,11 +139,11 @@ slidingWindow <- function(gb,
       seqinfo = seqinfo(query)
     )
 
-    ref_retained_frac <- width(gr_ref_cut) / ref_width
-    mcols_new <- mcols(gr)
-    mcols_new$score <- round(mcols(gr)$score * ref_retained_frac)
-    mcols(gr_ref_cut) <- mcols_new
+    mcols(gr_ref_cut) <- mcols(gr)
     gr_ref_cut$query <- new_query
+    # Scale the alignment scores, if any, to the retained fraction of the target
+    if (!is.null(gr$score))
+      gr_ref_cut$score <- round(gr$score * width(gr_ref_cut) / ref_width)
     gr_ref_cut
   }
 
