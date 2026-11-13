@@ -76,5 +76,7 @@ Other Similarity indexes:
 }
 \author{
 Zhang Kun
+
+Claude Opus 5.5 (Anthropic), prompted by Charles Plessy
 }
 \concept{Similarity indexes}

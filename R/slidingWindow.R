@@ -24,6 +24,7 @@
 #' @family Similarity indexes
 #'
 #' @author Zhang Kun
+#' @author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy
 #'
 #' @examples
 #' exampleInversion
