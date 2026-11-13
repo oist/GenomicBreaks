@@ -37,7 +37,7 @@ A
 [`GenomicRanges::GRanges`](https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html)
 object representing the *target* genome, inheriting its *sequence
 information*
-([`GenomeInfoDb::Seqinfo`](https://rdrr.io/pkg/Seqinfo/man/Seqinfo-class.html)).
+([`Seqinfo::Seqinfo`](https://rdrr.io/pkg/Seqinfo/man/Seqinfo-class.html)).
 The class of each region is indicated by a factor in the `type` metadata
 column.
 

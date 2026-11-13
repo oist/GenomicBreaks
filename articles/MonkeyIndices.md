@@ -865,18 +865,17 @@ sessionInfo()
     ##  [95] gridExtra_2.3.1             SummarizedExperiment_1.42.0
     ##  [97] xfun_0.62                   Biobase_2.72.0             
     ##  [99] matrixStats_1.5.0           stringi_1.8.9              
-    ## [101] UCSC.utils_1.8.0            fftwtools_0.9-11           
-    ## [103] yaml_2.3.12                 boot_1.3-32                
-    ## [105] evaluate_1.0.5              codetools_0.2-20           
-    ## [107] cigarillo_1.2.1             tibble_3.3.1               
-    ## [109] cli_3.6.6                   rpart_4.1.27               
-    ## [111] systemfonts_1.3.2           Rdpack_2.6.6               
-    ## [113] jquerylib_0.1.4             dichromat_2.0-1            
-    ## [115] Rcpp_1.1.2                  GenomeInfoDb_1.48.0        
-    ## [117] png_0.1-9                   XML_3.99-0.25              
-    ## [119] parallel_4.6.2              pkgdown_2.2.1              
-    ## [121] jpeg_0.1-11                 bitops_1.1-0               
-    ## [123] lme4_2.1-0                  glmnet_5.2                 
-    ## [125] pwalign_1.8.0               scales_1.4.0               
-    ## [127] purrr_1.2.2                 crayon_1.5.3               
-    ## [129] rlang_1.3.0                 mice_3.19.0
+    ## [101] fftwtools_0.9-11            yaml_2.3.12                
+    ## [103] boot_1.3-32                 evaluate_1.0.5             
+    ## [105] codetools_0.2-20            cigarillo_1.2.1            
+    ## [107] tibble_3.3.1                cli_3.6.6                  
+    ## [109] rpart_4.1.27                systemfonts_1.3.2          
+    ## [111] Rdpack_2.6.6                jquerylib_0.1.4            
+    ## [113] dichromat_2.0-1             Rcpp_1.1.2                 
+    ## [115] png_0.1-9                   XML_3.99-0.25              
+    ## [117] parallel_4.6.2              pkgdown_2.2.1              
+    ## [119] jpeg_0.1-11                 bitops_1.1-0               
+    ## [121] lme4_2.1-0                  glmnet_5.2                 
+    ## [123] pwalign_1.8.0               scales_1.4.0               
+    ## [125] purrr_1.2.2                 crayon_1.5.3               
+    ## [127] rlang_1.3.0                 mice_3.19.0
