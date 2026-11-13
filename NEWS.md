@@ -1,5 +1,12 @@
 # GenomicBreaks 0.26.0
 
+ * `GenomicBreaks` now imports `Seqinfo` instead of `GenomeInfoDb`, and
+   therefore requires Bioconductor 3.22 or later.  The example objects need
+   the `Seqinfo` package, where the `Seqinfo` class moved in Bioconductor
+   3.22, but installation on earlier releases did not stop for lack of it
+   (#70).  The functions that `GenomicBreaks` took from `GenomeInfoDb` are
+   all defined in `Seqinfo`, which `GenomeInfoDb` re-exports only
+   temporarily.
  * New _monkey indices_: `wukong_index()`, `abu_index()`, `albert_index()`,
    `marcel_index()`, `imo_index()`, `rafiki_index()`, `hanuman_index()`,
    `jack_index()`, `able_index()`, `mizaru_index()`, `george_index()` and

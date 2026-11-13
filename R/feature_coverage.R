@@ -16,7 +16,7 @@
 #' [`heatmaps::plotHeatmapMeta`].
 #'
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom heatmaps CoverageHeatmap
 #'
 #' @family plot functions

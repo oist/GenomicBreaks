@@ -82,7 +82,7 @@
 #' @export
 #' @importFrom GenomicRanges GRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom stats na.omit
 #' @include dist2next.R
 

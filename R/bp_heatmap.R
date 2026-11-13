@@ -19,7 +19,7 @@
 #' object via the [`BSgenome::getBSgenome`] function.
 #'
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom heatmaps PatternHeatmap
 #' @importFrom Biostrings getSeq
 #'

@@ -8,7 +8,7 @@
 #' @export
 #' @import GenomicRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom graphics plot.new plot.window rect
 
 

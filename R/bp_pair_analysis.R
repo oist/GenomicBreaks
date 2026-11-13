@@ -21,7 +21,7 @@
 #'
 #' @import GenomicRanges
 #' @import IRanges
-#' @import GenomeInfoDb
+#' @import Seqinfo
 #' @importFrom heatmaps CoverageHeatmap
 #'
 #' @export
