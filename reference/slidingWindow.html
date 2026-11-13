@@ -94,7 +94,21 @@ using a sliding window.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns a list of <code>GBreaks</code> objects, one for each window.</p>
+    <p>Returns a <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html" class="external-link">GenomicRanges::GRangesList</a></code> containing one <code>GBreaks</code>
+object for each window, or a single <code>GBreaks</code> object if <code>merged</code> is <code>TRUE</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>When <code>cut</code> is <code>TRUE</code>, an alignment that crosses a window boundary
+is cut at that boundary on the <em>target</em> genome.  Its <em>query</em> range is cut by
+the same proportion, on the side given by the strand of the <em>target</em> range,
+and its score, if any, is scaled by that proportion.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="unstranded-ranges-experimental-">Unstranded ranges (experimental)<a class="anchor" aria-label="anchor" href="#unstranded-ranges-experimental-"></a></h2>
+
+
+<p>The <em>query</em> ranges of alignments on the <code>*</code> strand are not cut.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -122,65 +136,67 @@ using a sliding window.</p>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Zhang Kun</p>
+<p>Claude Opus 5.5 (Anthropic), prompted by Charles Plessy</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exdata_Sac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/SacCer3__SacPar.gff3.gz"</span>, package <span class="op">=</span> <span class="st">"GenomicBreaks"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gb</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_genomic_breaks.html">load_genomic_breaks</a></span><span class="op">(</span><span class="va">exdata_Sac</span>, <span class="fu">BSgenome.Scerevisiae.UCSC.sacCer3</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/BSgenome.Scerevisiae.UCSC.sacCer3/man/package.html" class="external-link">Scerevisiae</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">slided_gb</span> <span class="op">&lt;-</span> <span class="fu">slidingWindow</span><span class="op">(</span><span class="va">gb</span>, windowSize <span class="op">=</span> <span class="fl">1e5</span>, stepSize <span class="op">=</span> <span class="fl">5e4</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The 2 combined objects have no sequence levels in common. (Use</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   suppressWarnings() to suppress this warning.)</span>
-<span class="r-in"><span><span class="va">slided_gb</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 6 ranges and 6 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames       ranges strand |     score                    query</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;                &lt;GRanges&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrI   5860-10010      + |     10609   NC_047487.1:8723-12716</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrI  11157-11782      + |      1253  NC_047487.1:13035-13680</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrI  25371-26528      + |      3651  NC_047487.1:15380-16537</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]     chrI  26849-29699      + |      6130  NC_047487.1:17263-20175</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]     chrI  29937-30607      + |       767  NC_047487.1:20203-20866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6]     chrI 31155-100000      + |    298623 NC_047487.1:21379-128635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       window_id window_seqname window_start window_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;integer&gt;    &lt;character&gt;    &lt;integer&gt;  &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]         1           chrI            1     100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]         1           chrI            1     100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]         1           chrI            1     100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]         1           chrI            1     100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]         1           chrI            1     100000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6]         1           chrI            1     100000</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">exampleInversion</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 1 metadata column:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-400      + | chrB:301-400</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 17 sequences (1 circular) from sacCer3 genome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-in"><span><span class="va">slided_gb</span> <span class="op">&lt;-</span> <span class="fu">slidingWindow</span><span class="op">(</span><span class="va">exampleInversion</span>, windowSize <span class="op">=</span> <span class="fl">250</span>, stepSize <span class="op">=</span> <span class="fl">125</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">slided_gb</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRangesList object of length 3:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 5 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query window_id window_seqname</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;    &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   100-190      + | chrB:100-190         1           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-250      - | chrB:251-291         1           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window_start window_end</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;integer&gt;  &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]            1        250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]            1        250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 3 ranges and 5 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query window_id window_seqname</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;    &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   126-190      + | chrB:126-190         2           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   210-291      - | chrB:210-291         2           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]     chrA   301-375      + | chrB:301-375         2           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window_start window_end</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;integer&gt;  &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]          126        375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]          126        375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]          126        375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`3`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GBreaks object with 2 ranges and 5 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       seqnames    ranges strand |        query window_id window_seqname</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;GRanges&gt; &lt;integer&gt;    &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     chrA   251-291      - | chrB:210-250         3           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]     chrA   301-400      + | chrB:301-400         3           chrA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       window_start window_end</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          &lt;integer&gt;  &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]          251        500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]          251        500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">slided_gb</span>, <span class="va">strand_randomisation_index</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1         2         3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3787879 0.2612613 0.4184397 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

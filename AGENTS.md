@@ -20,6 +20,13 @@ root), not `docs/code_review.md`.
 When creating commits, include the line `AI-generated: yes` in the
 commit message body (not the subject line).
 
+## Pushed history
+
+Do not rewrite commits that are already pushed (no amend, rebase or
+force push). Add the changes requested in review as new commits on the
+branch: other contributors value a history that shows which parts were
+generated and which came from human review.
+
 ## What this package is
 
 An R package built on the **Bioconductor** ecosystem (but not part of
@@ -82,6 +89,15 @@ GitHub Actions currently only builds/deploys the pkgdown site
   `devtools::document()`.
 - **`@family` / `@concept` tags matter**: the pkgdown reference index is
   grouped by them (`_pkgdown.yml`). Keep them on new exported functions.
+- **`@author` of functions written by an AI model**: when a model wrote
+  most of a function and the developer only made small corrections,
+  write `@author <model>, prompted by <developer>`, for example
+  `@author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy`. In
+  other cases (shared work, code not reviewed, changes to a function
+  written by someone else), ask the developer. The developers understand
+  that AI agents are not authors in the strict sense: `@author` is used
+  only to signal agentic work, and this documentation will be updated
+  once better standards for signalling it are available.
 - **S4 classes/methods** via
   [`methods::setClass`](https://rdrr.io/r/methods/setClass.html)/`setGeneric`/`setMethod`.
 - **Bioconductor features and classes** are used as long as they do not
@@ -96,9 +112,14 @@ GitHub Actions currently only builds/deploys the pkgdown site
   the column is in a variable). Do not write accessor helpers for them:
   when a column is required, test for it directly
   (`"name" %in% colnames(mcols(gb))`); when a missing column (`NULL`)
-  leads to an acceptable result, no test is needed.
+  leads to an acceptable result, no test is needed. Exception: the
+  `score` column has Bioconductor accessors; use `score(gb)` and
+  `score(gb) <- value` when possible.
 - **Semantic versioning** since 0.17.0; record every user-visible change
-  in `NEWS.md` and bump the `Version:` in `DESCRIPTION`.
+  in `NEWS.md`. Bump the `Version:` in `DESCRIPTION` only when the
+  current version is already released, that is, tagged
+  (`git tag --list`); otherwise add the change to the section of the
+  current version at the top of `NEWS.md`.
 - Keep roxygen `@examples` runnable on the bundled example data — they
   are currently a primary form of verification.
 

@@ -57,6 +57,10 @@
 <p>When creating commits, include the line <code>AI-generated: yes</code> in the commit message body (not the subject line).</p>
 </div>
 <div class="section level2">
+<h2 id="pushed-history">Pushed history<a class="anchor" aria-label="anchor" href="#pushed-history"></a></h2>
+<p>Do not rewrite commits that are already pushed (no amend, rebase or force push). Add the changes requested in review as new commits on the branch: other contributors value a history that shows which parts were generated and which came from human review.</p>
+</div>
+<div class="section level2">
 <h2 id="what-this-package-is">What this package is<a class="anchor" aria-label="anchor" href="#what-this-package-is"></a></h2>
 <p>An R package built on the <strong>Bioconductor</strong> ecosystem (but not part of it) for analysing <strong>pairwise whole-genome alignments</strong> where evolution has scrambled gene order. It loads alignments (GFF3 / MAF), coalesces colinear fragments, flags structural variants (inversions, translocations, double/twin inversions), computes synteny and nucleotide-distance metrics, and plots macrosynteny / Oxford / pair-of-chromosome figures.</p>
 </div>
@@ -112,13 +116,15 @@
 <li>
 <strong><code>@family</code> / <code>@concept</code> tags matter</strong>: the pkgdown reference index is grouped by them (<code>_pkgdown.yml</code>). Keep them on new exported functions.</li>
 <li>
+<strong><code>@author</code> of functions written by an AI model</strong>: when a model wrote most of a function and the developer only made small corrections, write <code>@author &lt;model&gt;, prompted by &lt;developer&gt;</code>, for example <code>@author Claude Opus 5.5 (Anthropic), prompted by Charles Plessy</code>. In other cases (shared work, code not reviewed, changes to a function written by someone else), ask the developer. The developers understand that AI agents are not authors in the strict sense: <code>@author</code> is used only to signal agentic work, and this documentation will be updated once better standards for signalling it are available.</li>
+<li>
 <strong>S4 classes/methods</strong> via <code><a href="https://rdrr.io/r/methods/setClass.html" class="external-link">methods::setClass</a></code>/<code>setGeneric</code>/<code>setMethod</code>.</li>
 <li>
 <strong>Bioconductor features and classes</strong> are used as long as they do not significantly reduce speed and readability: keep data in the <code>GBreaks</code> object and use accessors (<code><a href="https://rdrr.io/r/stats/start.html" class="external-link">start()</a></code>, <code>width()</code>, <code>strand()</code>, <code>seqnames()</code>) and functions such as <code>distance()</code>, rather than plain vectors copied out of the object.</li>
 <li>
-<strong>Metadata columns</strong>: read and create them with <code>gb$name</code> and <code>gb$name &lt;- value</code>, rather than by manipulating the <code>mcols(gb)</code> DataFrame, unless this is cumbersome (for example, when the name of the column is in a variable). Do not write accessor helpers for them: when a column is required, test for it directly (<code>"name" %in% colnames(mcols(gb))</code>); when a missing column (<code>NULL</code>) leads to an acceptable result, no test is needed.</li>
+<strong>Metadata columns</strong>: read and create them with <code>gb$name</code> and <code>gb$name &lt;- value</code>, rather than by manipulating the <code>mcols(gb)</code> DataFrame, unless this is cumbersome (for example, when the name of the column is in a variable). Do not write accessor helpers for them: when a column is required, test for it directly (<code>"name" %in% colnames(mcols(gb))</code>); when a missing column (<code>NULL</code>) leads to an acceptable result, no test is needed. Exception: the <code>score</code> column has Bioconductor accessors; use <code>score(gb)</code> and <code>score(gb) &lt;- value</code> when possible.</li>
 <li>
-<strong>Semantic versioning</strong> since 0.17.0; record every user-visible change in <code>NEWS.md</code> and bump the <code>Version:</code> in <code>DESCRIPTION</code>.</li>
+<strong>Semantic versioning</strong> since 0.17.0; record every user-visible change in <code>NEWS.md</code>. Bump the <code>Version:</code> in <code>DESCRIPTION</code> only when the current version is already released, that is, tagged (<code>git tag --list</code>); otherwise add the change to the section of the current version at the top of <code>NEWS.md</code>.</li>
 <li>Keep roxygen <code>@examples</code> runnable on the bundled example data — they are currently a primary form of verification.</li>
 </ul></div>
 <div class="section level2">

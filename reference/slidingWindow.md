@@ -46,7 +46,21 @@ slidingWindow(
 
 ## Value
 
-Returns a list of `GBreaks` objects, one for each window.
+Returns a
+[`GenomicRanges::GRangesList`](https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html)
+containing one `GBreaks` object for each window, or a single `GBreaks`
+object if `merged` is `TRUE`.
+
+## Details
+
+When `cut` is `TRUE`, an alignment that crosses a window boundary is cut
+at that boundary on the *target* genome. Its *query* range is cut by the
+same proportion, on the side given by the strand of the *target* range,
+and its score, if any, is scaled by that proportion.
+
+## Unstranded ranges (experimental)
+
+The *query* ranges of alignments on the `*` strand are not cut.
 
 ## See also
 
@@ -75,62 +89,65 @@ Other Similarity indexes:
 
 Zhang Kun
 
+Claude Opus 5.5 (Anthropic), prompted by Charles Plessy
+
 ## Examples
 
 ``` r
-exdata_Sac <- system.file("extdata/SacCer3__SacPar.gff3.gz", package = "GenomicBreaks")
-gb <- load_genomic_breaks(exdata_Sac, BSgenome.Scerevisiae.UCSC.sacCer3::Scerevisiae)
-slided_gb <- slidingWindow(gb, windowSize = 1e5, stepSize = 5e4)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-#> Warning: The 2 combined objects have no sequence levels in common. (Use
-#>   suppressWarnings() to suppress this warning.)
-slided_gb[[1]]
-#> GBreaks object with 6 ranges and 6 metadata columns:
-#>       seqnames       ranges strand |     score                    query
-#>          <Rle>    <IRanges>  <Rle> | <numeric>                <GRanges>
-#>   [1]     chrI   5860-10010      + |     10609   NC_047487.1:8723-12716
-#>   [2]     chrI  11157-11782      + |      1253  NC_047487.1:13035-13680
-#>   [3]     chrI  25371-26528      + |      3651  NC_047487.1:15380-16537
-#>   [4]     chrI  26849-29699      + |      6130  NC_047487.1:17263-20175
-#>   [5]     chrI  29937-30607      + |       767  NC_047487.1:20203-20866
-#>   [6]     chrI 31155-100000      + |    298623 NC_047487.1:21379-128635
-#>       window_id window_seqname window_start window_end
-#>       <integer>    <character>    <integer>  <integer>
-#>   [1]         1           chrI            1     100000
-#>   [2]         1           chrI            1     100000
-#>   [3]         1           chrI            1     100000
-#>   [4]         1           chrI            1     100000
-#>   [5]         1           chrI            1     100000
-#>   [6]         1           chrI            1     100000
+exampleInversion
+#> GBreaks object with 3 ranges and 1 metadata column:
+#>       seqnames    ranges strand |        query
+#>          <Rle> <IRanges>  <Rle> |    <GRanges>
+#>   [1]     chrA   100-190      + | chrB:100-190
+#>   [2]     chrA   210-291      - | chrB:210-291
+#>   [3]     chrA   301-400      + | chrB:301-400
 #>   -------
-#>   seqinfo: 17 sequences (1 circular) from sacCer3 genome
+#>   seqinfo: 1 sequence from an unspecified genome
+slided_gb <- slidingWindow(exampleInversion, windowSize = 250, stepSize = 125)
+slided_gb
+#> GRangesList object of length 3:
+#> $`1`
+#> GBreaks object with 2 ranges and 5 metadata columns:
+#>       seqnames    ranges strand |        query window_id window_seqname
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>    <character>
+#>   [1]     chrA   100-190      + | chrB:100-190         1           chrA
+#>   [2]     chrA   210-250      - | chrB:251-291         1           chrA
+#>       window_start window_end
+#>          <integer>  <integer>
+#>   [1]            1        250
+#>   [2]            1        250
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+#> 
+#> $`2`
+#> GBreaks object with 3 ranges and 5 metadata columns:
+#>       seqnames    ranges strand |        query window_id window_seqname
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>    <character>
+#>   [1]     chrA   126-190      + | chrB:126-190         2           chrA
+#>   [2]     chrA   210-291      - | chrB:210-291         2           chrA
+#>   [3]     chrA   301-375      + | chrB:301-375         2           chrA
+#>       window_start window_end
+#>          <integer>  <integer>
+#>   [1]          126        375
+#>   [2]          126        375
+#>   [3]          126        375
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+#> 
+#> $`3`
+#> GBreaks object with 2 ranges and 5 metadata columns:
+#>       seqnames    ranges strand |        query window_id window_seqname
+#>          <Rle> <IRanges>  <Rle> |    <GRanges> <integer>    <character>
+#>   [1]     chrA   251-291      - | chrB:210-250         3           chrA
+#>   [2]     chrA   301-400      + | chrB:301-400         3           chrA
+#>       window_start window_end
+#>          <integer>  <integer>
+#>   [1]          251        500
+#>   [2]          251        500
+#>   -------
+#>   seqinfo: 1 sequence from an unspecified genome
+#> 
+sapply(slided_gb, strand_randomisation_index)
+#>         1         2         3 
+#> 0.3787879 0.2612613 0.4184397 
 ```
