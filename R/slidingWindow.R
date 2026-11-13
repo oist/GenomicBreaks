@@ -129,8 +129,8 @@ slidingWindow <- function(gb,
     new_q_end   <- q_end
 
     # The orientation of an alignment is the strand of its target range.
-    is_fwd <- as.character(strand(gr)) == "+"
-    is_rev <- as.character(strand(gr)) == "-"
+    is_fwd <- decode(strand(gr)) == "+"
+    is_rev <- decode(strand(gr)) == "-"
 
     new_q_start[is_fwd] <- q_start[is_fwd] + round(q_width[is_fwd] * cut_5p[is_fwd] / ref_width[is_fwd])
     new_q_end[is_fwd]   <- q_end[is_fwd]   - round(q_width[is_fwd] * cut_3p[is_fwd] / ref_width[is_fwd])
