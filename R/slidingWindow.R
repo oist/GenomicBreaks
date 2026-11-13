@@ -10,7 +10,8 @@
 #' @param merged set TRUE to output a `GBreaks` object
 #' @param cut whether cut the alignments out of the window
 #'
-#' @returns Returns a list of `GBreaks` objects, one for each window.
+#' @returns Returns a [`GenomicRanges::GRangesList`] containing one `GBreaks`
+#' object for each window, or a single `GBreaks` object if `merged` is `TRUE`.
 #'
 #' @family Similarity indexes
 #'
@@ -97,16 +98,9 @@ slidingWindow <- function(gb,
 
   if (merged) return(gb_hits)
 
-  gb_list <- split(gb_hits, mcols(gb_hits)$window_id)
-  if (!cut) return(gb_list)
-
-  trim_func <- function(gr) {
-    window <- GRanges(
-      seqnames = unique(gr$window_seqname),
-      ranges = IRanges(start = unique(gr$window_start),
-                       end   = unique(gr$window_end))
-    )
-
+  # Cuts each range of `gr` to the parallel range of `window`.  All operations
+  # are element-wise, so all the alignment-window pairs are cut in one call.
+  trim_func <- function(gr, window) {
     gr_ref_cut <- GenomicRanges::pintersect(gr, window)
 
     ref_start_orig <- start(gr)
@@ -153,8 +147,7 @@ slidingWindow <- function(gb,
     gr_ref_cut
   }
 
+  if (cut) gb_hits <- trim_func(gb_hits, overlapping_windows)
 
-  gb_list <- lapply(gb_list, trim_func)
-
-  return(gb_list)
+  split(gb_hits, gb_hits$window_id)
 }
