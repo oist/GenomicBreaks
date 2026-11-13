@@ -13,6 +13,14 @@
 #' @returns Returns a [`GenomicRanges::GRangesList`] containing one `GBreaks`
 #' object for each window, or a single `GBreaks` object if `merged` is `TRUE`.
 #'
+#' @details When `cut` is `TRUE`, an alignment that crosses a window boundary
+#' is cut at that boundary on the _target_ genome.  Its _query_ range is cut by
+#' the same proportion, on the side given by the strand of the _target_ range,
+#' and its score, if any, is scaled by that proportion.
+#'
+#' @section Unstranded ranges (experimental):
+#' The _query_ ranges of alignments on the `*` strand are not cut.
+#'
 #' @family Similarity indexes
 #'
 #' @author Zhang Kun
@@ -114,15 +122,15 @@ slidingWindow <- function(gb,
     query <- gr$query
     q_start <- start(query)
     q_end   <- end(query)
-    q_strand <- as.character(strand(query))
     q_width <- width(query)
     ref_width <- width(gr)
 
     new_q_start <- q_start
     new_q_end   <- q_end
 
-    is_fwd <- q_strand == "+"
-    is_rev <- q_strand == "-"
+    # The orientation of an alignment is the strand of its target range.
+    is_fwd <- as.character(strand(gr)) == "+"
+    is_rev <- as.character(strand(gr)) == "-"
 
     new_q_start[is_fwd] <- q_start[is_fwd] + round(q_width[is_fwd] * cut_5p[is_fwd] / ref_width[is_fwd])
     new_q_end[is_fwd]   <- q_end[is_fwd]   - round(q_width[is_fwd] * cut_3p[is_fwd] / ref_width[is_fwd])
